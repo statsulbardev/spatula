@@ -6,7 +6,7 @@
             @if($photo)
                 <img src="{{ $photo }}" alt="..." class="img-fluid rounded-circle">
             @else
-                <img src="{{ \Illuminate\Support\Facades\Storage::url('public/user.png')}}" alt="..." class="img-fluid rounded-circle">
+                <img src="{{ asset('storage/user.png') }}" alt="..." class="img-fluid rounded-circle">
             @endif
         </div>
         <div class="title">
