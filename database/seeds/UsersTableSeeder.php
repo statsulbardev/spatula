@@ -13,16 +13,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'        => 'Misnawati Mansur',
-            'email'       => 'misna@bps.go.id',
-            'bps_id'      => '340054318',
-            'employee_id' => '1988'
-        ]);
-        User::create([
-            'name'        => 'Syaifur Rijal',
-            'email'       => 'syaifur.rijal@bps.go.id',
-            'bps_id'      => '340056465',
-            'employee_id' => '1990'
+            'nama'     => 'Admin Spatula',
+            'username' => 'admin',
+            'email'    => 'admin@mail.id',
+            'password' => bcrypt('secret'),
+            'role_id'  => '1'
         ]);
     }
 }
