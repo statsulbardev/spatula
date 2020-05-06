@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2db251f20c9a8cf3fd26c3b413dba238",
+    "content-hash": "7c72295aea9613e044e501844e68b475",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1992,49 +1992,6 @@
                 }
             ],
             "time": "2020-03-29T20:13:32+00:00"
-        },
-        {
-            "name": "statsulbardev/bps-auth",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:statsulbardev/bps-auth.git",
-                "reference": "b5c5cdd8ec861e1a635ebefc0a524c7d1c2e5e1f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/statsulbardev/bps-auth/zipball/b5c5cdd8ec861e1a635ebefc0a524c7d1c2e5e1f",
-                "reference": "b5c5cdd8ec861e1a635ebefc0a524c7d1c2e5e1f",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Statsulbar\\BPSAuth\\Providers\\BPSAuthServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Statsulbar\\BPSAuth\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Syaifur Rijal",
-                    "email": "syaifur.rijal@hotmail.com"
-                }
-            ],
-            "description": "Paket Laravel Untuk Otentikasi Menggunakan Data Community BPS.",
-            "support": {
-                "source": "https://github.com/statsulbardev/bps-auth/tree/master",
-                "issues": "https://github.com/statsulbardev/bps-auth/issues"
-            },
-            "time": "2020-05-06T00:52:46+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5886,9 +5843,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "statsulbardev/bps-auth": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
