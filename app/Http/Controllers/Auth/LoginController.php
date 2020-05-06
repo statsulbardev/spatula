@@ -7,7 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Statsulbar\BPSAuth\Facades\BPSAuth;
+// use Statsulbar\BPSAuth\Facades\BPSAuth;
+use App\Utility\Authentication as Otentikasi;
 
 class LoginController extends Controller
 {
@@ -51,16 +52,16 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(Otentikasi $auth, Request $request)
     {
         $this->validateLogin($request);
 
         // if(Auth::loginUsingId(1)) return $this->sendLoginResponse($request);
 
-        if(BPSAuth::login($request->username, $request->password)) {
-            $bps_id = BPSAuth::getBpsId();
+        if($auth->login($request->username, $request->password)) {
+            $bps_id = $auth->getBpsId();
 
-            $profile = BPSAuth::getProfil($bps_id);
+            $profile = $auth->getProfil($bps_id);
 
             $user = User::where('bps_id', $bps_id)->first();
 
