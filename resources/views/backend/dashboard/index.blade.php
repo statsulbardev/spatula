@@ -1,5 +1,7 @@
 @extends('home')
 
+@section('title', 'Dashboard')
+
 @section('inner-content')
     <!-- Page Header-->
     <header class="page-header">
@@ -68,4 +70,3 @@
 @push('scripts')
     <script src="{{ asset('js/front.js') }}"></script>
 @endpush
-      
