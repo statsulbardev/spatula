@@ -1,0 +1,14 @@
+@switch($role_id)
+    @case(1)
+        Superadmin
+        @break
+    @case(2)
+        Supervisor
+        @break
+    @case(3)
+        Pengawas
+        @break
+    @default
+        Operator
+        @break
+@endswitch
