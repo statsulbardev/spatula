@@ -1,5 +1,5 @@
 <!-- Side Navbar -->
-<nav class="side-navbar">
+<nav id="sidenav" class="side-navbar">
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar">
