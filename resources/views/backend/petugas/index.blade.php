@@ -62,6 +62,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="6">Tidak ditemukan informasi operator.</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>
