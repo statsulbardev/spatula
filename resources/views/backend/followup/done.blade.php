@@ -53,6 +53,9 @@
                                         </tr>
                                     @endforeach
                                 @else
+                                    <tr>
+                                        <td colspan="6">Tidak ditemukan informasi tindak lanjut - selesai.</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>
