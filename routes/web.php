@@ -19,9 +19,11 @@ Route::middleware('auth')->group(function() {
 
     // Petugas Route
     Route::get('petugas', 'MPetugasController@index')->name('petugas');
-    Route::get('petugas/tambah', 'MPetugasController@create')->name('petugas.tambah');
-    Route::post('petugas', 'MPetugasController@store')->name('petugas.simpan');
-    Route::get('petugas/{id}/edit', 'MPetugasController@edit')->name('petugas.edit');
     Route::put('petugas/{id}', 'MPetugasController@update')->name('petugas.update');
-    Route::delete('petugas/{id}', 'MPetugasController@destroy')->name('petugas.hapus');
+
+    // Tautan Route
+
+    // Tindak Lanjut - Selesai Route
+    Route::get('tindak-lanjut/selesai', 'FollowUpController@done')->name('followup.done');
+    Route::get('tindak-lanjut/{id}/selesai', 'FollowUpController@showDone')->name('followup.detail.done');
 });
