@@ -13,12 +13,13 @@ class MPenggunaTableSeeder extends Seeder
     public function run()
     {
         m_pengguna::create([
-            'nama'     => 'Admin Spatula',
-            'username' => 'admin',
-            'email'    => 'admin@mail.id',
-            'password' => bcrypt('secret'),
-            'role_id'  => '1',
-            'aktif'    => 1
+            'nama'           => 'Admin Spatula',
+            'username'       => 'admin',
+            'email'          => 'admin@mail.id',
+            'password'       => bcrypt('secret'),
+            'kode_satker_id' => 1,
+            'role_id'        => 1,
+            'aktif'          => 1
         ]);
     }
 }

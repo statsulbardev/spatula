@@ -31,7 +31,6 @@
                                     <th>Email</th>
                                     <th>NIP BPS</th>
                                     <th>Role</th>
-                                    <th>Aktif</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -56,14 +55,7 @@
                                                 @endif
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">
-                                                    @include('components.role', ['role_id' => $user->role_id ])
-                                                </a>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">
-                                                    @include('components.active', ['active' => $user->aktif ])
-                                                </a>
+                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->role->nama_akses }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">

@@ -51,13 +51,22 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">Satuan Kerja</label>
+                                <div class="col-sm-9">
+                                    <select name="satker" class="form-control mb-3">
+                                        @foreach($satker as $index => $item)
+                                            <option value="{{ $index + 1 }}">{{ $item->kode_satker }} - BPS {{ $item->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Role/Hak Akses</label>
                                 <div class="col-sm-9">
                                     <select name="role" class="form-control mb-3">
-                                        <option value="1">Superadmin</option>
-                                        <option value="2">Supervisor</option>
-                                        <option value="3">Pengawas</option>
-                                        <option value="4">Operator</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->kode_akses }}">{{ $role->nama_akses }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

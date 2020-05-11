@@ -10,12 +10,6 @@
         </div>
     </header>
     <section class="tables">
-        <div class="container-fluid d-flex">
-            <span class="w-100"></span>
-            <div class="form-group">
-                <a href="{{ route('petugas.tambah') }}" class="btn btn-primary">Tambah</a>
-            </div>
-        </div>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
@@ -30,30 +24,40 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>NIP BPS</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($opertors->count() > 0)
+                                @if($operators->count() > 0)
                                     @foreach($operators as $index => $operator)
                                         <tr>
                                             <th scope="row" class="align-middle">
-                                                <a class="text-dark" href="{{ route('petugas.edit', $operator->id) }}">{{ $index + 1 }}</a>
+                                                <a class="text-dark">{{ $index + 1 }}</a>
                                             </th>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('petugas.edit', $operator->id) }}">{{ $operator->nama }}</a>
+                                                <a class="text-dark">{{ $operator->nama }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('petugas.edit', $operator->id) }}">{{ $operator->email }}</a>
+                                                <a class="text-dark">{{ $operator->email }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('petugas.edit', $operator->id) }}">{{ $operator->bps_id }}</a>
+                                                <a class="text-dark">{{ $operator->bpsid }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <form action="{{ route('pengguna.hapus', $operator->id) }}" method="POST">
+                                                <a class="text-dark">
+                                                    @include('components.active', ['active' => $operator->aktif])
+                                                </a>
+                                            </td>
+                                            <td class="align-middle">
+                                                <form action="{{ route('petugas.update', $operator->id) }}" method="POST">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <input class="btn btn-sm btn-danger float-right" type="submit" value="Hapus"/>
+                                                    @method('PUT')
+                                                    @if($operator->aktif)
+                                                        <button name="state" class="btn btn-sm btn-danger float-right" type="submit" value="0">Non Aktifkan</button>
+                                                    @else
+                                                        <button name="state" class="btn btn-sm btn-primary float-right" type="submit" value="1">Aktifkan</button>
+                                                    @endif
                                                 </form>
                                             </td>
                                         </tr>
@@ -62,7 +66,7 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $users->links() }}
+                    {{ $operators->links() }}
                 </div>
             </div>
         </div>

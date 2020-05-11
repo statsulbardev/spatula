@@ -41,4 +41,14 @@ class m_pengguna extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function satker()
+    {
+        return $this->belongsTo(m_satker::class, 'kode_satker_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(m_akses::class, 'role_id');
+    }
 }

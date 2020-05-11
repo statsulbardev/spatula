@@ -21,8 +21,8 @@ class CreateMPenggunaTable extends Migration
             $table->string('password');
             $table->string('bpsid', 9)->unique()->nullable();
             $table->string('foto')->nullable();
-            $table->char('kode_satker_id', 4)->nullable();
-            $table->char('role_id', 1);
+            $table->bigInteger('kode_satker_id');
+            $table->bigInteger('role_id');
             $table->tinyInteger('aktif');
             $table->rememberToken();
             $table->timestamps();

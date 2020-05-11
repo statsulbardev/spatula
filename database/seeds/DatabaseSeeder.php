@@ -11,10 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(
+        $this->call([
             MPenggunaTableSeeder::class,
             MSatkerTableSeeder::class,
             MLayananTableSeeder::class,
-        );
+            MSaranTableSeeder::class,
+            MAksesTableSeeder::class,
+        ]);
     }
 }

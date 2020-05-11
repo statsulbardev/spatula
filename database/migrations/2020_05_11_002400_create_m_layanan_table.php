@@ -15,8 +15,8 @@ class CreateMLayananTable extends Migration
     {
         Schema::create('m_layanan', function (Blueprint $table) {
             $table->id();
-            $table->char('kode_layanan', 1);
-            $table->string('nama_layanan', 30);
+            $table->char('kode_layanan', 2);
+            $table->string('nama_layanan', 50);
             $table->timestamps();
         });
     }

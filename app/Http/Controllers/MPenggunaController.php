@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\m_akses;
 use App\Models\m_pengguna;
+use App\Models\m_satker;
 use Illuminate\Http\Request;
 
 class MPenggunaController extends Controller
@@ -26,7 +28,10 @@ class MPenggunaController extends Controller
      */
     public function create()
     {
-        return view('backend.pengguna.create');
+        return view('backend.pengguna.create', [
+            'roles'  => m_akses::get(['kode_akses', 'nama_akses']),
+            'satker' => m_satker::get(['kode_satker', 'nama'])
+        ]);
     }
 
     /**
@@ -43,6 +48,7 @@ class MPenggunaController extends Controller
             'email'    => 'required|email:rfc',
             'password' => 'required|string|max:20',
             'bpsid'    => 'nullable|string|max:9',
+            'satker'   => 'required',
             'role'     => 'required',
             'photo'    => 'nullable'
         ]);
@@ -54,23 +60,12 @@ class MPenggunaController extends Controller
             'password'       => bcrypt($request->password),
             'bpsid'          => $request->bpsid,
             'role_id'        => $request->role,
-            'kode_satker_id' => null,
+            'kode_satker_id' => $request->satker,
             'aktif'          => true,
             'foto'           => $request->file('photo') ? $request->file('photo')->store('public/image') : null
         ]);
 
         return redirect()->route('pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -84,7 +79,11 @@ class MPenggunaController extends Controller
         $user = m_pengguna::findOrFail($id);
 
         return view('backend.pengguna.edit', [
-            'user' => $user
+            'user'   => $user,
+            'roles'  => m_akses::get(['kode_akses', 'nama_akses']),
+            'satker' => m_satker::get(['kode_satker', 'nama']),
+            'selected_satker' => $user->kode_satker_id,
+            'selected_role' => $user->role_id
         ]);
     }
 
@@ -97,28 +96,26 @@ class MPenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'fullname' => 'required|string|max:30',
-        //     'username' => 'required|string|max:20',
-        //     'email'    => 'required|email:rfc',
-        //     'password' => 'required|string|max:20',
-        //     'bpsid'    => 'nullable|string|max:9',
-        //     'role'     => 'required',
-        //     'state'    => 'required',
-        //     'photo'    => 'nullable'
-        // ]);
-
         m_pengguna::where('id', $id)->update([
             'nama'           => $request->fullname,
             'username'       => $request->username,
             'email'          => $request->email,
-            'password'       => bcrypt($request->password),
             'bpsid'          => $request->bpsid,
             'role_id'        => $request->role,
-            'kode_satker_id' => null,
-            'aktif'          => $request->state,
-            'foto'           => $request->file('photo') ? $request->file('photo')->store('public/image') : null
+            'kode_satker_id' => $request->satker,
         ]);
+
+        if(!is_null($request->password)) {
+            m_pengguna::where('id', $id)->update([
+                'password' => bcrypt($request->password)
+            ]);
+        }
+
+        if(!is_null($request->file('photo'))) {
+            m_pengguna::where('id', $id)->update([
+                'foto' => $request->file('photo')->store('public/image')
+            ]);
+        }
 
         return redirect()->route('pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Diperbaharui.');
     }

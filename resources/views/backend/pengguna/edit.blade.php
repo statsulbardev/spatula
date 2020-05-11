@@ -52,22 +52,22 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">Role/Hak Akses</label>
+                                <label class="col-sm-3 form-control-label">Satuan Kerja</label>
                                 <div class="col-sm-9">
-                                    <select name="role" class="form-control mb-3">
-                                        <option value="1">Superadmin</option>
-                                        <option value="2">Supervisor</option>
-                                        <option value="3">Pengawas</option>
-                                        <option value="4">Operator</option>
+                                    <select name="satker" class="form-control mb-3">
+                                        @foreach ($satker as $index => $item)
+                                            <option value="{{ $index + 1 }}" {{ ( ($index+1) === $selected_satker) ? 'selected' : '' }}>{{ $item->kode_satker }} - BPS {{ $item->nama }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">Status Keaktifan</label>
+                                <label class="col-sm-3 form-control-label">Role/Hak Akses</label>
                                 <div class="col-sm-9">
-                                    <select name="state" class="form-control mb-3">
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak Aktif</option>
+                                    <select name="role" class="form-control mb-3">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->kode_akses }}" {{ ( $role->kode_akses === $selected_role) ? 'selected' : '' }}>{{ $role->nama_akses }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
