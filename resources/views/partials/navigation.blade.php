@@ -47,9 +47,14 @@
 
     <span class="heading">Pengaturan</span>
     <ul class="list-unstyled">
-        <li class="{{ request()->is('users') || request()->is('users/*') ? 'active' : '' }}">
-            <a href="{{ route('users') }}">
+        <li class="{{ request()->is('pengguna') || request()->is('pengguna/*') ? 'active' : '' }}">
+            <a href="{{ route('pengguna') }}">
                 <i class="icon-user"></i>Pengguna
+            </a>
+        </li>
+        <li class="{{ request()->is('petugas') || request()->is('petugas/*') ? 'active' : '' }}">
+            <a href="{{ route('petugas') }}">
+                <i class=""></i> Petugas
             </a>
         </li>
     </ul>

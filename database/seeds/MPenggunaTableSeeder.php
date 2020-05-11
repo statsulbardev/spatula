@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\User;
+use App\Models\m_pengguna;
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder
+class MPenggunaTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,12 +12,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        m_pengguna::create([
             'nama'     => 'Admin Spatula',
             'username' => 'admin',
             'email'    => 'admin@mail.id',
             'password' => bcrypt('secret'),
-            'role_id'  => '1'
+            'role_id'  => '1',
+            'aktif'    => 1
         ]);
     }
 }

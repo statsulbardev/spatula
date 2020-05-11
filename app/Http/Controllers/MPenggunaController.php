@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\m_pengguna;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class MPenggunaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.user.index', [
-            'users' => User::paginate(10)
+        return view('backend.pengguna.index', [
+            'users' => m_pengguna::paginate(10)
         ]);
     }
 
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.user.create');
+        return view('backend.pengguna.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class UserController extends Controller
             'photo'    => 'nullable'
         ]);
 
-        User::create([
+        m_pengguna::create([
             'nama'           => $request->fullname,
             'username'       => $request->username,
             'email'          => $request->email,
@@ -55,10 +55,11 @@ class UserController extends Controller
             'bpsid'          => $request->bpsid,
             'role_id'        => $request->role,
             'kode_satker_id' => null,
+            'aktif'          => true,
             'foto'           => $request->file('photo') ? $request->file('photo')->store('public/image') : null
         ]);
 
-        return redirect()->route('users')->with('success', 'Informasi ' . $request->nama . ' Telah Ditambahkan.');
+        return redirect()->route('pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Ditambahkan.');
     }
 
     /**
@@ -80,9 +81,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = m_pengguna::findOrFail($id);
 
-        return view('backend.user.edit', [
+        return view('backend.pengguna.edit', [
             'user' => $user
         ]);
     }
@@ -96,17 +97,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'fullname' => 'required|string|max:30',
-            'username' => 'required|string|max:20',
-            'email'    => 'required|email:rfc',
-            'password' => 'required|string|max:20',
-            'bpsid'    => 'nullable|string|max:9',
-            'role'     => 'required',
-            'photo'    => 'nullable'
-        ]);
+        // $request->validate([
+        //     'fullname' => 'required|string|max:30',
+        //     'username' => 'required|string|max:20',
+        //     'email'    => 'required|email:rfc',
+        //     'password' => 'required|string|max:20',
+        //     'bpsid'    => 'nullable|string|max:9',
+        //     'role'     => 'required',
+        //     'state'    => 'required',
+        //     'photo'    => 'nullable'
+        // ]);
 
-        User::where('id', $id)->update([
+        m_pengguna::where('id', $id)->update([
             'nama'           => $request->fullname,
             'username'       => $request->username,
             'email'          => $request->email,
@@ -114,10 +116,11 @@ class UserController extends Controller
             'bpsid'          => $request->bpsid,
             'role_id'        => $request->role,
             'kode_satker_id' => null,
+            'aktif'          => $request->state,
             'foto'           => $request->file('photo') ? $request->file('photo')->store('public/image') : null
         ]);
 
-        return redirect()->route('users')->with('success', 'Informasi ' . $request->nama . ' Telah Diperbaharui.');
+        return redirect()->route('pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Diperbaharui.');
     }
 
     /**
@@ -128,10 +131,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = m_pengguna::findOrFail($id);
 
         $user->delete();
 
-        return redirect()->route('users')->with('success', 'Informasi ' . $user->nama . ' Telah Dihapus.');
+        return redirect()->route('pengguna')->with('success', 'Informasi ' . $user->nama . ' Telah Dihapus.');
     }
 }

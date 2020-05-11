@@ -5,12 +5,19 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class m_pengguna extends Authenticatable
 {
     use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Tabel terkait dengan model
+     *
+     * @var string
+     */
+    protected $table = 'm_pengguna';
+
+    /**
+     * Atribut yang diperlukan untuk mass assignment.
      *
      * @var array
      */
@@ -22,11 +29,12 @@ class User extends Authenticatable
         'bpsid',
         'foto',
         'kode_satker_id',
-        'role_id'
+        'role_id',
+        'aktif'
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * Atribut yang harus disembunyikan untuk array.\
      *
      * @var array
      */

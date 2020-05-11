@@ -1,13 +1,13 @@
 @extends('home')
 
-@section('title', 'Edit Data Pengguna')
+@section('title', 'Tambah Pengguna Baru')
 
 @section('inner-content')
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('users') }}" style="color:#796AEE" class="h2 no-margin-bottom">Pengguna / </a>
-            <span class="h2 no-margin-bottom">{{ $user->nama }}</span>
+            <a href="{{ route('pengguna') }}" style="color:#796AEE" class="h2 no-margin-bottom">Pengguna Aplikasi / </a>
+            <span class="h2 no-margin-bottom">Tambah</span>
         </div>
     </header>
     <section>
@@ -18,25 +18,24 @@
                         <h3 class="h4">Isikan Informasi Pengguna Aplikasi</h3>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('users.update', $user->id) }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('pengguna.simpan') }}">
                             @csrf
-                            @method('PUT')
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Nama Lengkap</label>
                                 <div class="col-sm-9">
-                                    <input name="fullname" type="text" class="form-control" value="{{ $user->nama }}">
+                                    <input name="fullname" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Username</label>
                                 <div class="col-sm-9">
-                                    <input name="username" type="text" class="form-control" value="{{ $user->username }}">
+                                    <input name="username" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" name="email" class="form-control" value="{{ $user->email }}">
+                                    <input type="email" name="email" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -48,7 +47,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">NIP BPS</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="bpsid" class="form-control" value="{{ $user->bpsid }}">
+                                    <input type="text" name="bpsid" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -73,7 +72,7 @@
                             </div>
                             <div class="d-flex">
                                 <span class="w-100"></span>
-                                <button type="submit" class="btn btn-primary">Perbaharui</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>
                     </div>

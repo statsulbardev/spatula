@@ -1,13 +1,13 @@
 @extends('home')
 
-@section('title', 'Tambah Pengguna Baru')
+@section('title', 'Edit Data Pengguna')
 
 @section('inner-content')
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('users') }}" style="color:#796AEE" class="h2 no-margin-bottom">Pengguna / </a>
-            <span class="h2 no-margin-bottom">Tambah</span>
+            <a href="{{ route('pengguna') }}" style="color:#796AEE" class="h2 no-margin-bottom">Pengguna Aplikasi / </a>
+            <span class="h2 no-margin-bottom">{{ $user->nama }}</span>
         </div>
     </header>
     <section>
@@ -18,24 +18,25 @@
                         <h3 class="h4">Isikan Informasi Pengguna Aplikasi</h3>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('users.store') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('pengguna.update', $user->id) }}">
                             @csrf
+                            @method('PUT')
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Nama Lengkap</label>
                                 <div class="col-sm-9">
-                                    <input name="fullname" type="text" class="form-control">
+                                    <input name="fullname" type="text" class="form-control" value="{{ $user->nama }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Username</label>
                                 <div class="col-sm-9">
-                                    <input name="username" type="text" class="form-control">
+                                    <input name="username" type="text" class="form-control" value="{{ $user->username }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" name="email" class="form-control">
+                                    <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -47,7 +48,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">NIP BPS</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="bpsid" class="form-control">
+                                    <input type="text" name="bpsid" class="form-control" value="{{ $user->bpsid }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -62,6 +63,15 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">Status Keaktifan</label>
+                                <div class="col-sm-9">
+                                    <select name="state" class="form-control mb-3">
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Tidak Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="fileInput" class="col-sm-3 form-control-label">
                                     Foto Profil
                                     <sup class="badge badge-rounded bg-primary text-white">opsional</sup>
@@ -72,7 +82,7 @@
                             </div>
                             <div class="d-flex">
                                 <span class="w-100"></span>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="btn btn-primary">Perbaharui</button>
                             </div>
                         </form>
                     </div>
