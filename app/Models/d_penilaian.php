@@ -9,7 +9,27 @@ class d_penilaian extends Model
     protected $table = 'd_penilaian';
 
     protected $fillable = [
+        'nama_konsumen',
+        'kode_layanan',
+        'rating_layanan',
+        'email_konsumen',
+        'no_wa_telepon',
+        'kode_petugas',
+        'rating_petugas',
+        'kode_saran',
+        'saran_pengaduan',
+        'tanggal_notifikasi',
+        'tanggal_kategorisasi',
+        'tanggal_tl_pj_layanan',
+        'text_pj_layanan',
+        'tanggal_tl_pj_pengaduan',
+        'text_pj_pengaduan',
+        'selesai',
+        'tanggal_selesai'
+    ];
 
+    protected $casts = [
+        'kode_saran' => 'array'
     ];
 
     public function petugas()
@@ -24,6 +44,6 @@ class d_penilaian extends Model
 
     public function saran()
     {
-        return $this->belongsTo(m_saran::class, 'kategori_saran');
+        return $this->belongsTo(m_saran::class, 'kode_saran');
     }
 }

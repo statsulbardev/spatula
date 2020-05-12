@@ -1,0 +1,74 @@
+@extends('home')
+
+@section('title', 'Tindak Lanjut - Kirim')
+
+@section('inner-content')
+    <!-- Page Header-->
+    <header class="page-header">
+        <div class="container-fluid">
+            <a href="{{ route('followup.service') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
+            <span class="h2 no-margin-bottom">Kirim Whatsapp atau Email</span>
+        </div>
+    </header>
+    <section>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4>Kirim Whatsapp atau Email</h4>
+                </div>
+                <form method="POST" action="{{ route('followup.sent.store', $customer->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">Nama Konsumen</label>
+                            <div class="col-sm-9">
+                                {{ $customer->nama_konsumen }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">Email</label>
+                            <div class="col-sm-9">
+                                {{ $customer->email ?? '-' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">Nomor Whatsapp / Telepon</label>
+                            <div class="col-sm-9">
+                                {{ $customer->no_wa_telepon ?? '-' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">Saran/Pengaduan/Kritik/Apresiasi</label>
+                            <div class="col-sm-9">
+                                {{ $customer->saran_pengaduan ?? '-' }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">Kategori</label>
+                            <div class="col-sm-9">
+                                @if(!is_null($customer->kode_saran))
+                                    @for($i = 0; $i < count(collect($customer->kode_saran)); $i++)
+                                        {{ ucfirst(collect($customer->kode_saran)->keys()->get($i)) }},
+                                    @endfor
+                                @else
+                                    -
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">Tindak Lanjut PJ Layanan</label>
+                            <div class="col-sm-9">
+                                <textarea name="text_pj_layanan" class="form-control" cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success mr-4" name="button" value="whatsapp">Whatsapp</button>
+                        <button type="submit" class="btn btn-sm btn-primary" name="button" value="email">Email</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+@endsection

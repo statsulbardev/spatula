@@ -24,7 +24,11 @@
         </li>
         <li>
             <a href="#tindakLanjut"
-                @if(request()->is('tindak-lanjut/selesai'))
+                @if(request()->is('tindak-lanjut/selesai') ||
+                    request()->is('tindak-lanjut/selesai/*') ||
+                    request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
+                    request()->is('tindak-lanjut/kategorisasi/*') ||
+                    request()->is('tindak-lanjut/kirim/*'))
                     aria-expanded="true"
                 @else
                     aria-expanded="false"
@@ -32,11 +36,27 @@
                 data-toggle="collapse">
                 <i class="icon-interface-windows"></i>Tindak Lanjut
             </a>
-            <ul id="tindakLanjut" class="collapse list-unstyled {{ request()->is('tindak-lanjut/selesai') ? 'show' : '' }}">
-                <li class="{{ request()->is('tindak-lanjut/selesai') ? 'active' : '' }}">
+            <ul id="tindakLanjut" class="collapse list-unstyled
+                {{
+                    request()->is('tindak-lanjut/selesai') ||
+                    request()->is('tindak-lanjut/selesai/*') ||
+                    request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
+                    request()->is('tindak-lanjut/kategorisasi/*') ||
+                    request()->is('tindak-lanjut/kirim/*') ?
+                    'show' : ''
+                }}
+            ">
+                <li class="{{
+                    request()->is('tindak-lanjut/selesai') ||
+                    request()->is('tindak-lanjut/selesai/*') ? 'active' : '' }}">
                     <a href="{{ route('followup.done') }}">Selesai</a>
                 </li>
-                <li><a href="#">Konfirmasi PJ Layanan</a></li>
+                <li class="{{
+                    request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
+                    request()->is('tindak-lanjut/kategorisasi/*') ||
+                    request()->is('tindak-lanjut/kirim/*') ? 'active' : '' }}">
+                    <a href="{{ route('followup.service') }}">Konfirmasi PJ Layanan</a>
+                </li>
                 <li><a href="#">Konfirmasi PJ Pengaduan</a></li>
             </ul>
         </li>

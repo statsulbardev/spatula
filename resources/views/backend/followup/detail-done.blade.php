@@ -32,19 +32,19 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Email Konsumen</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->email_konsumen }}
+                            {{ $done[0]->email_konsumen ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Nomor Whatsapp / Telepon</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->no_wa_telepon }}
+                            {{ $done[0]->no_wa_telepon ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Nama Petugas</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->petugas->nama }}
+                            {{ $done[0]->petugas->nama ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -62,7 +62,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Jenis Layanan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->layanan->nama_layanan }}
+                            {{ $done[0]->layanan->nama_layanan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -78,57 +78,57 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Saran Pengaduan</label>
+                        <label class="col-sm-3 form-control-label">Kode Saran (bisa lebih dari satu)</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->saran_pengaduan }}
+                            @if(!is_null($done[0]->kode_saran))
+                                @for($i = 0; $i < count(collect($done[0]->kode_saran)); $i++)
+                                    {{ ucfirst(collect($done[0]->kode_saran)->keys()->get($i)) }},
+                                @endfor
+                            @else
+                                -
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Kategori Saran</label>
+                        <label class="col-sm-3 form-control-label">Saran Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->saran->nama_saran }}
+                            {{ $done[0]->saran_pengaduan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Notifikasi</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_notifikasi }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Kode Saran (bisa lebih dari satu)</label>
-                        <div class="col-sm-9">
-                            {{ $done[0]->kode_saran }}
+                            {{ $done[0]->tanggal_notifikasi ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Kategorisasi</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_kategorisasi }}
+                            {{ $done[0]->tanggal_kategorisasi ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Tindak Lanjut PJ Pelayanan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_tl_pj_layanan }}
+                            {{ $done[0]->tanggal_tl_pj_layanan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Komentar PJ Pelayanan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->text_pj_layanan }}
+                            {{ $done[0]->text_pj_layanan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Tindak Lanjut PJ Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_tl_pj_pengaduan }}
+                            {{ $done[0]->tanggal_tl_pj_pengaduan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Komentar PJ Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->text_pj_pengaduan }}
+                            {{ $done[0]->text_pj_pengaduan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
