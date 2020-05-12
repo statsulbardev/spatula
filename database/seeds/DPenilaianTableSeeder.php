@@ -21,7 +21,7 @@ class DPenilaianTableSeeder extends Seeder
             'no_wa_telepon' => '081322356754',
             'kode_petugas' => 2,
             'rating_petugas' => '3',
-            'kode_saran' => '2',
+            'kode_saran' => ['saran' => 1],
             'saran_pengaduan' => 'lorem ipsum',
             'tanggal_notifikasi' => Carbon::now(),
             'tanggal_kategorisasi' => Carbon::now(),
