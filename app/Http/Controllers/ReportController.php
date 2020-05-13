@@ -11,8 +11,8 @@ class ReportController extends Controller
     public function monthly()
     {
         // $result = d_penilaian::select(DB::Raw('YEAR(created_at) as year'))->distinct()->get(); -> untuk mysql
-        $result = d_penilaian::select(DB::Raw('EXTRACT(year from created_at)'))->distinct()->get();
-        $years  = $result->pluck('year');
+        $years = d_penilaian::select(DB::Raw('EXTRACT(year from created_at)'))->distinct()->get();
+        // $years  = $result->pluck('year');
 
         $col3 = collect([]);
 
