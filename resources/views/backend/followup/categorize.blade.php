@@ -1,6 +1,6 @@
 @extends('home')
 
-@section('title', 'Tindak Lanjut - Kategorisasi')
+@section('title', 'Kategorisasi')
 
 @section('inner-content')
     <!-- Page Header-->
@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4>Kategorisasi Saran Pengaduan</h4>
+                    <h4>Informasi Customer</h4>
                 </div>
                 <form method="POST" action="{{ route('followup.categorize.store', $customer->id) }}">
                     @csrf

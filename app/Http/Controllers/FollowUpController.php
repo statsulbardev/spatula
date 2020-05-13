@@ -25,7 +25,7 @@ class FollowUpController extends Controller
     public function service()
     {
         return view('backend.followup.service', [
-            'services' => d_penilaian::where('selesai', 0)->paginate(15)
+            'services' => d_penilaian::where('selesai', 0)->whereNull('tanggal_tl_pj_layanan')->paginate(15)
         ]);
     }
 
@@ -98,5 +98,39 @@ class FollowUpController extends Controller
         ]);
 
         return redirect()->route('followup.service');
+    }
+
+    public function complaint()
+    {
+        return view('backend.followup.complaint', [
+            'complaints' => d_penilaian::where('selesai', 0)->whereNull('tanggal_tl_pj_pengaduan')->paginate(15)
+        ]);
+    }
+
+    public function sentComplaint($id)
+    {
+        $customer = d_penilaian::findOrFail($id);
+
+        return view('backend.followup.sent-complaint', [
+            'customer' => $customer
+        ]);
+    }
+
+    public function sentComplaintStore(Request $request, $id)
+    {
+        $customer = d_penilaian::findOrFail($id);
+
+        $customer->update([
+            'text_pj_pengaduan' => $request->text_pj_pengaduan,
+            'tanggal_tl_pj_pengaduan' => Carbon::now()
+        ]);
+
+        switch($request->button) {
+            case 'whatsapp':
+
+                break;
+            case 'email':
+                break;
+        }
     }
 }

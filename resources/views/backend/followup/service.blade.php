@@ -1,19 +1,19 @@
 @extends('home')
 
-@section('title', 'Tindak Lanjut - Konfirmasi PJ Layanan')
+@section('title', 'Konfirmasi PJ Layanan')
 
 @section('inner-content')
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <h2 class="no-margin-bottom">Tindak Lanjut - Konfirmasi PJ Layanan</h2>
+            <h2 class="no-margin-bottom">Konfirmasi PJ Layanan</h2>
         </div>
     </header>
     <section>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4>Tindak Lanjut - Konfirmasi PJ Layanan</h4>
+                    <h4>Daftar Konfirmasi</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -70,6 +70,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {{ $services->links() }}
                 </div>
             </div>
         </div>

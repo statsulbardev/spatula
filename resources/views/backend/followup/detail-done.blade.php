@@ -1,12 +1,12 @@
 @extends('home')
 
-@section('title', 'Tindak Lanjut - Selesai - Detail')
+@section('title', 'Detail Customer')
 
 @section('inner-content')
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('followup.done') }}" style="color:#796AEE" class="h2 no-margin-bottom">Tindak Lanjut - Selesai / </a>
+            <a href="{{ route('followup.done') }}" style="color:#796AEE" class="h2 no-margin-bottom">Selesai Tindak Lanjut / </a>
             <span class="h2 no-margin-bottom">{{ $done[0]->nama_konsumen }} - {{ $done[0]->layanan->nama_layanan }}</span>
         </div>
     </header>
@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4>Tindak Lanjut Layanan - Selesai</h4>
+                    <h4>Informasi Customer</h4>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">

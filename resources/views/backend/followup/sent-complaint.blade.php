@@ -6,7 +6,7 @@
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('followup.service') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
+            <a href="{{ route('followup.complaint') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Pengaduan / </a>
             <span class="h2 no-margin-bottom">Kirim Whatsapp atau Email</span>
         </div>
     </header>
@@ -57,9 +57,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 form-control-label">Tindak Lanjut PJ Layanan</label>
+                            <label class="col-sm-3 form-control-label">Tindak Lanjut PJ Pengaduan</label>
                             <div class="col-sm-9">
-                                <textarea name="text_pj_layanan" class="form-control" cols="30" rows="5"></textarea>
+                                <textarea name="text_pj_pengaduan" class="form-control" cols="30" rows="5"></textarea>
                             </div>
                         </div>
                     </div>

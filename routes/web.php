@@ -34,4 +34,14 @@ Route::middleware('auth')->group(function() {
     Route::get('tindak-lanjut/kirim/{id}', 'FollowUpController@sentPage')->name('followup.sent');
     Route::put('tindak-lanjut/kirim/{id}', 'FollowUpController@storeSent')->name('followup.sent.store');
     Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@finish')->name('followup.finish');
+
+    // Tindak Lanjut - Konfirmasi PJ Pengaduan
+    Route::get('tindak-lanjut/konfirmasi-pj-pengaduan', 'FollowUpController@complaint')->name('followup.complaint');
+    Route::get('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@sentComplaint')->name('followup.sent.complaint');
+    Route::put('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@sentComplaintStore')->name('followup.sent.complaint.store');
+
+    // Laporan Bulanan Route
+    Route::get('laporan/bulanan', 'ReportController@monthly')->name('report.monthly');
+    Route::get('laporan/harian', 'ReportController@daily')->name('report.daily');
+    Route::post('laporan/harian', 'ReportController@showDailyDetail')->name('report.daily.show');
 });

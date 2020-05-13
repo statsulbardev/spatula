@@ -28,13 +28,15 @@
                     request()->is('tindak-lanjut/selesai/*') ||
                     request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
                     request()->is('tindak-lanjut/kategorisasi/*') ||
-                    request()->is('tindak-lanjut/kirim/*'))
+                    request()->is('tindak-lanjut/kirim/*') ||
+                    request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
+                    request()->is('tindak-lanjut/kirim-pengaduan/*'))
                     aria-expanded="true"
                 @else
                     aria-expanded="false"
                 @endif
                 data-toggle="collapse">
-                <i class="icon-interface-windows"></i>Tindak Lanjut
+                <i class="icon-website"></i>Tindak Lanjut
             </a>
             <ul id="tindakLanjut" class="collapse list-unstyled
                 {{
@@ -42,7 +44,9 @@
                     request()->is('tindak-lanjut/selesai/*') ||
                     request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
                     request()->is('tindak-lanjut/kategorisasi/*') ||
-                    request()->is('tindak-lanjut/kirim/*') ?
+                    request()->is('tindak-lanjut/kirim/*') ||
+                    request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
+                    request()->is('tindak-lanjut/kirim-pengaduan/*') ?
                     'show' : ''
                 }}
             ">
@@ -57,16 +61,36 @@
                     request()->is('tindak-lanjut/kirim/*') ? 'active' : '' }}">
                     <a href="{{ route('followup.service') }}">Konfirmasi PJ Layanan</a>
                 </li>
-                <li><a href="#">Konfirmasi PJ Pengaduan</a></li>
+                <li class="{{
+                    request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
+                    request()->is('tindak-lanjut/kirim-pengaduan/*') ? 'active' : '' }}">
+                    <a href="{{ route('followup.complaint') }}">Konfirmasi PJ Pengaduan</a>
+                </li>
             </ul>
         </li>
         <li>
-            <a href="#laporan" aria-expanded="false" data-toggle="collapse">
-                <i class="icon-interface-windows"></i>Laporan
+            <a href="#laporan"
+                @if(request()->is('laporan/bulanan') ||
+                    request()->is('laporan/harian'))
+                    aria-expanded="true"
+                @else
+                    aria-expanded="false"
+                @endif
+                data-toggle="collapse">
+                <i class="icon-form"></i>Laporan
             </a>
-            <ul id="laporan" class="collapse list-unstyled ">
-                <li><a href="#">Bulanan</a></li>
-                <li><a href="#">Harian</a></li>
+            <ul id="laporan" class="collapse list-unstyled {{
+                    request()->is('laporan/bulanan') ||
+                    request()->is('laporan/harian') ?
+                    'show' : ''
+                }}
+            ">
+                <li class="{{ request()->is('laporan/bulanan') ? 'active' : '' }}">
+                    <a href="{{ route('report.monthly') }}">Bulanan</a>
+                </li>
+                <li class="{{ request()->is('laporan/harian') ? 'active' : '' }}">
+                    <a href="{{ route('report.daily') }}">Harian</a>
+                </li>
             </ul>
         </li>
     </ul>
