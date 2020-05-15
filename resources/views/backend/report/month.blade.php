@@ -38,17 +38,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($col3->count() > 0)
-                                                    @foreach($col3 as $index => $data)
+                                                @if($table1->count() > 0)
+                                                    @foreach($table1 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->nama }}</a>
+                                                                <a class="text-dark">
+                                                                    @include('components.month', ['month' => $data->created_at->format('m')])
+                                                                </a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                                <a class="text-dark">{{ $data->petugas->nama }}</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                                <a class="text-dark"></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -75,8 +77,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($col3->count() > 0)
-                                                    @foreach($col3 as $index => $data)
+                                                @if($table2->count() > 0)
+                                                    @foreach($table2 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
                                                                 <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->nama }}</a>
@@ -114,8 +116,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($col3->count() > 0)
-                                                    @foreach($col3 as $index => $data)
+                                                @if($table3->count() > 0)
+                                                    @foreach($table3 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
                                                                 <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->nama }}</a>

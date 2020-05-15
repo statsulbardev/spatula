@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 form-control-label">Email</label>
                             <div class="col-sm-9">
-                                {{ $customer->email ?? '-' }}
+                                {{ $customer->email_konsumen ?? '-' }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -48,8 +48,8 @@
                             <label class="col-sm-3 form-control-label">Kategori</label>
                             <div class="col-sm-9">
                                 @if(!is_null($customer->kode_saran))
-                                    @for($i = 0; $i < count(collect($customer->kode_saran)); $i++)
-                                        {{ ucfirst(collect($customer->kode_saran)->keys()->get($i)) }},
+                                    @for($i = 0; $i < count($customer->kode_saran); $i++)
+                                        {{ \App\Models\m_saran::where('id', collect($customer->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                     @endfor
                                 @else
                                     -
@@ -64,8 +64,17 @@
                         </div>
                     </div>
                     <div class="card-footer bg-light d-flex justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-success mr-4" name="button" value="whatsapp">Whatsapp</button>
-                        <button type="submit" class="btn btn-sm btn-primary" name="button" value="email">Email</button>
+                        @if(!is_null($customer->no_wa_telepon))
+                            <button type="submit" class="btn btn-sm btn-success mr-4" name="button" value="whatsapp">
+                                <i class="icon-paper-airplane"></i> Whatsapp
+                            </button>
+                        @endif
+                        @if(!is_null($customer->email_konsumen))
+                            <button type="submit" class="btn btn-sm btn-warning mr-4" name="button" value="email">
+                                <i class="icon-mail"></i> Email
+                            </button>
+                        @endif
+                        <button type="submit" class="btn btn-sm btn-primary" name="button" value="simpan">Simpan</button>
                     </div>
                 </form>
             </div>

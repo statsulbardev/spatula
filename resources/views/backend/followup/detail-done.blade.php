@@ -81,8 +81,8 @@
                         <label class="col-sm-3 form-control-label">Kode Saran (bisa lebih dari satu)</label>
                         <div class="col-sm-9">
                             @if(!is_null($done[0]->kode_saran))
-                                @for($i = 0; $i < count(collect($done[0]->kode_saran)); $i++)
-                                    {{ ucfirst(collect($done[0]->kode_saran)->keys()->get($i)) }},
+                                @for($i = 0; $i < count($done[0]->kode_saran); $i++)
+                                    {{ \App\Models\m_saran::where('id', collect($done[0]->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                 @endfor
                             @else
                                 -

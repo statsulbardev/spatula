@@ -17,6 +17,7 @@ class d_penilaian extends Model
         'kode_petugas',
         'rating_petugas',
         'kode_saran',
+        'is_pengaduan',
         'saran_pengaduan',
         'tanggal_notifikasi',
         'tanggal_kategorisasi',

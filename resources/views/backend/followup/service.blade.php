@@ -30,6 +30,9 @@
                             <tbody>
                                 @if($services->count() > 0)
                                     @foreach ($services as $item)
+                                        @if($item->kode_saran === [2])
+                                            @continue
+                                        @endif
                                         <tr>
                                             <td class="align-middle">
                                                 <a>{{ $item->created_at }}</a>
@@ -43,8 +46,8 @@
                                             <td class="align-middle">
                                                 <a>
                                                     @if(!is_null($item->kode_saran))
-                                                        @for($i = 0; $i < count(collect($item->kode_saran)); $i++)
-                                                            {{ ucfirst(collect($item->kode_saran)->keys()->get($i)) }},
+                                                        @for($i = 0; $i < count($item->kode_saran); $i++)
+                                                            {{ \App\Models\m_saran::where('id', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                                         @endfor
                                                     @else
                                                         -

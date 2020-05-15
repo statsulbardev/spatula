@@ -23,6 +23,7 @@ class CreateDPenilaianTable extends Migration
             $table->bigInteger('kode_petugas')->nullable();
             $table->char('rating_petugas', 1)->nullable();
             $table->json('kode_saran')->nullable();
+            $table->tinyInteger('is_pengaduan')->nullable();
             $table->text('saran_pengaduan')->nullable();
             $table->dateTime('tanggal_notifikasi')->nullable();
             $table->dateTime('tanggal_kategorisasi')->nullable();

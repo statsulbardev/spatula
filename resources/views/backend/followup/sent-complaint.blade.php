@@ -16,7 +16,7 @@
                 <div class="card-header d-flex align-items-center">
                     <h4>Informasi Customer</h4>
                 </div>
-                <form method="POST" action="{{ route('followup.sent.store', $customer->id) }}">
+                <form method="POST" action="{{ route('followup.sent.complaint.store', $customer->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -48,8 +48,8 @@
                             <label class="col-sm-3 form-control-label">Kategori</label>
                             <div class="col-sm-9">
                                 @if(!is_null($customer->kode_saran))
-                                    @for($i = 0; $i < count(collect($customer->kode_saran)); $i++)
-                                        {{ ucfirst(collect($customer->kode_saran)->keys()->get($i)) }},
+                                    @for($i = 0; $i < count($customer->kode_saran); $i++)
+                                        {{ \App\Models\m_saran::where('id', collect($customer->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                     @endfor
                                 @else
                                     -
@@ -64,8 +64,12 @@
                         </div>
                     </div>
                     <div class="card-footer bg-light d-flex justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-success mr-4" name="button" value="whatsapp">Whatsapp</button>
-                        <button type="submit" class="btn btn-sm btn-primary" name="button" value="email">Email</button>
+                        <button type="submit" class="btn btn-sm btn-success mr-4" name="button" value="whatsapp">
+                            <i class="icon-paper-airplane"></i> Whatsapp
+                        </button>
+                        <button type="submit" class="btn btn-sm btn-warning" name="button" value="email">
+                            <i class="icon-mail"></i> Email
+                        </button>
                     </div>
                 </form>
             </div>

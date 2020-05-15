@@ -34,22 +34,22 @@
                                     @foreach ($complaints as $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->created_at }}</a>
+                                                <a>{{ $item->created_at }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->nama_konsumen ?? '-' }}</a>
+                                                <a>{{ $item->nama_konsumen ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->no_wa_telepon ?? '-'}}</a>
+                                                <a>{{ $item->no_wa_telepon ?? '-'}}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->saran_pengaduan ?? '-' }}</a>
+                                                <a>{{ $item->saran_pengaduan ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">
+                                                <a>
                                                     @if(!is_null($item->kode_saran))
-                                                        @for($i = 0; $i < count(collect($item->kode_saran)); $i++)
-                                                            {{ ucfirst(collect($item->kode_saran)->keys()->get($i)) }},
+                                                        @for($i = 0; $i < count($item->kode_saran); $i++)
+                                                            {{ \App\Models\m_saran::where('id', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                                         @endfor
                                                     @else
                                                         -
@@ -57,7 +57,7 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->tanggal_kategorisasi ?? '-'}}</a>
+                                                <a>{{ $item->tanggal_kategorisasi ?? '-'}}</a>
                                             </td>
                                             <td class="align-middle d-flex justify-content-around">
                                                 <a class="text-white btn btn-sm btn-info" href="{{ route('followup.sent.complaint', $item->id) }}">Kirim</a>
