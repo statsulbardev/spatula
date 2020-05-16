@@ -47,10 +47,7 @@ class DPenilaianTableSeeder extends Seeder
             'tanggal_kategorisasi' => Carbon::now(),
             'tanggal_tl_pj_layanan' => Carbon::now(),
             'text_pj_layanan' => 'lorem ipsum',
-            'tanggal_tl_pj_pengaduan' => Carbon::now(),
-            'text_pj_pengaduan' => 'lorem ipsum',
-            'selesai' => 1,
-            'tanggal_selesai' => Carbon::now()
+            'selesai' => 0,
         ]);
 
         d_penilaian::create([
@@ -58,6 +55,7 @@ class DPenilaianTableSeeder extends Seeder
             'kode_layanan' => 1,
             'rating_layanan' => '3',
             'selesai' => 0,
+            'email_konsumen' => 'slitaz.ipul@gmail.com',
         ]);
     }
 }
