@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Console\Commands\ModelMakeCommand;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        date_default_timezone_set('Asia/Makassar');
+        Schema::defaultStringLength(191);
     }
 }

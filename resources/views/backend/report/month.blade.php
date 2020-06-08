@@ -35,22 +35,24 @@
                                                     <th>Bulan</th>
                                                     <th>Nama Petugas</th>
                                                     <th>Rating Rata-Rata</th>
+                                                    <th>Jumlah Terlayani</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($table1->count() > 0)
-                                                    @foreach($table1 as $index => $data)
+                                                @if($query_1)
+                                                    @foreach($query_1 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
-                                                                <a class="text-dark">
-                                                                    @include('components.month', ['month' => $data->created_at->format('m')])
-                                                                </a>
+                                                                <a class="text-dark">@include('components.month', ['month' => $data->bulan])</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark">{{ $data->petugas->nama }}</a>
+                                                                <a class="text-dark">{{ $data->nama }}</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark"></a>
+                                                                <a class="text-dark">{{ number_format($data->rerata, 2) }}</a>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <a class="text-dark">{{ $data->jumlah_terlayani }}</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -77,17 +79,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($table2->count() > 0)
-                                                    @foreach($table2 as $index => $data)
+                                                @if($query_2_3)
+                                                    @foreach($query_2_3 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->nama }}</a>
+                                                                <a class="text-dark">@include('components.month', ['month' => $data->bulan])</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                                <a class="text-dark">{{ $data->nama_layanan }}</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                                <a class="text-dark">{{ $data->jumlah_terlayani }}</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -116,17 +118,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($table3->count() > 0)
-                                                    @foreach($table3 as $index => $data)
+                                                @if($query_2_3)
+                                                    @foreach($query_2_3 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->nama }}</a>
+                                                                <a class="text-dark">@include('components.month', ['month' => $data->bulan])</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                                <a class="text-dark">{{ $data->nama_layanan }}</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                                <a class="text-dark">{{ number_format($data->rerata, 2) }}</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
