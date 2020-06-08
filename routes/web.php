@@ -2,12 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::redirect('/', 'login');
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
 Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('penilaian/form-pertama', 'FrontEndController@firstForm')->name('form.first');
+Route::post('form-pertama', 'FrontEndController@storeFirstForm')->name('form.first.store');
+
 Route::middleware('auth')->group(function() {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
     // Pengguna Route
     Route::get('pengguna', 'MPenggunaController@index')->name('pengguna');
