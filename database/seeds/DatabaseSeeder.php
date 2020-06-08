@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             MLayananTableSeeder::class,
             MSaranTableSeeder::class,
             MAksesTableSeeder::class,
-            DPenilaianTableSeeder::class,
         ]);
     }
 }

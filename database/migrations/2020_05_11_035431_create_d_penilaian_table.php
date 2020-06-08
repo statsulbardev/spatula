@@ -16,12 +16,12 @@ class CreateDPenilaianTable extends Migration
         Schema::create('d_penilaian', function (Blueprint $table) {
             $table->id();
             $table->string('nama_konsumen', 40);
-            $table->bigInteger('kode_layanan');
-            $table->char('rating_layanan', 1);
             $table->string('email_konsumen', 40)->unique()->nullable();
-            $table->string('no_wa_telepon', 15)->nullable();
+            $table->string('no_wa_telepon', 15);
             $table->bigInteger('kode_petugas')->nullable();
             $table->char('rating_petugas', 1)->nullable();
+            $table->bigInteger('kode_layanan')->nullable();
+            $table->char('rating_layanan', 1)->nullable();
             $table->json('kode_saran')->nullable();
             $table->tinyInteger('is_pengaduan')->nullable();
             $table->text('saran_pengaduan')->nullable();

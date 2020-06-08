@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\d_penilaian;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
@@ -12,8 +13,7 @@ class FrontEndController extends Controller
     public function firstForm()
     {
         return view('frontend.first-form', [
-            'petugas'   => m_pengguna::get(['id', 'nama']),
-            'j_layanan' => m_layanan::get(['id', 'nama_layanan'])
+            'petugas'   => m_pengguna::get(['id', 'nama'])
         ]);
     }
 
@@ -38,18 +38,38 @@ class FrontEndController extends Controller
             'email_konsumen'  => $request->email_konsumen,
             'no_wa_telepon'   => $request->no_wa_telepon,
             'kode_petugas'    => $request->kode_petugas,
-            'rating_petugas'  => $request->rating_layanan,
-            'kode_layanan'    => $request->kode_layanan,
-            'rating_layanan'  => $request->rating_layanan,
-            'saran_pengaduan' => $request->saran_pengaduan
+            'rating_petugas'  => $request->rating_petugas,
+            'saran_pengaduan' => $request->saran_pengaduan,
+            'selesai'         => false,
+            'created_at'      => Carbon::now(),
+            'updated_at'      => Carbon::now()
         ]);
 
         return redirect()->back();
     }
 
-    public function store(Request $request)
+    public function storeSecondForm(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'nama_konsumen'   => 'required|string',
+            'email_konsumen'  => 'nullable|email',
+            'no_wa_telepon'   => 'nullable',
+            'saran_pengaduan' => 'required|string'
+        ]);
+
+        d_penilaian::insert([
+            'nama_konsumen'   => $request->nama_konsumen,
+            'email_konsumen'  => $request->email_konsumen,
+            'no_wa_telepon'   => $request->no_wa_telepon,
+            'kode_layanan'    => $request->kode_layanan,
+            'rating_layanan'  => $request->rating_layanan,
+            'saran_pengaduan' => $request->saran_pengaduan,
+            'selesai'         => false,
+            'created_at'      => Carbon::now(),
+            'updated_at'      => Carbon::now()
+        ]);
+
+        return redirect()->back();
     }
 
     /**

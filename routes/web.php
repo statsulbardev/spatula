@@ -8,8 +8,11 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middle
 Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('penilaian/form-pertama', 'FrontEndController@firstForm')->name('form.first');
-Route::post('form-pertama', 'FrontEndController@storeFirstForm')->name('form.first.store');
+Route::get('penilaian-petugas', 'FrontEndController@firstForm')->name('form.first');
+Route::post('penilaian-petugas', 'FrontEndController@storeFirstForm')->name('form.first.store');
+
+Route::get('penilaian-layanan', 'FrontEndController@secondForm')->name('form.second');
+Route::post('penilaian-layanan', 'FrontEndController@storeSecondForm')->name('form.second.store');
 
 Route::middleware('auth')->group(function() {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
