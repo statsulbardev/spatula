@@ -25,8 +25,8 @@ class ReportController extends Controller
          * $years  = $result->pluck('date_part');
          */
 
-        $result = d_penilaian::select(DB::Raw('EXTRACT(year from created_at)'))->distinct()->get();
-        $years  = $result->pluck('date_part');
+        $result = d_penilaian::select(DB::Raw('YEAR(created_at) as year'))->distinct()->get();
+        $years  = $result->pluck('year');
 
         // Rating Petugas
         $query_1 = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama , AVG(rating_petugas) as rerata, COUNT(rating_petugas) as jumlah_terlayani
@@ -57,8 +57,8 @@ class ReportController extends Controller
          * $years  = $result->pluck('date_part');
          */
 
-        $result = d_penilaian::select(DB::Raw('EXTRACT(year from created_at)'))->distinct()->get();
-        $years  = $result->pluck('date_part');
+        $result = d_penilaian::select(DB::Raw('YEAR(created_at) as year'))->distinct()->get();
+        $years  = $result->pluck('year');
 
         $data   = d_penilaian::where('selesai', 1)->orderBy('created_at', 'desc')->paginate(15);
 
@@ -81,8 +81,8 @@ class ReportController extends Controller
          * $years  = $result->pluck('date_part');
          */
 
-        $result = d_penilaian::select(DB::Raw('EXTRACT(year from created_at)'))->distinct()->get();
-        $years  = $result->pluck('date_part');
+        $result = d_penilaian::select(DB::Raw('YEAR(created_at) as year'))->distinct()->get();
+        $years  = $result->pluck('year');
 
         $data = d_penilaian::whereYear('created_at', '=', $request->tahun)
                 ->whereMonth('created_at', '=', $request->bulan)
