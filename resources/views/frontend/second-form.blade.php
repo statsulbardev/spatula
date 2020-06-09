@@ -2,6 +2,10 @@
 
 @section('title', 'Penilaian Layanan')
 
+@section('styles')
+<link href="{{ asset('vendor/star-rating/star-rating.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 <div class="page">
     <div class="page-content d-flex align-items-stretch">
@@ -54,12 +58,12 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 form-control-label">Rating Layanan</label>
                                     <div class="col-sm-9">
-                                        <select name="rating_petugas" class="form-control mb-3">
-                                            <option value="1">Rating 1</option>
-                                            <option value="2">Rating 2</option>
-                                            <option value="3">Rating 3</option>
-                                            <option value="4">Rating 4</option>
-                                            <option value="5">Rating 5</option>
+                                        <select class="star-rating" name="rating_layanan" class="form-control mb-3">
+                                            <option value="1">Sangat Tidak Puas</option>
+                                            <option value="2">Tidak Puas</option>
+                                            <option value="3">Cukup Puas</option>
+                                            <option value="4">Puas</option>
+                                            <option value="5">Sangat Puas</option>
                                         </select>
                                     </div>
                                 </div>
@@ -77,10 +81,12 @@
                                 </div>
                                 <div class="line"></div>
                                 <div class="form-group row">
-                                <div class="col-sm-4 offset-sm-3">
-                                    {{-- <button type="submit" class="btn btn-secondary">Batal</button> --}}
-                                    <button type="submit" class="btn btn-primary">Kirim</button>
-                                </div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-block btn-primary">Kirim</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -91,3 +97,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('vendor/star-rating/star-rating.min.js') }}"></script>
+<script>
+    var starRatingControl = new StarRating('.star-rating', {
+        maxStars: 5,
+        showText: true,
+    });
+</script>
+@endpush
