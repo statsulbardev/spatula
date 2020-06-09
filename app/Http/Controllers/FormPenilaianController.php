@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\d_penilaian;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;
+use App\Models\m_satker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class FrontEndController extends Controller
+class FormPenilaianController extends Controller
 {
-    public function firstForm()
+    public function petugasForm($satker, $layanan = null)
     {
+        $kantor  = m_satker::where('kode_satker', $satker)->get();
+
+
+
         return view('frontend.first-form', [
-            'petugas'   => m_pengguna::get(['id', 'nama']),
+            'satker'    => m_satker::where('kode_satker', $satker)->get(['nama']),
+            'petugas'   => m_pengguna::where()get(['id', 'nama']),
             'j_layanan' => m_layanan::get(['id', 'nama_layanan'])
         ]);
     }

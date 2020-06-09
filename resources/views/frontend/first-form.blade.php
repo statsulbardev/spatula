@@ -42,7 +42,7 @@
                                 <div class="line"></div>
                                 <div class="form-group row text-center mb-4">
                                     <h1 class="col-lg-12 form-control-label">
-                                        Bagaimana penilaian Anda terhadap petugas layanan di Pelayanan Statistik Terpadu BPS Provinsi Sulawesi Barat:
+                                        Bagaimana penilaian Anda terhadap petugas layanan di Pelayanan Statistik Terpadu $satker:
                                     </h1>
                                 </div>
                                 <div class="form-group row">
@@ -70,7 +70,7 @@
                                 <div class="line"></div>
                                 <div class="form-group row text-center mb-4">
                                     <h1 class="col-lg-12 form-control-label">
-                                        Bagaimana penilaian Anda terhadap layanan di BPS Provinsi Sulawesi Barat:
+                                        Bagaimana penilaian Anda terhadap layanan di $satker:
                                     </h1>
                                 </div>
                                 <div class="form-group row">
@@ -98,7 +98,7 @@
                                 <div class="line"></div>
                                 <div class="form-group row text-center mb-4">
                                     <h1 class="col-lg-12 form-control-label">
-                                        Berikan saran/pengaduan/kritik/apresiasi untuk layanan di BPS Provinsi Sulawesi Barat:
+                                        Berikan saran/pengaduan/kritik/apresiasi untuk layanan di $satker:
                                     </h1>
                                 </div>
                                 <div class="form-group row">

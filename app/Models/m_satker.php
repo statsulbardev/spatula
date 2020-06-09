@@ -23,4 +23,9 @@ class m_satker extends Model
         'nama',
         'level',
     ];
+
+    public function pengguna()
+    {
+        return $this->hasMany(m_pengguna::class, 'kode_satker_id', 'id');
+    }
 }
