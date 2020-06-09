@@ -13,7 +13,8 @@ class FrontEndController extends Controller
     public function firstForm()
     {
         return view('frontend.first-form', [
-            'petugas'   => m_pengguna::get(['id', 'nama'])
+            'petugas'   => m_pengguna::get(['id', 'nama']),
+            'j_layanan' => m_layanan::get(['id', 'nama_layanan'])
         ]);
     }
 
@@ -39,6 +40,8 @@ class FrontEndController extends Controller
             'no_wa_telepon'   => $request->no_wa_telepon,
             'kode_petugas'    => $request->kode_petugas,
             'rating_petugas'  => $request->rating_petugas,
+            'rating_layanan'  => $request->rating_layanan,
+            'saran_pengaduan' => $request->saran_pengaduan,
             'saran_pengaduan' => $request->saran_pengaduan,
             'selesai'         => false,
             'created_at'      => Carbon::now(),
