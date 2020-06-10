@@ -29,6 +29,7 @@
 </head>
 <body>
     @yield('content')
+
     <!-- JavaScript files-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"></script>
@@ -38,6 +39,7 @@
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/charts-home.js') }}"></script>
 
+    @include('sweetalert::alert')
     @stack('scripts')
 </body>
 </html>
