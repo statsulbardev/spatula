@@ -15,7 +15,7 @@ class MPetugasController extends Controller
     public function index()
     {
         return view('backend.petugas.index', [
-            'operators' => m_pengguna::where('role_id', 6)->paginate(15)
+            'operators' => m_pengguna::where('role_id', 7)->paginate(15)
         ]);
     }
 
