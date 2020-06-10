@@ -25,19 +25,11 @@ class MPenggunaTableSeeder extends Seeder
             'nama'           => 'Irnanda Mas Putri',
             'username'       => 'uti',
             'email'          => 'uti@mail.id',
+            'bpsid'          => '340058302',
             'password'       => bcrypt('secret'),
             'kode_satker_id' => 1,
-            'role_id'        => 6,
+            'role_id'        => 7,
             'aktif'          => 1
-        ]);
-        m_pengguna::create([
-            'nama'           => 'Yulia Dwi',
-            'username'       => 'yulia',
-            'email'          => 'yulia@mail.id',
-            'password'       => bcrypt('secret'),
-            'kode_satker_id' => 1,
-            'role_id'        => 6,
-            'aktif'          => 0
         ]);
     }
 }

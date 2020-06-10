@@ -18,22 +18,26 @@ class MAksesTableSeeder extends Seeder
         ]);
         m_akses::create([
             'kode_akses' => 2,
-            'nama_akses' => 'Pimpinan'
+            'nama_akses' => 'Admin'
         ]);
         m_akses::create([
             'kode_akses' => 3,
-            'nama_akses' => 'PJ Layanan'
+            'nama_akses' => 'Pimpinan'
         ]);
         m_akses::create([
             'kode_akses' => 4,
-            'nama_akses' => 'PJ Pengaduan'
+            'nama_akses' => 'PJ Layanan'
         ]);
         m_akses::create([
             'kode_akses' => 5,
-            'nama_akses' => 'Tim ZI Area Pengawasan'
+            'nama_akses' => 'PJ Pengaduan'
         ]);
         m_akses::create([
             'kode_akses' => 6,
+            'nama_akses' => 'Tim ZI Area Pengawasan'
+        ]);
+        m_akses::create([
+            'kode_akses' => 7,
             'nama_akses' => 'Petugas/Operator'
         ]);
     }
