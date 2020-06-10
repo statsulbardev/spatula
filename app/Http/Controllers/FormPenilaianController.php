@@ -13,25 +13,33 @@ class FormPenilaianController extends Controller
 {
     public function petugasForm($satker, $layanan = null)
     {
-        $kantor  = m_satker::where('kode_satker', $satker)->get();
+        $kantor    = m_satker::where('kode_satker', $satker)->first();
 
+        $petugas   = $kantor->pengguna()->where('role_id', 7)->where('aktif', 1)->get();
 
+        if($layanan < 1 || $layanan > 6) $layanan = null;
 
-        return view('frontend.first-form', [
-            'satker'    => m_satker::where('kode_satker', $satker)->get(['nama']),
-            'petugas'   => m_pengguna::where()get(['id', 'nama']),
-            'j_layanan' => m_layanan::get(['id', 'nama_layanan'])
-        ]);
+        !is_null($layanan) ?
+            $j_layanan = m_layanan::where('kode_form', '1')->where('kode_layanan', $layanan)->get(['id', 'nama_layanan']) :
+            $j_layanan = m_layanan::where('kode_form', '1')->get(['id', 'nama_layanan']);
+
+        return view('frontend.first-form', compact('kantor', 'petugas', 'j_layanan'));
     }
 
-    public function secondForm()
+    public function layananForm($satker, $layanan = null)
     {
-        return view('frontend.second-form', [
-            'j_layanan' => m_layanan::get(['id', 'nama_layanan'])
-        ]);
+        $kantor = m_satker::where('kode_satker', $satker)->first();
+
+        if($layanan < 7 || $layanan > 10) $layanan = null;
+
+        !is_null($layanan) ?
+            $j_layanan = m_layanan::where('kode_form', '2')->where('kode_layanan', $layanan)->get(['id', 'nama_layanan']) :
+            $j_layanan = m_layanan::where('kode_form', '2')->get(['id', 'nama_layanan']);
+
+        return view('frontend.second-form', compact('kantor', 'j_layanan'));
     }
 
-    public function storeFirstForm(Request $request)
+    public function storePetugasForm(Request $request, $satker)
     {
         $request->validate([
             'nama_konsumen'   => 'required|string',
@@ -46,18 +54,24 @@ class FormPenilaianController extends Controller
             'no_wa_telepon'   => $request->no_wa_telepon,
             'kode_petugas'    => $request->kode_petugas,
             'rating_petugas'  => $request->rating_petugas,
+            'kode_layanan'    => $request->kode_layanan,
             'rating_layanan'  => $request->rating_layanan,
             'saran_pengaduan' => $request->saran_pengaduan,
-            'saran_pengaduan' => $request->saran_pengaduan,
+            'kode_satker_id'  => $satker,
             'selesai'         => false,
             'created_at'      => Carbon::now(),
             'updated_at'      => Carbon::now()
         ]);
 
+        if(!is_null($request->email_konsumen)) {}
+            // kirim email
+
+        alert()->success('Info','Terima Kasih Atas Partisipasi Anda.');
+
         return redirect()->back();
     }
 
-    public function storeSecondForm(Request $request)
+    public function storeLayananForm(Request $request, $satker)
     {
         $request->validate([
             'nama_konsumen'   => 'required|string',
@@ -73,56 +87,16 @@ class FormPenilaianController extends Controller
             'kode_layanan'    => $request->kode_layanan,
             'rating_layanan'  => $request->rating_layanan,
             'saran_pengaduan' => $request->saran_pengaduan,
+            'kode_satker_id'  => $satker,
             'selesai'         => false,
             'created_at'      => Carbon::now(),
             'updated_at'      => Carbon::now()
         ]);
 
+        alert()->success('Info','Terima Kasih Atas Partisipasi Anda.');
+
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

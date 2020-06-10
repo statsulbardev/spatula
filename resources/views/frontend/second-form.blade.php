@@ -17,7 +17,7 @@
                             <h3 class="h4">Mohon isi data diri Anda:</h3>
                         </div>
                         <div class="card-body">
-                            <form class="form-horizontal" action="{{ route('form.second.store') }}" method="POST">
+                            <form class="form-horizontal" action="{{ route('penilaian.layanan.store', ['satker' => $kantor->kode_satker ]) }}" method="POST">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-sm-3 form-control-label">Nama Lengkap <sup class="border border-danger rounded p-1 text-danger">Wajib</sup></label>
@@ -42,13 +42,13 @@
                                 <div class="line"></div>
                                 <div class="form-group row text-center mb-4">
                                     <h1 class="col-lg-12 form-control-label">
-                                        Bagaimana penilaian Anda terhadap layanan di BPS Provinsi Sulawesi Barat:
+                                        Bagaimana penilaian Anda terhadap layanan di BPS {{ $kantor->nama }}:
                                     </h1>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 form-control-label">Jenis Layanan</label>
                                     <div class="col-sm-9">
-                                        <select name="kode_petugas" class="form-control mb-3">
+                                        <select name="kode_layanan" class="form-control mb-3">
                                             @foreach($j_layanan as $layanan)
                                                 <option value="{{ $layanan->id }}">{{ $layanan->nama_layanan }}</option>
                                             @endforeach
@@ -70,7 +70,7 @@
                                 <div class="line"></div>
                                 <div class="form-group row text-center mb-4">
                                     <h1 class="col-lg-12 form-control-label">
-                                        Berikan saran/pengaduan/kritik/apresiasi untuk layanan di BPS Provinsi Sulawesi Barat:
+                                        Berikan saran/pengaduan/kritik/apresiasi untuk layanan di BPS {{ $kantor->nama }}:
                                     </h1>
                                 </div>
                                 <div class="form-group row">
