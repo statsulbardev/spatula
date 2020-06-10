@@ -31,6 +31,7 @@
                                     <th>Email</th>
                                     <th>NIP BPS</th>
                                     <th>Role</th>
+                                    <th>Satuan Kerja</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -56,6 +57,11 @@
                                             </td>
                                             <td class="align-middle">
                                                 <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->role->nama_akses }}</a>
+                                            </td>
+                                            <td class="align-middle">
+                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">
+                                                    BPS {{ $user->satker()->first()->nama }}
+                                                </a>
                                             </td>
                                             <td class="align-middle">
                                                 <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">
