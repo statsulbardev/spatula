@@ -9,15 +9,12 @@ Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middl
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::prefix('penilaian')->name('penilaian.')->group(function() {
-    Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas.all');
+    Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');
+    Route::get('{satker}/layanan/{layanan?}', 'FormPenilaianController@layananForm')->name('layanan');
+
+    Route::post('petugas/{satker}', 'FormPenilaianController@storePetugasForm')->name('petugas.store');
+    Route::post('layanan/{satker}', 'FormPenilaianController@storeLayananForm')->name('layanan.store');
 });
-
-
-Route::get('penilaian-petugas', 'FormPenilaianController@firstForm')->name('form.first');
-Route::post('penilaian-petugas', 'FormPenilaianController@storeFirstForm')->name('form.first.store');
-
-Route::get('penilaian-layanan', 'FormPenilaianController@secondForm')->name('form.second');
-Route::post('penilaian-layanan', 'FormPenilaianController@storeSecondForm')->name('form.second.store');
 
 Route::middleware('auth')->group(function() {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
