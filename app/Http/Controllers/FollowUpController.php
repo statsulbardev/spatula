@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\d_penilaian;
 use App\Mail\SendMail;
+use App\Models\m_pengguna;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class FollowUpController extends Controller
 {
@@ -26,7 +28,9 @@ class FollowUpController extends Controller
 
     public function service()
     {
-        $data = d_penilaian::where('selesai', 0)->paginate(15);
+        $kodeSatker = $this->getSatkerKode();
+
+        $data = d_penilaian::where('kode_satker_id', $kodeSatker->kode_satker)->where('selesai', 0)->paginate(15);
 
         return view('backend.followup.service', [
             'services' => $data
@@ -129,7 +133,10 @@ class FollowUpController extends Controller
 
     public function complaint()
     {
+        $kodeSatker = $this->getSatkerKode();
+
         $data = d_penilaian::where('selesai', 0)
+                ->where('kode_satker_id', $kodeSatker->kode_satker)
                 ->where('is_pengaduan', 1)
                 ->paginate(15);
 
@@ -195,5 +202,14 @@ class FollowUpController extends Controller
         }
 
         return $hp;
+    }
+
+    private function getSatkerKode()
+    {
+        $userId = Auth::user()->id;
+        $userSatkerId = m_pengguna::find($userId);
+        $kodeSatker = $userSatkerId->satker()->first('kode_satker');
+
+        return $kodeSatker;
     }
 }
