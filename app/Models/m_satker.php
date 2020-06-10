@@ -26,6 +26,11 @@ class m_satker extends Model
 
     public function pengguna()
     {
-        return $this->hasMany(m_pengguna::class, 'kode_satker_id', 'id');
+        return $this->hasMany(m_pengguna::class, 'kode_satker_id');
+    }
+
+    public function penilaian()
+    {
+        return $this->hasMany(d_penilaian::class, 'kode_satker_id', 'kode_satker');
     }
 }
