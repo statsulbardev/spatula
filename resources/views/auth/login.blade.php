@@ -12,9 +12,9 @@
                     <div class="info d-flex align-items-center">
                         <div class="content">
                             <div class="logo">
-                                <h1>Dashboard</h1>
+                                <h1>SPATULA</h1>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <p>Saran Pengaduan Online dan Rating Pelayanan Petugas</p>
                         </div>
                     </div>
                 </div>
