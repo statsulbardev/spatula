@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowUpController extends Controller
 {
-    /* -------------------- awal menu selesai -------------------- */
     public function selesai()
     {
         if(Auth::user()->role_id === 1) {
@@ -35,10 +34,6 @@ class FollowUpController extends Controller
         return view('backend.followup.detail-done', compact('done'));
     }
 
-    /* -------------------- akhir menu selesai -------------------- */
-
-
-    /* -------------------- awal menu konfirmasi pj layanan -------------------- */
     public function listPjLayanan()
     {
         if(Auth::user()->role_id === 1) {
@@ -94,9 +89,6 @@ class FollowUpController extends Controller
         return redirect()->route('followup.service')->with('success', 'Data Telah Ditambahkan.');
     }
 
-    public function editKategori()
-    {}
-
     public function kirimDataLayanan($id)
     {
         $customer = d_penilaian::findOrFail($id);
@@ -148,9 +140,7 @@ class FollowUpController extends Controller
 
         return redirect()->route('followup.service');
     }
-    /* -------------------- akhir menu konfirmasi pj layanan -------------------- */
 
-    /* -------------------- awal menu konfirmasi pj pengaduan -------------------- */
     public function listPjPengaduan()
     {
         if(Auth::user()->role_id === 1) {
@@ -211,7 +201,6 @@ class FollowUpController extends Controller
                 break;
         }
     }
-    /* -------------------- akhir menu konfirmasi pj pengaduan -------------------- */
 
     private function changeNumber($number)
     {

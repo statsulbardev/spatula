@@ -57,6 +57,6 @@ class LoginController extends Controller
 
         return $request->wantsJson()
             ? new Response('', 204)
-            : redirect('/');
+            : redirect('/login');
     }
 }
