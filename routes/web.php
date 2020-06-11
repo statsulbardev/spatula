@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::put('petugas/{id}', 'MPetugasController@update')->name('petugas.update');
 
     // Tautan/Link Route
+    Route::get('tautan', 'LinkController@index')->name('tautan');
 
     // Tindak Lanjut - Selesai Route
     Route::get('tindak-lanjut/selesai', 'FollowUpController@done')->name('followup.done');
