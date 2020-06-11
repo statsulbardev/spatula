@@ -35,16 +35,16 @@ Route::middleware('auth')->group(function() {
     Route::get('tautan', 'LinkController@index')->name('tautan');
 
     // Tindak Lanjut - Selesai Route
-    Route::get('tindak-lanjut/selesai', 'FollowUpController@done')->name('followup.done');
-    Route::get('tindak-lanjut/selesai/{id}', 'FollowUpController@showDone')->name('followup.detail.done');
+    Route::get('tindak-lanjut/selesai', 'FollowUpController@selesai')->name('followup.done');
+    Route::get('tindak-lanjut/selesai/{id}', 'FollowUpController@selesaiDetail')->name('followup.detail.done');
 
     // Tindak Lanjut - Konfirmasi PJ Layanan
-    Route::get('tindak-lanjut/konfirmasi-pj-layanan', 'FollowUpController@service')->name('followup.service');
-    Route::get('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@categorize')->name('followup.categorize');
-    Route::put('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@storeCategory')->name('followup.categorize.store');
-    Route::get('tindak-lanjut/kirim/{id}', 'FollowUpController@sentPage')->name('followup.sent');
-    Route::put('tindak-lanjut/kirim/{id}', 'FollowUpController@storeSent')->name('followup.sent.store');
-    Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@finish')->name('followup.finish');
+    Route::get('tindak-lanjut/konfirmasi-pj-layanan', 'FollowUpController@listPjLayanan')->name('followup.service');
+    Route::get('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@kategorisasi')->name('followup.categorize');
+    Route::put('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@simpanKategori')->name('followup.categorize.store');
+    Route::get('tindak-lanjut/kirim/{id}', 'FollowUpController@kirimDataLayanan')->name('followup.sent');
+    Route::put('tindak-lanjut/kirim/{id}', 'FollowUpController@simpanDataLayanan')->name('followup.sent.store');
+    Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@akhiriKonfirmasiLayanan')->name('followup.finish');
 
     // Tindak Lanjut - Konfirmasi PJ Pengaduan
     Route::get('tindak-lanjut/konfirmasi-pj-pengaduan', 'FollowUpController@complaint')->name('followup.complaint');

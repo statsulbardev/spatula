@@ -12,41 +12,57 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowUpController extends Controller
 {
-    public function done()
+    /* -------------------- awal menu selesai -------------------- */
+    public function selesai()
     {
-        return view('backend.followup.done', [
-            'dones' => d_penilaian::where('selesai', 1)->orderBy('tanggal_selesai', 'desc')->paginate(15)
-        ]);
+        if(Auth::user()->role_id === 1) {
+            return view('backend.followup.done', [
+                'dones' => d_penilaian::where('selesai', 1)->orderBy('tanggal_selesai', 'desc')->paginate(15)
+            ]);
+        } else {
+            $kodeSatker = $this->getSatkerKode();
+
+            return view('backend.followup.done', [
+                'dones' => d_penilaian::where('kode_satker_id', $kodeSatker->kode_satker)->where('selesai', 1)->orderBy('tanggal_selesai', 'desc')->paginate(15)
+            ]);
+        }
     }
 
-    public function showDone($id)
+    public function selesaiDetail($id)
     {
         $done = d_penilaian::where('id', $id)->where('selesai', 1)->get();
 
         return view('backend.followup.detail-done', compact('done'));
     }
 
-    public function service()
-    {
-        $kodeSatker = $this->getSatkerKode();
+    /* -------------------- akhir menu selesai -------------------- */
 
-        $data = d_penilaian::where('kode_satker_id', $kodeSatker->kode_satker)->where('selesai', 0)->paginate(15);
+
+    /* -------------------- awal menu konfirmasi pj layanan -------------------- */
+    public function listPjLayanan()
+    {
+        if(Auth::user()->role_id === 1) {
+            $data = d_penilaian::where('selesai', 0)->paginate(15);
+        } else {
+            $kodeSatker = $this->getSatkerKode();
+
+            $data = d_penilaian::where('kode_satker_id', $kodeSatker->kode_satker)->where('selesai', 0)->paginate(15);
+        }
 
         return view('backend.followup.service', [
             'services' => $data
         ]);
     }
 
-    public function categorize($id)
+    public function kategorisasi($id)
     {
         return view('backend.followup.categorize', [
             'customer' => d_penilaian::findOrFail($id)
         ]);
     }
 
-    public function storeCategory(Request $request, $id)
+    public function simpanKategori(Request $request, $id)
     {
-
         $data = [
             $request->saran ? 1 : null,
             $request->pengaduan ? 2 : null,
@@ -78,7 +94,10 @@ class FollowUpController extends Controller
         return redirect()->route('followup.service')->with('success', 'Data Telah Ditambahkan.');
     }
 
-    public function sentPage($id)
+    public function editKategori()
+    {}
+
+    public function kirimDataLayanan($id)
     {
         $customer = d_penilaian::findOrFail($id);
 
@@ -87,7 +106,7 @@ class FollowUpController extends Controller
         ]);
     }
 
-    public function storeSent(Request $request, $id)
+    public function simpanDataLayanan(Request $request, $id)
     {
         $customer = d_penilaian::findOrFail($id);
 
@@ -108,8 +127,10 @@ class FollowUpController extends Controller
                 $to_email = $customer->email_konsumen;
                 $pesan    = $customer->text_pj_layanan;
                 $data     = array('title' => $to_name, 'body' => $pesan);
+                $subject  = "Terima kasih atas penilaian anda.";
+                $template = "pj-layanan";
 
-                Mail::to($to_email)->send(new SendMail($data));
+                Mail::to($to_email)->send(new SendMail($subject, $data, $template));
                 return redirect()->route('followup.service');
 
                 break;
@@ -119,7 +140,7 @@ class FollowUpController extends Controller
         }
     }
 
-    public function finish($id)
+    public function akhiriKonfirmasiLayanan($id)
     {
         $customer = d_penilaian::findOrFail($id);
 
@@ -130,7 +151,9 @@ class FollowUpController extends Controller
 
         return redirect()->route('followup.service');
     }
+    /* -------------------- akhir menu konfirmasi pj layanan -------------------- */
 
+    /* -------------------- awal menu konfirmasi pj pengaduan -------------------- */
     public function complaint()
     {
         $kodeSatker = $this->getSatkerKode();
@@ -175,13 +198,12 @@ class FollowUpController extends Controller
                 $to_name  = $customer->nama_konsumen;
                 $to_email = $customer->email_konsumen;
                 $pesan    = $customer->text_pj_pengaduan;
-                $data     = array('name' => 'Seksi DLS', 'body' => $pesan);
+                $data     = array('title' => $to_name, 'body' => $pesan);
+                $subject  = "Terima kasih atas penilaian anda.";
+                $template = "pj-layanan";
 
-                Mail::send('backend.emails.mail', $data, function($message) use ($to_name, $to_email) {
-                    $message->to($to_email, $to_name)->subject('Test Email');
-
-                    $message->from('SENDER_EMAIL_ADDRESS', 'Test Email');
-                });
+                Mail::to($to_email)->send(new SendMail($subject, $data, $template));
+                return redirect()->route('followup.service');
 
                 break;
         }

@@ -35,7 +35,7 @@
                                         @endif
                                         <tr>
                                             <td class="align-middle">
-                                                <a>{{ $item->created_at }}</a>
+                                                <a>{{ IDFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a>{{ $item->nama_konsumen }}</a>

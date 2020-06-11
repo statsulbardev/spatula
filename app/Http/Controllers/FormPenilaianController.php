@@ -50,15 +50,15 @@ class FormPenilaianController extends Controller
         ]);
 
         // coba pakai laravel queue untuk pengiriman email di background
-        if(!is_null($request->email_konsumen)) {
-            $to_name  = $request->nama_konsumen;
-            $to_email = $request->email_konsumen;
-            $data     = array('title' => $to_name);
-            $subject  = "Terima kasih telah memberikan penilaian pada layanan kami.";
-            $template = "notification";
+        // if(!is_null($request->email_konsumen)) {
+        //     $to_name  = $request->nama_konsumen;
+        //     $to_email = $request->email_konsumen;
+        //     $data     = array('title' => $to_name);
+        //     $subject  = "Terima kasih telah memberikan penilaian pada layanan kami.";
+        //     $template = "notification";
 
-            Mail::to($to_email)->send(new SendMail($subject, $data, $template));
-        }
+        //     Mail::to($to_email)->send(new SendMail($subject, $data, $template));
+        // }
 
         d_penilaian::insert([
             'nama_konsumen'   => $request->nama_konsumen,
@@ -90,15 +90,15 @@ class FormPenilaianController extends Controller
         ]);
 
         // coba pakai laravel queue untuk pengiriman email di background
-        if(!is_null($request->email_konsumen)) {
-            $to_name  = $request->nama_konsumen;
-            $to_email = $request->email_konsumen;
-            $data     = array('title' => $to_name);
-            $subject  = "Terima kasih telah memberikan penilaian pada layanan kami.";
-            $template = "notification";
+        // if(!is_null($request->email_konsumen)) {
+        //     $to_name  = $request->nama_konsumen;
+        //     $to_email = $request->email_konsumen;
+        //     $data     = array('title' => $to_name);
+        //     $subject  = "Terima kasih telah memberikan penilaian pada layanan kami.";
+        //     $template = "notification";
 
-            Mail::to($to_email)->send(new SendMail($subject, $data, $template));
-        }
+        //     Mail::to($to_email)->send(new SendMail($subject, $data, $template));
+        // }
 
         d_penilaian::insert([
             'nama_konsumen'   => $request->nama_konsumen,
