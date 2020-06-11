@@ -65,20 +65,24 @@
                                     @foreach($data as $index => $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a class="text-dark">{{ $item->created_at }}</a>
+                                                <a class="text-dark">{{ IDFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark">{{ $item->petugas->nama }}</a>
+                                                <a class="text-dark">{{ $item->petugas->nama ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a class="text-dark">
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        @if($i < $item->rating_petugas)
-                                                            @include('components.icon', ['name' => 'star', 'color' => '#796AEE'])
-                                                        @else
-                                                            @include('components.icon', ['name' => 'star'])
-                                                        @endif
-                                                    @endfor
+                                                    @if(!is_null($item->rating_petugas))
+                                                        @for($i = 0; $i < 5; $i++)
+                                                            @if($i < $item->rating_petugas)
+                                                                @include('components.icon', ['name' => 'star', 'color' => '#796AEE'])
+                                                            @else
+                                                                @include('components.icon', ['name' => 'star'])
+                                                            @endif
+                                                        @endfor
+                                                    @else
+                                                        {{ '-' }}
+                                                    @endif
                                                 </a>
                                             </td>
                                             <td class="align-middle">

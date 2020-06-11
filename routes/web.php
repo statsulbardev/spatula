@@ -47,12 +47,13 @@ Route::middleware('auth')->group(function() {
     Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@akhiriKonfirmasiLayanan')->name('followup.finish');
 
     // Tindak Lanjut - Konfirmasi PJ Pengaduan
-    Route::get('tindak-lanjut/konfirmasi-pj-pengaduan', 'FollowUpController@complaint')->name('followup.complaint');
-    Route::get('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@sentComplaint')->name('followup.sent.complaint');
-    Route::put('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@sentComplaintStore')->name('followup.sent.complaint.store');
+    Route::get('tindak-lanjut/konfirmasi-pj-pengaduan', 'FollowUpController@listPjPengaduan')->name('followup.complaint');
+    Route::get('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@kirimDataPengaduan')->name('followup.sent.complaint');
+    Route::put('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@simpanDataPengaduan')->name('followup.sent.complaint.store');
 
     // Laporan Bulanan Route
     Route::get('laporan/bulanan', 'ReportController@monthly')->name('report.monthly');
+    Route::post('laporan/bulanan', 'ReportController@showMonthlyDetail')->name('report.monthly.show');
     Route::get('laporan/harian', 'ReportController@daily')->name('report.daily');
     Route::post('laporan/harian', 'ReportController@showDailyDetail')->name('report.daily.show');
 });

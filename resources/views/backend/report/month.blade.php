@@ -13,20 +13,24 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-inline-flex align-items-center">
-                    <label class="form-control-label mt-2 mr-2">Pilih Tahun : </label>
-                    <div class="mr-4" style="width: 10% !important">
-                        <select name="tahun" class="form-control">
-                            @foreach($years as $year)
-                                <option value="{{ $year }}">{{ $year }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
+                    <form class="d-inline-flex align-items-center" action="{{ route('report.monthly.show') }}" method="POST">
+                        @csrf
+                        <label class="form-control-label mt-2 mr-2" style="width: 40% !important">Pilih Tahun : </label>
+                        <div class="mr-4" style="width: 40% !important">
+                            <select name="tahun" class="form-control">
+                                @foreach($years as $year)
+                                    <option value="{{ $year }}">{{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
+                    </form>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card">
+                                <div class="card-header">Laporan Bulanan Rating Petugas Layanan Tahun {{ $year }}</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover">
@@ -58,7 +62,7 @@
                                                     @endforeach
                                                 @else
                                                         <tr class="align-middle">
-                                                            <td colspan="3">Tidak ada informasi.</td>
+                                                            <td colspan="4">Tidak ada informasi.</td>
                                                         </tr>
                                                 @endif
                                             </tbody>
@@ -68,6 +72,7 @@
                                 </div>
                             </div>
                             <div class="card">
+                                <div class="card-header">Laporan Bulanan Saran Pengaduan Tahun {{ $year }}</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover">
@@ -107,6 +112,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card">
+                                <div class="card-header">Laporan Bulanan Rating Layanan Tahun {{ $year }}</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover">
