@@ -20,7 +20,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Layanan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->created_at }}
+                            {{ IDFormat::convertDateTime($done[0]->created_at) }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -98,19 +98,19 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Notifikasi</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_notifikasi ?? '-' }}
+                            {{ $done[0]->tanggal_notifikasi ? IDFormat::convertDateTime($done[0]->tanggal_notifikasi) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Kategorisasi</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_kategorisasi ?? '-' }}
+                            {{ $done[0]->tanggal_kategorisasi ? IDFormat::convertDateTime($done[0]->tanggal_kategorisasi) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Tindak Lanjut PJ Pelayanan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_tl_pj_layanan ?? '-' }}
+                            {{ $done[0]->tanggal_tl_pj_layanan ? IDFormat::convertDateTime($done[0]->tanggal_tl_pj_layanan) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -122,7 +122,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Tindak Lanjut PJ Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_tl_pj_pengaduan ?? '-' }}
+                            {{ $done[0]->tanggal_tl_pj_pengaduan ? IDFormat::convertDateTime($done[0]->tanggal_tl_pj_pengaduan) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -134,7 +134,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Selesai Tindak Lanjut</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->tanggal_selesai }}
+                            {{ IDFormat::convertDateTime($done[0]->tanggal_selesai) }}
                         </div>
                     </div>
                 </div>

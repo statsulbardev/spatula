@@ -22,7 +22,6 @@
                                 <tr>
                                     <th>Tanggal</th>
                                     <th>Pengguna Layanan</th>
-                                    <th>Telepon/Whatsapp</th>
                                     <th>Saran dan Pengaduan</th>
                                     <th>Kategori</th>
                                     <th>Selesai</th>
@@ -33,13 +32,10 @@
                                     @foreach ($dones as $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->created_at }}</a>
+                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ IDFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->nama_konsumen }}</a>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->no_wa_telepon }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->saran_pengaduan }}</a>
@@ -56,7 +52,7 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->tanggal_selesai }}</a>
+                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ IDFormat::convertDateTime($item->tanggal_selesai) }}</a>
                                             </td>
                                         </tr>
                                     @endforeach

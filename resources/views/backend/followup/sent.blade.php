@@ -74,7 +74,6 @@
                                 <i class="icon-mail"></i> Email
                             </button>
                         @endif
-                        <button type="submit" class="btn btn-sm btn-primary" name="button" value="simpan">Simpan</button>
                     </div>
                 </form>
             </div>

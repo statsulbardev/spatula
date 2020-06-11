@@ -134,9 +134,6 @@ class FollowUpController extends Controller
                 return redirect()->route('followup.service');
 
                 break;
-            default:
-                return redirect()->route('followup.service');
-                break;
         }
     }
 
@@ -154,21 +151,27 @@ class FollowUpController extends Controller
     /* -------------------- akhir menu konfirmasi pj layanan -------------------- */
 
     /* -------------------- awal menu konfirmasi pj pengaduan -------------------- */
-    public function complaint()
+    public function listPjPengaduan()
     {
-        $kodeSatker = $this->getSatkerKode();
+        if(Auth::user()->role_id === 1) {
+            $data = d_penilaian::where('selesai', 0)
+                    ->where('is_pengaduan', 1)
+                    ->paginate(15);
+        } else {
+            $kodeSatker = $this->getSatkerKode();
 
-        $data = d_penilaian::where('selesai', 0)
-                ->where('kode_satker_id', $kodeSatker->kode_satker)
-                ->where('is_pengaduan', 1)
-                ->paginate(15);
+            $data = d_penilaian::where('selesai', 0)
+                    ->where('kode_satker_id', $kodeSatker->kode_satker)
+                    ->where('is_pengaduan', 1)
+                    ->paginate(15);
+        }
 
         return view('backend.followup.complaint', [
             'complaints' => $data
         ]);
     }
 
-    public function sentComplaint($id)
+    public function kirimDataPengaduan($id)
     {
         $customer = d_penilaian::findOrFail($id);
 
@@ -177,7 +180,7 @@ class FollowUpController extends Controller
         ]);
     }
 
-    public function sentComplaintStore(Request $request, $id)
+    public function simpanDataPengaduan(Request $request, $id)
     {
         $customer = d_penilaian::findOrFail($id);
 
@@ -208,6 +211,7 @@ class FollowUpController extends Controller
                 break;
         }
     }
+    /* -------------------- akhir menu konfirmasi pj pengaduan -------------------- */
 
     private function changeNumber($number)
     {

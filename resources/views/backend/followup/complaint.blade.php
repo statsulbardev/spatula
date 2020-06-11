@@ -22,7 +22,6 @@
                                 <tr>
                                     <th>Tanggal</th>
                                     <th>Pengguna Layanan</th>
-                                    <th>Telepon/Whatsapp</th>
                                     <th>Saran dan Pengaduan</th>
                                     <th>Kategori</th>
                                     <th>Tanggal Kategorisasi</th>
@@ -40,9 +39,6 @@
                                                 <a>{{ $item->nama_konsumen ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ $item->no_wa_telepon ?? '-'}}</a>
-                                            </td>
-                                            <td class="align-middle">
                                                 <a>{{ $item->saran_pengaduan ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
@@ -57,7 +53,7 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ $item->tanggal_kategorisasi ?? '-'}}</a>
+                                                <a>{{ $item->tanggal_kategorisasi ? IDFormat::convertDateTime($item->tanggal_kategorisasi) : '-'}}</a>
                                             </td>
                                             <td class="align-middle d-flex justify-content-around">
                                                 <a class="text-white btn btn-sm btn-info" href="{{ route('followup.sent.complaint', $item->id) }}">Kirim</a>
