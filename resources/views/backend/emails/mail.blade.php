@@ -1,2 +1,2 @@
-Hello <strong>{{ $data['title'] }}</strong>,
+Halo <strong>{{ $data['title'] }}</strong>,
 <p>{{ $data['body'] }}</p>
