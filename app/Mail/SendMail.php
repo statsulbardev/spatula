@@ -12,15 +12,19 @@ class SendMail extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+    public $subject;
+    public $template;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($subject, $data, $template)
     {
         $this->data = $data;
+        $this->subject = $subject;
+        $this->template = $template;
     }
 
     /**
@@ -30,6 +34,10 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Subject: Test Email')->view('backend.emails.mail');
+        if($this->template === 'notification') {
+            return $this->subject('Subject: ' . $this->subject)->view('backend.emails.notification');
+        } else {
+            return $this->subject('Subject: ' . $this->subject)->view('backend.emails.mail');
+        }
     }
 }
