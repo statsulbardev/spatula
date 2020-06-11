@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2b7101084b30350c8abb06f9fbc7a4f",
+    "content-hash": "87e0d87b62801f0a5d650267316f1913",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -946,6 +946,52 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "ipulmisaja/dateformat",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:ipulmisaja/dateformat.git",
+                "reference": "348c68b3c70cc4d0cc03ffc9805c1796035e8904"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ipulmisaja/dateformat/zipball/348c68b3c70cc4d0cc03ffc9805c1796035e8904",
+                "reference": "348c68b3c70cc4d0cc03ffc9805c1796035e8904",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ipulmisaja\\DateFormat\\Providers\\DateFormatServiceProvider"
+                    ],
+                    "aliases": {
+                        "IDFormat": "Ipulmisaja\\DateFormat\\Helpers\\DateFormat"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ipulmisaja\\DateFormat\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Syaifur Rijal",
+                    "email": "syaifur.rijal@hotmail.com"
+                }
+            ],
+            "description": "Package untuk membuat format tanggal indonesia.",
+            "support": {
+                "source": "https://github.com/ipulmisaja/dateformat/tree/master",
+                "issues": "https://github.com/ipulmisaja/dateformat/issues"
+            },
+            "time": "2020-05-02T03:48:45+00:00"
         },
         {
             "name": "laravel/framework",
@@ -5985,7 +6031,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "ipulmisaja/dateformat": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
