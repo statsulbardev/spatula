@@ -6,6 +6,7 @@ use App\Models\m_akses;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MPenggunaController extends Controller
 {
@@ -16,9 +17,19 @@ class MPenggunaController extends Controller
      */
     public function index()
     {
-        return view('backend.pengguna.index', [
-            'users' => m_pengguna::paginate(10)
-        ]);
+        if(Auth::user()->role_id === 1) {
+            return view('backend.pengguna.index', [
+                'users' => m_pengguna::paginate(10)
+            ]);
+        } elseif(Auth::user()->role_id === 2 || Auth::user()->role_id === 3) {
+            return view('backend.pengguna.index', [
+                'users' => m_pengguna::where('kode_satker_id', Auth::user()->kode_satker_id)->where('role_id', '>', 1)->paginate(10)
+            ]);
+        } else {
+            return view('backend.pengguna.index', [
+                'users' => m_pengguna::where('id', Auth::user()->id)->paginate(1)
+            ]);
+        }
     }
 
     /**
@@ -28,10 +39,17 @@ class MPenggunaController extends Controller
      */
     public function create()
     {
-        return view('backend.pengguna.create', [
-            'roles'  => m_akses::get(['kode_akses', 'nama_akses']),
-            'satker' => m_satker::get(['kode_satker', 'nama'])
-        ]);
+        if(Auth::user()->role_id === 1) {
+            return view('backend.pengguna.create', [
+                'roles'  => m_akses::get(['kode_akses', 'nama_akses']),
+                'satker' => m_satker::get(['kode_satker', 'nama'])
+            ]);
+        } else {
+            return view('backend.pengguna.create', [
+                'roles'  => m_akses::where('id', '>', 1)->get(['kode_akses', 'nama_akses']),
+                'satker' => m_satker::where('id', Auth::user()->kode_satker_id)->get(['kode_satker', 'nama'])
+            ]);
+        }
     }
 
     /**

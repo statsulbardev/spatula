@@ -12,9 +12,11 @@
     <section class="tables">
         <div class="container-fluid d-flex">
             <span class="w-100"></span>
-            <div class="form-group">
-                <a href="{{ route('pengguna.tambah') }}" class="btn btn-primary">Tambah</a>
-            </div>
+            @if(Auth::user()->role_id === 1 || Auth::user()->role_id === 2)
+                <div class="form-group">
+                    <a href="{{ route('pengguna.tambah') }}" class="btn btn-primary">Tambah</a>
+                </div>
+            @endif
         </div>
         <div class="container-fluid">
             <div class="card">
@@ -32,7 +34,9 @@
                                     <th>NIP BPS</th>
                                     <th>Role</th>
                                     <th>Satuan Kerja</th>
-                                    <th></th>
+                                    @if(Auth::user()->role_id <= 2)
+                                        <th></th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,13 +67,15 @@
                                                     BPS {{ $user->satker()->first()->nama }}
                                                 </a>
                                             </td>
-                                            <td class="align-middle">
-                                                <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input class="btn btn-sm btn-danger float-right" type="submit" value="Hapus"/>
-                                                </form>
-                                            </td>
+                                            @if(Auth::user()->role_id <= 2)
+                                                <td class="align-middle">
+                                                    <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input class="btn btn-sm btn-danger float-right" type="submit" value="Hapus"/>
+                                                    </form>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @endif

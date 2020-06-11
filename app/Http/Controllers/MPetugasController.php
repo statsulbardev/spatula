@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\m_pengguna;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MPetugasController extends Controller
 {
@@ -14,9 +15,15 @@ class MPetugasController extends Controller
      */
     public function index()
     {
-        return view('backend.petugas.index', [
-            'operators' => m_pengguna::where('role_id', 7)->paginate(15)
-        ]);
+        if(Auth::user()->role_id === 1) {
+            return view('backend.petugas.index', [
+                'operators' => m_pengguna::where('role_id', 7)->paginate(15)
+            ]);
+        } else {
+            return view('backend.petugas.index', [
+                'operators' => m_pengguna::where('kode_satker_id', Auth::user()->kode_satker_id)->where('role_id', 7)->paginate(15)
+            ]);
+        }
     }
 
     /**

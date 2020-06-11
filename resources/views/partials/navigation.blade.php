@@ -68,31 +68,33 @@
                 </li>
             </ul>
         </li>
-        <li>
-            <a href="#laporan"
-                @if(request()->is('laporan/bulanan') ||
-                    request()->is('laporan/harian'))
-                    aria-expanded="true"
-                @else
-                    aria-expanded="false"
-                @endif
-                data-toggle="collapse">
-                <i class="icon-form"></i>Laporan
-            </a>
-            <ul id="laporan" class="collapse list-unstyled {{
-                    request()->is('laporan/bulanan') ||
-                    request()->is('laporan/harian') ?
-                    'show' : ''
-                }}
-            ">
-                <li class="{{ request()->is('laporan/bulanan') ? 'active' : '' }}">
-                    <a href="{{ route('report.monthly') }}">Bulanan</a>
-                </li>
-                <li class="{{ request()->is('laporan/harian') ? 'active' : '' }}">
-                    <a href="{{ route('report.daily') }}">Harian</a>
-                </li>
-            </ul>
-        </li>
+        @if(Auth::user()->role_id <= 6)
+            <li>
+                <a href="#laporan"
+                    @if(request()->is('laporan/bulanan') ||
+                        request()->is('laporan/harian'))
+                        aria-expanded="true"
+                    @else
+                        aria-expanded="false"
+                    @endif
+                    data-toggle="collapse">
+                    <i class="icon-form"></i>Laporan
+                </a>
+                <ul id="laporan" class="collapse list-unstyled {{
+                        request()->is('laporan/bulanan') ||
+                        request()->is('laporan/harian') ?
+                        'show' : ''
+                    }}
+                ">
+                    <li class="{{ request()->is('laporan/bulanan') ? 'active' : '' }}">
+                        <a href="{{ route('report.monthly') }}">Bulanan</a>
+                    </li>
+                    <li class="{{ request()->is('laporan/harian') ? 'active' : '' }}">
+                        <a href="{{ route('report.daily') }}">Harian</a>
+                    </li>
+                </ul>
+            </li>
+        @endif
     </ul>
 
     <span class="heading">Pengaturan</span>
@@ -102,13 +104,15 @@
                 <i class="icon-user"></i>Pengguna
             </a>
         </li>
-        <li class="{{ request()->is('petugas') || request()->is('petugas/*') ? 'active' : '' }}">
-            <a href="{{ route('petugas') }}">
-                <i class="icon-list"></i> Petugas
-            </a>
-        </li>
-        <li>
-            <a href="">
+        @if(Auth::user()->role_id <= 2)
+            <li class="{{ request()->is('petugas') || request()->is('petugas/*') ? 'active' : '' }}">
+                <a href="{{ route('petugas') }}">
+                    <i class="icon-list"></i> Petugas
+                </a>
+            </li>
+        @endif
+        <li class="{{ request()->is('tautan') ? 'active' : '' }}">
+            <a href="{{ route('tautan') }}">
                 <i class="icon-interface-windows"></i> Tautan/Link
             </a>
         </li>
