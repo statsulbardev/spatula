@@ -115,10 +115,14 @@ class FollowUpController extends Controller
                 return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
                 break;
             case 'email':
+                $userId = Auth::user()->id;
+                $userSatkerId = m_pengguna::find($userId);
+                $namaSatker = $userSatkerId->satker()->first('nama');
+
                 $to_name  = $customer->nama_konsumen;
                 $to_email = $customer->email_konsumen;
                 $pesan    = $customer->text_pj_layanan;
-                $data     = array('title' => $to_name, 'body' => $pesan);
+                $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker);
                 $subject  = "Terima kasih atas penilaian anda.";
                 $template = "pj-layanan";
 
@@ -188,10 +192,14 @@ class FollowUpController extends Controller
 
                 break;
             case 'email':
+                $userId = Auth::user()->id;
+                $userSatkerId = m_pengguna::find($userId);
+                $namaSatker = $userSatkerId->satker()->first('nama');
+
                 $to_name  = $customer->nama_konsumen;
                 $to_email = $customer->email_konsumen;
                 $pesan    = $customer->text_pj_pengaduan;
-                $data     = array('title' => $to_name, 'body' => $pesan);
+                $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker);
                 $subject  = "Terima kasih atas penilaian anda.";
                 $template = "pj-layanan";
 
