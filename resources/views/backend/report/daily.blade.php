@@ -65,7 +65,7 @@
                                     @foreach($data as $index => $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a class="text-dark">{{ IDFormat::convertDateTime($item->created_at) }}</a>
+                                                <a class="text-dark">{{ DateFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a class="text-dark">{{ $item->petugas->nama ?? '-' }}</a>

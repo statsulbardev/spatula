@@ -32,7 +32,7 @@
                                     @foreach ($dones as $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ IDFormat::convertDateTime($item->created_at) }}</a>
+                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ DateFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->nama_konsumen }}</a>
@@ -52,7 +52,7 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ IDFormat::convertDateTime($item->tanggal_selesai) }}</a>
+                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ DateFormat::convertDateTime($item->tanggal_selesai) }}</a>
                                             </td>
                                         </tr>
                                     @endforeach

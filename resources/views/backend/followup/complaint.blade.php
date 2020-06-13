@@ -33,7 +33,7 @@
                                     @foreach ($complaints as $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a>{{ IDFormat::convertDateTime($item->created_at) }}</a>
+                                                <a>{{ DateFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a>{{ $item->nama_konsumen ?? '-' }}</a>
@@ -53,7 +53,7 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ $item->tanggal_kategorisasi ? IDFormat::convertDateTime($item->tanggal_kategorisasi) : '-'}}</a>
+                                                <a>{{ $item->tanggal_kategorisasi ? DateFormat::convertDateTime($item->tanggal_kategorisasi) : '-'}}</a>
                                             </td>
                                             <td class="align-middle d-flex justify-content-around">
                                                 <a class="text-white btn btn-sm btn-info" href="{{ route('followup.sent.complaint', $item->id) }}">Kirim</a>
