@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = 'dashboard';
 
     /**
      * Create a new controller instance.
@@ -57,6 +57,13 @@ class LoginController extends Controller
 
         return $request->wantsJson()
             ? new Response('', 204)
-            : redirect('/login');
+            : redirect('login');
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        alert()->error('Gagal Login', 'Username atau Password Anda Salah.');
+
+        return redirect()->to('login');
     }
 }
