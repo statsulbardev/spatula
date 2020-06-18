@@ -16,7 +16,7 @@
                 <div class="card-header d-flex align-items-center">
                     <h4>Informasi Customer</h4>
                 </div>
-                <form method="POST" action="{{ route('followup.categorize.store', $customer->id) }}">
+                <form method="POST" action="{{ route('followup.categorize.update', $customer->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 form-control-label">Email</label>
                             <div class="col-sm-9">
-                                {{ $customer->email ?? '-' }}
+                                {{ $customer->email_konsumen ?? '-' }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -48,30 +48,54 @@
                             <label class="col-sm-3 form-control-label">Kategori Saran Pengaduan</label>
                             <div class="col-sm-9 d-flex justify-content-between">
                                 <div class="item d-flex">
-                                    <input type="checkbox" id="input-1" name="saran" class="checkbox-template">
+                                    <input type="checkbox" id="input-1" name="saran" class="checkbox-template"
+                                    @if(collect($customer->kode_saran)->contains(function($value, $key) { return $value === 1; }))
+                                        checked
+                                    @endif
+                                    >
                                     <label for="input-1">Saran</label>
                                 </div>
                                 <div class="item d-flex">
-                                    <input type="checkbox" id="input-2" name="pengaduan" class="checkbox-template">
+                                    <input type="checkbox" id="input-2" name="pengaduan" class="checkbox-template"
+                                    @if(collect($customer->kode_saran)->contains(function($value, $key) { return $value === 2; }))
+                                        checked
+                                    @endif
+                                    >
                                     <label for="input-2">Pengaduan</label>
                                 </div>
                                 <div class="item d-flex">
-                                    <input type="checkbox" id="input-3" name="kritik" class="checkbox-template">
+                                    <input type="checkbox" id="input-3" name="kritik" class="checkbox-template"
+                                    @if(collect($customer->kode_saran)->contains(function($value, $key) { return $value === 3; }))
+                                        checked
+                                    @endif
+                                    >
                                     <label for="input-3">Kritik</label>
                                 </div>
                                 <div class="item d-flex">
-                                    <input type="checkbox" id="input-4" name="apresiasi" class="checkbox-template">
+                                    <input type="checkbox" id="input-4" name="apresiasi" class="checkbox-template"
+                                    @if(collect($customer->kode_saran)->contains(function($value, $key) { return $value === 4; }))
+                                        checked
+                                    @endif
+                                    >
                                     <label for="input-4">Apresiasi</label>
                                 </div>
                                 <div class="item d-flex">
-                                    <input type="checkbox" id="input-5" name="lainnya" class="checkbox-template">
+                                    <input type="checkbox" id="input-5" name="lainnya" class="checkbox-template"
+                                    @if(collect($customer->kode_saran)->contains(function($value, $key) { return $value === 9; }))
+                                        checked
+                                    @endif
+                                    >
                                     <label for="input-5">Lainnya</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer bg-light d-flex justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                        @if(!is_null($customer->kode_saran))
+                            <button type="submit" class="btn btn-sm btn-primary">Perbaharui</button>
+                        @else
+                            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                        @endif
                     </div>
                 </form>
             </div>

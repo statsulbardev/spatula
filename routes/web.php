@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function() {
     Route::get('tindak-lanjut/konfirmasi-pj-layanan', 'FollowUpController@listPjLayanan')->name('followup.service');
     Route::get('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@kategorisasi')->name('followup.categorize');
     Route::put('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@simpanKategori')->name('followup.categorize.store');
+    Route::get('tindak-lanjut/kategorisasi/{id}/edit', 'FollowUpController@editKategori')->name('followup.categorize.edit');
+    Route::put('tindak-lanjut/kategorisasi/{id}/edit', 'FollowUpController@updateKategori')->name('followup.categorize.update');
     Route::get('tindak-lanjut/kirim/{id}', 'FollowUpController@kirimDataLayanan')->name('followup.sent');
     Route::put('tindak-lanjut/kirim/{id}', 'FollowUpController@simpanDataLayanan')->name('followup.sent.store');
     Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@akhiriKonfirmasiLayanan')->name('followup.finish');

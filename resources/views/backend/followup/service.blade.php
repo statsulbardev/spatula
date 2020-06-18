@@ -47,20 +47,24 @@
                                                 <a>
                                                     @if(!is_null($item->kode_saran))
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                            {{ \App\Models\m_saran::where('id', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
+                                                            {{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                                         @endfor
                                                     @else
                                                         -
                                                     @endif
                                                 </a>
                                             </td>
-                                            <td class="align-middle d-flex justify-content-around">
-                                                <a class="text-white btn btn-sm btn-primary" href="{{ route('followup.categorize', $item->id) }}">Kategorisasi</a>
-                                                <a class="text-white btn btn-sm btn-info" href="{{ route('followup.sent', $item->id) }}">Kirim</a>
+                                            <td class="align-middle justify-content-end d-flex">
+                                                @if(!is_null($item->kode_saran))
+                                                    <a class="text-white btn btn-sm btn-secondary" href="{{ route('followup.categorize.edit', $item->id) }}">Ubah Kategori</a>
+                                                @else
+                                                    <a class="text-white btn btn-sm btn-primary" href="{{ route('followup.categorize', $item->id) }}">Kategorisasi</a>
+                                                @endif
+                                                <a class="text-white btn btn-sm btn-info ml-4" href="{{ route('followup.sent', $item->id) }}">Kirim</a>
                                                 <form action="{{ route('followup.finish', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="text-white btn btn-sm btn-success" type="submit">Selesai</button>
+                                                    <button class="text-white btn btn-sm btn-success ml-4" type="submit">Selesai</button>
                                                 </form>
                                             </td>
                                         </tr>

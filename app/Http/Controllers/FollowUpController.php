@@ -89,6 +89,46 @@ class FollowUpController extends Controller
         return redirect()->route('followup.service')->with('success', 'Data Telah Ditambahkan.');
     }
 
+    public function editKategori($id)
+    {
+        return view('backend.followup.categorize', [
+            'customer' => d_penilaian::findOrFail($id)
+        ]);
+    }
+
+    public function updateKategori(Request $request, $id)
+    {
+        $data = [
+            $request->saran ? 1 : null,
+            $request->pengaduan ? 2 : null,
+            $request->kritik ? 3 : null,
+            $request->apresiasi ? 4 : null,
+            $request->lainnya ? 9 : null,
+        ];
+
+        if(count(array_filter($data)) === 0) {
+            return redirect()->back();
+        }
+
+        $customer = d_penilaian::find($id);
+
+        if($request->pengaduan) {
+            $customer->update([
+                'kode_saran'   => array_values(array_filter($data)), // remove null values and reindex
+                'is_pengaduan' => 1,
+                'tanggal_kategorisasi' => Carbon::now()
+            ]);
+        } else {
+            $customer->update([
+                'kode_saran'   => array_values(array_filter($data)), // remove null values and reindex
+                'is_pengaduan' => 0,
+                'tanggal_kategorisasi' => Carbon::now()
+            ]);
+        }
+
+        return redirect()->route('followup.service')->with('success', 'Data Telah Diperbaharui.');
+    }
+
     public function kirimDataLayanan($id)
     {
         $customer = d_penilaian::findOrFail($id);
@@ -109,11 +149,17 @@ class FollowUpController extends Controller
 
         switch($request->button) {
             case 'whatsapp':
-                $phone = $this->changeNumber($customer->no_wa_telepon);
-                $message = $customer->text_pj_layanan;
+                if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === '') {
+                    alert()->warning('Pesan Notifikasi', 'Pesan notifikasi harus terisi.');
+                    break;
+                } else {
+                    $phone = $this->changeNumber($customer->no_wa_telepon);
+                    $message = $customer->text_pj_layanan;
 
-                return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
-                break;
+                    return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
+                    break;
+                }
+
             case 'email':
                 $userId = Auth::user()->id;
                 $userSatkerId = m_pengguna::find($userId);
