@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 form-control-label">Email</label>
                             <div class="col-sm-9">
-                                {{ $customer->email ?? '-' }}
+                                {{ $customer->email_konsumen ?? '-' }}
                             </div>
                         </div>
                         <div class="form-group row">
