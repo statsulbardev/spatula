@@ -142,40 +142,52 @@ class FollowUpController extends Controller
     {
         $customer = d_penilaian::findOrFail($id);
 
-        $customer->update([
-            'text_pj_layanan' => $request->text_pj_layanan,
-            'tanggal_tl_pj_layanan' => Carbon::now()
-        ]);
-
         switch($request->button) {
             case 'whatsapp':
-                if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === '') {
-                    alert()->warning('Pesan Notifikasi', 'Pesan notifikasi harus terisi.');
-                    break;
+                if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === "") {
+                    alert()->warning('Tindak Lanjut Layanan', 'Pesan tindak lanjut harus terisi.');
+                    return redirect()->back();
                 } else {
+                    $customer->update([
+                        'text_pj_layanan' => $request->text_pj_layanan,
+                        'tanggal_tl_pj_layanan' => Carbon::now()
+                    ]);
+
                     $phone = $this->changeNumber($customer->no_wa_telepon);
                     $message = $customer->text_pj_layanan;
 
                     return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
                     break;
                 }
-
             case 'email':
-                $userId = Auth::user()->id;
-                $userSatkerId = m_pengguna::find($userId);
-                $namaSatker = $userSatkerId->satker()->first('nama');
+                if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === "") {
+                    alert()->warning('Tindak Lanjut Layanan', 'Pesan tindak lanjut harus terisi.');
+                    return redirect()->back();
+                } else {
+                    $customer->update([
+                        'text_pj_layanan' => $request->text_pj_layanan,
+                        'tanggal_tl_pj_layanan' => Carbon::now()
+                    ]);
 
-                $to_name  = $customer->nama_konsumen;
-                $to_email = $customer->email_konsumen;
-                $pesan    = $customer->text_pj_layanan;
-                $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker);
-                $subject  = "Terima kasih atas penilaian anda.";
-                $template = "pj-layanan";
+                    $userId = Auth::user()->id;
+                    $userSatkerId = m_pengguna::find($userId);
+                    $namaSatker = $userSatkerId->satker()->first('nama');
 
-                Mail::to($to_email)->send(new SendMail($subject, $data, $template));
-                return redirect()->route('followup.service');
+                    $to_name  = $customer->nama_konsumen;
+                    $to_email = $customer->email_konsumen;
+                    $pesan    = $customer->text_pj_layanan;
+                    $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker->nama);
+                    $subject  = "Terima kasih atas penilaian anda.";
+                    $template = "pj-layanan";
 
-                break;
+                    Mail::to($to_email)->send(new SendMail($subject, $data, $template));
+
+                    alert()->success('Tindak Lanjut Layanan', 'Pesan tindak lanjut telah terkirim.');
+
+                    return redirect()->route('followup.service');
+
+                    break;
+                }
         }
     }
 
@@ -224,35 +236,53 @@ class FollowUpController extends Controller
     {
         $customer = d_penilaian::findOrFail($id);
 
-        $customer->update([
-            'text_pj_pengaduan' => $request->text_pj_pengaduan,
-            'tanggal_tl_pj_pengaduan' => Carbon::now()
-        ]);
-
         switch($request->button) {
             case 'whatsapp':
-                $phone = $this->changeNumber($customer->no_wa_telepon);
-                $message = $customer->text_pj_pengaduan;
+                if(is_null($request->text_pj_pengaduan) || trim($request->text_pj_pengaduan, "") === "") {
+                    alert()->warning('Tindak Lanjut Pengaduan', 'Pesan tindak lanjut harus terisi.');
+                    return redirect()->back();
+                } else {
+                    $customer->update([
+                        'text_pj_pengaduan' => $request->text_pj_pengaduan,
+                        'tanggal_tl_pj_pengaduan' => Carbon::now()
+                    ]);
 
-                return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
+                    $phone = $this->changeNumber($customer->no_wa_telepon);
+                    $message = $customer->text_pj_pengaduan;
 
-                break;
+                    return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
+
+                    break;
+                }
             case 'email':
-                $userId = Auth::user()->id;
-                $userSatkerId = m_pengguna::find($userId);
-                $namaSatker = $userSatkerId->satker()->first('nama');
+                if(is_null($request->text_pj_pengaduan) || trim($request->text_pj_pengaduan, "") === "") {
+                    alert()->warning('Tindak Lanjut Pengaduan', 'Pesan tindak lanjut harus terisi.');
+                    return redirect()->back();
+                } else {
+                    $customer->update([
+                        'text_pj_pengaduan' => $request->text_pj_pengaduan,
+                        'tanggal_tl_pj_pengaduan' => Carbon::now()
+                    ]);
 
-                $to_name  = $customer->nama_konsumen;
-                $to_email = $customer->email_konsumen;
-                $pesan    = $customer->text_pj_pengaduan;
-                $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker);
-                $subject  = "Terima kasih atas penilaian anda.";
-                $template = "pj-layanan";
+                    $userId = Auth::user()->id;
+                    $userSatkerId = m_pengguna::find($userId);
+                    $namaSatker = $userSatkerId->satker()->first('nama');
 
-                Mail::to($to_email)->send(new SendMail($subject, $data, $template));
-                return redirect()->route('followup.service');
+                    $to_name  = $customer->nama_konsumen;
+                    $to_email = $customer->email_konsumen;
+                    $pesan    = $customer->text_pj_pengaduan;
+                    $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker->nama);
+                    $subject  = "Terima kasih atas penilaian anda.";
+                    $template = "pj-layanan";
 
-                break;
+                    Mail::to($to_email)->send(new SendMail($subject, $data, $template));
+
+                    alert()->success('Tindak Lanjut Pengaduan', 'Pesan tindak lanjut telah terkirim.');
+
+                    return redirect()->route('followup.complaint');
+
+                    break;
+                }
         }
     }
 
