@@ -83,7 +83,8 @@ class MPenggunaController extends Controller
             'foto'           => $request->file('photo') ? $request->file('photo')->store('public/image') : null
         ]);
 
-        return redirect()->route('pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Ditambahkan.');
+        alert()->success('Tambah Pengguna', $request->fullname . ' Telah Ditambahkan');
+        return redirect()->route('pengguna');
     }
 
     /**
