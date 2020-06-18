@@ -45,7 +45,7 @@
                                                 <a>
                                                     @if(!is_null($item->kode_saran))
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                            {{ \App\Models\m_saran::where('id', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
+                                                            {{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
                                                         @endfor
                                                     @else
                                                         -
