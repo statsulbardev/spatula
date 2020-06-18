@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\d_penilaian;
+use App\Models\m_pengguna;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,72 +17,28 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard.index');
+        if(Auth::user()->role_id === 1) {
+            $petugasAktif     = m_pengguna::where('role_id', 7)->where('aktif', 1)->count();
+            $penilaianPetugas = d_penilaian::whereNotNull('kode_petugas')->count();
+            $penilaianLayanan = d_penilaian::whereNull('kode_petugas')->count();
+            $jumlahPengaduan  = d_penilaian::count('is_pengaduan', 1);
+        } else {
+            $kode = $this->getSatkerKode();
+            $petugasAktif     = m_pengguna::where('kode_satker_id', Auth::user()->kode_satker_id)->where('role_id', 7)->where('aktif', 1)->count();
+            $penilaianPetugas = d_penilaian::where('kode_satker_id', $kode->kode_satker)->whereNotNull('kode_petugas')->count();
+            $penilaianLayanan = d_penilaian::where('kode_satker_id', $kode->kode_satker)->whereNull('kode_petugas')->count();
+            $jumlahPengaduan  = d_penilaian::where('kode_satker_id', $kode->kode_satker)->count('is_pengaduan', 1);
+        }
+
+        return view('backend.dashboard.index', compact('petugasAktif', 'penilaianPetugas', 'penilaianLayanan', 'jumlahPengaduan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    private function getSatkerKode()
     {
-        //
-    }
+        $userId = Auth::user()->id;
+        $userSatkerId = m_pengguna::find($userId);
+        $kodeSatker = $userSatkerId->satker()->first('kode_satker');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $kodeSatker;
     }
 }
