@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SendMail;
 use App\Models\d_penilaian;
 use App\Models\m_layanan;
+use App\Models\m_pengguna;
 use App\Models\m_satker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,13 +50,14 @@ class FormPenilaianController extends Controller
             'saran_pengaduan' => 'required|string'
         ]);
 
-        $namaSatker = m_satker::where('kode_satker', $satker)->first('nama');
+        $namaSatker = m_satker::where('kode_satker', $satker)->first(['id', 'nama']);
+        $pjLayanan  = m_pengguna::where('kode_satker_id', $namaSatker->id)->where('role_id', 4)->first('nama');
 
         // coba pakai laravel queue untuk pengiriman email di background
         if(!is_null($request->email_konsumen)) {
             $to_name  = $request->nama_konsumen;
             $to_email = $request->email_konsumen;
-            $data     = array('title' => $to_name, 'satker' => $namaSatker);
+            $data     = array('title' => $to_name, 'pj_layanan' => $pjLayanan->nama ,'satker' => $namaSatker->nama);
             $subject  = "Terima kasih telah memberikan penilaian pada layanan kami.";
             $template = "notification";
 
@@ -91,13 +93,14 @@ class FormPenilaianController extends Controller
             'saran_pengaduan' => 'required|string'
         ]);
 
-        $namaSatker = m_satker::where('kode_satker', $satker)->first('nama');
+        $namaSatker = m_satker::where('kode_satker', $satker)->first(['id', 'nama']);
+        $pjLayanan  = m_pengguna::where('kode_satker_id', $namaSatker->id)->where('role_id', 4)->first('nama');
 
         // coba pakai laravel queue untuk pengiriman email di background
         if(!is_null($request->email_konsumen)) {
             $to_name  = $request->nama_konsumen;
             $to_email = $request->email_konsumen;
-            $data     = array('title' => $to_name, 'satker' => $namaSatker);
+            $data     = array('title' => $to_name, 'pj_layanan' => $pjLayanan->nama ,'satker' => $namaSatker->nama);
             $subject  = "Terima kasih telah memberikan penilaian pada layanan kami.";
             $template = "notification";
 
