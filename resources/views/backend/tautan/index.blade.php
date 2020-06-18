@@ -37,7 +37,7 @@
                                         <span>Semua Layanan</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -45,7 +45,7 @@
                                         <span>Konsultasi dan Rekomendasi Statistik</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas/1</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas/1</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -53,7 +53,7 @@
                                         <span>Konsultasi Pengguna Data</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas/2</span>
+                                        <a>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas/2</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -61,7 +61,7 @@
                                         <span>Perpustakaan Tercetak</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas/3</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas/3</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -69,7 +69,7 @@
                                         <span>Perpustakaan Digital</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas/4</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas/4</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -77,7 +77,7 @@
                                         <span>Penjualan Buku</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas/5</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas/5</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -85,7 +85,7 @@
                                         <span>Mikro/Peta Digital/Softcopy Publikasi</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/petugas/6</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/petugas/6</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -96,7 +96,7 @@
                                         <span>Semua Layanan</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/layanan</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/layanan</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -104,7 +104,7 @@
                                         <span>Website</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/layanan/7</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/layanan/7</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -112,7 +112,7 @@
                                         <span>Email</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/layanan/8</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/layanan/8</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,7 +120,7 @@
                                         <span>Chat Us</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/layanan/9</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/layanan/9</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -128,12 +128,15 @@
                                         <span>Whatsapp</span>
                                     </td>
                                     <td class="align-middle">
-                                        <span>http://bpssulbar.id/spatula/penilaian/{kode_satker}/layanan/10</span>
+                                        <span>https://webapps.bps.go.id/sulbar/spatula/penilaian/{kode_satker}/layanan/10</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <span class="text-muted lead">Contoh URL: https://webapps.bps.go.id/sulbar/spatula/penilaian/7600/petugas</span>
                 </div>
             </div>
         </div>
