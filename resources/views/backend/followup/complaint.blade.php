@@ -44,9 +44,11 @@
                                             <td class="align-middle">
                                                 <a>
                                                     @if(!is_null($item->kode_saran))
+                                                        <ul class="ml-n4">
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                            {{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
+                                                            <li>{{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
                                                         @endfor
+                                                        </ul>
                                                     @else
                                                         -
                                                     @endif

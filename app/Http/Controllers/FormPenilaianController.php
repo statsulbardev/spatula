@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormPenilaianValidation;
 use App\Mail\SendMail;
-use App\Models\d_penilaian;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Repositories\PenilaianLayananRepository;
+use App\Repositories\PenilaianPetugasRepository;
 use Illuminate\Support\Facades\Mail;
 
 class FormPenilaianController extends Controller
 {
+    /**
+     * Menampilkan halaman penilaian petugas menurut satker dan jenis layanan.
+     *
+     * @param String $satker
+     * @param int $layanan
+     * @return \Illuminate\Http\Response
+     */
     public function petugasForm($satker, $layanan = null)
     {
         $kantor    = m_satker::where('kode_satker', $satker)->first();
@@ -28,6 +35,13 @@ class FormPenilaianController extends Controller
         return view('frontend.first-form', compact('kantor', 'petugas', 'j_layanan'));
     }
 
+    /**
+     * Menampilkan halaman penilaian layanan menurut satker dan jenis layanan.
+     *
+     * @param String $satker
+     * @param int $layanan
+     * @return \Illuminate\Http\Response
+     */
     public function layananForm($satker, $layanan = null)
     {
         $kantor = m_satker::where('kode_satker', $satker)->first();
@@ -41,15 +55,8 @@ class FormPenilaianController extends Controller
         return view('frontend.second-form', compact('kantor', 'j_layanan'));
     }
 
-    public function storePetugasForm(Request $request, $satker)
+    public function storePetugasForm(FormPenilaianValidation $request, PenilaianPetugasRepository $repository, $satker)
     {
-        $request->validate([
-            'nama_konsumen'   => 'required|string',
-            'email_konsumen'  => 'nullable|email',
-            'no_wa_telepon'   => 'nullable',
-            'saran_pengaduan' => 'required|string'
-        ]);
-
         $namaSatker = m_satker::where('kode_satker', $satker)->first(['id', 'nama']);
         $pjLayanan  = m_pengguna::where('kode_satker_id', $namaSatker->id)->where('role_id', 4)->first('nama');
 
@@ -64,35 +71,15 @@ class FormPenilaianController extends Controller
             Mail::to($to_email)->send(new SendMail($subject, $data, $template));
         }
 
-        d_penilaian::insert([
-            'nama_konsumen'   => $request->nama_konsumen,
-            'email_konsumen'  => $request->email_konsumen,
-            'no_wa_telepon'   => $request->no_wa_telepon,
-            'kode_petugas'    => $request->kode_petugas,
-            'rating_petugas'  => $request->rating_petugas,
-            'kode_layanan'    => $request->kode_layanan,
-            'rating_layanan'  => $request->rating_layanan,
-            'saran_pengaduan' => $request->saran_pengaduan,
-            'kode_satker_id'  => $satker,
-            'selesai'         => false,
-            'created_at'      => Carbon::now(),
-            'updated_at'      => Carbon::now()
-        ]);
+        $repository->store($request, $satker);
 
         alert()->success('Info','Terima Kasih Atas Partisipasi Anda.');
 
         return redirect()->back();
     }
 
-    public function storeLayananForm(Request $request, $satker)
+    public function storeLayananForm(FormPenilaianValidation $request, PenilaianLayananRepository $repository, $satker)
     {
-        $request->validate([
-            'nama_konsumen'   => 'required|string',
-            'email_konsumen'  => 'nullable|email',
-            'no_wa_telepon'   => 'nullable',
-            'saran_pengaduan' => 'required|string'
-        ]);
-
         $namaSatker = m_satker::where('kode_satker', $satker)->first(['id', 'nama']);
         $pjLayanan  = m_pengguna::where('kode_satker_id', $namaSatker->id)->where('role_id', 4)->first('nama');
 
@@ -107,23 +94,10 @@ class FormPenilaianController extends Controller
             Mail::to($to_email)->send(new SendMail($subject, $data, $template));
         }
 
-        d_penilaian::insert([
-            'nama_konsumen'   => $request->nama_konsumen,
-            'email_konsumen'  => $request->email_konsumen,
-            'no_wa_telepon'   => $request->no_wa_telepon,
-            'kode_layanan'    => $request->kode_layanan,
-            'rating_layanan'  => $request->rating_layanan,
-            'saran_pengaduan' => $request->saran_pengaduan,
-            'kode_satker_id'  => $satker,
-            'selesai'         => false,
-            'created_at'      => Carbon::now(),
-            'updated_at'      => Carbon::now()
-        ]);
+        $repository->store($request, $satker);
 
         alert()->success('Info','Terima Kasih Atas Partisipasi Anda.');
 
         return redirect()->back();
     }
-
-
 }

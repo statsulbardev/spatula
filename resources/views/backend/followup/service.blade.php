@@ -41,16 +41,18 @@
                                                 <a>{{ $item->nama_konsumen }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ $item->saran_pengaduan ?? '-' }}</a>
+                                                <a>{{ Str::limit($item->saran_pengaduan, 20) ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a>
                                                     @if(!is_null($item->kode_saran))
+                                                        <ul class="ml-n4">
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                            {{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
+                                                            <li>{{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
                                                         @endfor
+                                                        </ul>
                                                     @else
-                                                        -
+                                                        Belum Dikategorisasi
                                                     @endif
                                                 </a>
                                             </td>
@@ -61,11 +63,13 @@
                                                     <a class="text-white btn btn-sm btn-primary" href="{{ route('followup.categorize', $item->id) }}">Kategorisasi</a>
                                                 @endif
                                                 <a class="text-white btn btn-sm btn-info ml-4" href="{{ route('followup.sent', $item->id) }}">Kirim</a>
-                                                <form action="{{ route('followup.finish', $item->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button class="text-white btn btn-sm btn-success ml-4" type="submit">Selesai</button>
-                                                </form>
+                                                @if(!is_null($item->kode_saran))
+                                                    <form action="{{ route('followup.finish', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="text-white btn btn-sm btn-success ml-4" type="submit">Selesai</button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

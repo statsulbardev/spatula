@@ -84,6 +84,7 @@ class MPenggunaController extends Controller
         ]);
 
         alert()->success('Tambah Pengguna', $request->fullname . ' Telah Ditambahkan');
+
         return redirect()->route('pengguna');
     }
 

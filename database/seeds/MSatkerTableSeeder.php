@@ -14,32 +14,32 @@ class MSatkerTableSeeder extends Seeder
     {
         m_satker::create([
             'kode_satker' => '7600',
-            'nama'        => 'Provinsi Sulawesi Barat',
+            'nama'        => 'Prov. Sulawesi Barat',
             'level'       => '1'
         ]);
         m_satker::create([
             'kode_satker' => '7601',
-            'nama'        => 'Kabupaten Majene',
+            'nama'        => 'Kab. Majene',
             'level'       => '2'
         ]);
         m_satker::create([
             'kode_satker' => '7602',
-            'nama'        => 'Kabupaten Polewali Mandar',
+            'nama'        => 'Kab. Polewali Mandar',
             'level'       => '2'
         ]);
         m_satker::create([
             'kode_satker' => '7603',
-            'nama'        => 'Kabupaten Mamasa',
+            'nama'        => 'Kab. Mamasa',
             'level'       => '2'
         ]);
         m_satker::create([
             'kode_satker' => '7604',
-            'nama'        => 'Kabupaten Mamuju',
+            'nama'        => 'Kab. Mamuju',
             'level'       => '2'
         ]);
         m_satker::create([
             'kode_satker' => '7605',
-            'nama'        => 'Kabupaten Pasangkayu',
+            'nama'        => 'Kab. Pasangkayu',
             'level'       => '2'
         ]);
     }

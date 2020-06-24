@@ -48,9 +48,11 @@
                             <label class="col-sm-3 form-control-label">Kategori</label>
                             <div class="col-sm-9">
                                 @if(!is_null($customer->kode_saran))
+                                    <ul class="ml-n4">
                                     @for($i = 0; $i < count($customer->kode_saran); $i++)
-                                        {{ \App\Models\m_saran::where('id', collect($customer->kode_saran)->get($i))->pluck('nama_saran')[0]  }},
+                                        <li>{{ \App\Models\m_saran::where('kode_saran', collect($customer->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
                                     @endfor
+                                    </ul>
                                 @else
                                     -
                                 @endif

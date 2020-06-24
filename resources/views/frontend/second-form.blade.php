@@ -20,9 +20,14 @@
                             <form class="form-horizontal" action="{{ route('penilaian.layanan.store', ['satker' => $kantor->kode_satker ]) }}" method="POST">
                                 @csrf
                                 <div class="form-group row">
-                                    <label class="col-sm-3 form-control-label">Nama Lengkap <sup class="border border-danger rounded p-1 text-danger">Wajib</sup></label>
+                                    <label class="col-sm-3 form-control-label">
+                                        Nama Lengkap <sup class="border border-danger rounded p-1 text-danger">Wajib</sup>
+                                    </label>
                                     <div class="col-sm-9">
                                         <input type="text" name="nama_konsumen" class="form-control">
+                                        @error('nama_konsumen')
+                                            <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="line"></div>
@@ -30,13 +35,21 @@
                                     <label class="col-sm-3 form-control-label">Email</label>
                                     <div class="col-sm-9">
                                         <input type="email" name="email_konsumen" class="form-control" placeholder="contoh: john.doe@gmail.com">
+                                        @error('email_konsumen')
+                                            <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="line"></div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 form-control-label">Nomor Telepon / Whatsapp <sup class="border border-danger rounded p-1 text-danger">Wajib</sup></label>
+                                    <label class="col-sm-3 form-control-label">
+                                        Nomor Telepon / Whatsapp <sup class="border border-danger rounded p-1 text-danger">Wajib</sup>
+                                    </label>
                                     <div class="col-sm-9">
                                         <input type="text" name="no_wa_telepon" class="form-control">
+                                        @error('no_wa_telepon')
+                                            <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="line"></div>
@@ -74,9 +87,14 @@
                                     </h1>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 form-control-label">Kritik dan Saran <sup class="border border-danger rounded p-1 text-danger">Wajib</sup></label>
+                                    <label class="col-sm-3 form-control-label">
+                                        Kritik dan Saran <sup class="border border-danger rounded p-1 text-danger">Wajib</sup>
+                                    </label>
                                     <div class="col-sm-9">
                                         <textarea name="saran_pengaduan" class="form-control" rows="5"></textarea>
+                                        @error('saran_pengaduan')
+                                            <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="line"></div>

@@ -44,36 +44,47 @@
                                     @foreach($users as $index => $user)
                                         <tr>
                                             <th scope="row" class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $index + 1 }}</a>
+                                                <span class="text-dark">
+                                                    {{ $index + 1 }}
+                                                </span>
                                             </th>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->nama }}</a>
+                                                <span class="text-dark">
+                                                    {{ $user->nama }}
+                                                </span>
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->email }}</a>
+                                                <span class="text-dark">
+                                                    {{ $user->email }}
+                                                </span>
                                             </td>
                                             <td class="align-middle">
                                                 @if(!is_null($user->bpsid))
-                                                    <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->bpsid }}</a>
+                                                    <span class="text-dark">
+                                                        {{ $user->bpsid }}
+                                                    </span>
                                                 @else
                                                     -
                                                 @endif
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">{{ $user->role->nama_akses }}</a>
+                                                <span class="text-dark">
+                                                    {{ $user->role->nama_akses }}
+                                                </span>
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark" href="{{ route('pengguna.edit', $user->id) }}">
+                                                <span class="text-dark">
                                                     BPS {{ $user->satker()->first()->nama }}
-                                                </a>
+                                                </span>
                                             </td>
                                             @if(Auth::user()->role_id <= 2)
                                                 <td class="align-middle">
                                                     <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <input class="btn btn-sm btn-danger float-right" type="submit" value="Hapus"/>
+                                                        <input class="btn btn-sm btn-danger float-right ml-4" type="submit" value="Hapus"/>
                                                     </form>
+                                                    <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
                                                 </td>
                                             @endif
                                         </tr>

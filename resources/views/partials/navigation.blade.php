@@ -11,7 +11,7 @@
         </div>
         <div class="title">
             <h1 class="h4">{{ Auth::user()->nama }}</h1>
-            <p>{{ Auth::user()->role->nama_akses }}</p>
+            <p>BPS {{ Auth::user()->satker->nama }}</p>
         </div>
     </div>
     <!-- Sidebar Navidation Menus-->
