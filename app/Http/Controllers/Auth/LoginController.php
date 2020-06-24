@@ -64,6 +64,6 @@ class LoginController extends Controller
     {
         alert()->error('Gagal Login', 'Username atau Password Anda Salah.');
 
-        return redirect()->to('login');
+        return redirect()->to(env('APP_URL') . 'login');
     }
 }
