@@ -35,16 +35,16 @@
                                         @endif
                                         <tr>
                                             <td class="align-middle">
-                                                <a>{{ DateFormat::convertDateTime($item->created_at) }}</a>
+                                                <span>{{ DateFormat::convertDateTime($item->created_at) }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ $item->nama_konsumen }}</a>
+                                                <span>{{ $item->nama_konsumen }}</span>
+                                            </td>
+                                            <td width="40%" class="align-middle">
+                                                <p>{{ wordwrap($item->saran_pengaduan) ?? '-' }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ Str::limit($item->saran_pengaduan, 50) ?? '-' }}</a>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a>
+                                                <span>
                                                     @if(!is_null($item->kode_saran))
                                                         <ul class="ml-n4">
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
@@ -54,7 +54,7 @@
                                                     @else
                                                         Belum Dikategorisasi
                                                     @endif
-                                                </a>
+                                                </span>
                                             </td>
                                             <td class="align-middle justify-content-end d-flex">
                                                 @if(!is_null($item->kode_saran))

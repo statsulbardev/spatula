@@ -41,7 +41,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 form-control-label">Saran/Pengaduan/Kritik/Apresiasi</label>
                             <div class="col-sm-9">
-                                {{ $customer->saran_pengaduan ?? '-' }}
+                                <p>{{ $customer->saran_pengaduan ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="row">

@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4>Daftar Customer</h4>
+                    <h4>Daftar Pengguna Layanan</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -32,16 +32,19 @@
                                     @foreach ($dones as $item)
                                         <tr>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ DateFormat::convertDateTime($item->created_at) }}</a>
+                                                <span>{{ DateFormat::convertDateTime($item->created_at) }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->nama_konsumen }}</a>
+                                                <a style="color:#666666" class="text-decoration-none" href="{{ route('followup.detail.done', $item->id) }}">
+                                                    <i class="icon-user"></i>
+                                                    <span class="ml-1">{{ $item->nama_konsumen }}</span>
+                                                </a>
+                                            </td>
+                                            <td width="40%" class="align-middle">
+                                                <p>{{ wordwrap($item->saran_pengaduan) }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ $item->saran_pengaduan }}</a>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">
+                                                <span>
                                                     @if(!is_null($item->kode_saran))
                                                         <ul class="ml-n4">
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
@@ -51,16 +54,16 @@
                                                     @else
                                                         -
                                                     @endif
-                                                </a>
+                                                </span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('followup.detail.done', $item->id) }}">{{ DateFormat::convertDateTime($item->tanggal_selesai) }}</a>
+                                                <span>{{ DateFormat::convertDateTime($item->tanggal_selesai) }}</span>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="6">Tidak ditemukan informasi tindak lanjut - selesai.</td>
+                                        <td colspan="6">Tidak ditemukan informasi tindak lanjut dengan status selesai.</td>
                                     </tr>
                                 @endif
                             </tbody>

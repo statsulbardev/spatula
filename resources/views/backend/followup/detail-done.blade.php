@@ -1,6 +1,6 @@
 @extends('home')
 
-@section('title', 'Detail Customer')
+@section('title', 'Detail Pengguna Layanan')
 
 @section('inner-content')
     <!-- Page Header-->
@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4>Informasi Customer</h4>
+                    <h4>Informasi Pengguna Layanan</h4>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -24,13 +24,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Nama Konsumen</label>
+                        <label class="col-sm-3 form-control-label">Nama</label>
                         <div class="col-sm-9">
                             {{ $done[0]->nama_konsumen }}
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Email Konsumen</label>
+                        <label class="col-sm-3 form-control-label">Email</label>
                         <div class="col-sm-9">
                             {{ $done[0]->email_konsumen ?? '-' }}
                         </div>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Kode Saran (bisa lebih dari satu)</label>
+                        <label class="col-sm-3 form-control-label">Kategori Saran Pengaduan</label>
                         <div class="col-sm-9">
                             @if(!is_null($done[0]->kode_saran))
                                 <ul class="ml-n4">
@@ -94,7 +94,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Saran Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $done[0]->saran_pengaduan ?? '-' }}
+                            <p>{{ $done[0]->saran_pengaduan ?? '-' }}</p>
                         </div>
                     </div>
                     <div class="form-group row">

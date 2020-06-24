@@ -38,8 +38,8 @@
                                             <td class="align-middle">
                                                 <a>{{ $item->nama_konsumen ?? '-' }}</a>
                                             </td>
-                                            <td class="align-middle">
-                                                <a>{{ Str::limit($item->saran_pengaduan, 50) ?? '-' }}</a>
+                                            <td width="40%" class="align-middle">
+                                                <p>{{ wordwrap($item->saran_pengaduan) ?? '-' }}</p>
                                             </td>
                                             <td class="align-middle">
                                                 <a>
