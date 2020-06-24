@@ -41,7 +41,7 @@
                                                 <a>{{ $item->nama_konsumen }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ Str::limit($item->saran_pengaduan, 20) ?? '-' }}</a>
+                                                <a>{{ Str::limit($item->saran_pengaduan, 50) ?? '-' }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a>
