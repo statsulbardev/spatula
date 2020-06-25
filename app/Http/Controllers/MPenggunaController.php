@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MPenggunaValidation;
 use App\Models\m_akses;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
@@ -58,19 +59,8 @@ class MPenggunaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MPenggunaValidation $request)
     {
-        $request->validate([
-            'fullname' => 'required|string|max:30',
-            'username' => 'required|string|max:20',
-            'email'    => 'required|email:rfc',
-            'password' => 'required|string|max:20',
-            'bpsid'    => 'nullable|string|max:9',
-            'satker'   => 'required',
-            'role'     => 'required',
-            'photo'    => 'nullable'
-        ]);
-
         m_pengguna::create([
             'nama'           => $request->fullname,
             'username'       => $request->username,
@@ -85,7 +75,7 @@ class MPenggunaController extends Controller
 
         alert()->success('Tambah Pengguna', $request->fullname . ' Telah Ditambahkan');
 
-        return redirect()->route('pengguna');
+        return redirect()->to(env('APP_URL') . 'pengguna');
     }
 
     /**
@@ -114,7 +104,7 @@ class MPenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MPenggunaValidation $request, $id)
     {
         m_pengguna::where('id', $id)->update([
             'nama'           => $request->fullname,
@@ -137,7 +127,7 @@ class MPenggunaController extends Controller
             ]);
         }
 
-        return redirect()->route('pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Diperbaharui.');
+        return redirect()->to(env('APP_URL') . 'pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Diperbaharui.');
     }
 
     /**
@@ -152,6 +142,6 @@ class MPenggunaController extends Controller
 
         $user->delete();
 
-        return redirect()->route('pengguna')->with('success', 'Informasi ' . $user->nama . ' Telah Dihapus.');
+        return redirect()->to(env('APP_URL') . 'pengguna')->with('success', 'Informasi ' . $user->nama . ' Telah Dihapus.');
     }
 }

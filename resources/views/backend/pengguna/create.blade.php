@@ -6,7 +6,9 @@
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('pengguna') }}" style="color:#796AEE" class="h2 no-margin-bottom">Pengguna Aplikasi / </a>
+            <a href="{{ route('pengguna') }}" style="color:#796AEE" class="h2 no-margin-bottom">
+                Pengguna Aplikasi /
+            </a>
             <span class="h2 no-margin-bottom">Tambah</span>
         </div>
     </header>
@@ -21,33 +23,60 @@
                         <form class="form-horizontal" method="POST" action="{{ route('pengguna.simpan') }}">
                             @csrf
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">Nama Lengkap</label>
+                                <label class="col-sm-3 form-control-label">
+                                    Nama Lengkap
+                                    <sup class="badge badge-rounded bg-primary text-white">wajib</sup>
+                                </label>
                                 <div class="col-sm-9">
                                     <input name="fullname" type="text" class="form-control">
+                                    @error('fullname')
+                                        <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">Username</label>
+                                <label class="col-sm-3 form-control-label">
+                                    Username
+                                    <sup class="badge badge-rounded bg-primary text-white">wajib</sup>
+                                </label>
                                 <div class="col-sm-9">
                                     <input name="username" type="text" class="form-control">
+                                    @error('username')
+                                        <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">Email</label>
+                                <label class="col-sm-3 form-control-label">
+                                    Email
+                                    <sup class="badge badge-rounded bg-primary text-white">wajib</sup>
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="email" name="email" class="form-control">
+                                    @error('email')
+                                        <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">Password</label>
+                                <label class="col-sm-3 form-control-label">
+                                    Password
+                                    <sup class="badge badge-rounded bg-primary text-white">wajib</sup>
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="password" name="password" class="form-control">
+                                    @error('password')
+                                        <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">NIP BPS</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="bpsid" class="form-control">
+                                    @error('bpsid')
+                                        <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -73,10 +102,12 @@
                             <div class="form-group row">
                                 <label for="fileInput" class="col-sm-3 form-control-label">
                                     Foto Profil
-                                    <sup class="badge badge-rounded bg-primary text-white">opsional</sup>
                                 </label>
                                 <div class="col-sm-9">
                                     <input name="photo" type="file" class="form-control-file" accept="image/*">
+                                    @error('photo')
+                                        <span class="mt-4 alert alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="d-flex">
