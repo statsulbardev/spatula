@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nama</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>NIP BPS</th>
                                     <th>Role</th>
@@ -51,6 +52,11 @@
                                             <td class="align-middle">
                                                 <span class="text-dark">
                                                     {{ $user->nama }}
+                                                </span>
+                                            </td>
+                                            <td class="align-middle">
+                                                <span class="text-dark">
+                                                    {{ $user->username }}
                                                 </span>
                                             </td>
                                             <td class="align-middle">
