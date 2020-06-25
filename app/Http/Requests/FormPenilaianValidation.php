@@ -25,7 +25,7 @@ class FormPenilaianValidation extends FormRequest
     {
         return [
             'nama_konsumen'   => 'required|string|regex:/^[\pL\s-]+$/u|min:3|max:25',
-            'email_konsumen'  => 'nullable|email',
+            'email_konsumen'  => 'nullable|email:rfc',
             'no_wa_telepon'   => 'required|numeric|min:10',
             'saran_pengaduan' => 'required|string|min:3'
         ];
