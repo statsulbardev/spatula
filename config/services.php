@@ -32,7 +32,7 @@ return [
 
     'bps' => [
         'client_id'     => env('BPS_CLIENT_ID'),
-        'client_secret' => env('BPS_CLIENT_SECRET'),
+        'client_secret' => env('BPS_CLIENT_SECRET')
     ],
 
 ];
