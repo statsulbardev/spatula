@@ -38,7 +38,7 @@
                                                 <span>{{ DateFormat::convertDateTime($item->created_at) }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <span>{{ $item->nama_konsumen }}</span>
+                                                <a href="{{ route() }}">{{ $item->nama_konsumen }}</a>
                                             </td>
                                             <td width="40%" class="align-middle">
                                                 <p>{{ wordwrap($item->saran_pengaduan) ?? '-' }}</p>
@@ -62,12 +62,12 @@
                                                 @else
                                                     <a class="text-white btn btn-sm btn-primary" href="{{ route('followup.categorize', $item->id) }}">Kategorisasi</a>
                                                 @endif
-                                                <a class="text-white btn btn-sm btn-info ml-4" href="{{ route('followup.sent', $item->id) }}">Kirim</a>
+                                                <a class="text-white btn btn-sm btn-info ml-4" href="{{ route('followup.sent', $item->id) }}">Kirim Pesan</a>
                                                 @if(!is_null($item->kode_saran))
                                                     <form action="{{ route('followup.finish', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        <button class="text-white btn btn-sm btn-success ml-4" type="submit">Selesai</button>
+                                                        <button class="text-white btn btn-sm btn-success ml-4" type="submit">Tandai Selesai</button>
                                                     </form>
                                                 @endif
                                             </td>

@@ -58,11 +58,11 @@
                                                 <a>{{ $item->tanggal_kategorisasi ? DateFormat::convertDateTime($item->tanggal_kategorisasi) : '-'}}</a>
                                             </td>
                                             <td class="align-middle d-flex justify-content-around">
-                                                <a class="text-white btn btn-sm btn-info" href="{{ route('followup.sent.complaint', $item->id) }}">Kirim</a>
+                                                <a class="text-white btn btn-sm btn-info" href="{{ route('followup.sent.complaint', $item->id) }}">Kirim Pesan</a>
                                                 <form action="{{ route('followup.finish', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="text-white btn btn-sm btn-success" type="submit">Selesai</button>
+                                                    <button class="text-white btn btn-sm btn-success" type="submit">Tandai Selesai</button>
                                                 </form>
                                             </td>
                                         </tr>

@@ -8,6 +8,8 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middle
 Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('sso', 'BpsSsoController')->name('sso');
+
 Route::prefix('penilaian')->name('penilaian.')->group(function() {
     Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');
     Route::get('{satker}/layanan/{layanan?}', 'FormPenilaianController@layananForm')->name('layanan');
