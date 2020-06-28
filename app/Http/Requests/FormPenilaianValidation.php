@@ -49,7 +49,7 @@ class FormPenilaianValidation extends FormRequest
             'no_wa_telepon.required'   => 'Nomor telepon/whatsapp tidak boleh kosong.',
             'no_wa_telepon.numeric'    => 'Nomor telepon/whatsapp harus numerik.',
             'no_wa_telepon.min'        => 'Nomor telepon/whatsapp minimal terdiri dari 10 digit.',
-            'saran_pengaduan.required' => 'Kritik dan Saran tidak boleh kosong.',
+            'saran_pengaduan.required' => 'Saran/Pengaduan/Apresiasi tidak boleh kosong.',
             'saran_pengaduan.min'      => 'Kritik dan Saran minimal terdiri dari 3 karakter.'
         ];
     }

@@ -39,7 +39,7 @@
                                                     <th>Bulan</th>
                                                     <th>Nama Petugas</th>
                                                     <th>Rating Rata-Rata</th>
-                                                    <th>Jumlah Terlayani</th>
+                                                    <th>Jumlah Penilaian</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -121,6 +121,7 @@
                                                     <th>Bulan</th>
                                                     <th>Jenis Layanan</th>
                                                     <th>Rating Rata-Rata</th>
+                                                    <th>Jumlah Penilaian</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -135,6 +136,9 @@
                                                             </td>
                                                             <td class="align-middle">
                                                                 <a class="text-dark">{{ number_format($data->rerata, 2) }}</a>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <a href="text-dark">{{ $data->jumlah_terlayani }}</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach

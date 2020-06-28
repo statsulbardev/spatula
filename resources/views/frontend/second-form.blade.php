@@ -14,7 +14,10 @@
                 <div class="container-fluid">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
-                            <h3 class="h4">Mohon isi data diri Anda:</h3>
+                            <h4>
+                                <img width="5%" class="mr-2" src="{{ asset('images/bps.svg') }}" alt="">
+                                <span>Saran Pengaduan Online dan Rating Petugas Layanan BPS {{ $kantor->nama }}</span>
+                            </h4>
                         </div>
                         <div class="card-body">
                             <form class="form-horizontal" action="{{ route('penilaian.layanan.store', ['satker' => $kantor->kode_satker ]) }}" method="POST">
@@ -81,14 +84,9 @@
                                     </div>
                                 </div>
                                 <div class="line"></div>
-                                <div class="form-group row text-center mb-4">
-                                    <h1 class="col-lg-12 form-control-label">
-                                        Berikan saran/pengaduan/kritik/apresiasi untuk layanan di BPS {{ $kantor->nama }}:
-                                    </h1>
-                                </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 form-control-label">
-                                        Kritik dan Saran <sup class="border border-danger rounded p-1 text-danger">Wajib</sup>
+                                        Tuliskan Saran/Pengaduan/Apresiasi <sup class="border border-danger rounded p-1 text-danger">Wajib</sup>
                                     </label>
                                     <div class="col-sm-9">
                                         <textarea name="saran_pengaduan" class="form-control" rows="5"></textarea>
