@@ -33,7 +33,7 @@ class FollowUpController extends Controller
         // tampilan menurut satker
         // belum dibuat.
 
-        $done = d_penilaian::where('id', $id)->where('selesai', 1)->get();
+        $done = d_penilaian::where('id', $id)->where('selesai', 1)->first();
 
         return view('backend.followup.detail-done', compact('done'));
     }
@@ -55,11 +55,11 @@ class FollowUpController extends Controller
 
     public function detailPjLayanan($id)
     {
-        if(Auth::user()->role_id === 1) {
-            $serviceDetail = d_penilaian::where('id', $id)->where('isPengaduan', 0)->where('selesai', 0)->paginate(15);
-        } else {
-            $serviceDetail = 
-        }
+        $serviceDetail = d_penilaian::where('id', $id)
+                         -> where('selesai', 0)
+                         -> where('is_pengaduan', 0)
+                         -> orWhere('is_pengaduan', null)
+                         -> first();
 
         return view('backend.followup.detail-service', compact('serviceDetail'));
     }
@@ -161,7 +161,7 @@ class FollowUpController extends Controller
             case 'whatsapp':
                 if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === "") {
                     alert()->warning('Tindak Lanjut Layanan', 'Pesan tindak lanjut harus terisi.');
-                    return redirect()->back();
+                    return redirect()->to(env('APP_URL') . 'tindak-lanjut/kirim/' . $id);
                 } else {
                     $customer->update([
                         'text_pj_layanan' => $request->text_pj_layanan,
@@ -177,7 +177,7 @@ class FollowUpController extends Controller
             case 'email':
                 if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === "") {
                     alert()->warning('Tindak Lanjut Layanan', 'Pesan tindak lanjut harus terisi.');
-                    return redirect()->back();
+                    return redirect()->to(env('APP_URL') . 'tindak-lanjut/kirim/' . $id);
                 } else {
                     $customer->update([
                         'text_pj_layanan' => $request->text_pj_layanan,
@@ -238,6 +238,16 @@ class FollowUpController extends Controller
         ]);
     }
 
+    public function detailPjPengaduan($id)
+    {
+        $complaintDetail = d_penilaian::where('id', $id)
+                           -> where('selesai', 0)
+                           -> where('is_pengaduan', 1)
+                           -> first();
+
+        return view('backend.followup.detail-complaint', compact('complaintDetail'));
+    }
+
     public function kirimDataPengaduan($id)
     {
         $customer = d_penilaian::findOrFail($id);
@@ -255,7 +265,7 @@ class FollowUpController extends Controller
             case 'whatsapp':
                 if(is_null($request->text_pj_pengaduan) || trim($request->text_pj_pengaduan, "") === "") {
                     alert()->warning('Tindak Lanjut Pengaduan', 'Pesan tindak lanjut harus terisi.');
-                    return redirect()->back();
+                    return redirect()->to(env('APP_URL') . 'tindak-lanjut/kirim-pengaduan/' . $id);
                 } else {
                     $customer->update([
                         'text_pj_pengaduan' => $request->text_pj_pengaduan,
@@ -272,7 +282,7 @@ class FollowUpController extends Controller
             case 'email':
                 if(is_null($request->text_pj_pengaduan) || trim($request->text_pj_pengaduan, "") === "") {
                     alert()->warning('Tindak Lanjut Pengaduan', 'Pesan tindak lanjut harus terisi.');
-                    return redirect()->back();
+                    return redirect()->to(env('APP_URL') . 'tindak-lanjut/kirim-pengaduan/' . $id);
                 } else {
                     $customer->update([
                         'text_pj_pengaduan' => $request->text_pj_pengaduan,

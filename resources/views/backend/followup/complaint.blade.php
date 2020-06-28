@@ -36,7 +36,10 @@
                                                 <a>{{ DateFormat::convertDateTime($item->created_at) }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a>{{ $item->nama_konsumen ?? '-' }}</a>
+                                                <a style="color:#666666" class="text-decoration-none" href="{{ route('followup.detail.complaint', $item->id) }}">
+                                                    <i class="icon-user"></i>
+                                                    <span class="ml-1">{{ $item->nama_konsumen }}</span>
+                                                </a>
                                             </td>
                                             <td width="40%" class="align-middle">
                                                 <p>{{ wordwrap($item->saran_pengaduan) ?? '-' }}</p>

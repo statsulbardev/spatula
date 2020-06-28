@@ -8,7 +8,7 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middle
 Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('sso', 'BpsSsoController')->name('sso');
+Route::get('sso', 'Auth\LoginController@sso')->name('sso');
 
 Route::prefix('penilaian')->name('penilaian.')->group(function() {
     Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');
@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function() {
     Route::get('tindak-lanjut/selesai/{id}', 'FollowUpController@selesaiDetail')->name('followup.detail.done');
 
     Route::get('tindak-lanjut/konfirmasi-pj-layanan', 'FollowUpController@listPjLayanan')->name('followup.service');
+    Route::get('tindak-lanjut/konfirmasi-pj-layanan/{id}', 'FollowUpController@detailPjLayanan')->name('followup.detail.service');
     Route::get('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@kategorisasi')->name('followup.categorize');
     Route::put('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@simpanKategori')->name('followup.categorize.store');
     Route::get('tindak-lanjut/kategorisasi/{id}/edit', 'FollowUpController@editKategori')->name('followup.categorize.edit');
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function() {
     Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@akhiriKonfirmasiLayanan')->name('followup.finish');
 
     Route::get('tindak-lanjut/konfirmasi-pj-pengaduan', 'FollowUpController@listPjPengaduan')->name('followup.complaint');
+    Route::get('tindak-lanjut/konfirmasi-pj-pengaduan/{id}', 'FollowUpController@detailPjPengaduan')->name('followup.detail.complaint');
     Route::get('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@kirimDataPengaduan')->name('followup.sent.complaint');
     Route::put('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@simpanDataPengaduan')->name('followup.sent.complaint.store');
 
