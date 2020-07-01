@@ -25,9 +25,9 @@ class MPenggunaValidation extends FormRequest
     {
         $rules = [
             'fullname' => 'required|string|regex:/^[\pL\s-]+$/u|min:3|max:30',
-            'username' => 'required|string|regex:/^[\pL\s-]+$/u|min:3|max:20',
-            'email'    => 'required|email:rfc',
-            'bpsid'    => 'nullable|numeric|min:9|max:9',
+            'username' => 'required|string|min:3|max:20',
+            'email'    => 'required|email:rfc|unique:m_pengguna,email',
+            'bpsid'    => 'required|numeric|min:9|unique:m_pengguna,bpsid',
             'satker'   => 'required',
             'role'     => 'required',
             'photo'    => 'nullable|image|mimes:png,jpg,jpeg|max:500'
@@ -54,12 +54,13 @@ class MPenggunaValidation extends FormRequest
             'username.min'      => 'Isian username minimal terdiri dari 3 huruf.',
             'username.max'      => 'Isian username maksimum terdiri dari 20 huruf.',
             'email.required'    => 'Isian email tidak boleh kosong.',
+            'email.unique'      => 'Isian email tersebut sudah digunakan.',
             'password.required' => 'Isian password tidak boleh kosong.',
             'password.min'      => 'Isian password minimal terdiri dari 8 karakter.',
             'password.max'      => 'Isian password maksumum terdiri dari 20 karakter.',
-            'bpsid.min'         => 'Isian NIP BPS harus terdiri dari 9 nomor.',
-            'bpsid.max'         => 'Isian NIP BPS harus terdiri dari 9 nomor.',
+            'bpsid.min'         => 'Isian NIP BPS harus terdiri dari 9 angka.',
             'bpsid.numeric'     => 'Isian NIP BPS terdiri dari angka 0-9.',
+            'bpsid.unique'      => 'Isian NIP BPS tersebut sudah digunakan.',
             'photo.image'       => 'Foto profil harus merupakan format gambar.',
             'photo.mimes'       => 'Format foto profil yang diizinkan adalah jpg, jpeg, dan png.',
             'photo.max'         => 'Ukuran maksimum foto profil adalah 500 kb.',

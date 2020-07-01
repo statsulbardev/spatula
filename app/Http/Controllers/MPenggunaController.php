@@ -66,7 +66,7 @@ class MPenggunaController extends Controller
 
         alert()->success('Tambah Pengguna', $request->fullname . ' Telah Ditambahkan');
 
-        return redirect()->to(env('APP_URL') . '/pengguna');
+        return redirect()->to(env('APP_URL') . 'pengguna');
     }
 
     /**
