@@ -62,7 +62,7 @@
   background-size: 24px;
   background-repeat: no-repeat;
   /* background-image: url(../img/star-empty.svg); */
-  background-image: url(../../storage/star-rating/star-empty.svg);
+  background-image: url(../../files/image/star-rating/star-empty.svg);
   margin: 0 8px 0 0;
 }
 
@@ -89,7 +89,7 @@
 .gl-star-rating-stars.s90 > span:nth-child(-1n+9),
 .gl-star-rating-stars.s100 > span {
   /* background-image: url(../img/star-full.svg); */
-  background-image: url(../../storage/star-rating/star-full.svg);
+  background-image: url(../../files/image/star-rating/star-full.svg);
 }
 
 .gl-star-rating-text {

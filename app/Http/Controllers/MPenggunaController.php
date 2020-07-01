@@ -6,6 +6,7 @@ use App\Http\Requests\MPenggunaValidation;
 use App\Models\m_akses;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
+use App\Repositories\MPenggunaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,23 +60,13 @@ class MPenggunaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MPenggunaValidation $request)
+    public function store(MPenggunaValidation $request, MPenggunaRepository $repository)
     {
-        m_pengguna::create([
-            'nama'           => $request->fullname,
-            'username'       => $request->username,
-            'email'          => $request->email,
-            'password'       => bcrypt($request->password),
-            'bpsid'          => $request->bpsid,
-            'role_id'        => $request->role,
-            'kode_satker_id' => $request->satker,
-            'aktif'          => true,
-            'foto'           => $request->file('photo') ? $request->file('photo')->store('public/image') : null
-        ]);
+        $repository->store($request);
 
         alert()->success('Tambah Pengguna', $request->fullname . ' Telah Ditambahkan');
 
-        return redirect()->to(env('APP_URL') . 'pengguna');
+        return redirect()->to(env('APP_URL') . '/pengguna');
     }
 
     /**
