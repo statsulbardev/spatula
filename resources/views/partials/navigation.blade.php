@@ -116,5 +116,10 @@
                 <i class="icon-interface-windows"></i> Tautan/Link
             </a>
         </li>
+        <li class="{{ request()->is('panduan') ? 'active' : '' }}">
+            <a href="{{ route('panduan') }}">
+                <i class="icon-list-1"></i> Panduan
+            </a>
+        </li>
     </ul>
 </nav>

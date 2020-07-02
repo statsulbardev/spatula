@@ -55,4 +55,6 @@ Route::middleware('auth')->group(function() {
     Route::post('laporan/bulanan', 'ReportController@showMonthlyDetail')->name('report.monthly.show');
     Route::get('laporan/harian', 'ReportController@daily')->name('report.daily');
     Route::post('laporan/harian', 'ReportController@showDailyDetail')->name('report.daily.show');
+
+    Route::get('panduan', 'PanduanController')->name('panduan');
 });
