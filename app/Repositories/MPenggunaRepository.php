@@ -3,11 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\m_pengguna;
+use Illuminate\Support\Facades\Storage;
 
 class MPenggunaRepository
 {
     public function store($request)
     {
+        if(!is_null($request->photo)) $path = Storage::putFile('image', $request->file('photo'));
+
         m_pengguna::create([
             'nama'           => $request->fullname,
             'username'       => $request->username,
@@ -17,30 +20,30 @@ class MPenggunaRepository
             'role_id'        => $request->role,
             'kode_satker_id' => $request->satker,
             'aktif'          => true,
-            // 'foto'           => $request->file('photo') ? Storage::disk('bps')->put('') : null
+            'foto'           => is_null($request->photo) ? null : $path
         ]);
     }
 
     public function update($id, $request)
     {
+        if(!is_null($request->photo)) {
+            $path = Storage::putFile('image', $request->file('photo'));
+
+            m_pengguna::where('id', $id)->update(['foto' => $path]);
+        }
+
         m_pengguna::where('id', $id)->update([
             'nama'           => $request->fullname,
             'username'       => $request->username,
             'email'          => $request->email,
             'bpsid'          => $request->bpsid,
             'role_id'        => $request->role,
-            'kode_satker_id' => $request->satker,
+            'kode_satker_id' => $request->satker
         ]);
 
         if(!is_null($request->password)) {
             m_pengguna::where('id', $id)->update([
                 'password' => bcrypt($request->password)
-            ]);
-        }
-
-        if(!is_null($request->file('photo'))) {
-            m_pengguna::where('id', $id)->update([
-                'foto' => $request->file('photo')->store('public/image')
             ]);
         }
     }

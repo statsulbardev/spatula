@@ -20,7 +20,7 @@
                         <h3 class="h4">Isikan Informasi Pengguna Aplikasi</h3>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('pengguna.simpan') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('pengguna.simpan') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">

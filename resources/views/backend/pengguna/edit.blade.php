@@ -20,7 +20,7 @@
                         <h3 class="h4">Isikan Informasi Pengguna Aplikasi</h3>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('pengguna.update', $user->id) }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('pengguna.update', $user->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="form-group row">
@@ -109,6 +109,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input name="photo" type="file" class="form-control-file" accept="image/*">
+                                    <img class="mt-3 img-thumbnail" width="100" src="{{ asset('public/files/' . $user->foto ) }}">
                                     @error('photo')
                                         <span class="mt-4 alert alert-danger">{{ $message }}</span>
                                     @enderror
