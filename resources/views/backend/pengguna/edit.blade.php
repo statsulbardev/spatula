@@ -86,21 +86,27 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Satuan Kerja</label>
                                 <div class="col-sm-9">
-                                    <select name="satker" class="form-control mb-3">
+                                    <select name="satker" class="form-control mb-3" @if(Auth::user()->role_id > 2) disabled @endif>
                                         @foreach ($satker as $index => $item)
                                             <option value="{{ $index + 1 }}" {{ ( ($index+1) === $selected_satker) ? 'selected' : '' }}>{{ $item->kode_satker }} - BPS {{ $item->nama }}</option>
                                         @endforeach
                                     </select>
+                                    @if(Auth::user()->role_id > 2)
+                                        <input name="satker" type="hidden" value="{{ $selected_satker }}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">Role/Hak Akses</label>
                                 <div class="col-sm-9">
-                                    <select name="role" class="form-control mb-3">
+                                    <select name="role" class="form-control mb-3" @if(Auth::user()->role_id > 2) disabled @endif>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->kode_akses }}" {{ ( $role->kode_akses === $selected_role) ? 'selected' : '' }}>{{ $role->nama_akses }}</option>
                                         @endforeach
                                     </select>
+                                    @if(Auth::user()->role_id > 2)
+                                        <input name="role" type="hidden" value="{{ $selected_role }}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group row">

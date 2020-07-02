@@ -4,7 +4,7 @@
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar">
             @if(Auth::user()->foto)
-                <img src="{{ Auth::user()->foto }}" alt="..." class="img-fluid rounded-circle">
+                <img src="{{ asset('public/files/' . Auth::user()->foto ) }}" alt="..." class="img-fluid rounded-circle">
             @else
                 <img src="{{ asset('public/files/image/user.png') }}" alt="..." class="img-fluid rounded-circle">
             @endif

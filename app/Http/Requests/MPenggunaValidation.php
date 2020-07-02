@@ -26,8 +26,6 @@ class MPenggunaValidation extends FormRequest
         $rules = [
             'fullname' => 'required|string|regex:/^[\pL\s-]+$/u|min:3|max:30',
             'username' => 'required|string|min:3|max:20',
-            'satker'   => 'required',
-            'role'     => 'required',
             'photo'    => 'nullable|image|mimes:png,jpg,jpeg|max:500'
         ];
 

@@ -35,9 +35,7 @@
                                     <th>NIP BPS</th>
                                     <th>Role</th>
                                     <th>Satuan Kerja</th>
-                                    @if(Auth::user()->role_id <= 2)
-                                        <th></th>
-                                    @endif
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,16 +81,18 @@
                                                     BPS {{ $user->satker()->first()->nama }}
                                                 </span>
                                             </td>
-                                            @if(Auth::user()->role_id <= 2)
-                                                <td class="align-middle">
+                                            <td class="align-middle">
+                                                @if(Auth::user()->role_id <= 2)
                                                     <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <input class="btn btn-sm btn-danger float-right ml-4" type="submit" value="Hapus"/>
                                                     </form>
                                                     <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
-                                                </td>
-                                            @endif
+                                                @else
+                                                    <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @endif
