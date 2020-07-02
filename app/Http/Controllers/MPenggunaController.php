@@ -95,30 +95,13 @@ class MPenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MPenggunaValidation $request, $id)
+    public function update(MPenggunaValidation $request, MPenggunaRepository $repository, $id)
     {
-        m_pengguna::where('id', $id)->update([
-            'nama'           => $request->fullname,
-            'username'       => $request->username,
-            'email'          => $request->email,
-            'bpsid'          => $request->bpsid,
-            'role_id'        => $request->role,
-            'kode_satker_id' => $request->satker,
-        ]);
+        $repository->update($id, $request);
 
-        if(!is_null($request->password)) {
-            m_pengguna::where('id', $id)->update([
-                'password' => bcrypt($request->password)
-            ]);
-        }
+        alert()->success('Update Pengguna', 'Informasi ' . $request->fullname . ' telah diperbaharui.');
 
-        if(!is_null($request->file('photo'))) {
-            m_pengguna::where('id', $id)->update([
-                'foto' => $request->file('photo')->store('public/image')
-            ]);
-        }
-
-        return redirect()->to(env('APP_URL') . 'pengguna')->with('success', 'Informasi ' . $request->nama . ' Telah Diperbaharui.');
+        return redirect()->to(env('APP_URL') . 'pengguna');
     }
 
     /**

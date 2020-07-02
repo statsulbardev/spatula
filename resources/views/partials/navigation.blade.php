@@ -6,7 +6,7 @@
             @if(Auth::user()->foto)
                 <img src="{{ Auth::user()->foto }}" alt="..." class="img-fluid rounded-circle">
             @else
-                <img src="{{ asset('files/image/user.png') }}" alt="..." class="img-fluid rounded-circle">
+                <img src="{{ asset('public/files/image/user.png') }}" alt="..." class="img-fluid rounded-circle">
             @endif
         </div>
         <div class="title">

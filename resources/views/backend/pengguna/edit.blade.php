@@ -72,9 +72,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 form-control-label">NIP BPS</label>
+                                <label class="col-sm-3 form-control-label">
+                                    NIP BPS
+                                    <sup class="badge badge-rounded bg-primary text-white">wajib</sup>
+                                </label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="bpsid" class="form-control" value="{{ $user->bpsid }}">
+                                    <input type="number" name="bpsid" class="form-control" value="{{ $user->bpsid }}">
                                     @error('bpsid')
                                         <span class="mt-4 alert alert-danger">{{ $message }}</span>
                                     @enderror

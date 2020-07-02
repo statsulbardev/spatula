@@ -26,8 +26,7 @@ class MPenggunaValidation extends FormRequest
         $rules = [
             'fullname' => 'required|string|regex:/^[\pL\s-]+$/u|min:3|max:30',
             'username' => 'required|string|min:3|max:20',
-            'email'    => 'required|email:rfc|unique:m_pengguna,email',
-            'bpsid'    => 'required|numeric|min:9|unique:m_pengguna,bpsid',
+
             'satker'   => 'required',
             'role'     => 'required',
             'photo'    => 'nullable|image|mimes:png,jpg,jpeg|max:500'
@@ -35,8 +34,12 @@ class MPenggunaValidation extends FormRequest
 
         if($this->route()->getName() === "pengguna.tambah") {
             $rules['password'] = 'required|string|min:8|max:20';
+            $rules['email']    = 'required|email:rfc|unique:m_pengguna,email';
+            $rules['bpsid']    = 'required|numeric|min:9|unique:m_pengguna,bpsid';
         } else {
             $rules['password'] = 'nullable|string|min:8|max:20';
+            $rules['email']    = 'required|email:rfc';
+            $rules['bpsid']    = 'required|numeric|min:9';
         }
 
         return $rules;

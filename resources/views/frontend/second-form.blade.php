@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
                             <h4>
-                                <img width="5%" class="mr-2" src="{{ asset('images/bps.svg') }}" alt="">
+                                <img width="5%" class="mr-2" src="{{ asset('public/files/logo/bps.svg') }}" alt="">
                                 <span>Saran Pengaduan Online dan Rating Petugas Layanan BPS {{ $kantor->nama }}</span>
                             </h4>
                         </div>
