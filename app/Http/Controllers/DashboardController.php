@@ -21,13 +21,13 @@ class DashboardController extends Controller
             $petugasAktif     = m_pengguna::where('role_id', 7)->where('aktif', 1)->count();
             $penilaianPetugas = d_penilaian::whereNotNull('kode_petugas')->count();
             $penilaianLayanan = d_penilaian::whereNull('kode_petugas')->count();
-            $jumlahPengaduan  = d_penilaian::count('is_pengaduan', 1);
+            $jumlahPengaduan  = d_penilaian::where('is_pengaduan', 1)->count();
         } else {
             $kode = $this->getSatkerKode();
             $petugasAktif     = m_pengguna::where('kode_satker_id', Auth::user()->kode_satker_id)->where('role_id', 7)->where('aktif', 1)->count();
             $penilaianPetugas = d_penilaian::where('kode_satker_id', $kode->kode_satker)->whereNotNull('kode_petugas')->count();
             $penilaianLayanan = d_penilaian::where('kode_satker_id', $kode->kode_satker)->whereNull('kode_petugas')->count();
-            $jumlahPengaduan  = d_penilaian::where('kode_satker_id', $kode->kode_satker)->count('is_pengaduan', 1);
+            $jumlahPengaduan  = d_penilaian::where('kode_satker_id', $kode->kode_satker)->where('is_pengaduan', 1)->count();
         }
 
         return view('backend.dashboard.index', compact('petugasAktif', 'penilaianPetugas', 'penilaianLayanan', 'jumlahPengaduan'));
