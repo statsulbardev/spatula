@@ -58,7 +58,6 @@ class FollowUpController extends Controller
         $serviceDetail = d_penilaian::where('id', $id)
                          -> where('selesai', 0)
                          -> where('is_pengaduan', 0)
-                         -> orWhere('is_pengaduan', null)
                          -> first();
 
         return view('backend.followup.detail-service', compact('serviceDetail'));
