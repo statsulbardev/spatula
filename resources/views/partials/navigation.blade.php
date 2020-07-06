@@ -95,6 +95,11 @@
                 </ul>
             </li>
         @endif
+        <li class="{{ request()->is('panduan') ? 'active' : '' }}">
+            <a href="{{ route('panduan') }}">
+                <i class="icon-list-1"></i> Panduan
+            </a>
+        </li>
     </ul>
 
     <span class="heading">Pengaturan</span>
@@ -114,11 +119,6 @@
         <li class="{{ request()->is('tautan') ? 'active' : '' }}">
             <a href="{{ route('tautan') }}">
                 <i class="icon-interface-windows"></i> Tautan/Link
-            </a>
-        </li>
-        <li class="{{ request()->is('panduan') ? 'active' : '' }}">
-            <a href="{{ route('panduan') }}">
-                <i class="icon-list-1"></i> Panduan
             </a>
         </li>
     </ul>
