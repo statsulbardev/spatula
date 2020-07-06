@@ -16,6 +16,7 @@ class PenilaianLayananRepository
             'kode_layanan'    => $request->kode_layanan,
             'rating_layanan'  => $request->rating_layanan,
             'saran_pengaduan' => $request->saran_pengaduan,
+            'is_pengaduan'    => 0,
             'kode_satker_id'  => $satker,
             'selesai'         => false,
             'created_at'      => Carbon::now(),
