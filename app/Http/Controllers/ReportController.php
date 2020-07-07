@@ -34,9 +34,15 @@ class ReportController extends Controller
             $query_1 = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama , AVG(rating_petugas) as rerata, COUNT(rating_petugas) as jumlah_terlayani
                        FROM d_penilaian a, m_pengguna b WHERE a.kode_petugas=b.id GROUP BY YEAR(a.created_at), MONTH(a.created_at), kode_petugas');
 
+            // Rating Saran Pengaduan
+            $query_2 = DB::select("SELECT MONTH(a.created_at) as bulan, b.nama_saran , COUNT(a.kode_saran) as jumlah_saran
+                       FROM d_penilaian a, m_saran b WHERE YEAR(a.created_at) = 2020 AND a.kode_saran LIKE CONCAT('%', b.kode_saran ,'%')
+                       GROUP BY YEAR(a.created_at), MONTH(a.created_at), b.kode_saran");
+
             // Rating Layanan
-            $query_2_3 = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
-                         FROM d_penilaian a, m_layanan b WHERE a.kode_layanan=b.kode_layanan GROUP BY YEAR(a.created_at), MONTH(a.created_at), a.kode_layanan');
+            $query_3 = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
+                       FROM d_penilaian a, m_layanan b WHERE a.kode_layanan=b.kode_layanan GROUP BY YEAR(a.created_at), MONTH(a.created_at), a.kode_layanan');
+
         } else {
             $kodeSatker = $this->getSatkerKode();
 
@@ -45,13 +51,18 @@ class ReportController extends Controller
                        FROM d_penilaian a, m_pengguna b WHERE a.kode_satker_id = ' . $kodeSatker->kode_satker . ' AND a.kode_petugas=b.id
                        GROUP BY a.kode_satker_id, MONTH(a.created_at), kode_petugas');
 
+            // Rating Saran Pengaduan
+            $query_2 = DB::select("SELECT MONTH(a.created_at) as bulan, b.nama_saran , COUNT(a.kode_saran) as jumlah_saran
+                       FROM d_penilaian a, m_saran b WHERE a.kode_satker_id = " . $kodeSatker->kode_satker . " AND YEAR(a.created_at) = 2020 AND a.kode_saran LIKE CONCAT('%', b.kode_saran ,'%')
+                       GROUP BY YEAR(a.created_at), MONTH(a.created_at), b.kode_saran");
+
             // Rating Layanan
-            $query_2_3 = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
-                    FROM d_penilaian a, m_layanan b WHERE a.kode_satker_id = ' . $kodeSatker->kode_satker . ' AND a.kode_layanan=b.kode_layanan
-                    GROUP BY a.kode_satker_id, MONTH(a.created_at), a.kode_layanan');
+            $query_3 = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
+                       FROM d_penilaian a, m_layanan b WHERE a.kode_satker_id = ' . $kodeSatker->kode_satker . ' AND a.kode_layanan=b.kode_layanan
+                       GROUP BY a.kode_satker_id, MONTH(a.created_at), a.kode_layanan');
         }
 
-        return view('backend.report.month', compact('years', 'query_1', 'query_2_3'));
+        return view('backend.report.month', compact('years', 'query_1', 'query_2', 'query_3'));
     }
 
     public function showMonthlyDetail(Request $request)

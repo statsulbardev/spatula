@@ -79,22 +79,22 @@
                                             <thead>
                                                 <tr>
                                                     <th>Bulan</th>
-                                                    <th>Jenis Layanan</th>
-                                                    <th>Jumlah</th>
+                                                    <th>Nama Saran</th>
+                                                    <th>Jumlah Saran</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($query_2_3)
-                                                    @foreach($query_2_3 as $index => $data)
+                                                @if($query_2)
+                                                    @foreach($query_2 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
                                                                 <a class="text-dark">@include('components.month', ['month' => $data->bulan])</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark">{{ $data->nama_layanan }}</a>
+                                                                <a class="text-dark">{{ $data->nama_saran }}</a>
                                                             </td>
                                                             <td class="align-middle">
-                                                                <a class="text-dark">{{ $data->jumlah_terlayani }}</a>
+                                                                <a class="text-dark">{{ $data->jumlah_saran }}</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -125,8 +125,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($query_2_3)
-                                                    @foreach($query_2_3 as $index => $data)
+                                                @if($query_3)
+                                                    @foreach($query_3 as $index => $data)
                                                         <tr>
                                                             <td class="align-middle">
                                                                 <a class="text-dark">@include('components.month', ['month' => $data->bulan])</a>
