@@ -116,6 +116,8 @@ class MPenggunaController extends Controller
 
         $user->delete();
 
-        return redirect()->to(env('APP_URL') . 'pengguna')->with('success', 'Informasi ' . $user->nama . ' Telah Dihapus.');
+        alert()->success('Hapus Pengguna', 'Informasi ' . $user->nama . ' telah dihapus.');
+
+        return redirect()->to(env('APP_URL') . 'pengguna');
     }
 }
