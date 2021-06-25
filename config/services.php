@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'bps' => [
+        'client_id'     => env('BPS_CLIENT_ID'),
+        'client_secret' => env('BPS_CLIENT_SECRET')
+    ],
+
 ];

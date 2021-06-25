@@ -1,0 +1,16 @@
+@switch($type)
+    @case(1)
+        Saran
+        @break
+    @case(2)
+        Pengaduan
+        @break
+    @case(3)
+        Kritik
+        @break
+    @case(4)
+        Apresiasi
+        @break
+    @default
+        Lainnya
+@endswitch

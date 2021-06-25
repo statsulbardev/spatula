@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Login')
+
 @section('content')
 <div class="page login-page">
     <div class="container d-flex align-items-center">
@@ -10,9 +12,9 @@
                     <div class="info d-flex align-items-center">
                         <div class="content">
                             <div class="logo">
-                                <h1>Dashboard</h1>
+                                <h1>SPATULA</h1>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <p>Saran Pengaduan Online dan Rating Pelayanan Petugas</p>
                         </div>
                     </div>
                 </div>
@@ -20,11 +22,18 @@
                 <div class="col-lg-6 bg-white">
                     <div class="form d-flex align-items-center">
                         <div class="content">
+                            {{-- <div class="mb-5">
+                                <p class="h3 text-dark mb-4">SIGN IN APLIKASI SPATULA</p>
+                                <a class="mb-3 btn btn-sm btn-outline-primary" href="{{ route('sso') }}">
+                                    Gunakan Akun Community BPS
+                                </a>
+                            </div> --}}
                             <form method="POST" class="form-validate" action={{ route('login') }}>
                                 @csrf
+                                {{-- <hr class="mb-5 mt-5 divider"> --}}
                                 <div class="form-group">
                                     <input id="username" type="text" name="username" required class="input-material">
-                                    <label for="username" class="label-material">User Name</label>
+                                    <label for="username" class="label-material">Username</label>
                                     @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
