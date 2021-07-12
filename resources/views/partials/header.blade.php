@@ -32,12 +32,7 @@
                     <li class="nav-item d-flex align-items-center mr-3"><a id="search" href="#"><i class="icon-search"></i></a></li> --}}
                     <!-- Logout    -->
                     <li class="nav-item">
-                        <a href="{{ route('logout') }}" class="nav-link logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                        <livewire:auth.logout/>
                     </li>
                 </ul>
             </div>

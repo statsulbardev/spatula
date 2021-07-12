@@ -1,8 +1,6 @@
-@extends('home')
+@section('title', 'Pengaturan User')
 
-@section('title', 'Pengaturan Pengguna')
-
-@section('inner-content')
+<div>
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
@@ -12,9 +10,9 @@
     <section class="tables">
         <div class="container-fluid d-flex">
             <span class="w-100"></span>
-            @if(Auth::user()->role_id === 1 || Auth::user()->role_id === 2)
+            @if (Auth::user()->role_id === 1 || Auth::user()->role_id === 2)
                 <div class="form-group">
-                    <a href="{{ route('pengguna.tambah') }}" class="btn btn-primary">Tambah</a>
+                    <a href="{{ url(env('APP_URL') . '/setting/user/create') }}" class="btn btn-primary">Tambah</a>
                 </div>
             @endif
         </div>
@@ -28,62 +26,42 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Nama</th>
                                     <th>Username</th>
-                                    <th>Email</th>
                                     <th>NIP BPS</th>
                                     <th>Role</th>
                                     <th>Satuan Kerja</th>
-                                    <th></th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if($users->count() > 0)
                                     @foreach($users as $index => $user)
                                         <tr>
-                                            <th scope="row" class="align-middle">
-                                                <span class="text-dark">
-                                                    {{ $index + 1 }}
-                                                </span>
-                                            </th>
                                             <td class="align-middle">
-                                                <span class="text-dark">
-                                                    {{ $user->nama }}
-                                                </span>
+                                                <span class="text-dark">{{ $user->nama }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <span class="text-dark">
-                                                    {{ $user->username }}
-                                                </span>
+                                                <span class="text-dark">{{ $user->username }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <span class="text-dark">
-                                                    {{ $user->email }}
-                                                </span>
+                                                <span class="text-dark">{{ $user->bpsid ?? '-' }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                @if(!is_null($user->bpsid))
-                                                    <span class="text-dark">
-                                                        {{ $user->bpsid }}
-                                                    </span>
-                                                @else
-                                                    -
-                                                @endif
+                                                <span class="text-dark">{{ $user->role->nama_akses }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <span class="text-dark">
-                                                    {{ $user->role->nama_akses }}
-                                                </span>
+                                                <span class="text-dark">BPS {{ $user->satker()->first()->nama }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <span class="text-dark">
-                                                    BPS {{ $user->satker()->first()->nama }}
-                                                </span>
-                                            </td>
-                                            <td class="align-middle">
-                                                @if(Auth::user()->role_id <= 2)
-                                                    <form action="{{ route('pengguna.hapus', $user->id) }}" method="POST">
+                                                <a href="" class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                                <a href="{{ url(env('APP_URL') . '/setting/user/edit/' . $user->username) }}" class="btn btn-sm btn-primary ml-2">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                {{-- @if(Auth::user()->role_id <= 2)
+                                                    <form action="" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <input class="btn btn-sm btn-danger float-right ml-4" type="submit" value="Hapus"/>
@@ -91,7 +69,7 @@
                                                     <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
                                                 @else
                                                     <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
-                                                @endif
+                                                @endif --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -99,9 +77,9 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $users->links() }}
+                    {{-- {{ $users->links() }} --}}
                 </div>
             </div>
         </div>
     </section>
-@endsection
+</div>

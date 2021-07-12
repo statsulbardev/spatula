@@ -38,9 +38,7 @@ class m_pengguna extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password'];
 
     public function satker()
     {
@@ -50,5 +48,10 @@ class m_pengguna extends Authenticatable
     public function role()
     {
         return $this->belongsTo(m_akses::class, 'role_id');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'username';
     }
 }

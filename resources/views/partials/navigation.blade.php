@@ -17,9 +17,9 @@
     <!-- Sidebar Navidation Menus-->
     <span class="heading">Utama</span>
     <ul class="list-unstyled">
-        <li class="{{ request()->is('/') ? 'active' : '' }}">
-            <a href="{{ route('dashboard') }}">
-                <i class="icon-home"></i>Beranda
+        <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
+            <a href="{{ url(env('APP_URL')) }}">
+                <i class="fa fa-home"></i>Beranda
             </a>
         </li>
         <li>
@@ -53,18 +53,21 @@
                 <li class="{{
                     request()->is('tindak-lanjut/selesai') ||
                     request()->is('tindak-lanjut/selesai/*') ? 'active' : '' }}">
-                    <a href="{{ route('followup.done') }}">Selesai</a>
+                    {{-- <a href="{{ route('followup.done') }}">Selesai</a> --}}
+                    <a href="">Selesai</a>
                 </li>
                 <li class="{{
                     request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
                     request()->is('tindak-lanjut/kategorisasi/*') ||
                     request()->is('tindak-lanjut/kirim/*') ? 'active' : '' }}">
-                    <a href="{{ route('followup.service') }}">Konfirmasi PJ Layanan</a>
+                    {{-- <a href="{{ route('followup.service') }}">Konfirmasi PJ Layanan</a> --}}
+                    <a href="">Konfirmasi PJ Layanan</a>
                 </li>
                 <li class="{{
                     request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
                     request()->is('tindak-lanjut/kirim-pengaduan/*') ? 'active' : '' }}">
-                    <a href="{{ route('followup.complaint') }}">Konfirmasi PJ Pengaduan</a>
+                    {{-- <a href="{{ route('followup.complaint') }}">Konfirmasi PJ Pengaduan</a> --}}
+                    <a href="">Konfirmasi PJ Pengaduan</a>
                 </li>
             </ul>
         </li>
@@ -87,38 +90,49 @@
                     }}
                 ">
                     <li class="{{ request()->is('laporan/bulanan') ? 'active' : '' }}">
-                        <a href="{{ route('report.monthly') }}">Bulanan</a>
+                        {{-- <a href="{{ route('report.monthly') }}">Bulanan</a> --}}
+                        <a href="">Bulanan</a>
                     </li>
                     <li class="{{ request()->is('laporan/harian') ? 'active' : '' }}">
-                        <a href="{{ route('report.daily') }}">Harian</a>
+                        {{-- <a href="{{ route('report.daily') }}">Harian</a> --}}
+                        <a href="">Harian</a>
                     </li>
                 </ul>
             </li>
         @endif
         <li class="{{ request()->is('panduan') ? 'active' : '' }}">
-            <a href="{{ route('panduan') }}">
+            {{-- <a href="{{ route('panduan') }}">
                 <i class="icon-list-1"></i> Panduan
+            </a> --}}
+            <a href="">
+                <i class="fa fa-book"></i> Panduan
             </a>
         </li>
     </ul>
 
     <span class="heading">Pengaturan</span>
     <ul class="list-unstyled">
-        <li class="{{ request()->is('pengguna') || request()->is('pengguna/*') ? 'active' : '' }}">
-            <a href="{{ route('pengguna') }}">
-                <i class="icon-user"></i>Pengguna
+        <li class="{{ request()->is('setting/user') || request()->is('setting/user/*') ? 'active' : '' }}">
+            <a href="{{ url(env('APP_URL') . '/setting/user/lists') }}">
+                <i class="fa fa-user"></i>Pengguna
             </a>
         </li>
         @if(Auth::user()->role_id <= 2)
             <li class="{{ request()->is('petugas') || request()->is('petugas/*') ? 'active' : '' }}">
-                <a href="{{ route('petugas') }}">
+                {{-- <a href="{{ route('petugas') }}">
+                    <i class="icon-list"></i> Petugas
+                </a> --}}
+                <a href="">
                     <i class="icon-list"></i> Petugas
                 </a>
             </li>
         @endif
         <li class="{{ request()->is('tautan') ? 'active' : '' }}">
-            <a href="{{ route('tautan') }}">
+            {{-- <a href="{{ route('tautan') }}">
                 <i class="icon-interface-windows"></i> Tautan/Link
+            </a> --}}
+            <a href="">
+                <i class="fa fa-globe"></i> Tautan
             </a>
         </li>
     </ul>
