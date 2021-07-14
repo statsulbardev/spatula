@@ -32,7 +32,7 @@ class CreateEdit extends Component
 
     ];
 
-    public function mount(m_pengguna $username)
+    public function mount(m_pengguna $id)
     {
         switch (explode('/', Route::getCurrentRoute()->uri)[2])
         {
@@ -47,7 +47,7 @@ class CreateEdit extends Component
 
                 break;
             case 'edit' :
-                $this->user     = $username;
+                $this->user     = $id;
                 $this->fullname = $this->user->nama;
                 $this->email    = $this->user->email;
                 $this->bpsid    = $this->user->bpsid;
@@ -93,5 +93,19 @@ class CreateEdit extends Component
 
             return redirect(env('APP_URL') . '/setting/user/lists');
         }
+    }
+
+    public function deleteId()
+    {
+        // Method kosong untuk mengakali wire:click yang bentrok dengan wire:submit.
+    }
+
+    public function delete(MPenggunaRepository $mPenggunaRepository)
+    {
+        $result = $mPenggunaRepository->delete($this->user);
+
+        session()->flash('message', $result);
+
+        return redirect(env('APP_URL') . '/setting/user/lists');
     }
 }

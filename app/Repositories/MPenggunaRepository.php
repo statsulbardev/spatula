@@ -84,4 +84,29 @@ class MPenggunaRepository
 
         return $message;
     }
+
+    public function delete($data) : string
+    {
+        try {
+            DB::beginTransaction();
+
+            $path = $data->foto;
+
+            $data->delete();
+
+            is_null($path) ?: $this->deleteFile($path);
+
+            $message = "Informasi " . $data->nama . ' telah dihapus.';
+
+            DB::commit();
+        } catch(Exception $error) {
+            DB::rollBack();
+
+            Log::alert($error->getMessage());
+
+            $message = "Informasi " . $data->nama . ' gagal dihapus.';
+        }
+
+        return $message;
+    }
 }

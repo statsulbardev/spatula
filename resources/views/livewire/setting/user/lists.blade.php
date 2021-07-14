@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                 @if($users->count() > 0)
-                                    @foreach($users as $index => $user)
+                                    @foreach($users as $user)
                                         <tr>
                                             <td class="align-middle">
                                                 <span class="text-dark">{{ $user->nama }}</span>
@@ -59,22 +59,12 @@
                                                 <span class="text-dark">BPS {{ $user->satker()->first()->nama }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="" class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                                <a href="{{ url(env('APP_URL') . '/setting/user/edit/' . $user->username) }}" class="btn btn-sm btn-primary ml-2">
+                                                <a href="{{ url(env('APP_URL') . '/setting/user/edit/' . $user->id) }}" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                {{-- @if(Auth::user()->role_id <= 2)
-                                                    <form action="" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input class="btn btn-sm btn-danger float-right ml-4" type="submit" value="Hapus"/>
-                                                    </form>
-                                                    <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
-                                                @else
-                                                    <a class="btn btn-sm btn-primary float-right" href="{{ route('pengguna.edit', $user->id) }}">Ubah</a>
-                                                @endif --}}
+                                                <button type="button" wire:click="deleteId({{ $user->id }})" class="btn btn-sm btn-danger ml-2" data-toggle="modal" data-target="#deleteModal">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -82,7 +72,28 @@
                             </tbody>
                         </table>
                     </div>
-                    {{-- {{ $users->links() }} --}}
+                    {{-- Paginate --}}
+                </div>
+            </div>
+        </div>
+
+        {{-- Bootstrap Modal --}}
+        <div wire:ignore.self class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Hapus Informasi Pengguna</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah anda ingin menghapus data pengguna ini ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" wire:click.prevent="delete()" id="btn-modal-delete" class="btn btn-danger">Hapus</button>
+                    </div>
                 </div>
             </div>
         </div>

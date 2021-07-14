@@ -49,9 +49,4 @@ class m_pengguna extends Authenticatable
     {
         return $this->belongsTo(m_akses::class, 'role_id');
     }
-
-    public function getRouteKeyName()
-    {
-        return 'username';
-    }
 }

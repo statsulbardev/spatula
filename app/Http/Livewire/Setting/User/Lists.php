@@ -3,12 +3,15 @@
 namespace App\Http\Livewire\Setting\User;
 
 use App\Models\m_pengguna;
+use App\Repositories\MPenggunaRepository;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Lists extends Component
 {
     public $users;
+    public $userData;
+
 
     public function mount()
     {
@@ -26,9 +29,28 @@ class Lists extends Component
         }
     }
 
+    public function data(m_pengguna $data)
+    {
+        $this->userData = $data;
+    }
+
     public function render()
     {
         return view('livewire.setting.user.lists')
             -> layout('layouts.app');
+    }
+
+    public function deleteId(m_pengguna $id)
+    {
+        $this->userData = $id;
+    }
+
+    public function delete(MPenggunaRepository $mPenggunaRepository)
+    {
+        $result = $mPenggunaRepository->delete($this->userData);
+
+        session()->flash('message', $result);
+
+        return redirect(env('APP_URL') . '/setting/user/lists');
     }
 }
