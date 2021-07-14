@@ -7,7 +7,6 @@ use App\Traits\FileUploadable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class MPenggunaRepository
 {
@@ -38,7 +37,7 @@ class MPenggunaRepository
         } catch(Exception $error) {
             DB::rollBack();
 
-            $this->deleteFile($path);
+            $this->deleteFile('image', $path);
 
             Log::alert($error->getMessage());
 
@@ -75,7 +74,7 @@ class MPenggunaRepository
         } catch(Exception $error) {
             DB::rollBack();
 
-            $this->deleteFile($path);
+            $this->deleteFile('image', $path);
 
             Log::alert($error->getMessage());
 
@@ -94,7 +93,7 @@ class MPenggunaRepository
 
             $data->delete();
 
-            is_null($path) ?: $this->deleteFile($path);
+            is_null($path) ?: $this->deleteFile('image', $path);
 
             $message = "Informasi " . $data->nama . ' telah dihapus.';
 

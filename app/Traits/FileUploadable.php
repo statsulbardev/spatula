@@ -22,8 +22,8 @@ trait FileUploadable
         return $name;
     }
 
-    public function deleteFile(string $file) : void
+    public function deleteFile(string $folder, string $file) : void
     {
-        Storage::disk($this->disk)->delete($file);
+        Storage::disk($this->disk)->delete($folder . '/' . $file);
     }
 }
