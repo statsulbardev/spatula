@@ -1,8 +1,6 @@
-@extends('home')
-
 @section('title', 'Pengaturan Petugas')
 
-@section('inner-content')
+<div>
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
@@ -10,6 +8,10 @@
         </div>
     </header>
     <section class="tables">
+        <div class="container-fluid">
+            @include('components.notification.flash')
+        </div>
+
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
@@ -20,9 +22,8 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Nama</th>
-                                    <th>Email</th>
+                                    <th>Satuan Kerja</th>
                                     <th>NIP BPS</th>
                                     <th>Status</th>
                                     <th></th>
@@ -30,16 +31,13 @@
                             </thead>
                             <tbody>
                                 @if($operators->count() > 0)
-                                    @foreach($operators as $index => $operator)
+                                    @foreach($operators as $operator)
                                         <tr>
-                                            <th scope="row" class="align-middle">
-                                                <a class="text-dark">{{ $index + 1 }}</a>
-                                            </th>
                                             <td class="align-middle">
                                                 <a class="text-dark">{{ $operator->nama }}</a>
                                             </td>
                                             <td class="align-middle">
-                                                <a class="text-dark">{{ $operator->email }}</a>
+                                                <a class="text-dark">BPS {{ $operator->satker->nama }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 <a class="text-dark">{{ $operator->bpsid }}</a>
@@ -50,15 +48,11 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <form action="{{ route('petugas.update', $operator->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    @if($operator->aktif)
-                                                        <button name="state" class="btn btn-sm btn-danger float-right" type="submit" value="0">Non Aktifkan</button>
-                                                    @else
-                                                        <button name="state" class="btn btn-sm btn-primary float-right" type="submit" value="1">Aktifkan</button>
-                                                    @endif
-                                                </form>
+                                                @if($operator->aktif)
+                                                    <button wire:click="update({{ $operator->id }}, 0)" class="btn btn-sm btn-danger float-right" type="submit">Non Aktifkan</button>
+                                                @else
+                                                    <button wire:click="update({{ $operator->id }}, 1)" class="btn btn-sm btn-primary float-right" type="submit">Aktifkan</button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -70,9 +64,9 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $operators->links() }}
+                    {{-- {{ $operators->links() }} --}}
                 </div>
             </div>
         </div>
     </section>
-@endsection
+</div>

@@ -114,16 +114,13 @@
     <ul class="list-unstyled">
         <li class="{{ request()->is('setting/user') || request()->is('setting/user/*') ? 'active' : '' }}">
             <a href="{{ url(env('APP_URL') . '/setting/user/lists') }}">
-                <i class="fa fa-user"></i>Pengguna
+                <i class="fa fa-user"></i> Pengguna
             </a>
         </li>
         @if(Auth::user()->role_id <= 2)
-            <li class="{{ request()->is('petugas') || request()->is('petugas/*') ? 'active' : '' }}">
-                {{-- <a href="{{ route('petugas') }}">
-                    <i class="icon-list"></i> Petugas
-                </a> --}}
-                <a href="">
-                    <i class="icon-list"></i> Petugas
+            <li class="{{ request()->is('setting/officer') || request()->is('setting/officer/*') ? 'active' : '' }}">
+                <a href="{{ url(env('APP_URL') . '/setting/officer/lists') }}">
+                    <i class="fa fa-list"></i> Petugas
                 </a>
             </li>
         @endif

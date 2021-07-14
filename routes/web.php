@@ -15,7 +15,10 @@ Route::middleware('auth')->group(function () {
         // User Management
         Route::get('user/lists', \App\Http\Livewire\Setting\User\Lists::class);
         Route::get('user/create', \App\Http\Livewire\Setting\User\CreateEdit::class);
-        Route::get('user/edit/{username}', \App\Http\Livewire\Setting\User\CreateEdit::class);
+        Route::get('user/edit/{id}', \App\Http\Livewire\Setting\User\CreateEdit::class);
+
+        // Officer Management
+        Route::get('officer/lists', \App\Http\Livewire\Setting\Officer\Lists::class);
     });
 });
 
