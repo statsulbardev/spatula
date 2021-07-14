@@ -3,10 +3,10 @@
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar">
-            @if(Auth::user()->foto)
-                <img src="{{ asset('public/files/' . Auth::user()->foto ) }}" alt="..." class="img-fluid rounded-circle">
+            @if(auth()->user()->foto)
+                <img src="{{ secure_asset('/public/files/image/' . auth()->user()->foto ) }}" alt="{{ auth()->user()->nama }}" class="img-fluid rounded">
             @else
-                <img src="{{ asset('public/files/image/user.png') }}" alt="..." class="img-fluid rounded-circle">
+                <img src="{{ secure_asset('/public/files/image/user.png') }}" alt="user" class="img-fluid rounded-circle">
             @endif
         </div>
         <div class="title">
