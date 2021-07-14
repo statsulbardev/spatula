@@ -18,8 +18,6 @@
                         <h3 class="h4">Isikan Informasi Pengguna Aplikasi</h3>
                     </div>
                     <form wire:submit.prevent="save">
-                        @csrf
-
                         <div class="card-body">
                             {{-- Nama Lengkap --}}
                             <div class="form-group row">
@@ -74,8 +72,9 @@
                                 <label class="col-sm-3 form-control-label">Satuan Kerja</label>
                                 <div class="col-sm-9">
                                     <select wire:model="unit" class="form-control mb-3">
-                                        @foreach($satker as $index => $item)
-                                            <option value="{{ $index + 1 }}">{{ $item->kode_satker }} - BPS {{ $item->nama }}</option>
+                                        <option>- Pilih Salah Satu -</option>
+                                        @foreach($satker as $item)
+                                            <option value="{{ $item->id }}">{{ $item->kode_satker }} - BPS {{ $item->nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -87,8 +86,9 @@
                                 <label class="col-sm-3 form-control-label">Role/Hak Akses</label>
                                 <div class="col-sm-9">
                                     <select wire:model="role" class="form-control mb-3">
+                                        <option>- Pilih Salah Satu -</option>
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->kode_akses }}">{{ $role->nama_akses }}</option>
+                                            <option value="{{ $role->id }}">{{ $role->nama_akses }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -102,7 +102,14 @@
                                     <sup class="badge badge-rounded bg-primary text-white">opsional</sup>
                                 </label>
                                 <div class="col-sm-9">
-                                    <input wire:model.defer="photo" type="file" class="form-control-file" accept="image/*">
+                                    <input wire:change="$emit('file')" id="filePhoto" type="file" class="form-control-file" accept="image/*">
+                                    @if (!is_null($urlPhoto))
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ secure_asset(env('APP_URL') . '/public/files/image/' . $urlPhoto) }}" alt="Foto" class="mt-2 shadow rounded" width="50">
+                                        <p class="ml-2 h6 text-muted">{{ $urlPhoto }}</p>
+                                    </div>
+                                    @endif
+
                                     @error('photo')
                                         <span class="mt-4 alert alert-danger">{{ $message }}</span>
                                     @enderror
@@ -119,3 +126,21 @@
         </div>
     </section>
 </div>
+
+@push('scripts')
+<script>
+    window.livewire.on('file', () => {
+        let inputField = document.getElementById('filePhoto')
+        let file       = inputField.files[0]
+        let extension  = inputField.files[0].name.split('.').pop().toLowerCase()
+        let reader     = new FileReader()
+
+        reader.onloadend = () => {
+            window.livewire.emit('photo', reader.result)
+            window.livewire.emit('photoExtension', extension)
+        }
+
+        reader.readAsDataURL(file)
+    });
+</script>
+@endpush

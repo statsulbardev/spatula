@@ -16,6 +16,11 @@
                 </div>
             @endif
         </div>
+
+        <div class="container-fluid">
+            @include('components.notification.flash')
+        </div>
+
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
