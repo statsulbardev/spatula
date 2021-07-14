@@ -23,14 +23,14 @@
             </a>
         </li>
         <li>
-            <a href="#tindakLanjut"
-                @if(request()->is('tindak-lanjut/selesai') ||
-                    request()->is('tindak-lanjut/selesai/*') ||
-                    request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
-                    request()->is('tindak-lanjut/kategorisasi/*') ||
-                    request()->is('tindak-lanjut/kirim/*') ||
-                    request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
-                    request()->is('tindak-lanjut/kirim-pengaduan/*'))
+            <a href="#followUp"
+                @if(request()->is('followup/selesai') ||
+                    request()->is('followup/selesai/*') ||
+                    request()->is('followup/konfirmasi-pj-layanan') ||
+                    request()->is('followup/kategorisasi/*') ||
+                    request()->is('followup/kirim/*') ||
+                    request()->is('followup/konfirmasi-pj-pengaduan') ||
+                    request()->is('followup/kirim-pengaduan/*'))
                     aria-expanded="true"
                 @else
                     aria-expanded="false"
@@ -38,21 +38,21 @@
                 data-toggle="collapse">
                 <i class="icon-website"></i>Tindak Lanjut
             </a>
-            <ul id="tindakLanjut" class="collapse list-unstyled
+            <ul id="followUp" class="collapse list-unstyled
                 {{
-                    request()->is('tindak-lanjut/selesai') ||
-                    request()->is('tindak-lanjut/selesai/*') ||
-                    request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
-                    request()->is('tindak-lanjut/kategorisasi/*') ||
-                    request()->is('tindak-lanjut/kirim/*') ||
-                    request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
-                    request()->is('tindak-lanjut/kirim-pengaduan/*') ?
+                    request()->is('followup/selesai') ||
+                    request()->is('followup/selesai/*') ||
+                    request()->is('followup/konfirmasi-pj-layanan') ||
+                    request()->is('followup/kategorisasi/*') ||
+                    request()->is('followup/kirim/*') ||
+                    request()->is('followup/konfirmasi-pj-pengaduan') ||
+                    request()->is('followup/kirim-pengaduan/*') ?
                     'show' : ''
                 }}
             ">
                 <li class="{{
-                    request()->is('tindak-lanjut/selesai') ||
-                    request()->is('tindak-lanjut/selesai/*') ? 'active' : '' }}">
+                    request()->is('followup/done') ||
+                    request()->is('followup/done/*') ? 'active' : '' }}">
                     {{-- <a href="{{ route('followup.done') }}">Selesai</a> --}}
                     <a href="">Selesai</a>
                 </li>
