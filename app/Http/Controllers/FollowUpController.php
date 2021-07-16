@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowUpController extends Controller
 {
-    public function selesai()
-    {
-        if(Auth::user()->role_id === 1) {
-            return view('backend.followup.done', [
-                'dones' => d_penilaian::where('selesai', 1)->orderBy('tanggal_selesai', 'desc')->paginate(15)
-            ]);
-        } else {
-            $kodeSatker = $this->getSatkerKode();
-
-            return view('backend.followup.done', [
-                'dones' => d_penilaian::where('kode_satker_id', $kodeSatker->kode_satker)->where('selesai', 1)
-                           ->orderBy('tanggal_selesai', 'desc')->paginate(15)
-            ]);
-        }
-    }
-
-    public function selesaiDetail($id)
-    {
-        // tampilan menurut satker
-        // belum dibuat.
-
-        $done = d_penilaian::where('id', $id)->where('selesai', 1)->first();
-
-        return view('backend.followup.detail-done', compact('done'));
-    }
 
     public function listPjLayanan()
     {
@@ -329,10 +304,6 @@ class FollowUpController extends Controller
 
     private function getSatkerKode()
     {
-        $userId = Auth::user()->id;
-        $userSatkerId = m_pengguna::find($userId);
-        $kodeSatker = $userSatkerId->satker()->first('kode_satker');
 
-        return $kodeSatker;
     }
 }

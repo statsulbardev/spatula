@@ -1,12 +1,10 @@
-@extends('home')
+@section('title', $done->nama_konsumen)
 
-@section('title', 'Detail Pengguna Layanan')
-
-@section('inner-content')
+<div>
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('followup.done') }}" style="color:#796AEE" class="h2 no-margin-bottom">Selesai Tindak Lanjut / </a>
+            <a href="{{ url(env('APP_URL') . '/followup/done/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Selesai Tindak Lanjut / </a>
             <span class="h2 no-margin-bottom">{{ $done->nama_konsumen }} - {{ $done->layanan->nama_layanan }}</span>
         </div>
     </header>
@@ -143,4 +141,4 @@
             </div>
         </div>
     </section>
-@endsection
+</div>

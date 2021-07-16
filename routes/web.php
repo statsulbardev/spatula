@@ -11,6 +11,18 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', \App\Http\Livewire\Dashboard\Index::class);
 
+    Route::prefix('followup')->group(function () {
+        // Done
+        Route::get('done/lists', \App\Http\Livewire\Followup\Done\Lists::class);
+        Route::get('done/show/{id}', \App\Http\Livewire\Followup\Done\Show::class);
+
+        // Service PIC
+        Route::get('service/lists', \App\Http\Livewire\Followup\ServicePic\Lists::class);
+
+        // Complain PIC
+        Route::get('complaint/lists', \App\Http\Livewire\Followup\ComplaintPic\Lists::class);
+    });
+
     Route::prefix('setting')->group(function () {
         // User Management
         Route::get('user/lists', \App\Http\Livewire\Setting\User\Lists::class);
@@ -50,9 +62,6 @@ Route::middleware('auth')->group(function () {
 //     Route::put('petugas/{id}', 'MPetugasController@update')->name('petugas.update');
 
 //     Route::get('tautan', 'LinkController@index')->name('tautan');
-
-//     Route::get('tindak-lanjut/selesai', 'FollowUpController@selesai')->name('followup.done');
-//     Route::get('tindak-lanjut/selesai/{id}', 'FollowUpController@selesaiDetail')->name('followup.detail.done');
 
 //     Route::get('tindak-lanjut/konfirmasi-pj-layanan', 'FollowUpController@listPjLayanan')->name('followup.service');
 //     Route::get('tindak-lanjut/konfirmasi-pj-layanan/{id}', 'FollowUpController@detailPjLayanan')->name('followup.detail.service');

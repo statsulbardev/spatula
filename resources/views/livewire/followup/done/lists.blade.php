@@ -1,8 +1,6 @@
-@extends('home')
-
 @section('title', 'Selesai Tindak Lanjut')
 
-@section('inner-content')
+<div>
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
@@ -25,6 +23,7 @@
                                     <th>Saran dan Pengaduan</th>
                                     <th>Kategori</th>
                                     <th>Selesai</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,22 +34,33 @@
                                                 <span>{{ DateFormat::convertDateTime($item->created_at) }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <a style="color:#666666" class="text-decoration-none" href="{{ route('followup.detail.done', $item->id) }}">
-                                                    <i class="icon-user"></i>
-                                                    <span class="ml-1">{{ $item->nama_konsumen }}</span>
-                                                </a>
+                                                <span class="ml-1">{{ $item->nama_konsumen }}</span>
                                             </td>
                                             <td width="40%" class="align-middle">
-                                                <p>{{ wordwrap($item->saran_pengaduan) }}</p>
+                                                <p>
+                                                    <a tabindex="0" data-toggle="popover" title="Saran dan Pengaduan" data-trigger="focus" data-content="{{ $item->saran_pengaduan }}">
+                                                        {{ Str::limit($item->saran_pengaduan, 70, $end='...') }}
+                                                    </a>
+                                                </p>
                                             </td>
                                             <td class="align-middle">
                                                 <span>
                                                     @if(!is_null($item->kode_saran))
-                                                        <ul class="ml-n4">
-                                                        @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                            <li>{{ \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
-                                                        @endfor
-                                                        </ul>
+                                                        @if (count($item->kode_saran) > 1)
+                                                            <ul class="ml-n4">
+                                                                @for($i = 0; $i < count($item->kode_saran); $i++)
+                                                                    <li class="my-2">
+                                                                        @include('components.badge.suggestion', [
+                                                                            'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
+                                                                        ])
+                                                                    </li>
+                                                                @endfor
+                                                            </ul>
+                                                        @else
+                                                            @include('components.badge.suggestion', [
+                                                                'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get(0))->pluck('id')[0]
+                                                            ])
+                                                        @endif
                                                     @else
                                                         -
                                                     @endif
@@ -58,6 +68,11 @@
                                             </td>
                                             <td class="align-middle">
                                                 <span>{{ DateFormat::convertDateTime($item->tanggal_selesai) }}</span>
+                                            </td>
+                                            <td>
+                                                <a href="{{ url(env('APP_URL') . '/followup/done/show/' . $item->id) }}" class="btn btn-primary">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,9 +84,17 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $dones->links() }}
+                    {{-- Pagination --}}
                 </div>
             </div>
         </div>
     </section>
-@endsection
+</div>
+
+@push('scripts')
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+@endpush

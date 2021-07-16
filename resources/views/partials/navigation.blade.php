@@ -24,8 +24,8 @@
         </li>
         <li>
             <a href="#followUp"
-                @if(request()->is('followup/selesai') ||
-                    request()->is('followup/selesai/*') ||
+                @if(request()->is('followup/done') ||
+                    request()->is('followup/done/*') ||
                     request()->is('followup/konfirmasi-pj-layanan') ||
                     request()->is('followup/kategorisasi/*') ||
                     request()->is('followup/kirim/*') ||
@@ -40,9 +40,9 @@
             </a>
             <ul id="followUp" class="collapse list-unstyled
                 {{
-                    request()->is('followup/selesai') ||
-                    request()->is('followup/selesai/*') ||
-                    request()->is('followup/konfirmasi-pj-layanan') ||
+                    request()->is('followup/done') ||
+                    request()->is('followup/done/*') ||
+                    request()->is('followup/service/*') ||
                     request()->is('followup/kategorisasi/*') ||
                     request()->is('followup/kirim/*') ||
                     request()->is('followup/konfirmasi-pj-pengaduan') ||
@@ -53,15 +53,13 @@
                 <li class="{{
                     request()->is('followup/done') ||
                     request()->is('followup/done/*') ? 'active' : '' }}">
-                    {{-- <a href="{{ route('followup.done') }}">Selesai</a> --}}
-                    <a href="">Selesai</a>
+                    <a href="{{ url(env('APP_URL') . '/followup/done/lists') }}">Selesai</a>
                 </li>
                 <li class="{{
-                    request()->is('tindak-lanjut/konfirmasi-pj-layanan') ||
-                    request()->is('tindak-lanjut/kategorisasi/*') ||
-                    request()->is('tindak-lanjut/kirim/*') ? 'active' : '' }}">
-                    {{-- <a href="{{ route('followup.service') }}">Konfirmasi PJ Layanan</a> --}}
-                    <a href="">Konfirmasi PJ Layanan</a>
+                    request()->is('followup/service/*') ||
+                    request()->is('followup/kategorisasi/*') ||
+                    request()->is('followup/kirim/*') ? 'active' : '' }}">
+                    <a href="{{ url(env('APP_URL') . '/followup/service/lists') }}">Konfirmasi PJ Layanan</a>
                 </li>
                 <li class="{{
                     request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
