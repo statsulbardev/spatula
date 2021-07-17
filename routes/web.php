@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
 
         // Service PIC
         Route::get('service/lists', \App\Http\Livewire\Followup\ServicePic\Lists::class);
+        Route::get('service/show/{id}', \App\Http\Livewire\Followup\ServicePic\Show::class);
+        Route::get('service/categorize/{id}', \App\Http\Livewire\Followup\ServicePic\CreateCategorize::class);
 
         // Complain PIC
         Route::get('complaint/lists', \App\Http\Livewire\Followup\ComplaintPic\Lists::class);
@@ -63,8 +65,6 @@ Route::middleware('auth')->group(function () {
 
 //     Route::get('tautan', 'LinkController@index')->name('tautan');
 
-//     Route::get('tindak-lanjut/konfirmasi-pj-layanan', 'FollowUpController@listPjLayanan')->name('followup.service');
-//     Route::get('tindak-lanjut/konfirmasi-pj-layanan/{id}', 'FollowUpController@detailPjLayanan')->name('followup.detail.service');
 //     Route::get('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@kategorisasi')->name('followup.categorize');
 //     Route::put('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@simpanKategori')->name('followup.categorize.store');
 //     Route::get('tindak-lanjut/kategorisasi/{id}/edit', 'FollowUpController@editKategori')->name('followup.categorize.edit');

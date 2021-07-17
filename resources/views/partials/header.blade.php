@@ -19,7 +19,7 @@
                     <span class="ml-4 mr-3"></span>
                     <span class="ml-4"></span>
                     <!-- Toggle Button-->
-                    <a id="toggle-btn" href="#" class="menu-btn active">
+                    <a wire:ignore id="toggle-btn" href="#" class="menu-btn active">
                         <span></span><span></span><span></span>
                     </a>
                     <span class="ml-2">

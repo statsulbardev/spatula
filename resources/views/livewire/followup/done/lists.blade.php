@@ -38,7 +38,7 @@
                                             </td>
                                             <td width="40%" class="align-middle">
                                                 <p>
-                                                    <a tabindex="0" data-toggle="popover" title="Saran dan Pengaduan" data-trigger="focus" data-content="{{ $item->saran_pengaduan }}">
+                                                    <a tabindex="0" data-toggle="popover" title="Saran dan Pengaduan" data-trigger="hover" data-placement="bottom" data-content="{{ $item->saran_pengaduan }}">
                                                         {{ Str::limit($item->saran_pengaduan, 70, $end='...') }}
                                                     </a>
                                                 </p>

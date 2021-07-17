@@ -1,12 +1,10 @@
-@extends('home')
+@section('title', $serviceDetail->nama_konsumen)
 
-@section('title', 'Detail Pengguna Layanan')
-
-@section('inner-content')
+<div>
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ route('followup.service') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
+            <a href="{{ url(env('APP_URL') . '/followup/service/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
             <span class="h2 no-margin-bottom">{{ $serviceDetail->nama_konsumen }} - {{ $serviceDetail->layanan->nama_layanan }}</span>
         </div>
     </header>
@@ -143,4 +141,4 @@
             </div>
         </div>
     </section>
-@endsection
+</div>
