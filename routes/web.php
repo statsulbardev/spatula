@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
         Route::get('service/lists', \App\Http\Livewire\Followup\ServicePic\Lists::class);
         Route::get('service/show/{id}', \App\Http\Livewire\Followup\ServicePic\Show::class);
         Route::get('service/categorize/{id}', \App\Http\Livewire\Followup\ServicePic\CreateCategorize::class);
+        Route::get('service/categorize/edit/{id}', \App\Http\Livewire\Followup\ServicePic\EditCategorize::class);
+        Route::get('service/categorize/sent/{id}', \App\Http\Livewire\Followup\ServicePic\Sent::class);
 
         // Complain PIC
         Route::get('complaint/lists', \App\Http\Livewire\Followup\ComplaintPic\Lists::class);
@@ -36,10 +38,6 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
-// Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
 // Route::get('sso', 'Auth\LoginController@sso')->name('sso');
 
 // Route::prefix('penilaian')->name('penilaian.')->group(function() {
@@ -53,23 +51,8 @@ Route::middleware('auth')->group(function () {
 // Route::middleware('auth')->group(function() {
 //     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-//     Route::get('pengguna', 'MPenggunaController@index')->name('pengguna');
-//     Route::get('pengguna/tambah', 'MPenggunaController@create')->name('pengguna.tambah');
-//     Route::post('pengguna', 'MPenggunaController@store')->name('pengguna.simpan');
-//     Route::get('pengguna/{id}/edit', 'MPenggunaController@edit')->name('pengguna.edit');
-//     Route::put('pengguna/{id}', 'MPenggunaController@update')->name('pengguna.update');
-//     Route::delete('pengguna/{id}', 'MPenggunaController@destroy')->name('pengguna.hapus');
-
-//     Route::get('petugas', 'MPetugasController@index')->name('petugas');
-//     Route::put('petugas/{id}', 'MPetugasController@update')->name('petugas.update');
-
 //     Route::get('tautan', 'LinkController@index')->name('tautan');
 
-//     Route::get('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@kategorisasi')->name('followup.categorize');
-//     Route::put('tindak-lanjut/kategorisasi/{id}', 'FollowUpController@simpanKategori')->name('followup.categorize.store');
-//     Route::get('tindak-lanjut/kategorisasi/{id}/edit', 'FollowUpController@editKategori')->name('followup.categorize.edit');
-//     Route::put('tindak-lanjut/kategorisasi/{id}/edit', 'FollowUpController@updateKategori')->name('followup.categorize.update');
-//     Route::get('tindak-lanjut/kirim/{id}', 'FollowUpController@kirimDataLayanan')->name('followup.sent');
 //     Route::put('tindak-lanjut/kirim/{id}', 'FollowUpController@simpanDataLayanan')->name('followup.sent.store');
 //     Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@akhiriKonfirmasiLayanan')->name('followup.finish');
 

@@ -51,7 +51,7 @@
                                             </td>
                                             <td class="align-middle" width="20%">
                                                 @if(!is_null($item->kode_saran))
-                                                    <div class="d-flex flex-wrap justify-content-between">
+                                                    <div class="d-flex flex-wrap">
                                                         @for($i = 0; $i < count($item->kode_saran); $i++)
                                                             @if ($i === 0)
                                                                 <span class="mt-2">
@@ -60,7 +60,7 @@
                                                                     ])
                                                                 </span>
                                                             @else
-                                                                <span class="mt-2">
+                                                                <span class="mt-2 ml-2">
                                                                     @include('components.badge.suggestion', [
                                                                         'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
                                                                     ])
@@ -74,21 +74,46 @@
                                             </td>
                                             <td class="align-middle d-flex justify-content-between">
                                                 @if(!is_null($item->kode_saran))
-                                                    {{-- <a class="text-white btn btn-sm btn-secondary" href="{{ route('followup.categorize.edit', $item->id) }}">Ubah Kategori</a> --}}
-                                                    <a class="btn btn-sm btn-secondary" href="" tabindex="0" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Ubah Kategori">
+                                                    <a
+                                                        class="btn btn-sm btn-secondary"
+                                                        href="{{ url(env('APP_URL') . '/followup/service/categorize/edit/' . $item->id) }}"
+                                                        tabindex="0"
+                                                        data-toggle="popover"
+                                                        data-trigger="hover"
+                                                        data-placement="bottom"
+                                                        data-content="Ubah Kategori">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
                                                 @else
-                                                    {{-- <a class="text-white btn btn-sm btn-primary" href="{{ route('followup.categorize', $item->id) }}">Kategorisasi</a> --}}
-                                                    <a class="btn btn-sm btn-info" href="{{ url(env('APP_URL') . '/followup/service/categorize/' . $item->id) }}" tabindex="0" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Kategorisasi">
+                                                    <a
+                                                        class="btn btn-sm btn-info"
+                                                        href="{{ url(env('APP_URL') . '/followup/service/categorize/' . $item->id) }}"
+                                                        tabindex="0"
+                                                        data-toggle="popover"
+                                                        data-trigger="hover"
+                                                        data-placement="bottom"
+                                                        data-content="Kategorisasi">
                                                         <i class="fa fa-list"></i>
                                                     </a>
                                                 @endif
-                                                {{-- <a class="text-white btn btn-sm btn-info ml-4" href="{{ route('followup.sent', $item->id) }}">Kirim Pesan</a> --}}
-                                                <a class="btn btn-sm btn-warning" href="" tabindex="0" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Kirim Pesan">
+                                                <a
+                                                    class="btn btn-sm btn-warning"
+                                                    href="{{ url(env('APP_URL') . '/followup/service/categorize/sent/' . $item->id) }}"
+                                                    tabindex="0"
+                                                    data-toggle="popover"
+                                                    data-trigger="hover"
+                                                    data-placement="bottom"
+                                                    data-content="Kirim Pesan">
                                                     <i class="fa fa-mail-forward"></i>
                                                 </a>
-                                                <a class="btn btn-sm btn-primary" href="{{ url(env('APP_URL') . '/followup/service/show/' . $item->id) }}" tabindex="0" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Lihat">
+                                                <a
+                                                    class="btn btn-sm btn-primary"
+                                                    href="{{ url(env('APP_URL') . '/followup/service/show/' . $item->id) }}"
+                                                    tabindex="0"
+                                                    data-toggle="popover"
+                                                    data-trigger="hover"
+                                                    data-placement="bottom"
+                                                    data-content="Lihat">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 @if(!is_null($item->kode_saran))

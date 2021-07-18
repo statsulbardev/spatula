@@ -12,106 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowUpController extends Controller
 {
-    public function editKategori($id)
+
+        public function simpanDataLayanan(Request $request, $id)
     {
-        return view('backend.followup.categorize', [
-            'customer' => d_penilaian::findOrFail($id)
-        ]);
-    }
 
-    public function updateKategori(Request $request, $id)
-    {
-        $data = [
-            $request->saran ? 1 : null,
-            $request->pengaduan ? 2 : null,
-            $request->kritik ? 3 : null,
-            $request->apresiasi ? 4 : null,
-            $request->lainnya ? 9 : null,
-        ];
-
-        if(count(array_filter($data)) === 0) {
-            return redirect()->back();
-        }
-
-        $customer = d_penilaian::find($id);
-
-        if($request->pengaduan) {
-            $customer->update([
-                'kode_saran'   => array_values(array_filter($data)), // remove null values and reindex
-                'is_pengaduan' => 1,
-                'tanggal_kategorisasi' => Carbon::now()
-            ]);
-        } else {
-            $customer->update([
-                'kode_saran'   => array_values(array_filter($data)), // remove null values and reindex
-                'is_pengaduan' => 0,
-                'tanggal_kategorisasi' => Carbon::now()
-            ]);
-        }
-
-        return redirect()->route('followup.service')->with('success', 'Data Telah Diperbaharui.');
-    }
-
-    public function kirimDataLayanan($id)
-    {
-        $customer = d_penilaian::findOrFail($id);
-
-        return view('backend.followup.sent', [
-            'customer' => $customer
-        ]);
-    }
-
-    public function simpanDataLayanan(Request $request, $id)
-    {
-        $customer = d_penilaian::findOrFail($id);
-
-        switch($request->button) {
-            case 'whatsapp':
-                if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === "") {
-                    alert()->warning('Tindak Lanjut Layanan', 'Pesan tindak lanjut harus terisi.');
-                    return redirect()->to(env('APP_URL') . 'tindak-lanjut/kirim/' . $id);
-                } else {
-                    $customer->update([
-                        'text_pj_layanan' => $request->text_pj_layanan,
-                        'tanggal_tl_pj_layanan' => Carbon::now()
-                    ]);
-
-                    $phone = $this->changeNumber($customer->no_wa_telepon);
-                    $message = $customer->text_pj_layanan;
-
-                    return redirect()->to("https://api.whatsapp.com/send?phone=$phone&text=$message");
-                    break;
-                }
-            case 'email':
-                if(is_null($request->text_pj_layanan) || trim($request->text_pj_layanan, "") === "") {
-                    alert()->warning('Tindak Lanjut Layanan', 'Pesan tindak lanjut harus terisi.');
-                    return redirect()->to(env('APP_URL') . 'tindak-lanjut/kirim/' . $id);
-                } else {
-                    $customer->update([
-                        'text_pj_layanan' => $request->text_pj_layanan,
-                        'tanggal_tl_pj_layanan' => Carbon::now()
-                    ]);
-
-                    $userId = Auth::user()->id;
-                    $userSatkerId = m_pengguna::find($userId);
-                    $namaSatker = $userSatkerId->satker()->first('nama');
-
-                    $to_name  = $customer->nama_konsumen;
-                    $to_email = $customer->email_konsumen;
-                    $pesan    = $customer->text_pj_layanan;
-                    $data     = array('title' => $to_name, 'body' => $pesan, 'satker' => $namaSatker->nama);
-                    $subject  = "Terima kasih atas penilaian anda.";
-                    $template = "pj-layanan";
-
-                    Mail::to($to_email)->send(new SendMail($subject, $data, $template));
-
-                    alert()->success('Tindak Lanjut Layanan', 'Pesan tindak lanjut telah terkirim.');
-
-                    return redirect()->route('followup.service');
-
-                    break;
-                }
-        }
     }
 
     public function akhiriKonfirmasiLayanan($id)

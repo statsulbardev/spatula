@@ -6,7 +6,7 @@ use App\Models\d_penilaian;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class CreateCategorize extends Component
+class EditCategorize extends Component
 {
     public $customer;
 
@@ -19,14 +19,20 @@ class CreateCategorize extends Component
     public function mount(d_penilaian $id)
     {
         $this->customer = $id;
+
+        $this->suggest      = in_array(1, $id->kode_saran) ?? false;
+        $this->complaint    = in_array(2, $id->kode_saran) ?? false;
+        $this->criticism    = in_array(3, $id->kode_saran) ?? false;
+        $this->appreciation = in_array(4, $id->kode_saran) ?? false;
+        $this->other        = in_array(9, $id->kode_saran) ?? false;
     }
 
     public function render()
     {
-        return view('livewire.followup.service-pic.create-categorize');
+        return view('livewire.followup.service-pic.edit-categorize');
     }
 
-    public function save()
+    public function update()
     {
         $data = [
             $this->suggest ? 1 : null,
@@ -50,7 +56,7 @@ class CreateCategorize extends Component
                     'tanggal_kategorisasi' => Carbon::now()
                 ]);
 
-        session()->flash('message', 'Kategorisasi telah disimpan.');
+        session()->flash('message', 'Kategorisasi telah diperbaharui.');
 
         return redirect(env('APP_URL') . '/followup/service/lists');
     }
