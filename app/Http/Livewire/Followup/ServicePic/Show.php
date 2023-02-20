@@ -16,6 +16,7 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.followup.service-pic.show');
+        return view('livewire.followup.service-pic.show')
+            -> layout('layouts.app');
     }
 }

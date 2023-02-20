@@ -1,44 +1,57 @@
 <?php
 
+use App\Http\Livewire\Auth\Login;
+use App\Http\Livewire\Dashboard\Index;
+use App\Http\Livewire\Followup\Done\Lists as DoneList;
+use App\Http\Livewire\Followup\Done\Show as DoneShow;
+use App\Http\Livewire\Followup\ServicePic\Lists as ServicePicList;
+use App\Http\Livewire\Followup\ServicePic\Show as ServicePicShow;
+use App\Http\Livewire\Followup\ServicePic\CreateCategorize;
+use App\Http\Livewire\Followup\ServicePic\EditCategorize;
+use App\Http\Livewire\Followup\ServicePic\Sent;
+use App\Http\Livewire\Followup\ComplaintPic\Lists as ComplaintPicList;
+use App\Http\Livewire\Setting\User\Lists as UserList;
+use App\Http\Livewire\Setting\User\CreateEdit as CreateEditUser;
+use App\Http\Livewire\Setting\Officer\Lists as OfficerList;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
-Route::middleware('guest')->group(function () {
-    Route::get('/login', \App\Http\Livewire\Auth\Login::class);
-});
+Route::get('login', Login::class)->name('login');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', \App\Http\Livewire\Dashboard\Index::class);
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('dashboard', Index::class)->name('dashboard');
 
-    Route::prefix('followup')->group(function () {
+    Route::group(['prefix' => 'followup'], function() {
         // Done
-        Route::get('done/lists', \App\Http\Livewire\Followup\Done\Lists::class);
-        Route::get('done/show/{id}', \App\Http\Livewire\Followup\Done\Show::class);
+        Route::get('done/lists', DoneList::class)->name('list-done');
+        Route::get('done/show/{id}', DoneShow::class)->name('list-done-show');
 
         // Service PIC
-        Route::get('service/lists', \App\Http\Livewire\Followup\ServicePic\Lists::class);
-        Route::get('service/show/{id}', \App\Http\Livewire\Followup\ServicePic\Show::class);
-        Route::get('service/categorize/{id}', \App\Http\Livewire\Followup\ServicePic\CreateCategorize::class);
-        Route::get('service/categorize/edit/{id}', \App\Http\Livewire\Followup\ServicePic\EditCategorize::class);
-        Route::get('service/categorize/sent/{id}', \App\Http\Livewire\Followup\ServicePic\Sent::class);
+        Route::get('service/lists', ServicePicList::class)->name('service-pic-list');
+        Route::get('service/show/{id}', ServicePicShow::class)->name('service-pic-show');
+        Route::get('service/categorize/{id}', CreateCategorize::class)->name('service-pic-create-categorize');
+        Route::get('service/categorize/edit/{id}', EditCategorize::class)->name('service-pic-edit-categorize');
+        Route::get('service/categorize/sent/{id}', Sent::class)->name('service-pic-sent');
 
         // Complain PIC
-        Route::get('complaint/lists', \App\Http\Livewire\Followup\ComplaintPic\Lists::class);
+        Route::get('complaint/lists', ComplaintPicList::class)->name('complaint-pic-list');
     });
 
-    Route::prefix('setting')->group(function () {
+    Route::group(['prefix' => 'setting'], function() {
         // User Management
-        Route::get('user/lists', \App\Http\Livewire\Setting\User\Lists::class);
-        Route::get('user/create', \App\Http\Livewire\Setting\User\CreateEdit::class);
-        Route::get('user/edit/{id}', \App\Http\Livewire\Setting\User\CreateEdit::class);
+        Route::get('user/lists', UserList::class)->name('user-list');
+        Route::get('user/create', CreateEditUser::class)->name('create-user');
+        Route::get('user/edit/{id}', CreateEditUser::class)->name('edit-user');
 
         // Officer Management
-        Route::get('officer/lists', \App\Http\Livewire\Setting\Officer\Lists::class);
+        Route::get('officer/lists', OfficerList::class)->name('officer-list');
+    });
+
+    Route::group(['prefix' => 'penilaian'], function() {
+
     });
 });
-
-// Route::get('sso', 'Auth\LoginController@sso')->name('sso');
 
 // Route::prefix('penilaian')->name('penilaian.')->group(function() {
 //     Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');

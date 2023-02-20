@@ -1,4 +1,6 @@
-<x-layouts.base>
+@extends('layouts.base')
+
+@section('content')
     <div class="page login-page">
         <div class="container d-flex align-items-center">
             <div class="form-holder has-shadow">
@@ -33,4 +35,4 @@
             </div>
         </div>
     </div>
-</x-layouts.base>
+@overwrite

@@ -8,6 +8,7 @@ class Lists extends Component
 {
     public function render()
     {
-        return view('livewire.followup.complaint-pic.lists');
+        return view('livewire.followup.complaint-pic.lists')
+            -> layout('layouts.app');
     }
 }

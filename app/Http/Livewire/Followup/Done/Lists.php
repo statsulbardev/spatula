@@ -25,6 +25,7 @@ class Lists extends Component
 
     public function render()
     {
-        return view('livewire.followup.done.lists');
+        return view('livewire.followup.done.lists')
+            -> layout('layouts.app');
     }
 }

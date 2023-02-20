@@ -53,13 +53,13 @@
                 <li class="{{
                     request()->is('followup/done') ||
                     request()->is('followup/done/*') ? 'active' : '' }}">
-                    <a href="{{ url(env('APP_URL') . '/followup/done/lists') }}">Selesai</a>
+                    <a href="{{ url(env('APP_URL') . 'followup/done/lists') }}">Selesai</a>
                 </li>
                 <li class="{{
                     request()->is('followup/service/*') ||
                     request()->is('followup/kategorisasi/*') ||
                     request()->is('followup/kirim/*') ? 'active' : '' }}">
-                    <a href="{{ url(env('APP_URL') . '/followup/service/lists') }}">Konfirmasi PJ Layanan</a>
+                    <a href="{{ url(env('APP_URL') . 'followup/service/lists') }}">Konfirmasi PJ Layanan</a>
                 </li>
                 <li class="{{
                     request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||

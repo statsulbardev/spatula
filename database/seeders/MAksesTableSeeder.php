@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\m_akses;
 use Illuminate\Database\Seeder;
 

@@ -1,4 +1,6 @@
-<x-layouts.base>
+@extends('layouts.base')
+
+@section('content')
     @include('partials.header')
 
     <div class="page-content d-flex align-items-stretch">
@@ -10,4 +12,4 @@
             @include('partials.footer')
         </div>
     </div>
-</x-layouts.base>
+@overwrite

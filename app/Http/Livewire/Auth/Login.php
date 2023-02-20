@@ -28,7 +28,7 @@ class Login extends Component
         if (Auth::attempt($credentials)) {
             request()->session()->regenerate();
 
-            return redirect()->intended(env('APP_URL') . '/dashboard');
+            return redirect()->intended(env('APP_URL') . 'dashboard');
         } else {
             $this->addError('error', 'Otentikasi gagal, periksan kembali.');
         }

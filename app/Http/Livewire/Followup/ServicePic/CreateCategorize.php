@@ -23,7 +23,8 @@ class CreateCategorize extends Component
 
     public function render()
     {
-        return view('livewire.followup.service-pic.create-categorize');
+        return view('livewire.followup.service-pic.create-categorize')
+            -> layout('layouts.app');
     }
 
     public function save()
