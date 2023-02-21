@@ -1,11 +1,11 @@
-@section('title', $serviceDetail->nama_konsumen)
+@section('title', $complaintDetail->nama_konsumen)
 
 <div>
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ url(env('APP_URL') . '/followup/service/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
-            <span class="h2 no-margin-bottom">{{ $serviceDetail->nama_konsumen }}</span>
+            <a href="{{ url(env('APP_URL') . 'followup/complaint/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Pengaduan / </a>
+            <span class="h2 no-margin-bottom">{{ $complaintDetail->nama_konsumen }}</span>
         </div>
     </header>
     <section>
@@ -18,38 +18,38 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Layanan</label>
                         <div class="col-sm-9">
-                            {{ DateFormat::convertDateTime($serviceDetail->created_at) }}
+                            {{ DateFormat::convertDateTime($complaintDetail->created_at) }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Nama</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->nama_konsumen }}
+                            {{ $complaintDetail->nama_konsumen }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Email</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->email_konsumen ?? '-' }}
+                            {{ $complaintDetail->email_konsumen ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Nomor Whatsapp / Telepon</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->no_wa_telepon ?? '-' }}
+                            {{ $complaintDetail->no_wa_telepon ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Nama Petugas</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->petugas->nama ?? '-' }}
+                            {{ $complaintDetail->petugas->nama ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Rating Petugas</label>
                         <div class="col-sm-9">
                             @for($i = 0; $i < 5; $i++)
-                                @if($i < $serviceDetail->rating_petugas)
+                                @if($i < $complaintDetail->rating_petugas)
                                     @include('components.icon', ['name' => 'star', 'color' => '#796AEE'])
                                 @else
                                     @include('components.icon', ['name' => 'star'])
@@ -60,14 +60,14 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Jenis Layanan</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->layanan->nama_layanan ?? '-' }}
+                            {{ $complaintDetail->layanan->nama_layanan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Rating Layanan</label>
                         <div class="col-sm-9">
                             @for($i = 0; $i < 5; $i++)
-                                @if($i < $serviceDetail->rating_layanan)
+                                @if($i < $complaintDetail->rating_layanan)
                                     @include('components.icon', ['name' => 'star', 'color' => '#796AEE'])
                                 @else
                                     @include('components.icon', ['name' => 'star'])
@@ -78,11 +78,11 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Kategori Saran Pengaduan</label>
                         <div class="col-sm-9">
-                            @if(!is_null($serviceDetail->kode_saran))
-                                @for($i = 0; $i < count($serviceDetail->kode_saran); $i++)
+                            @if(!is_null($complaintDetail->kode_saran))
+                                @for($i = 0; $i < count($complaintDetail->kode_saran); $i++)
                                     <div class="mb-2">
                                         @include('components.badge.suggestion', [
-                                            'suggest' => \App\Models\m_saran::where('kode_saran', collect($serviceDetail->kode_saran)->get($i))->pluck('id')[0]
+                                            'suggest' => \App\Models\m_saran::where('kode_saran', collect($complaintDetail->kode_saran)->get($i))->pluck('id')[0]
                                         ])
                                     </div>
                                 @endfor
@@ -94,49 +94,49 @@
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Saran Pengaduan</label>
                         <div class="col-sm-9">
-                            <p>{{ $serviceDetail->saran_pengaduan ?? '-' }}</p>
+                            <p>{{ $complaintDetail->saran_pengaduan ?? '-' }}</p>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Notifikasi</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->tanggal_notifikasi ? DateFormat::convertDateTime($serviceDetail->tanggal_notifikasi) : '-' }}
+                            {{ $complaintDetail->tanggal_notifikasi ? DateFormat::convertDateTime($complaintDetail->tanggal_notifikasi) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Kategorisasi</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->tanggal_kategorisasi ? DateFormat::convertDateTime($serviceDetail->tanggal_kategorisasi) : '-' }}
+                            {{ $complaintDetail->tanggal_kategorisasi ? DateFormat::convertDateTime($complaintDetail->tanggal_kategorisasi) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Tindak Lanjut PJ Pelayanan</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->tanggal_tl_pj_layanan ? DateFormat::convertDateTime($serviceDetail->tanggal_tl_pj_layanan) : '-' }}
+                            {{ $complaintDetail->tanggal_tl_pj_layanan ? DateFormat::convertDateTime($complaintDetail->tanggal_tl_pj_layanan) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Komentar PJ Pelayanan</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->text_pj_layanan ?? '-' }}
+                            {{ $complaintDetail->text_pj_layanan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Tindak Lanjut PJ Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->tanggal_tl_pj_pengaduan ? DateFormat::convertDateTime($serviceDetail->tanggal_tl_pj_pengaduan) : '-' }}
+                            {{ $complaintDetail->tanggal_tl_pj_pengaduan ? DateFormat::convertDateTime($complaintDetail->tanggal_tl_pj_pengaduan) : '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Komentar PJ Pengaduan</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->text_pj_pengaduan ?? '-' }}
+                            {{ $complaintDetail->text_pj_pengaduan ?? '-' }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Tanggal Selesai Tindak Lanjut</label>
                         <div class="col-sm-9">
-                            {{ $serviceDetail->tanggal_selesai ? DateFormat::convertDateTime($serviceDetail->tanggal_selesai) : '-' }}
+                            {{ $complaintDetail->tanggal_selesai ? DateFormat::convertDateTime($complaintDetail->tanggal_selesai) : '-' }}
                         </div>
                     </div>
                 </div>

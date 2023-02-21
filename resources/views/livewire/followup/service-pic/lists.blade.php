@@ -22,11 +22,9 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Tanggal</th>
                                     <th>Pengguna Layanan</th>
-                                    <th>Saran dan Pengaduan</th>
                                     <th>Kategori Saran Pengaduan</th>
-                                    <th>Aksi</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,47 +34,36 @@
                                             @continue
                                         @endif
                                         <tr>
-                                            <td class="align-middle">
-                                                <span>{{ DateFormat::convertDateTime($item->created_at) }}</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <span class="ml-1">{{ $item->nama_konsumen }}</span>
-                                            </td>
-                                            <td class="align-middle">
+                                            <td class="align-middle pr-4" width="70%">
+                                                <small>
+                                                    <i class="fa fa-calendar"></i> {{ DateFormat::convertDateTime($item->created_at) }}
+                                                </small>
+                                                <h4 class="mt-2 font-weight-bold text-primary">{{ $item->nama_konsumen }}</h4>
                                                 <p>
                                                     <a tabindex="0" data-toggle="popover" title="Saran dan Pengaduan" data-trigger="hover" data-placement="bottom" data-content="{{ $item->saran_pengaduan }}">
-                                                        {{ Str::limit($item->saran_pengaduan, 50, $end='...') }}
+                                                        {{ Str::limit($item->saran_pengaduan, 200, $end='...') }}
                                                     </a>
                                                 </p>
                                             </td>
+
                                             <td class="align-middle" width="20%">
                                                 @if(!is_null($item->kode_saran))
-                                                    <div class="d-flex flex-wrap">
-                                                        @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                            @if ($i === 0)
-                                                                <span class="mt-2">
-                                                                    @include('components.badge.suggestion', [
-                                                                        'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
-                                                                    ])
-                                                                </span>
-                                                            @else
-                                                                <span class="mt-2 ml-2">
-                                                                    @include('components.badge.suggestion', [
-                                                                        'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
-                                                                    ])
-                                                                </span>
-                                                            @endif
-                                                        @endfor
-                                                    </div>
+                                                    @for($i = 0; $i < count($item->kode_saran); $i++)
+                                                        <div class="mb-2">
+                                                            @include('components.badge.suggestion', [
+                                                                'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
+                                                            ])
+                                                        </div>
+                                                    @endfor
                                                 @else
                                                     Belum Dikategorisasi
                                                 @endif
                                             </td>
-                                            <td class="align-middle d-flex justify-content-between">
-                                                @if(!is_null($item->kode_saran))
+                                            <td class="d-flex justify-content-between">
+                                                    @if(!is_null($item->kode_saran))
                                                     <a
                                                         class="btn btn-sm btn-secondary"
-                                                        href="{{ url(env('APP_URL') . '/followup/service/categorize/edit/' . $item->id) }}"
+                                                        href="{{ url(env('APP_URL') . 'followup/service/categorize/edit/' . $item->id) }}"
                                                         tabindex="0"
                                                         data-toggle="popover"
                                                         data-trigger="hover"
@@ -87,7 +74,7 @@
                                                 @else
                                                     <a
                                                         class="btn btn-sm btn-info"
-                                                        href="{{ url(env('APP_URL') . '/followup/service/categorize/' . $item->id) }}"
+                                                        href="{{ url(env('APP_URL') . 'followup/service/categorize/' . $item->id) }}"
                                                         tabindex="0"
                                                         data-toggle="popover"
                                                         data-trigger="hover"
@@ -97,18 +84,18 @@
                                                     </a>
                                                 @endif
                                                 <a
-                                                    class="btn btn-sm btn-warning"
-                                                    href="{{ url(env('APP_URL') . '/followup/service/categorize/sent/' . $item->id) }}"
+                                                    class="btn btn-sm btn-warning text-white"
+                                                    href="{{ url(env('APP_URL') . 'followup/service/categorize/sent/' . $item->id) }}"
                                                     tabindex="0"
                                                     data-toggle="popover"
                                                     data-trigger="hover"
                                                     data-placement="bottom"
                                                     data-content="Kirim Pesan">
-                                                    <i class="fa fa-mail-forward"></i>
+                                                    <i class="fa fa-envelope"></i>
                                                 </a>
                                                 <a
                                                     class="btn btn-sm btn-primary"
-                                                    href="{{ url(env('APP_URL') . '/followup/service/show/' . $item->id) }}"
+                                                    href="{{ url(env('APP_URL') . 'followup/service/show/' . $item->id) }}"
                                                     tabindex="0"
                                                     data-toggle="popover"
                                                     data-trigger="hover"

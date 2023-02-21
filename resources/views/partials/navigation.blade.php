@@ -64,8 +64,7 @@
                 <li class="{{
                     request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
                     request()->is('tindak-lanjut/kirim-pengaduan/*') ? 'active' : '' }}">
-                    {{-- <a href="{{ route('followup.complaint') }}">Konfirmasi PJ Pengaduan</a> --}}
-                    <a href="">Konfirmasi PJ Pengaduan</a>
+                    <a href="{{ url(env('APP_URL') . 'followup/complaint/lists') }}">Konfirmasi PJ Pengaduan</a>
                 </li>
             </ul>
         </li>
@@ -89,11 +88,11 @@
                 ">
                     <li class="{{ request()->is('laporan/bulanan') ? 'active' : '' }}">
                         {{-- <a href="{{ route('report.monthly') }}">Bulanan</a> --}}
-                        <a href="">Bulanan</a>
+                        <a href="{{ url(env('APP_URL') . 'report/monthly') }}">Bulanan</a>
                     </li>
                     <li class="{{ request()->is('laporan/harian') ? 'active' : '' }}">
                         {{-- <a href="{{ route('report.daily') }}">Harian</a> --}}
-                        <a href="">Harian</a>
+                        <a href="{{ url(env('APP_URL') . 'report/daily') }}">Harian</a>
                     </li>
                 </ul>
             </li>

@@ -18,28 +18,24 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Tanggal</th>
                                     <th>Pengguna Layanan</th>
-                                    <th>Saran dan Pengaduan</th>
                                     <th>Kategori</th>
-                                    <th>Selesai</th>
-                                    <th>Aksi</th>
+                                    <th>Tanggal Selesai</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if($dones->count() > 0)
                                     @foreach ($dones as $item)
                                         <tr>
-                                            <td class="align-middle">
-                                                <span>{{ DateFormat::convertDateTime($item->created_at) }}</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <span class="ml-1">{{ $item->nama_konsumen }}</span>
-                                            </td>
-                                            <td width="40%" class="align-middle">
+                                            <td class="align-middle pr-4" width="70%">
+                                                <small>
+                                                    <i class="fa fa-calendar"></i> {{ DateFormat::convertDateTime($item->created_at) }}
+                                                </small>
+                                                <h4 class="mt-2 font-weight-bold text-primary">{{ $item->nama_konsumen }}</h4>
                                                 <p>
                                                     <a tabindex="0" data-toggle="popover" title="Saran dan Pengaduan" data-trigger="hover" data-placement="bottom" data-content="{{ $item->saran_pengaduan }}">
-                                                        {{ Str::limit($item->saran_pengaduan, 70, $end='...') }}
+                                                        {{ Str::limit($item->saran_pengaduan, 200, $end='...') }}
                                                     </a>
                                                 </p>
                                             </td>
@@ -47,15 +43,13 @@
                                                 <span>
                                                     @if(!is_null($item->kode_saran))
                                                         @if (count($item->kode_saran) > 1)
-                                                            <ul class="ml-n4">
-                                                                @for($i = 0; $i < count($item->kode_saran); $i++)
-                                                                    <li class="my-2">
-                                                                        @include('components.badge.suggestion', [
-                                                                            'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
-                                                                        ])
-                                                                    </li>
-                                                                @endfor
-                                                            </ul>
+                                                            @for($i = 0; $i < count($item->kode_saran); $i++)
+                                                                <div class="mb-2">
+                                                                    @include('components.badge.suggestion', [
+                                                                        'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get($i))->pluck('id')[0]
+                                                                    ])
+                                                                </div>
+                                                            @endfor
                                                         @else
                                                             @include('components.badge.suggestion', [
                                                                 'suggest' => \App\Models\m_saran::where('kode_saran', collect($item->kode_saran)->get(0))->pluck('id')[0]
@@ -69,8 +63,15 @@
                                             <td class="align-middle">
                                                 <span>{{ DateFormat::convertDateTime($item->tanggal_selesai) }}</span>
                                             </td>
-                                            <td>
-                                                <a href="{{ url(env('APP_URL') . '/followup/done/show/' . $item->id) }}" class="btn btn-primary">
+                                            <td class="align-middle">
+                                                <a
+                                                    class="btn btn-primary"
+                                                    href="{{ url(env('APP_URL') . 'followup/done/show/' . $item->id) }}"
+                                                    tabindex="0"
+                                                    data-toggle="popover"
+                                                    data-trigger="hover"
+                                                    data-placement="bottom"
+                                                    data-content="Lihat">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>

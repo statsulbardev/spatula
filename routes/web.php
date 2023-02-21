@@ -10,14 +10,26 @@ use App\Http\Livewire\Followup\ServicePic\CreateCategorize;
 use App\Http\Livewire\Followup\ServicePic\EditCategorize;
 use App\Http\Livewire\Followup\ServicePic\Sent;
 use App\Http\Livewire\Followup\ComplaintPic\Lists as ComplaintPicList;
+use App\Http\Livewire\Followup\ComplaintPic\Show as ComplaintPicShow;
+use App\Http\Livewire\Followup\ComplaintPic\Sent as ComplaintPicSent;
 use App\Http\Livewire\Setting\User\Lists as UserList;
 use App\Http\Livewire\Setting\User\CreateEdit as CreateEditUser;
 use App\Http\Livewire\Setting\Officer\Lists as OfficerList;
+use App\Http\Livewire\Report\Monthly;
+use App\Http\Livewire\Report\Daily;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
 Route::get('login', Login::class)->name('login');
+
+Route::group(['prefix' => 'penilaian'], function() {
+    // Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');
+//     Route::get('{satker}/layanan/{layanan?}', 'FormPenilaianController@layananForm')->name('layanan');
+
+//     Route::post('petugas/{satker}', 'FormPenilaianController@storePetugasForm')->name('petugas.store');
+//     Route::post('layanan/{satker}', 'FormPenilaianController@storeLayananForm')->name('layanan.store');
+});
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('dashboard', Index::class)->name('dashboard');
@@ -36,6 +48,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         // Complain PIC
         Route::get('complaint/lists', ComplaintPicList::class)->name('complaint-pic-list');
+        Route::get('complaint/show/{id}', ComplaintPicShow::class)->name('complaint-pic-show');
+        Route::get('complaint/sent/{id}', ComplaintPicSent::class)->name('complaint-pic-sent');
     });
 
     Route::group(['prefix' => 'setting'], function() {
@@ -48,18 +62,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('officer/lists', OfficerList::class)->name('officer-list');
     });
 
-    Route::group(['prefix' => 'penilaian'], function() {
-
+    Route::group(['prefix' => 'report'], function() {
+        Route::get('monthly', Monthly::class)->name('report-monthly');
+        Route::get('daily', Daily::class)->name('report-daily');
     });
 });
 
-// Route::prefix('penilaian')->name('penilaian.')->group(function() {
-//     Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');
-//     Route::get('{satker}/layanan/{layanan?}', 'FormPenilaianController@layananForm')->name('layanan');
-
-//     Route::post('petugas/{satker}', 'FormPenilaianController@storePetugasForm')->name('petugas.store');
-//     Route::post('layanan/{satker}', 'FormPenilaianController@storeLayananForm')->name('layanan.store');
-// });
 
 // Route::middleware('auth')->group(function() {
 //     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
@@ -74,10 +82,7 @@ Route::group(['middleware' => 'auth'], function() {
 //     Route::get('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@kirimDataPengaduan')->name('followup.sent.complaint');
 //     Route::put('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@simpanDataPengaduan')->name('followup.sent.complaint.store');
 
-//     Route::get('laporan/bulanan', 'ReportController@monthly')->name('report.monthly');
-//     Route::post('laporan/bulanan', 'ReportController@showMonthlyDetail')->name('report.monthly.show');
-//     Route::get('laporan/harian', 'ReportController@daily')->name('report.daily');
-//     Route::post('laporan/harian', 'ReportController@showDailyDetail')->name('report.daily.show');
+
 
 //     Route::get('panduan', 'PanduanController')->name('panduan');
 // });

@@ -53,6 +53,6 @@ class CreateCategorize extends Component
 
         session()->flash('message', 'Kategorisasi telah disimpan.');
 
-        return redirect(env('APP_URL') . '/followup/service/lists');
+        return redirect(env('APP_URL') . 'followup/service/lists');
     }
 }

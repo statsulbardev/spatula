@@ -4,7 +4,7 @@
     <!-- Page Header-->
     <header class="page-header">
         <div class="container-fluid">
-            <a href="{{ url(env('APP_URL') . '/followup/service/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
+            <a href="{{ url(env('APP_URL') . 'followup/service/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Konfirmasi PJ Layanan / </a>
             <span class="h2 no-margin-bottom">Kategorisasi Saran Pengaduan</span>
         </div>
     </header>

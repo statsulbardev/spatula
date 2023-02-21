@@ -59,6 +59,6 @@ class EditCategorize extends Component
 
         session()->flash('message', 'Kategorisasi telah diperbaharui.');
 
-        return redirect(env('APP_URL') . '/followup/service/lists');
+        return redirect(env('APP_URL') . 'followup/service/lists');
     }
 }

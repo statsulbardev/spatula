@@ -5,7 +5,7 @@
     <header class="page-header">
         <div class="container-fluid">
             <a href="{{ url(env('APP_URL') . '/followup/done/lists') }}" style="color:#796AEE" class="h2 no-margin-bottom">Selesai Tindak Lanjut / </a>
-            <span class="h2 no-margin-bottom">{{ $done->nama_konsumen }} - {{ $done->layanan->nama_layanan }}</span>
+            <span class="h2 no-margin-bottom">{{ $done->nama_konsumen }}</span>
         </div>
     </header>
     <section>
@@ -79,11 +79,13 @@
                         <label class="col-sm-3 form-control-label">Kategori Saran Pengaduan</label>
                         <div class="col-sm-9">
                             @if(!is_null($done->kode_saran))
-                                <ul class="ml-n4">
                                 @for($i = 0; $i < count($done->kode_saran); $i++)
-                                    <li>{{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
+                                    <div class="mb-2">
+                                        @include('components.badge.suggestion', [
+                                            'suggest' => \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('id')[0]
+                                        ])
+                                    </div>
                                 @endfor
-                                </ul>
                             @else
                                 -
                             @endif
