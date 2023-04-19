@@ -16,12 +16,15 @@ use App\Http\Livewire\Pengaturan\Pengguna\DaftarPengguna;
 use App\Http\Livewire\Pengaturan\Pengguna\TambahEditPengguna;
 use App\Http\Livewire\Pengaturan\Layanan\DaftarLayanan;
 use App\Http\Livewire\Pengaturan\Layanan\TambahEditLayanan;
+use App\Http\Livewire\Formulir\Penilaian;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
 Route::get('sso', [LoginController::class, 'sso'])->name('sso');
 Route::get('login', Login::class)->name('login');
+
+Route::get('penilaian', Penilaian::class)->name('form-penilaian');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', Index::class)->name('dashboard');
