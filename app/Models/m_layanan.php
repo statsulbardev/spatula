@@ -20,6 +20,8 @@ class m_layanan extends Model
      */
     protected $fillable = [
         'kode_layanan',
-        'nama_layanan'
+        'nama_layanan',
+        'deskripsi',
+        'kode_form'
     ];
 }

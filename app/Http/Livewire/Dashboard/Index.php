@@ -16,8 +16,8 @@ class Index extends Component
 
     public function mount()
     {
-        if (Auth::user()->role_id === 1) {
-            $this->petugasAktif     = m_pengguna::where('role_id', 7)->where('aktif', 1)->count();
+        if (Auth::user()->hasRole('superadmin')) {
+            $this->petugasAktif     = m_pengguna::role('operator')->where('aktif', 1)->count();
             $this->penilaianPetugas = d_penilaian::whereNotNull('kode_petugas')->count();
             $this->penilaianLayanan = d_penilaian::where('rating_layanan', '>', 0)->count();
             $this->jumlahPengaduan  = d_penilaian::where('is_pengaduan', 1)->count();

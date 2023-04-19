@@ -18,8 +18,7 @@ class Sent extends Component
 
     public function render()
     {
-        return view('livewire.followup.service-pic.sent')
-            -> layout('layouts.app');
+        return view('livewire.followup.service-pic.sent');
     }
 
     public function switch($val)

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            MPenggunaTableSeeder::class,
-            MSatkerTableSeeder::class,
-            MLayananTableSeeder::class,
-            MSaranTableSeeder::class,
-            MAksesTableSeeder::class,
+            RoleSeeder::class
         ]);
     }
 }

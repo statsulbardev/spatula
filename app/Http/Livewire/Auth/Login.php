@@ -10,15 +10,9 @@ class Login extends Component
     public $username;
     public $password;
 
-    public function render()
-    {
-        return view('livewire.auth.login')
-            -> layout('layouts.auth');
-    }
-
     protected $rules = [
-        'username' => 'required|string',
-        'password' => 'required'
+        'username' => 'required|string|min:5',
+        'password' => 'required|string|min:5'
     ];
 
     public function login()
@@ -28,9 +22,14 @@ class Login extends Component
         if (Auth::attempt($credentials)) {
             request()->session()->regenerate();
 
-            return redirect()->intended(env('APP_URL') . 'dashboard');
+            return redirect()->intended(env('APP_URL') . '/dashboard');
         } else {
-            $this->addError('error', 'Otentikasi gagal, periksan kembali.');
+            // sweetalert
         }
+    }
+
+    public function render()
+    {
+        return view('livewire.auth.login')->layout('layouts.auth');
     }
 }

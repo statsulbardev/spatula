@@ -1,88 +1,49 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard\Index;
-use App\Http\Livewire\Followup\Done\Lists as DoneList;
-use App\Http\Livewire\Followup\Done\Show as DoneShow;
-use App\Http\Livewire\Followup\ServicePic\Lists as ServicePicList;
-use App\Http\Livewire\Followup\ServicePic\Show as ServicePicShow;
-use App\Http\Livewire\Followup\ServicePic\CreateCategorize;
-use App\Http\Livewire\Followup\ServicePic\EditCategorize;
-use App\Http\Livewire\Followup\ServicePic\Sent;
-use App\Http\Livewire\Followup\ComplaintPic\Lists as ComplaintPicList;
-use App\Http\Livewire\Followup\ComplaintPic\Show as ComplaintPicShow;
-use App\Http\Livewire\Followup\ComplaintPic\Sent as ComplaintPicSent;
-use App\Http\Livewire\Setting\User\Lists as UserList;
-use App\Http\Livewire\Setting\User\CreateEdit as CreateEditUser;
-use App\Http\Livewire\Setting\Officer\Lists as OfficerList;
-use App\Http\Livewire\Report\Monthly;
-use App\Http\Livewire\Report\Daily;
+use App\Http\Livewire\TindakLanjut\Selesai\DaftarSelesai;
+use App\Http\Livewire\TindakLanjut\Selesai\DetailSelesai;
+use App\Http\Livewire\TindakLanjut\PjLayanan\DaftarPjLayanan;
+use App\Http\Livewire\TindakLanjut\PjLayanan\KategorisasiLayanan;
+use App\Http\Livewire\TindakLanjut\PjPengaduan\DaftarPjPengaduan;
+use App\Http\Livewire\Laporan\LaporanHarian;
+use App\Http\Livewire\Laporan\LaporanBulanan;
+use App\Http\Livewire\Pengaturan\Petugas\DaftarPetugas;
+use App\Http\Livewire\Pengaturan\Pengguna\DaftarPengguna;
+use App\Http\Livewire\Pengaturan\Pengguna\TambahEditPengguna;
+use App\Http\Livewire\Pengaturan\Layanan\DaftarLayanan;
+use App\Http\Livewire\Pengaturan\Layanan\TambahEditLayanan;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
+Route::get('sso', [LoginController::class, 'sso'])->name('sso');
 Route::get('login', Login::class)->name('login');
 
-Route::group(['prefix' => 'penilaian'], function() {
-    // Route::get('{satker}/petugas/{layanan?}', 'FormPenilaianController@petugasForm')->name('petugas');
-//     Route::get('{satker}/layanan/{layanan?}', 'FormPenilaianController@layananForm')->name('layanan');
-
-//     Route::post('petugas/{satker}', 'FormPenilaianController@storePetugasForm')->name('petugas.store');
-//     Route::post('layanan/{satker}', 'FormPenilaianController@storeLayananForm')->name('layanan.store');
-});
-
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', Index::class)->name('dashboard');
 
-    Route::group(['prefix' => 'followup'], function() {
-        // Done
-        Route::get('done/lists', DoneList::class)->name('list-done');
-        Route::get('done/show/{id}', DoneShow::class)->name('list-done-show');
+    Route::get('tindak-lanjut/selesai', DaftarSelesai::class);
+    Route::get('tindak-lanjut/selesai/{id}', DetailSelesai::class);
+    Route::get('tindak-lanjut/pj-layanan', DaftarPjLayanan::class);
+    Route::get('tindak-lanjut/pj-layanan/kategorisasi/{id}', KategorisasiLayanan::class);
+    Route::get('tindak-lanjut/pj-layanan/kategorisasi/{id}/edit', KategorisasiLayanan::class);
+    Route::get('tindak-lanjut/pj-pengaduan', DaftarPjPengaduan::class);
 
-        // Service PIC
-        Route::get('service/lists', ServicePicList::class)->name('service-pic-list');
-        Route::get('service/show/{id}', ServicePicShow::class)->name('service-pic-show');
-        Route::get('service/categorize/{id}', CreateCategorize::class)->name('service-pic-create-categorize');
-        Route::get('service/categorize/edit/{id}', EditCategorize::class)->name('service-pic-edit-categorize');
-        Route::get('service/categorize/sent/{id}', Sent::class)->name('service-pic-sent');
-
-        // Complain PIC
-        Route::get('complaint/lists', ComplaintPicList::class)->name('complaint-pic-list');
-        Route::get('complaint/show/{id}', ComplaintPicShow::class)->name('complaint-pic-show');
-        Route::get('complaint/sent/{id}', ComplaintPicSent::class)->name('complaint-pic-sent');
+    Route::prefix('laporan/')->group(function () {
+        Route::get('harian', LaporanHarian::class)->name('laporan-harian');
+        Route::get('bulanan', LaporanBulanan::class)->name('laporan-bulanan');
     });
 
-    Route::group(['prefix' => 'setting'], function() {
-        // User Management
-        Route::get('user/lists', UserList::class)->name('user-list');
-        Route::get('user/create', CreateEditUser::class)->name('create-user');
-        Route::get('user/edit/{id}', CreateEditUser::class)->name('edit-user');
-
-        // Officer Management
-        Route::get('officer/lists', OfficerList::class)->name('officer-list');
-    });
-
-    Route::group(['prefix' => 'report'], function() {
-        Route::get('monthly', Monthly::class)->name('report-monthly');
-        Route::get('daily', Daily::class)->name('report-daily');
+    Route::prefix('pengaturan/')->group(function () {
+        Route::get('petugas', DaftarPetugas::class);
+        Route::get('pengguna', DaftarPengguna::class);
+        Route::get('pengguna/tambah', TambahEditPengguna::class)->name('tambah-pengguna');
+        Route::get('pengguna/{pengguna}/edit', TambahEditPengguna::class)->name('edit-pengguna');
+        Route::get('layanan', DaftarLayanan::class)->name('daftar-layanan');
+        Route::get('layanan/tambah', TambahEditLayanan::class)->name('tambah-layanan');
+        Route::get('layanan/{layanan}/edit', TambahEditLayanan::class)->name('edit-layanan');
     });
 });
-
-
-// Route::middleware('auth')->group(function() {
-//     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-
-//     Route::get('tautan', 'LinkController@index')->name('tautan');
-
-//     Route::put('tindak-lanjut/kirim/{id}', 'FollowUpController@simpanDataLayanan')->name('followup.sent.store');
-//     Route::put('tindak-lanjut/akhiri/{id}', 'FollowUpController@akhiriKonfirmasiLayanan')->name('followup.finish');
-
-//     Route::get('tindak-lanjut/konfirmasi-pj-pengaduan', 'FollowUpController@listPjPengaduan')->name('followup.complaint');
-//     Route::get('tindak-lanjut/konfirmasi-pj-pengaduan/{id}', 'FollowUpController@detailPjPengaduan')->name('followup.detail.complaint');
-//     Route::get('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@kirimDataPengaduan')->name('followup.sent.complaint');
-//     Route::put('tindak-lanjut/kirim-pengaduan/{id}', 'FollowUpController@simpanDataPengaduan')->name('followup.sent.complaint.store');
-
-
-
-//     Route::get('panduan', 'PanduanController')->name('panduan');
-// });

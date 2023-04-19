@@ -3,133 +3,102 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\m_pengguna;
+use App\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use JKD\SSO\Client\Provider\Keycloak;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    // use AuthenticatesUsers;
 
-    use AuthenticatesUsers;
+    protected $redirectTo = RouteServiceProvider::HOME;
+    private $provider;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = 'dashboard';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-    }
 
-    public function username()
-    {
-        return 'username';
-    }
-
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new Response('', 204)
-            : redirect('login');
+        $this->provider = new Keycloak([
+            'authServerUrl' => 'https://sso.bps.go.id',
+            'realm'         => 'pegawai-bps',
+            'clientId'      => config('services.bps.client_id'),
+            'clientSecret'  => config('services.bps.client_secret'),
+            'redirectUri'   => config('services.bps.redirect_uri')
+        ]);
     }
 
     public function sso(Request $request)
     {
-        $provider = new Keycloak([
-            'authServerUrl'         => 'https://sso.bps.go.id',
-            'realm'                 => 'pegawai-bps',
-            'clientId'              => config('services.bps.client_id'),
-            'clientSecret'          => config('services.bps.client_secret'),
-            'redirectUri'           => 'http://localhost/spatula/callback-url'
-        ]);
+        if (!$request->input('code')) {
+            $authUrl = $this->provider->getAuthorizationUrl();
 
-        if (!isset($_GET['code'])) {
-            $authUrl = $provider->getAuthorizationUrl();
+            $request->session()->put('oauth2state', $this->provider->getState());
+            $request->session()->save();
 
-            $request->session()->put('oauth2state', $provider->getState());
-
-            header('Location: '.$authUrl);
+            return redirect($authUrl);
 
             exit;
 
         // Mengecek state yang disimpan saat ini untuk memitigasi serangan CSRF
-        } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+        } elseif (empty($request->input('state')) || ($request->input('state')) !== $request->session()->get('oauth2state')) {
+            $request->session()->forget('oauth2state');
+            $request->session()->save();
 
-            unset($_SESSION['oauth2state']);
-            exit('Invalid state');
-
+            exit;
         } else {
             try {
-                $token = $provider->getAccessToken('authorization_code', [
-                    'code' => $_GET['code']
+                $token = $this->provider->getAccessToken('authorization_code', [
+                    'code' => $request->input('code')
                 ]);
 
-                dd($token);
+                $request->session()->put('spatula_access_token', $token->getToken());
+                $request->session()->save();
             } catch (Exception $e) {
-                exit('Gagal mendapatkan akses token : '.$e->getMessage());
+                return abort(400, $e->getMessage());
             }
 
             // Opsional: Setelah mendapatkan token, anda dapat melihat data profil pengguna
             try {
 
-                $user = $provider->getResourceOwner($token);
-                    echo "Nama : ".$user->getName();
-                    echo "E-Mail : ". $user->getEmail();
-                    echo "Username : ". $user->getUsername();
-                    echo "NIP : ". $user->getNip();
-                    echo "NIP Baru : ". $user->getNipBaru();
-                    echo "Kode Organisasi : ". $user->getKodeOrganisasi();
-                    echo "Kode Provinsi : ". $user->getKodeProvinsi();
-                    echo "Kode Kabupaten : ". $user->getKodeKabupaten();
-                    echo "Alamat Kantor : ". $user->getAlamatKantor();
-                    echo "Provinsi : ". $user->getProvinsi();
-                    echo "Kabupaten : ". $user->getKabupaten();
-                    echo "Golongan : ". $user->getGolongan();
-                    echo "Jabatan : ". $user->getJabatan();
-                    echo "Foto : ". $user->getUrlFoto();
-                    echo "Eselon : ". $user->getEselon();
+                $data = $this->provider->getResourceOwner($token);
+
+                $pegawai = m_pengguna::where('bpsid', $data->getNip())->first();
+
+                if(!empty($pegawai)) {
+                    try {
+                        DB::beginTransaction();
+
+                        $pegawai->update([
+                            'nama'     => $data->getName(),
+                            'username' => $data->getUsername(),
+                            'email'    => $data->getEmail(),
+                            'foto'     => $data->getUrlFoto(),
+                        ]);
+
+                        DB::commit();
+                    } catch(Exception $e) {
+                        DB::rollBack();
+
+                        return abort(403, $e->getMessage());
+                    }
+
+                    if(Auth::loginUsingId($pegawai->id)) return redirect()->intended('/');
+                } else {
+                    return abort(403, 'Anda tidak mempunyai akses untuk aplikasi ini.');
+                }
 
             } catch (Exception $e) {
-                exit('Gagal Mendapatkan Data Pengguna: '.$e->getMessage());
+                return abort(401, $e->getMessage());
             }
-
-            // Gunakan token ini untuk berinteraksi dengan API di sisi pengguna
-            echo $token->getToken();
         }
     }
 
-    protected function sendFailedLoginResponse(Request $request)
+    public function logout(Request $request)
     {
-        alert()->error('Gagal Login', 'Username atau Password Anda Salah.');
-
-        return redirect()->to(env('APP_URL') . 'login');
+        //
     }
 }

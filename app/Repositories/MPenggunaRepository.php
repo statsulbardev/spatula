@@ -3,21 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\m_pengguna;
-use App\Traits\FileUploadable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class MPenggunaRepository
 {
-    use FileUploadable;
-
     public function store($data) : string
     {
         try {
             DB::beginTransaction();
-
-            $path = $this->uploadFile('image', $data->photo, $data->photoExtension);
 
             m_pengguna::create([
                 'nama'           => $data->fullname,
@@ -25,10 +20,9 @@ class MPenggunaRepository
                 'email'          => $data->email,
                 'password'       => bcrypt($data->password),
                 'bpsid'          => $data->bpsid,
-                'role_id'        => $data->role,
                 'kode_satker_id' => $data->unit,
                 'aktif'          => true,
-                'foto'           => $path ?? null
+                'foto'           => null
             ]);
 
             $message = "Informasi user telah disimpan.";

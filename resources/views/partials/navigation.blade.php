@@ -4,7 +4,7 @@
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar">
             @if(auth()->user()->foto)
-                <img src="{{ secure_asset('/public/files/image/' . auth()->user()->foto ) }}" alt="{{ auth()->user()->nama }}" class="img-fluid rounded">
+                <img src="{{ auth()->user()->foto }}" alt="{{ auth()->user()->nama }}" class="img-fluid rounded">
             @else
                 <img src="{{ secure_asset('/public/files/image/user.png') }}" alt="user" class="img-fluid rounded-circle">
             @endif
@@ -18,7 +18,7 @@
     <span class="heading">Utama</span>
     <ul class="list-unstyled">
         <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-            <a href="{{ url(env('APP_URL')) }}">
+            <a href="{{ url(env('APP_URL') . 'dashboard') }}">
                 <i class="fa fa-home"></i>Beranda
             </a>
         </li>
@@ -53,18 +53,19 @@
                 <li class="{{
                     request()->is('followup/done') ||
                     request()->is('followup/done/*') ? 'active' : '' }}">
-                    <a href="{{ url(env('APP_URL') . 'followup/done/lists') }}">Selesai</a>
+                    <a href="{{ url(env('APP_URL') . 'tindak-lanjut/selesai') }}">Selesai</a>
                 </li>
                 <li class="{{
                     request()->is('followup/service/*') ||
                     request()->is('followup/kategorisasi/*') ||
                     request()->is('followup/kirim/*') ? 'active' : '' }}">
-                    <a href="{{ url(env('APP_URL') . 'followup/service/lists') }}">Konfirmasi PJ Layanan</a>
+                    <a href="{{ url(env('APP_URL') . 'tindak-lanjut/konfirmasi-pj-layanan') }}">Konfirmasi PJ Layanan</a>
                 </li>
                 <li class="{{
                     request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') ||
                     request()->is('tindak-lanjut/kirim-pengaduan/*') ? 'active' : '' }}">
-                    <a href="{{ url(env('APP_URL') . 'followup/complaint/lists') }}">Konfirmasi PJ Pengaduan</a>
+                    {{-- <a href="{{ route('followup.complaint') }}">Konfirmasi PJ Pengaduan</a> --}}
+                    <a href="">Konfirmasi PJ Pengaduan</a>
                 </li>
             </ul>
         </li>
@@ -88,11 +89,11 @@
                 ">
                     <li class="{{ request()->is('laporan/bulanan') ? 'active' : '' }}">
                         {{-- <a href="{{ route('report.monthly') }}">Bulanan</a> --}}
-                        <a href="{{ url(env('APP_URL') . 'report/monthly') }}">Bulanan</a>
+                        <a href="">Bulanan</a>
                     </li>
                     <li class="{{ request()->is('laporan/harian') ? 'active' : '' }}">
                         {{-- <a href="{{ route('report.daily') }}">Harian</a> --}}
-                        <a href="{{ url(env('APP_URL') . 'report/daily') }}">Harian</a>
+                        <a href="">Harian</a>
                     </li>
                 </ul>
             </li>

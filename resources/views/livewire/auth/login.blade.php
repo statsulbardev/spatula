@@ -1,36 +1,32 @@
 @section('title', 'Login')
 
-<div>
-    <form wire:submit.prevent="login" class="form-validate">
-        {{-- <hr class="mb-5 mt-5 divider"> --}}
-        <div class="form-group">
-            <input wire:model.defer="username" id="username" type="text" class="input-material">
-            <label for="username" class="label-material">Username</label>
-            @error('username')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        <div class="form-group">
-            <input wire:model.defer="password" id="password" type="password" class="input-material">
-            <label for="password" class="label-material">Password</label>
-            @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-
-        @error('error')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </form>
+<div class="rounded-lg overflow-hidden">
+    <div class="w-full max-w-md">
+        <form wire:submit.prevent="login">
+            <div class="px-10 pt-10">
+                <button class="btn-primary w-full">BPS Single Sign On</button>
+                <div class="mt-8 separator">
+                    <small class="px-2 font-bold text-white">atau</small>
+                </div>
+                <div class="mt-6 mb-8">
+                    <div>
+                        <label class="form-label" for="username">Username</label>
+                        <input wire:model="username" ref="input" class="form-input" type="text" autofocus autocapitalize="off">
+                    </div>
+                    <div class="mt-6">
+                        <label class="form-label" for="password">Password</label>
+                        <input wire:model="password" ref="input" class="form-input" type="password">
+                    </div>
+                </div>
+                @if($errors->has('message'))
+                <div class="mt-6 rounded bg-supportred-400 p-2 text-white text-sm leading-4 text-center">
+                    {{ $errors->first('message') }}
+                </div>
+                @endif
+            </div>
+            <div class="px-10 py-4 bg-glass flex justify-between items-center">
+                <button class="btn-secondary w-full" type="submit">Masuk</button>
+            </div>
+        </form>
+    </div>
 </div>
-
-@push('scripts')
-<script src="{{ secure_asset(env('APP_URL') . '/js/front.js') }}"></script>
-@endpush

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class m_pengguna extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * Tabel terkait dengan model
@@ -29,7 +31,6 @@ class m_pengguna extends Authenticatable
         'bpsid',
         'foto',
         'kode_satker_id',
-        'role_id',
         'aktif'
     ];
 
@@ -42,11 +43,6 @@ class m_pengguna extends Authenticatable
 
     public function satker()
     {
-        return $this->belongsTo(m_satker::class, 'kode_satker_id');
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(m_akses::class, 'role_id');
+        return $this->hasOne(m_satker::class, 'id', 'kode_satker_id');
     }
 }

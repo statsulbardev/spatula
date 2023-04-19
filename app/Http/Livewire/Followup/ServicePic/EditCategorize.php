@@ -29,8 +29,7 @@ class EditCategorize extends Component
 
     public function render()
     {
-        return view('livewire.followup.service-pic.edit-categorize')
-            -> layout('layouts.app');
+        return view('livewire.followup.service-pic.edit-categorize');
     }
 
     public function update()
@@ -59,6 +58,6 @@ class EditCategorize extends Component
 
         session()->flash('message', 'Kategorisasi telah diperbaharui.');
 
-        return redirect(env('APP_URL') . 'followup/service/lists');
+        return redirect(env('APP_URL') . '/followup/service/lists');
     }
 }
