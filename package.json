@@ -5,6 +5,7 @@
         "production": "vite build"
     },
     "dependencies": {
+        "@ryangjchandler/alpine-tooltip": "^1.2.0",
         "alpinejs": "^3.11.1"
     },
     "devDependencies": {

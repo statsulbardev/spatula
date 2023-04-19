@@ -4,8 +4,10 @@ namespace App\Http\Livewire\TindakLanjut\PjPengaduan;
 
 use App\Models\d_penilaian;
 use App\Traits\UnitCode;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Redirector;
 use Livewire\WithPagination;
 
 class DaftarPjPengaduan extends Component
@@ -13,6 +15,12 @@ class DaftarPjPengaduan extends Component
     use UnitCode, WithPagination;
 
     public $complaints;
+
+    public function render()
+    {
+        return view('livewire.tindak-lanjut.pj-pengaduan.daftar-pj-pengaduan')
+            -> layout('layouts.app');
+    }
 
     public function mount()
     {
@@ -24,9 +32,22 @@ class DaftarPjPengaduan extends Component
                     ->get();
     }
 
-    public function render()
+    public function finalize($id) : Redirector
     {
-        return view('livewire.tindak-lanjut.pj-pengaduan.daftar-pj-pengaduan')
-            -> layout('layouts.app');
+        $customer = d_penilaian::findOrFail($id);
+
+        $customer->update([
+            'selesai' => 1,
+            'tanggal_selesai' => Carbon::now()
+        ]);
+
+        session()->flash('messages', 'Finalisasi verifikasi selesai dilakukan');
+
+        return $this->callbackUrl();
+    }
+
+    private function callbackUrl() : Redirector
+    {
+        return redirect(env('APP_URL') . '/tindak-lanjut/pj-pengaduan');
     }
 }

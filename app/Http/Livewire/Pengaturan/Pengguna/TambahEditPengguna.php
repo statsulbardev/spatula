@@ -5,9 +5,7 @@ namespace App\Http\Livewire\Pengaturan\Pengguna;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
 use App\Repositories\MPenggunaRepository;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\Redirector;
 use Spatie\Permission\Models\Role;
@@ -36,28 +34,32 @@ class TambahEditPengguna extends Component
     {
         $this->routeName = Route::currentRouteName();
         $this->units     = $this->renderUnitsOption(m_satker::get(['id', 'nama']));
-        $this->roles     = $this->renderRolesOption(Role::query()->orderBy('id', 'asc')->get('name'));
+        $this->roles     = $this->renderRolesOption(Role::query()->orderBy('id', 'asc')->get(['id', 'name']));
 
         if ($this->routeName === 'edit-pengguna') {
-            $this->user     = $pengguna;
-            $this->f_name     = $this->user->nama;
-            $this->f_email    = $this->user->email;
-            $this->f_bpsid    = $this->user->bpsid;
-            $this->f_unit     = $this->user->satker->nama;
+            $this->user    = $pengguna;
+            $this->f_name  = $pengguna->nama;
+            $this->f_email = $pengguna->email;
+            $this->f_bpsid = $pengguna->bpsid;
+            $this->f_unit  = $pengguna->kode_satker_id;
+            $this->f_role  = $pengguna->roles[0]->id;
         }
     }
 
     public function storeData(MPenggunaRepository $penggunaRepository) : Redirector
     {
-        $result = $penggunaRepository->store($this);
 
-        session()->flash('message', $result);
+        $result = $this->routeName === 'tambah-pengguna'
+            ? $penggunaRepository->store($this)
+            : $penggunaRepository->update($this);
+
+        session()->flash('messages', $result);
 
         return $this->callbackUrl();
     }
 
     // Perlu dicari cara $item->nama_kolom otomatis sesuai hasil query
-    private function renderUnitsOption($queryResult) : String
+    private function renderUnitsOption($queryResult) : string
     {
         $result = null;
 
@@ -67,12 +69,12 @@ class TambahEditPengguna extends Component
         return $result;
     }
 
-    private function renderRolesOption($queryResult) : String
+    private function renderRolesOption($queryResult) : string
     {
         $result = null;
 
         foreach($queryResult as $item)
-            $result .= "<option value=" . $item->name . ">" . ucwords(str_replace("-", " ", $item->name)) . "</option>";
+            $result .= "<option value=" . $item->id . ">" . ucwords(str_replace("-", " ", $item->name)) . "</option>";
 
         return $result;
     }

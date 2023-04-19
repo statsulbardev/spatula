@@ -53,8 +53,8 @@
             <h1 class="hover:text-gray-200 cursor-pointer">
                 <a href="{{ url(env('APP_URL') . '/tindak-lanjut/selesai') }}">Selesai</a>
             </h1>
-            <a href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-layanan') }}" class="cursor-pointer text-gray-200">PJ Layanan</a>
-            <a href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-pengaduan') }}" class="cursor-pointer text-gray-200">PJ Pengaduan</a>
+            <a href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-layanan') }}" class="cursor-pointer text-gray-200">Verifikasi PJ Layanan</a>
+            <a href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-pengaduan') }}" class="cursor-pointer text-gray-200">Verifikasi PJ Pengaduan</a>
         </div>
     </div>
 

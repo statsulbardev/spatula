@@ -1,43 +1,33 @@
-@section('title', 'Konfirmasi PJ Pengaduan')
+@section('title', 'Verifikasi PJ Pengaduan')
 
 <div>
-    <h1 class="mb-8 font-bold text-3xl">Konfirmasi PJ Pengaduan</h1>
+    @include('components.page.notification')
+
+    {{-- Header --}}
+    @include('components.page.page-title', ['title' => 'Verifikasi PJ Pengaduan'])
 
     <section class="flex mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">
             <div class="p-4 flex flex-wrap items-center">
-                <div class="w-1/3">
-                    <div class="flex flex-no-wrap border rounded">
-                        <div class="px-2 md:px-2 rounded-l border-r hover:bg-gray-100 focus:border-white focus:shadow-outline focus:z-10" x-data="{ open: false }">
-                            <div class="flex py-3 items-center cursor-pointer" @click="open = true">
-                                <span class="text-gray-600 text-sm hidden md:inline">FILTER</span>
-                                <svg class="w-2 h-2 fill-gray-600 md:ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 961.243 599.998">
-                                    <path d="M239.998 239.999L0 0h961.243L721.246 240c-131.999 132-240.28 240-240.624 239.999-.345-.001-108.625-108.001-240.624-240z" />
-                                </svg>
-                            </div>
-                            <div style="position: fixed; top: 0; right: 0; left: 0; bottom: 0; z-index: 99998; background: black; opacity: .2" x-show="open"></div>
-                            <div class="mt-6 -ml-6 px-4 py-6 w-screen shadow-xl bg-white rounded" style="position: absolute; z-index: 99999; max-width: 300px" x-show="open" @click.away="open = false">
-                                <label class="mt-4 block text-grey-darkest">Dihapus:</label>
-                                <select wire:model="trashed" class="mt-1 w-full form-select">
-                                    <option :value="null"></option>
-                                    <option value="with">Semua (Termasuk yang Dihapus)</option>
-                                    <option value="only">Hanya yang Terhapus</option>
-                                </select>
-                            </div>
+                <div class="flex flex-no-wrap border rounded">
+                    <div class="px-2 md:px-2 rounded-l border-r hover:bg-gray-100 focus:border-white focus:shadow-outline focus:z-10" x-data="{ open: false }">
+                        <div class="flex py-3 items-center cursor-pointer" @click="open = true">
+                            <span class="text-gray-600 text-sm hidden md:inline">FILTER</span>
+                            <svg class="w-2 h-2 fill-gray-600 md:ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 961.243 599.998">
+                                <path d="M239.998 239.999L0 0h961.243L721.246 240c-131.999 132-240.28 240-240.624 239.999-.345-.001-108.625-108.001-240.624-240z" />
+                            </svg>
                         </div>
-                        <input wire:model="search" class="relative w-full px-4 rounded-r focus:shadow-outline text-sm" type="text" placeholder="Cari …" />
+                        <div style="position: fixed; top: 0; right: 0; left: 0; bottom: 0; z-index: 99998; background: black; opacity: .2" x-show="open"></div>
+                        <div class="mt-6 -ml-6 px-4 py-6 w-screen shadow-xl bg-white rounded" style="position: absolute; z-index: 99999; max-width: 300px" x-show="open" @click.away="open = false">
+                            <label class="mt-4 block text-grey-darkest">Dihapus:</label>
+                            <select wire:model="trashed" class="mt-1 w-full form-select">
+                                <option :value="null"></option>
+                                <option value="with">Semua (Termasuk yang Dihapus)</option>
+                                <option value="only">Hanya yang Terhapus</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="w-2/3 flex items-center" x-data="{ dialog: false }">
-                    <span class="w-full"></span>
-
-                    {{-- Menghapus Informasi --}}
-                    <a class="text-gray-700 bg-white hover:bg-gray-100 border mr-2 p-2 rounded cursor-pointer flex items-center" @click="dialog = true">
-                        <i class="fas fa-trash text-red-600"></i>
-                    </a>
-
-                    {{-- delete confirmation dialog --}}
-                    {{-- @include('components.dialog.delete', ['title' => 'Hapus Informasi Perangkat IT']) --}}
+                    <input wire:model="search" class="relative w-full px-4 rounded-r focus:shadow-outline text-sm" type="text" placeholder="Cari …" />
                 </div>
             </div>
             @if($complaints->count() === 0)
@@ -65,12 +55,7 @@
                                 </td>
                                 <td class="border-t">
                                     <span class="pl-6 py-4 items-center">
-                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ DateFormat::convertDateTime($complaint->created_at) }}
-                                        {{-- @if ($product->deleted_at)
-                                            <div class="flex-no-shrink w-4 h-4 fill-red-600 ml-2">
-                                                @include('components.icon', ['name' => 'trash'])
-                                            </div>
-                                        @endif --}}
+                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ $complaint->created_at->format('d/m/Y') }}
                                     </span>
                                 </td>
                                 <td class="border-t">
@@ -78,9 +63,22 @@
                                         {{ $complaint->nama_konsumen }}
                                     </span>
                                 </td>
-                                <td class="border-t" width="45%">
-                                    <span class="pl-6 py-4 flex items-center">
-                                        {{ Str::limit($complaint->saran_pengaduan, 100) }}
+                                <td class="border-t" width="50%">
+                                    <span
+                                        x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
+                                        x-init="originalContent = $el.firstElementChild.textContent.trim(); content = originalContent.slice(0, maxLength)"
+                                        class="flex flex-wrap">
+                                        <span
+                                            x-text="isCollapsed ? originalContent : content"
+                                            class="pl-6 py-4 leading-tight">
+                                            {!! $complaint->saran_pengaduan !!}
+                                        </span>
+                                        <button
+                                            @click="isCollapsed = !isCollapsed"
+                                            x-show="originalContent.length > maxLength"
+                                            x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
+                                            class="ml-6 mb-4 p-2 bg-violet-200 hover:bg-violet-300 text-violet-900 rounded-md text-sm">
+                                        </button>
                                     </span>
                                 </td>
                                 <td class="border-t">
@@ -104,17 +102,31 @@
                                 </td>
                                 <td class="border-t">
                                     <span class="pl-6 py-4">
-                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ DateFormat::convertDateTime($complaint->tanggal_kategorisasi) }}
+                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ $complaint->tanggal_kategorisasi->format('d/m/Y') }}
                                     </span>
                                 </td>
                                 <td class="border-t w-px">
                                     <span class="py-2 flex items-center space-x-2 mr-2">
-                                        <button class="border-2 border-secondary-200 rounded-md p-1 hover:border-secondary-500">
-                                            <i class="fas fa-envelope text-secondary-400"></i>
+                                        <a
+                                            x-data
+                                            x-tooltip.raw="Lihat Informasi"
+                                            class="text-primary-400 hover:text-primary-500 cursor-pointer"
+                                            href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-pengaduan/' . $complaint->id) }}">
+                                            @include('components.icon', ['name' => 'eye', 'size' => 'w-5 h-5'])
+                                        </a>
+                                        <button
+                                            x-data
+                                            x-tooltip.raw="Kirim Pesan"
+                                            class="text-secondary-400 hover:text-secondary-500">
+                                            @include('components.icon', ['name' => 'message', 'size' => 'w-5 h-5'])
                                         </button>
                                         @if(!is_null($complaint->kode_saran))
-                                            <button class="border-2 border-primary-200 rounded-md p-1 hover:border-primary-500">
-                                                <i class="fas fa-check-circle text-primary-400"></i>
+                                            <button
+                                                wire:click="finalize({{ $complaint->id }})"
+                                                x-data
+                                                x-tooltip.raw="Selesaikan Verifikasi"
+                                                class="text-green-400 hover:text-green-500">
+                                                @include('components.icon', ['name' => 'check-circle', 'size' => 'w-5 h-5'])
                                             </button>
                                         @endif
                                     </span>
@@ -128,3 +140,15 @@
     </section>
     {{ $complaints->paginate(20)->links('vendor.spatula') }}
 </div>
+
+@push('scripts')
+    @if (session()->has('messages'))
+        <script>
+            window.onload = function() {
+                window.dispatchEvent(new CustomEvent('notify', {
+                    detail: '{{ session("messages") }}'
+                }));
+            }
+        </script>
+    @endif
+@endpush

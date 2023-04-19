@@ -30,8 +30,14 @@
                     </div>
                     <input wire:model="search" class="relative w-full px-4 rounded-r focus:shadow-outline text-sm" type="text" placeholder="Cari …" />
                 </div>
-                <a href="{{ url(env('APP_URL') . '/pengaturan/layanan/tambah') }}" class="text-primary-500 hover:text-primary-600">
-                    @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-10 h-10'])
+
+                {{-- Tambah User --}}
+                <a
+                    x-data
+                    x-tooltip.raw="Tambah Jenis Layanan"
+                    href="{{ url(env('APP_URL') . '/pengaturan/layanan/tambah') }}"
+                    class="p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md">
+                    @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
                 </a>
             </div>
             @if($services->count() === 0)
@@ -72,10 +78,17 @@
                                 </td>
                                 <td class="border-t w-px">
                                     <span class="py-2 flex items-center space-x-2 mr-2">
-                                        <a href="{{ url(env('APP_URL') . '/pengaturan/layanan/' . $service->id . '/edit') }}" class="text-violet-400 hover:text-violet-500 cursor-pointer">
+                                        <a
+                                            x-data
+                                            x-tooltip.raw="Edit Layanan"
+                                            href="{{ url(env('APP_URL') . '/pengaturan/layanan/' . $service->id . '/edit') }}"
+                                            class="text-violet-400 hover:text-violet-500 cursor-pointer">
                                             @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
                                         </a>
-                                        <button class="text-red-500 hover:text-red-600">
+                                        <button
+                                            x-data
+                                            x-tooltip.raw="Hapus Layanan"
+                                            class="text-red-500 hover:text-red-600">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                     </span>

@@ -1,10 +1,9 @@
-@section('title', 'Pengguna Layanan')
+@section('title', 'Pengaduan Pengguna Layanan')
 
 <div>
     {{-- Header --}}
-    @include('components.page.page-title', ['title' => $done->nama_konsumen])
+    @include('components.page.page-title', ['title' => $complaint->nama_konsumen])
 
-    {{-- Informasi Pengguna Layanan --}}
     <section>
         <div class="h-full">
             <!-- Table -->
@@ -19,35 +18,35 @@
                                 <tr>
                                     <td width="25%" class="pl-5 py-3 whitespace-nowrap text-md font-medium">Tanggal Layanan</td>
                                     <td width="1%" class="text-md font-medium">:</td>
-                                    <td>{{ $done->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $complaint->created_at->format('d/m/Y') }}</td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Nama</td>
                                     <td class="text-md font-medium">:</td>
-                                    <td>{{ $done->nama_konsumen }}</td>
+                                    <td>{{ $complaint->nama_konsumen }}</td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Email</td>
                                     <td class="text-md font-medium">:</td>
-                                    <td>{{ $done->email_konsumen ?? '-' }}</td>
+                                    <td>{{ $complaint->email_konsumen ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Nomor Whatsapp / Telepon</td>
                                     <td class="text-md font-medium">:</td>
-                                    <td>{{ $done->no_wa_telepon ?? '-' }}</td>
+                                    <td>{{ $complaint->no_wa_telepon ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Nama Petugas</td>
                                     <td class="text-md font-medium">:</td>
-                                    <td>{{ $done->petugas->nama ?? '-' }}</td>
+                                    <td>{{ $complaint->petugas->nama ?? '-' }}</td>
                                 </div>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Rating Petugas</td>
                                     <td class="text-md font-medium">:</td>
                                     <td class="flex py-4">
-                                        @if (!is_null($done->rating_petugas))
+                                        @if (!is_null($complaint->rating_petugas))
                                             @for($i = 0; $i < 5; $i++)
-                                                @if($i < $done->rating_petugas)
+                                                @if($i < $complaint->rating_petugas)
                                                     <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
                                                         @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
                                                     </span>
@@ -65,15 +64,15 @@
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Jenis Layanan</td>
                                     <td class="text-md font-medium">:</td>
-                                    <td>{{ $done->layanan->nama_layanan ?? '-' }}</td>
+                                    <td>{{ $complaint->layanan->nama_layanan ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Rating Layanan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td class="flex py-4">
-                                        @if (!is_null($done->rating_layanan))
+                                        @if (!is_null($complaint->rating_layanan))
                                             @for($i = 0; $i < 5; $i++)
-                                                @if($i < $done->rating_layanan)
+                                                @if($i < $complaint->rating_layanan)
                                                     <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
                                                         @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
                                                     </span>
@@ -92,15 +91,15 @@
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Kategori Saran Pengaduan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        @if (!is_null($done->kode_saran))
-                                            @if (count($done->kode_saran) > 1)
+                                        @if (!is_null($complaint->kode_saran))
+                                            @if (count($complaint->kode_saran) > 1)
                                                 <ul class="ml-td">
-                                                @for($i = 0; $i < count($done->kode_saran); $i++)
-                                                    <li>{{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
+                                                @for($i = 0; $i < count($complaint->kode_saran); $i++)
+                                                    <li>{{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran)->get($i))->pluck('nama_saran')[0] }}</li>
                                                 @endfor
                                                 </ul>
                                             @else
-                                                {{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran))->pluck('nama_saran')[0] }}
+                                                {{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran))->pluck('nama_saran')[0] }}
                                             @endif
                                         @else
                                             -
@@ -111,56 +110,49 @@
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Saran Pengaduan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        <p>{{ $done->saran_pengaduan ?? '-' }}</p>
+                                        <p>{{ $complaint->saran_pengaduan ?? '-' }}</p>
                                     </td>
                                 </div>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Tanggal Notifikasi</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        {{ $done->tanggal_notifikasi ? $done->tanggal_notifikasi->format('d/m/Y') : '-' }}
+                                        {{ $complaint->tanggal_notifikasi ? $complaint->tanggal_notifikasi->format('d/m/Y') : '-' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Tanggal Kategorisasi</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        {{ $done->tanggal_kategorisasi ? $done->tanggal_kategorisasi->format('d/m/Y') : '-' }}
+                                        {{ $complaint->tanggal_kategorisasi ? $complaint->tanggal_kategorisasi->format('d/m/Y') : '-' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Tanggal Tindak Lanjut PJ Pelayanan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        {{ $done->tanggal_tl_pj_layanan ? $done->tanggal_tl_pj_layanan->format('d/m/Y') : '-' }}
+                                        {{ $complaint->tanggal_tl_pj_layanan ? $complaint->tanggal_tl_pj_layanan->format('d/m/Y') : '-' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Komentar PJ Pelayanan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        {{ $done->text_pj_layanan ?? '-' }}
+                                        {{ $complaint->text_pj_layanan ?? '-' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Tanggal Tindak Lanjut PJ Pengaduan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        {{ $done->tanggal_tl_pj_pengaduan ? $done->tanggal_tl_pj_pengaduan->format('d/m/Y') : '-' }}
+                                        {{ $complaint->tanggal_tl_pj_pengaduan ? $complaint->tanggal_tl_pj_pengaduan->format('d/m/Y') : '-' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Komentar PJ Pengaduan</td>
                                     <td class="text-md font-medium">:</td>
                                     <td>
-                                        {{ $done->text_pj_pengaduan ?? '-' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pl-5 py-3 whitespace-nowrap text-md font-medium">Tanggal Selesai Tindak Lanjut</td>
-                                    <td class="text-md font-medium">:</td>
-                                    <td>
-                                        {{ $done->tanggal_selesai->format('d/m/Y') }}
+                                        {{ $complaint->text_pj_pengaduan ?? '-' }}
                                     </td>
                                 </tr>
                             </tbody>

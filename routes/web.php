@@ -8,6 +8,7 @@ use App\Http\Livewire\TindakLanjut\Selesai\DetailSelesai;
 use App\Http\Livewire\TindakLanjut\PjLayanan\DaftarPjLayanan;
 use App\Http\Livewire\TindakLanjut\PjLayanan\KategorisasiLayanan;
 use App\Http\Livewire\TindakLanjut\PjPengaduan\DaftarPjPengaduan;
+use App\Http\Livewire\TindakLanjut\PjPengaduan\DetailPjPengaduan;
 use App\Http\Livewire\Laporan\LaporanHarian;
 use App\Http\Livewire\Laporan\LaporanBulanan;
 use App\Http\Livewire\Pengaturan\Petugas\DaftarPetugas;
@@ -25,12 +26,15 @@ Route::get('login', Login::class)->name('login');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', Index::class)->name('dashboard');
 
-    Route::get('tindak-lanjut/selesai', DaftarSelesai::class);
-    Route::get('tindak-lanjut/selesai/{id}', DetailSelesai::class);
-    Route::get('tindak-lanjut/pj-layanan', DaftarPjLayanan::class);
-    Route::get('tindak-lanjut/pj-layanan/kategorisasi/{id}', KategorisasiLayanan::class);
-    Route::get('tindak-lanjut/pj-layanan/kategorisasi/{id}/edit', KategorisasiLayanan::class);
-    Route::get('tindak-lanjut/pj-pengaduan', DaftarPjPengaduan::class);
+    Route::prefix('tindak-lanjut/')->group(function() {
+        Route::get('selesai', DaftarSelesai::class)->name('daftar-selesai');
+        Route::get('selesai/{customer}', DetailSelesai::class)->name('detail-selesai');
+        Route::get('pj-layanan', DaftarPjLayanan::class)->name('daftar-pj-layanan');
+        Route::get('pj-layanan/kategorisasi/{customer}', KategorisasiLayanan::class)->name('tambah-kategorisasi-layanan');
+        Route::get('pj-layanan/kategorisasi/{customer}/edit', KategorisasiLayanan::class)->name('edit-kategorisasi-layanan');
+        Route::get('pj-pengaduan', DaftarPjPengaduan::class)->name('daftar-pj-pengaduan');
+        Route::get('pj-pengaduan/{customer}', DetailPjPengaduan::class)->name('detail-pj-pengaduan');
+    });
 
     Route::prefix('laporan/')->group(function () {
         Route::get('harian', LaporanHarian::class)->name('laporan-harian');
@@ -38,8 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::prefix('pengaturan/')->group(function () {
-        Route::get('petugas', DaftarPetugas::class);
-        Route::get('pengguna', DaftarPengguna::class);
+        Route::get('petugas', DaftarPetugas::class)->name('daftar-petugas');
+        Route::get('pengguna', DaftarPengguna::class)->name('daftar-pengguna');
         Route::get('pengguna/tambah', TambahEditPengguna::class)->name('tambah-pengguna');
         Route::get('pengguna/{pengguna}/edit', TambahEditPengguna::class)->name('edit-pengguna');
         Route::get('layanan', DaftarLayanan::class)->name('daftar-layanan');

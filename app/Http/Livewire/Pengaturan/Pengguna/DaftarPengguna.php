@@ -17,6 +17,7 @@ class DaftarPengguna extends Component
     public $users;
     public $userData;
     public $units;
+    public $selectedUnit;
 
     public function render()
     {
@@ -42,22 +43,27 @@ class DaftarPengguna extends Component
         }
     }
 
+    public function updatedSelectedUnit()
+    {
+        $this->users = m_pengguna::where('kode_satker_id', $this->selectedUnit)->get();
+    }
+
     public function data(m_pengguna $data)
     {
         $this->userData = $data;
     }
 
-    public function deleteId(m_pengguna $id)
-    {
-        $this->userData = $id;
-    }
+    // public function deleteId(m_pengguna $id)
+    // {
+    //     $this->userData = $id;
+    // }
 
-    public function delete(MPenggunaRepository $mPenggunaRepository)
-    {
-        $result = $mPenggunaRepository->delete($this->userData);
+    // public function delete(MPenggunaRepository $mPenggunaRepository)
+    // {
+    //     $result = $mPenggunaRepository->delete($this->userData);
 
-        session()->flash('message', $result);
+    //     session()->flash('message', $result);
 
-        return redirect(env('APP_URL') . '/setting/user/lists');
-    }
+    //     return redirect(env('APP_URL') . '/setting/user/lists');
+    // }
 }

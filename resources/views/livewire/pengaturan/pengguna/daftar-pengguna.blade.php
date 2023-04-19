@@ -48,7 +48,11 @@
                     @endrole
 
                     {{-- Tambah User --}}
-                    <a href="{{ url(env('APP_URL') . '/pengaturan/pengguna/tambah') }}" class="ml-6 p-3 text-white bg-primary-400 hover:bg-primary-500 rounded">
+                    <a
+                        x-data
+                        x-tooltip.raw="Tambah Pengguna"
+                        href="{{ url(env('APP_URL') . '/pengaturan/pengguna/tambah') }}"
+                        class="ml-6 p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md">
                         @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-6 h-6'])
                     </a>
                 </div>
@@ -111,10 +115,17 @@
                                 </td>
                                 <td class="border-t w-px">
                                     <span class="py-2 flex items-center space-x-2 mr-2">
-                                        <a href="{{ url(env('APP_URL') . '/pengaturan/pengguna/' . $user->id . '/edit') }}" class="text-violet-500 hover:text-violet-600 cursor-pointer">
+                                        <a
+                                            x-data
+                                            x-tooltip.raw="Edit Pengguna"
+                                            href="{{ url(env('APP_URL') . '/pengaturan/pengguna/' . $user->id . '/edit') }}"
+                                            class="text-violet-500 hover:text-violet-600 cursor-pointer">
                                             @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
                                         </a>
-                                        <button class="text-red-500 hover:text-red-600">
+                                        <button
+                                            x-data
+                                            x-tooltip.raw="Hapus Pengguna"
+                                            class="text-red-500 hover:text-red-600">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                     </span>

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPSTORM_META\map;
+
 class d_penilaian extends Model
 {
     protected $table = 'd_penilaian';
@@ -30,7 +32,14 @@ class d_penilaian extends Model
     ];
 
     protected $casts = [
-        'kode_saran' => 'array'
+        'kode_saran'              => 'array',
+        'created_at'              => 'datetime',
+        'updated_at'              => 'datetime',
+        'tanggal_selesai'         => 'datetime',
+        'tanggal_tl_pj_pengaduan' => 'datetime',
+        'tanggal_tl_pj_layanan'   => 'datetime',
+        'tanggal_notifikasi'      => 'datetime',
+        'tanggal_kategorisasi'    => 'datetime'
     ];
 
     public function petugas()

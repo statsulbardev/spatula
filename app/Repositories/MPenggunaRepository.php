@@ -6,6 +6,7 @@ use App\Models\m_pengguna;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class MPenggunaRepository
 {
@@ -14,28 +15,28 @@ class MPenggunaRepository
         try {
             DB::beginTransaction();
 
-            m_pengguna::create([
-                'nama'           => $data->fullname,
-                'username'       => explode('@', $data->email)[0],
-                'email'          => $data->email,
-                'password'       => bcrypt($data->password),
-                'bpsid'          => $data->bpsid,
-                'kode_satker_id' => $data->unit,
+            $user = m_pengguna::create([
+                'nama'           => $data->f_name,
+                'username'       => explode('@', $data->f_email)[0],
+                'email'          => $data->f_email,
+                'password'       => bcrypt($data->f_password),
+                'bpsid'          => $data->f_bpsid,
+                'kode_satker_id' => $data->f_unit,
                 'aktif'          => true,
                 'foto'           => null
             ]);
 
-            $message = "Informasi user telah disimpan.";
+            $user->assignRole(Role::find($data->f_role, ['name'])->name);
+
+            $message = "Info user telah disimpan.";
 
             DB::commit();
         } catch(Exception $error) {
             DB::rollBack();
 
-            $this->deleteFile('image', $path);
-
             Log::alert($error->getMessage());
 
-            $message = "Gagal menyimpan informasi user.";
+            $message = "Gagal menyimpan info user.";
         }
 
         return $message;
@@ -47,49 +48,21 @@ class MPenggunaRepository
             DB::beginTransaction();
 
             $data->user->update([
-                'nama'           => $data->fullname,
-                'username'       => explode('@', $data->email)[0],
-                'email'          => $data->email,
-                'bpsid'          => $data->bpsid,
-                'role_id'        => $data->role,
-                'kode_satker_id' => $data->unit,
+                'nama'           => $data->f_name,
+                'username'       => explode('@', $data->f_email)[0],
+                'email'          => $data->f_email,
+                'password'       => bcrypt($data->f_password) ?? null,
+                'bpsid'          => $data->f_bpsid,
+                'kode_satker_id' => $data->f_unit,
             ]);
 
-            if (!is_null($data->password)) $data->user->update(['password' => bcrypt($data->password)]);
+            // Remove Role
+            $data->user->removeRole($data->user->roles[0]->name);
 
-            if (!is_null($data->photo)) {
-                $path = $this->uploadFile('image', $data->photo, $data->photoExtension);
-                $data->user->update(['foto' => $path]);
-            }
+            // Assign New Role
+            $data->user->assignRole(Role::find($data->f_role, ['name'])->name);
 
-            $message = "Informasi " . $data->fullname . " telah diperbaharui.";
-
-            DB::commit();
-        } catch(Exception $error) {
-            DB::rollBack();
-
-            $this->deleteFile('image', $path);
-
-            Log::alert($error->getMessage());
-
-            $message = "Informasi " . $data->fullname . " gagal diperbaharui.";
-        }
-
-        return $message;
-    }
-
-    public function delete($data) : string
-    {
-        try {
-            DB::beginTransaction();
-
-            $path = $data->foto;
-
-            $data->delete();
-
-            is_null($path) ?: $this->deleteFile('image', $path);
-
-            $message = "Informasi " . $data->nama . ' telah dihapus.';
+            $message = "Info user telah diupdate";
 
             DB::commit();
         } catch(Exception $error) {
@@ -97,7 +70,7 @@ class MPenggunaRepository
 
             Log::alert($error->getMessage());
 
-            $message = "Informasi " . $data->nama . ' gagal dihapus.';
+            $message = "Info user gagal diupdate";
         }
 
         return $message;
