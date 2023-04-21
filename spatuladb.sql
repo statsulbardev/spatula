@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 19, 2023 at 10:29 PM
+-- Generation Time: Apr 21, 2023 at 10:42 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -273,7 +273,9 @@ INSERT INTO `d_penilaian` (`id`, `nama_konsumen`, `email_konsumen`, `no_wa_telep
 (291, 'Bagas Raditya Nanggala', 'bagasraditya36@gmail.com', '08982945566', NULL, NULL, 10, '4', '[9]', 0, 'Respon pelayanan cukup baik', NULL, '2023-04-19 05:12:59', NULL, NULL, NULL, NULL, '7600', 1, '2023-04-19 05:16:17', '2023-04-05 05:53:57', '2023-04-18 21:16:17'),
 (292, 'Amalia Tangdilambi', 'twentytwo20th@gmail.com', '085299850350', NULL, NULL, 10, '5', NULL, 0, 'terimakasih BPS Polman', NULL, NULL, NULL, NULL, NULL, NULL, '7602', 0, NULL, '2023-04-08 05:26:27', '2023-04-08 05:26:27'),
 (293, 'Sulastri Yasim', 'lastriyasim@gmail.com', '085299366967', NULL, NULL, 10, '5', '[1,2]', 1, 'Pelayanannya cepat dan santun. 👍', NULL, '2023-04-19 04:58:52', NULL, NULL, NULL, NULL, '7600', 1, '2023-04-19 05:16:51', '2023-04-10 05:49:22', '2023-04-18 21:16:51'),
-(294, 'Sulastri Yasim', 'lastriyasim@gmail.com', '085299366967', NULL, NULL, 10, '5', '[1]', 0, 'Pelayanannya cepat dan santun. 👍', NULL, '2023-04-19 05:02:22', NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-04-10 05:49:25', '2023-04-18 21:02:22');
+(294, 'Sulastri Yasim', 'lastriyasim@gmail.com', '085299366967', NULL, NULL, 10, '5', '[1]', 0, 'Pelayanannya cepat dan santun. 👍', NULL, '2023-04-19 05:02:22', NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-04-10 05:49:25', '2023-04-18 21:02:22'),
+(295, 'Syaifur Rijal', 'syaifur.rijal@hotmail.com', '081342357732', 16, '5', 3, '5', NULL, NULL, '<div>Lorem Ipsum Dol</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-04-21 00:24:53', '2023-04-21 00:24:53'),
+(296, 'Reski Tanawali', 'reski@bps.go.id', '081342357765', NULL, NULL, 9, '5', NULL, NULL, '<div>lorem ipsum dolor sit amet, dole</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-04-21 00:32:41', '2023-04-21 00:32:41');
 
 -- --------------------------------------------------------
 
@@ -407,7 +409,7 @@ CREATE TABLE `m_layanan` (
   `kode_layanan` char(2) NOT NULL,
   `nama_layanan` varchar(100) NOT NULL,
   `deskripsi` varchar(255) DEFAULT NULL,
-  `kode_form` char(1) NOT NULL,
+  `metode` char(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -416,7 +418,7 @@ CREATE TABLE `m_layanan` (
 -- Dumping data for table `m_layanan`
 --
 
-INSERT INTO `m_layanan` (`id`, `kode_layanan`, `nama_layanan`, `deskripsi`, `kode_form`, `created_at`, `updated_at`) VALUES
+INSERT INTO `m_layanan` (`id`, `kode_layanan`, `nama_layanan`, `deskripsi`, `metode`, `created_at`, `updated_at`) VALUES
 (1, '1', 'Rekomendasi Kegiatan Statistik', NULL, '1', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
 (2, '2', 'Konsultasi Statistik', NULL, '1', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
 (3, '3', 'Perpustakaan Tercetak', NULL, '1', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
@@ -698,7 +700,7 @@ ALTER TABLE `role_has_permissions`
 -- AUTO_INCREMENT for table `d_penilaian`
 --
 ALTER TABLE `d_penilaian`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
