@@ -11,9 +11,11 @@ class TambahEditLayanan extends Component
 {
     public $routeName;
     public $serviceMaster;
-    public $kode_layanan;
-    public $nama_layanan;
-    public $deskripsi;
+
+    public $f_kode_layanan;
+    public $f_nama_layanan;
+    public $f_deskripsi;
+    public $f_metode;
 
     public function render()
     {
@@ -39,7 +41,7 @@ class TambahEditLayanan extends Component
             'kode_layanan' => $this->kode_layanan,
             'nama_layanan' => $this->nama_layanan,
             'deskripsi'    => $this->deskripsi,
-            'kode_form'    => '1'
+            'metode'       => '1'
         ]);
 
         session()->flash('messages', 'Informasi Tersimpan !!');

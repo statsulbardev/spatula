@@ -1,11 +1,51 @@
-@extends('layouts.base')
-
 @section('title', 'Form Penilaian Layanan')
 
-@section('content')
-<section>
-    <div class="container mx-auto">
+@section('styles')
+    <link rel="stylesheet" href="{{ secure_asset('vendor/star-rating/star-rating.min.css') }}">
+@endsection
+
+<div>
+    @include('components.page.notification')
+
+    <form wire:submit.prevent="storeData">
         <div class="bg-white border-r border-t border-l border-gray-200 shadow-sm rounded-t-lg mt-4 py-4">
+            <div class="py-10 px-12 text-center">
+                <h1 class="text-4xl font-extrabold tracking-wider">Selamat Datang</h1>
+                <h1 class="mt-2 text-4xl font-extrabold">Saran Pengaduan Online dan Rating Petugas Layanan</h1>
+                <p class="mt-5 text-lg text-zinc-500">Anda dapat memberikan penilaian terhadap petugas dan layanan yang kami diberikan.</p>
+            </div>
+            <hr>
+            <div class="p-6 flex flex-wrap">
+                <div class="lg:w-1/3">
+                    <h1 class="text-2xl tracking-wide">Unit Kerja</h1>
+                    <p class="mt-4 leading-6 text-base lg:pr-24">
+                        Pilih unit kerja yang ingin anda berikan penilaian.
+                    </p>
+                </div>
+                <div class="lg:w-2/3">
+                    <div class="my-6 w-full">
+                        <label class="form-label font-bold" for="Unit Kerja">
+                            Unit Kerja
+                        </label>
+                        <select wire:model="f_unit" ref="input" class="form-select">
+                            <option value="" hidden selected>Pilih Unit Kerja ...</option>
+                            @foreach ($units as $unit)
+                                <option value="{{ $unit->id . '-' . $unit->nama }}">{{ $unit->nama }}</option>
+                            @endforeach
+                        </select>
+
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_unit')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
             <div class="p-6 flex flex-wrap">
                 <div class="lg:w-1/3">
                     <h1 class="text-2xl tracking-wide">Informasi Penerima Layanan</h1>
@@ -20,6 +60,15 @@
                             'label' => 'Nama Lengkap',
                             'type'  => 'text'
                         ])
+
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_nama')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
                     </div>
                     <div class="my-6 w-full">
                         @include('components.input.text', [
@@ -27,6 +76,15 @@
                             'label' => 'Akun Email',
                             'type'  => 'email'
                         ])
+
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_email')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
                     </div>
                     <div class="my-6 w-full">
                         @include('components.input.text', [
@@ -34,6 +92,15 @@
                             'label' => 'No. Telepon / Whatsapp',
                             'type'  => 'text'
                         ])
+
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_notelpwhatsapp')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,105 +110,144 @@
                     <h1 class="text-2xl tracking-wide">Penilaian Layanan</h1>
                     <p class="mt-4 leading-6 text-base lg:pr-24">
                         Bagaimana penilaian anda terhadap layanan yang diberikan oleh
-                        <b class="text-primary-500 font-bold">BPS Provinsi Sulawesi Barat</b> ?
+                        <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                     </p></div>
                 <div class="lg:w-2/3">
                     <div class="my-6 w-full">
-                        @include('components.input.select', [
-                            'model'     => 'f_layanan',
-                            'label'     => 'Nama Layanan',
-                            'opt_title' => 'Pilih Jenis Layanan ...',
-                            'opt_item'  => $services
-                        ])
-                    </div>
-                    <div class="my-6">
+                        <label class="form-label font-bold" for="Nama Layanan">
+                            Nama Layanan
+                        </label>
+                        <select wire:model="f_layanan" ref="input" class="form-select">
+                            <option value="" hidden selected>Pilih Jenis Layanan ...</option>
+                            @foreach ($services as $service)
+                                <option value="{{ $service->id .'-'. $service->metode }}">{{ $service->nama_layanan }}</option>
+                            @endforeach
+                        </select>
+
                         <div
-                            x-data="
-                            {
-                                rating: 0,
-                                hoverRating: 0,
-                                ratings: [{'amount': 1, 'label':'Sangat Tidak Puas'}, {'amount': 2, 'label':'Tidak Puas'}, {'amount': 3, 'label':'Biasa Saja'}, {'amount': 4, 'label':'Puas'}, {'amount': 5, 'label':'Sangat Puas'}],
-                                rate(amount) {
-                                    if (this.rating == amount) { this.rating = 0; } else this.rating = amount;
-                                },
-                                currentLabel() {
-                                    let r = this.rating;
-                                    if (this.hoverRating != this.rating) r = this.hoverRating;
-                                    let i = this.ratings.findIndex(e => e.amount == r);
-                                    if (i >=0) { return this.ratings[i].label; } else { return '' };
-                                }
-                            }"
-                        >
-                            <div class="flex space-x-0">
-                                <template x-for="(star, index) in ratings" :key="index">
-                                    <button
-                                        @click="rate(star.amount)"
-                                        @mouseover="hoverRating = star.amount"
-                                        @mouseleave="hoverRating = rating"
-                                        aria-hidden="true"
-                                        :title="star.label"
-                                        class="rounded-sm text-gray-400 fill-current focus:outline-none focus:shadow-outline w-12 m-0 cursor-pointer"
-                                        :class="{'text-gray-600': hoverRating >= star.amount, 'text-yellow-400': rating >= star.amount && hoverRating >= star.amount}">
-                                        <svg class="w-10 transition duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                    </button>
-                                </template>
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_layanan')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
+                    </div>
+                    @include('components.input.rating', ['model' => 'f_ratinglayanan'])
+
+                    <div
+                        x-data="{ shown: false, timeout: null }"
+                        x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                        x-show.transition.opacity.out.duration.2000ms="shown">
+                        @error('f_ratinglayanan')
+                            @include('components.input.error')
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            @if (isset($f_layanan) and explode('-', $f_layanan)[1] == 1)
+                <hr>
+                <div class="p-6 flex flex-wrap">
+                    <div class="lg:w-1/3">
+                        <h1 class="text-2xl tracking-wide">Penilaian Petugas</h1>
+                        <p class="mt-4 leading-6 text-base lg:pr-24">
+                            Bagaimana penilaian anda terhadap petugas layanan di Pelayanan Statistik Terpadu
+                            <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
+                        </p></div>
+                    <div class="lg:w-2/3">
+                        <div class="my-6 w-full">
+                            @include('components.input.select', [
+                                'model'     => 'f_petugas',
+                                'label'     => 'Nama Petugas',
+                                'opt_title' => 'Pilih Petugas Layanan ...',
+                                'opt_item'  => $officers
+                            ])
+
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('f_petugas')
+                                    @include('components.input.error')
+                                @enderror
                             </div>
-                            <div class="p-2">
-                                <template x-if="rating || hoverRating">
-                                    <p x-text="currentLabel()"></p>
-                                </template>
-                                <template x-if="!rating && !hoverRating">
-                                    <p>Silahkan Memberi Rating !</p>
-                                </template>
-                            </div>
+                        </div>
+                        @include('components.input.rating', ['model' => 'f_ratingpetugas'])
+
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_ratingpetugas')
+                                @include('components.input.error')
+                            @enderror
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="p-6 flex flex-wrap">
-                <div class="lg:w-1/3">
-                    <h1 class="text-2xl tracking-wide">Penilaian Petugas</h1>
-                    <p class="mt-4 leading-6 text-base lg:pr-24">
-                        Bagaimana penilaian anda terhadap petugas layanan di Pelayanan Statistik Terpadu
-                        <b class="text-primary-500 font-bold">BPS Provinsi Sulawesi Barat</b> ?
-                    </p></div>
-                <div class="lg:w-2/3">
-                    <div class="my-6 w-full">
-                        @include('components.input.select', [
-                            'model'     => 'f_petugas',
-                            'label'     => 'Nama Petugas',
-                            'opt_title' => 'Pilih Petugas Layanan ...',
-                            'opt_item'  => $officers
-                        ])
-                    </div>
-                </div>
-            </div>
+            @endif
+
             <hr>
             <div class="p-6 flex flex-wrap">
                 <div class="lg:w-1/3">
                     <h1 class="text-2xl tracking-wide">Kotak Saran Pengaduan</h1>
                     <p class="mt-4 leading-6 text-base lg:pr-24">
                         Berikan saran / pengaduan / kritik / apresiasi untuk layanan di
-                        <b class="text-primary-500 font-bold">BPS Provinsi Sulawesi Barat</b> ?
+                        <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                     </p></div>
                 <div class="lg:w-2/3">
                     <div class="my-6 w-full">
-                        @include('components.input.select', [
-                            'model'     => 'f_saranpengaduan',
-                            'label'     => 'Saran Pengaduan',
-                            'opt_title' => 'Pilih Petugas Layanan ...',
-                            'opt_item'  => $officers
+                        @include('components.input.text-area', [
+                            'model' => 'f_saranpengaduan',
+                            'label' => 'Saran Pengaduan'
                         ])
+
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('f_saranpengaduan')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mt-auto bg-gray-200 border-gray-200 rounded-b-lg shadow-sm p-4 text-center">
-            <span class="text-sm font-light">Copyright &copy; {{ date('Y') }} - BPS Provinsi Sulawesi Barat</span>
+        <div class="mt-auto bg-gray-200 border-gray-200 rounded-b-lg shadow-sm p-4 flex items-center">
+            <button wire:click="resetData" type="button" class="btn-secondary">Batal</button>
+            <button type="submit" class="btn-primary ml-auto">Simpan</button>
         </div>
-    </div>
-</section>
-@overwrite
+    </form>
+    <footer class="bottom mt-10 mb-6 text-light text-center leading-tight">
+        <p>Copyright &copy; {{ date('Y') }} - <b class="text-primary">BPS Provinsi Sulawesi Barat</b></p>
+        <span class="text-sm text-zinc-500">Jl. RE Martadinata No. 10, Mamuju, Telp. (0426) 21265, Fax (0426) 22103, Mailbox : sulbar@bps.go.id, WhatsApp: 0822-9338-2522</span>
+    </footer>
+</div>
+
+@push('scripts')
+    <script src="{{ secure_asset('vendor/star-rating/star-rating.min.js') }}"></script>
+    <script>
+        var starRatingControl = new StarRating('.star-rating', {
+            maxStars: 5,
+            showText: true,
+        });
+
+        window.addEventListener('contentChanged', event => {
+            var starRatingControl = new StarRating('.star-rating', {
+                maxStars: 5,
+                showText: true,
+            });
+        });
+    </script>
+
+    @if (session()->has('messages'))
+        <script>
+            window.onload = function() {
+                window.dispatchEvent(new CustomEvent('notify', {
+                    detail: '{{ session("messages") }}'
+                }));
+            }
+        </script>
+    @endif
+@endpush

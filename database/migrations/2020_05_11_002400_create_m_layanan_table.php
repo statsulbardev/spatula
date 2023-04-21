@@ -17,7 +17,8 @@ class CreateMLayananTable extends Migration
             $table->id();
             $table->char('kode_layanan', 2);
             $table->string('nama_layanan', 50);
-            $table->char('kode_form', 1);
+            $table->string('deskripsi');
+            $table->char('metode', 1);
             $table->timestamps();
         });
     }

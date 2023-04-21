@@ -5,9 +5,3 @@
     @endif
 </label>
 <input id="{{ $model }}" wire:model.defer="{{ $model }}" ref="input" class="form-input" type="{{ $type }}" @if(isset($option)) disabled @endif>
-
-@error('{{ $model }}')
-    <div class="mt-2">
-        <span class="text-sm text-red-600">{{ $message }}</span>
-    </div>
-@enderror

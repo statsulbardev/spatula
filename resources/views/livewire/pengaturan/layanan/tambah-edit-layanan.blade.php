@@ -23,23 +23,30 @@
                     <div class="pr-3 lg:w-2/3">
                         <div class="my-6 w-full">
                             @include('components.input.text', [
-                                'model' => 'kode_layanan',
+                                'model' => 'f_kode_layanan',
                                 'label' => 'Kode Layanan',
                                 'type'  => 'text'
                             ])
                         </div>
                         <div class="my-6 w-full">
                             @include('components.input.text', [
-                                'model' => 'nama_layanan',
+                                'model' => 'f_nama_layanan',
                                 'label' => 'Nama Layanan',
                                 'type'  => 'text'
                             ])
                         </div>
                         <div class="my-6 w-full">
-                            @include('components.input.text', [
-                                'model' => 'deskripsi',
-                                'label' => 'Deskripsi Layanan',
-                                'type'  => 'text'
+                            @include('components.input.select', [
+                                'model'     => 'f_metode',
+                                'label'     => 'Metode Layanan',
+                                'opt_title' => 'Pilih Metode Layanan ...',
+                                'opt_item'  => "<option value='1'>Luring (offline)</option><option value='2'>Daring (online)</option>"
+                            ])
+                        </div>
+                        <div class="my-6 w-full">
+                            @include('components.input.text-area', [
+                                'model' => 'f_deskripsi',
+                                'label' => 'Deskripsi Layanan'
                             ])
                         </div>
                     </div>

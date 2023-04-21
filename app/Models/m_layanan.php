@@ -22,6 +22,6 @@ class m_layanan extends Model
         'kode_layanan',
         'nama_layanan',
         'deskripsi',
-        'kode_form'
+        'metode'
     ];
 }

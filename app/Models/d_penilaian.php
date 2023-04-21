@@ -12,12 +12,12 @@ class d_penilaian extends Model
 
     protected $fillable = [
         'nama_konsumen',
-        'kode_layanan',
-        'rating_layanan',
         'email_konsumen',
         'no_wa_telepon',
         'kode_petugas',
         'rating_petugas',
+        'kode_layanan',
+        'rating_layanan',
         'kode_saran',
         'is_pengaduan',
         'saran_pengaduan',
@@ -27,6 +27,7 @@ class d_penilaian extends Model
         'text_pj_layanan',
         'tanggal_tl_pj_pengaduan',
         'text_pj_pengaduan',
+        'kode_satker_id',
         'selesai',
         'tanggal_selesai'
     ];
