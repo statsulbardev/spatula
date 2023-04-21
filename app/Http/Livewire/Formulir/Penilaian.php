@@ -30,18 +30,26 @@ class Penilaian extends Component
 
     protected $rules = [
         'f_unit'           => 'required',
-        'f_nama'           => 'required|max:20',
+        'f_nama'           => 'required|min:4|max:30',
         'f_email'          => 'nullable|email:rfc,dns',
         'f_notelpwhatsapp' => 'required|numeric',
         'f_layanan'        => 'required',
-        'f_ratinglayanan'  => 'required'
+        'f_ratinglayanan'  => 'required',
+        'f_saranpengaduan' => 'required|min:4'
     ];
 
     protected $messages = [
-        'f_nama.required' => 'Nama Lengkap Tidak Boleh Kosong',
-        'f_nama.max'      => 'Nama Lengkap Maks. 20 Karakter',
-        'f_email.email'   => 'Alamat email tidak valid',
-        'f_unit'          => 'Unit kerja minimal terpilih salah satu'
+        'f_nama.required'           => 'Nama lengkap tidak boleh kosong',
+        'f_nama.min'                => 'Nama lengkap min. 4 karakter',
+        'f_nama.max'                => 'Nama lengkap maks. 30 karakter',
+        'f_email.email'             => 'Alamat email tidak valid',
+        'f_unit'                    => 'Unit kerja minimal terpilih salah satu',
+        'f_notelpwhatsapp.required' => 'Nomor telp/whatsapp tidak boleh kosong',
+        'f_notelpwhatsapp.numeric'  => 'Nomor telp/whatsapp hanya boleh angka',
+        'f_layanan.required'        => 'Jenis Layanan minimal terpilih salah satu',
+        'f_ratinglayanan.required'  => 'Rating layanan harus terpilih salah satu',
+        'f_saranpengaduan.required' => 'Saran Pengaduan tidak boleh kosong',
+        'f_saranpengaduan.min'      => 'Saran Pengaduan minimal terisi 4 karakter'
     ];
 
 
