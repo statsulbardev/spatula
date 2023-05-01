@@ -14,7 +14,16 @@
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.css') }}">
 
-    @vite('resources/js/app.js')
+    @production
+        @php
+            $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+        @endphp
+        <script type="module" src="{{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['file']) }}"></script>
+        <link rel="stylesheet" href={{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['css'][0]) }}">
+    @else
+        <script type="module" src="{{ secure_asset(env('APP_URL') . ':5173/@vite/client') }}"></script>
+        <script type="module" src="{{ secure_asset(env('APP_URL') . ':5173/spatula/resources/js/app.js') }}"></script>
+    @endproduction
 
     @yield('styles')
 
