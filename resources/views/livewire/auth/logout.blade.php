@@ -1,12 +1,11 @@
-@section('styles')
-<style>
-    a { cursor: pointer }
-</style>
-@endsection
-
 <div>
-    <a wire:click="logout">
-        <span class="d-none d-sm-inline">Logout</span>
-        <i class="fa fa-sign-out"></i>
+    <a
+        wire:click="logout"
+        class="flex items-center space-x-2"
+        x-bind:class="{'hover:text-gray-300':$store.sidebar.full}">
+        @include('components.icon', ['name' => 'logout', 'size' => 'w-5 h-5'])
+        <h1 class="text-sm" x-cloak x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+            Logout
+        </h1>
     </a>
 </div>

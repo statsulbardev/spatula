@@ -2,7 +2,7 @@
 
 <div>
     {{-- Header --}}
-    <h1 class="mb-8 font-bold text-3xl">Laporan Bulanan</h1>
+    @include('components.page.page-title', ['title' => 'Laporan Bulanan'])
 
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">

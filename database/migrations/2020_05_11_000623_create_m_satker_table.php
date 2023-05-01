@@ -18,6 +18,9 @@ class CreateMSatkerTable extends Migration
             $table->char('kode_satker', 4);
             $table->string('nama', 50);
             $table->char('level', 1);
+            $table->string('alamat');
+            $table->string('web', 30);
+            $table->string('telepon', 12);
             $table->timestamps();
         });
     }

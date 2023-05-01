@@ -16,10 +16,12 @@ use App\Http\Livewire\Pengaturan\Pengguna\DaftarPengguna;
 use App\Http\Livewire\Pengaturan\Pengguna\TambahEditPengguna;
 use App\Http\Livewire\Pengaturan\Layanan\DaftarLayanan;
 use App\Http\Livewire\Pengaturan\Layanan\TambahEditLayanan;
+use App\Http\Livewire\Pengaturan\Satker\DaftarSatker;
+use App\Http\Livewire\Pengaturan\Satker\TambahEditSatker;
 use App\Http\Livewire\Formulir\Penilaian;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', 'login');
+Route::redirect('/', 'penilaian');
 
 Route::get('sso', [LoginController::class, 'sso'])->name('sso');
 Route::get('login', Login::class)->name('login');
@@ -29,7 +31,7 @@ Route::get('penilaian', Penilaian::class)->name('form-penilaian');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', Index::class)->name('dashboard');
 
-    Route::prefix('tindak-lanjut/')->group(function() {
+    Route::prefix('verifikasi/')->group(function() {
         Route::get('selesai', DaftarSelesai::class)->name('daftar-selesai');
         Route::get('selesai/{customer}', DetailSelesai::class)->name('detail-selesai');
         Route::get('pj-layanan', DaftarPjLayanan::class)->name('daftar-pj-layanan');
@@ -52,5 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('layanan', DaftarLayanan::class)->name('daftar-layanan');
         Route::get('layanan/tambah', TambahEditLayanan::class)->name('tambah-layanan');
         Route::get('layanan/{layanan}/edit', TambahEditLayanan::class)->name('edit-layanan');
+        Route::get('satker', DaftarSatker::class)->name('daftar-satker');
+        Route::get('satker/tambah', TambahEditSatker::class)->name('tambah-satker');
+        Route::get('satker/{satker}/edit', TambahEditSatker::class)->name('edit-satker');
     });
 });

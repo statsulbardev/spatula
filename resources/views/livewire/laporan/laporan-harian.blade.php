@@ -2,7 +2,7 @@
 
 <div>
     {{-- Header --}}
-    <h1 class="mb-8 font-bold text-3xl">Laporan Harian</h1>
+    @include('components.page.page-title', ['title' => 'Laporan Harian'])
 
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded-md shadow overflow-x-auto">
@@ -61,7 +61,7 @@
                             <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
                                 <td class="border-t">
                                     <span class="pl-6 py-4 items-center">
-                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ DateFormat::convertDateTime($report->created_at) }}
+                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ $report->created_at->format('d/m/Y') }}
                                     </span>
                                 </td>
                                 <td class="border-t">

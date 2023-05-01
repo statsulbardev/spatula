@@ -13,6 +13,7 @@ class DaftarSelesai extends Component
     use UnitCode, WithPagination;
 
     public $dones;
+    public $tab = 'verifikasi';
 
     public function mount()
     {

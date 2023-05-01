@@ -22,6 +22,9 @@ class m_satker extends Model
         'kode_satker',
         'nama',
         'level',
+        'alamat',
+        'web',
+        'telepon'
     ];
 
     public function pengguna()
