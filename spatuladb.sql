@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2023 at 10:42 AM
+-- Generation Time: May 01, 2023 at 02:38 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -475,10 +475,10 @@ INSERT INTO `m_pengguna` (`id`, `nama`, `username`, `email`, `password`, `bpsid`
 (13, 'Sri Prasetyaningsih', 'sripras', 'sripras@bps.go.id', '$2y$10$N/KGM0Gb0cxdgOTt3elvyevxokd7Sq/Yz6IwjBfxCuCbUl3h9z1IC', '340054128', NULL, 1, 1, NULL, '2020-07-06 13:52:31', '2020-10-08 02:08:01'),
 (14, 'Agus Gede Hendrayana Hermawan', 'hendrayana', 'hendrayana@bps.go.id', '$2y$10$usRMNOe8BWCPyJ2CoYFBV.slTe/yj1wy0CziAkc6WWDYOYa3XWpVe', '340016011', NULL, 1, 1, NULL, '2020-10-08 02:07:26', '2020-10-08 02:07:26'),
 (15, 'Mohammad Jufri', 'jufri', 'jufri@bps.go.id', '$2y$10$PTPZL9hUBsyX5e/6e0uUXObiQO7TYk6D4xcWbf/JvvYFIK.GlKZE.', '340000000', NULL, 2, 1, NULL, '2020-11-09 04:19:10', '2020-11-09 04:31:32'),
-(16, 'Yenni Kurnia', 'yenni.kurnia', 'yenni.kurnia@bps.go.id', '$2y$10$fKdlyPs2O8ulImWBfOfebOH4d4qAYeZi3WxYFirK.3zqRvp2GO8mS', '199999999', NULL, 1, 1, NULL, '2021-06-25 08:34:40', '2021-06-25 08:34:40'),
-(17, 'Dea Aditya', 'Dea Aditya', 'dea.aditya@bps.go.id', '$2y$10$jST/wOO2qkDJNkUi5pWrXeeMqRWRyh/po6N1TPcf6EwqXOFUVu5Fe', '199706022', NULL, 6, 1, NULL, '2022-07-19 03:17:18', '2023-04-16 01:30:31'),
+(16, 'Yenni Kurnia', 'yenni.kurnia', 'yenni.kurnia@bps.go.id', '$2y$10$fKdlyPs2O8ulImWBfOfebOH4d4qAYeZi3WxYFirK.3zqRvp2GO8mS', '199999999', NULL, 1, 1, NULL, '2021-06-25 08:34:40', '2023-04-30 17:50:31'),
+(17, 'Dea Aditya', 'Dea Aditya', 'dea.aditya@bps.go.id', '$2y$10$jST/wOO2qkDJNkUi5pWrXeeMqRWRyh/po6N1TPcf6EwqXOFUVu5Fe', '199706022', NULL, 6, 1, NULL, '2022-07-19 03:17:18', '2023-04-30 17:50:19'),
 (18, 'Anggoro Rahmadi', 'anggoro.rahmadi', 'anggoro.rahmadi@bps.go.id', '$2y$10$N4jX9lSymuqNTbFy2OB7eO7z.yk4zMOL4U3jQJK0QFv6N0v2VdJXS', '199403222', NULL, 4, 1, NULL, '2023-04-06 02:07:36', '2023-04-06 02:07:36'),
-(36, 'user1', 'user1', 'user1@bps.go.id', '$2y$10$bOykUjbJdQCaIXZ0h.dxweUqJiUgHJQRX4jw/238qYvNBkv7golOq', '340011111', NULL, 7, 1, NULL, '2023-04-18 17:35:16', '2023-04-18 17:35:16');
+(36, 'user1', 'user1', 'user1@bps.go.id', '$2y$10$bOykUjbJdQCaIXZ0h.dxweUqJiUgHJQRX4jw/238qYvNBkv7golOq', '340011111', NULL, 7, 1, NULL, '2023-04-18 17:35:16', '2023-04-30 17:50:29');
 
 -- --------------------------------------------------------
 
@@ -516,6 +516,9 @@ CREATE TABLE `m_satker` (
   `kode_satker` char(4) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `level` char(1) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `web` varchar(30) NOT NULL,
+  `telepon` varchar(12) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -524,14 +527,14 @@ CREATE TABLE `m_satker` (
 -- Dumping data for table `m_satker`
 --
 
-INSERT INTO `m_satker` (`id`, `kode_satker`, `nama`, `level`, `created_at`, `updated_at`) VALUES
-(1, '7600', 'BPS Provinsi Sulawesi Barat', '1', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
-(2, '7601', 'BPS Kabupaten Majene', '2', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
-(3, '7602', 'BPS Kabupaten Polewali Mandar', '2', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
-(4, '7603', 'BPS Kabupaten Mamasa', '2', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
-(5, '7604', 'BPS Kabupaten Mamuju', '2', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
-(6, '7605', 'BPS Kabupaten Pasangkayu', '2', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
-(7, '7606', 'BPS Kabupaten Mamuju Tengah', '2', NULL, NULL);
+INSERT INTO `m_satker` (`id`, `kode_satker`, `nama`, `level`, `alamat`, `web`, `telepon`, `created_at`, `updated_at`) VALUES
+(1, '7600', 'BPS Provinsi Sulawesi Barat', '1', '', '', '', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
+(2, '7601', 'BPS Kabupaten Majene', '2', '', '', '', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
+(3, '7602', 'BPS Kabupaten Polewali Mandar', '2', '', '', '', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
+(4, '7603', 'BPS Kabupaten Mamasa', '2', '', '', '', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
+(5, '7604', 'BPS Kabupaten Mamuju', '2', '', '', '', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
+(6, '7605', 'BPS Kabupaten Pasangkayu', '2', '', '', '', '2020-06-11 21:36:16', '2020-06-11 21:36:16'),
+(7, '7606', 'BPS Kabupaten Mamuju Tengah', '2', '', '', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
