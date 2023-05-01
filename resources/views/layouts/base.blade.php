@@ -19,12 +19,12 @@
     @yield('styles')
 
     @livewireStyles
+
+    <style>[x-cloak] { display : none; }</style>
 </head>
-<body x-data class="antialiased bg-gray-100 font-sans leading-none text-gray-700">
-    <style>
-        [x-cloak] { display : none; }
-    </style>
-     @yield('content')
+<body x-data class="h-screen mx-auto antialiased bg-gray-100 font-sans leading-none text-gray-700">
+
+    @yield('content')
 
     @livewireScripts
 

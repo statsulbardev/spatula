@@ -1,50 +1,35 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="h-screen flex">
+<div class="flex">
     {{-- Mobile menu toggle --}}
     <button @click="$store.sidebar.navOpen = !$store.sidebar.navOpen"
-       class="sm:hidden absolute top-5 right-5 focus:outline-none">
+        class="sm:hidden absolute top-5 right-5 focus:outline-none">
         {{-- Menu icon --}}
-        <svg xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            x-bind:class="$store.sidebar.navOpen ? 'hidden':''"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16m-7 6h7" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" x-bind:class="$store.sidebar.navOpen ? 'hidden':''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
         {{-- Close menu --}}
-        <svg x-cloak
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            x-bind:class="$store.sidebar.navOpen ? '':'hidden'"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12" />
+        <svg x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" x-bind:class="$store.sidebar.navOpen ? '':'hidden'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
     </button>
 
     {{-- Sidebar --}}
-    <div class=" h-full bg-primary-500 transition-all duration-300 space-y-2 fixed sm:relative"
+    <div class="bg-primary-500 fixed transition-all duration-300 space-y-2 sm:relative"
         x-bind:class="{'w-64':$store.sidebar.full, 'w-64 sm:w-20':!$store.sidebar.full,'top-0 left-0':$store.sidebar.navOpen,'top-0 -left-64 sm:left-0':!$store.sidebar.navOpen}">
 
         {{-- Logo Aplikasi --}}
         <div class="w-full bg-primary-600 h-14">
-            <a href="/" class="fill-white"
+            <a class="text-white"
                 x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
-                <div class="w-32 fill-white">@include('components.logo')</div>
+                LOGO
             </a>
         </div>
 
-        @include('components.menu')
+        <div class="h-screen">
+            @include('components.menu')
+        </div>
     </div>
 
     <div class="w-screen">
@@ -78,42 +63,3 @@
     </div>
 </div>
 @overwrite
-
-@push('scripts')
-<script>
-    // Custom Alpine Sidebar
-    document.addEventListener('alpine:init', () => {
-    // Stores variable globally
-    Alpine.store('sidebar', {
-        full: false,
-        active: 'home',
-        navOpen: false
-    });
-    // Creating component Dropdown
-    Alpine.data('dropdown', () => ({
-        open: false,
-        toggle(tab) {
-            this.open = !this.open;
-            Alpine.store('sidebar').active = tab;
-        },
-        activeClass: 'bg-gray-800 text-gray-200',
-        expandedClass: 'border-l border-gray-400 ml-4 pl-4',
-        shrinkedClass: 'sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28'
-    }));
-    // Creating component Sub Dropdown
-    Alpine.data('sub_dropdown', () => ({
-        sub_open: false,
-        sub_toggle() {
-            this.sub_open = !this.sub_open;
-        },
-        sub_expandedClass: 'border-l border-gray-400 ml-4 pl-4',
-        sub_shrinkedClass: 'sm:absolute top-0 left-28 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28'
-    }));
-    // Creating tooltip
-    Alpine.data('tooltip', () => ({
-        show: false,
-        visibleClass:'block sm:absolute -top-7 sm:border border-gray-800 left-5 sm:text-sm sm:bg-gray-900 sm:px-2 sm:py-1 sm:rounded-md'
-    }))
-})
-</script>
-@endpush
