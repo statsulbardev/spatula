@@ -1,7 +1,7 @@
 @section('title', 'Form Penilaian Layanan')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ secure_asset('vendor/star-rating/star-rating.min.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.css') }}">
 @endsection
 
 <div>
@@ -222,7 +222,7 @@
 </div>
 
 @push('scripts')
-    <script src="{{ secure_asset('vendor/star-rating/star-rating.min.js') }}"></script>
+    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
     <script>
         var starRatingControl = new StarRating('.star-rating', {
             maxStars: 5,
