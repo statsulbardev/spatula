@@ -4,6 +4,6 @@
         <sup class="rounded-lg bg-neutral-100 ml-1 p-1 text-xs text-gray-700">{{ $label_opt }}</sup>
     @endif
 </label>
-<div wire:ignore x-data @trix-blur="$dispatch('change', $event.target.value)">
+<div class="overflow-y" wire:ignore x-data @trix-blur="$dispatch('change', $event.target.value)">
     <trix-editor wire:model.defer="{{ $model }}" class="form-textarea"></trix-editor>
 </div>

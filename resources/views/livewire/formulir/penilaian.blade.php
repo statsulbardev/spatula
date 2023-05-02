@@ -10,19 +10,19 @@
     <form wire:submit.prevent="storeData">
         <div class="bg-white border-r border-t border-l border-gray-200 shadow-sm rounded-t-lg mt-4 py-4">
             <div class="py-10 px-12 text-center">
-                <h1 class="text-4xl font-extrabold tracking-wider">Selamat Datang</h1>
-                <h1 class="mt-2 text-4xl font-extrabold">Saran Pengaduan Online dan Rating Petugas Layanan</h1>
-                <p class="mt-5 text-lg text-zinc-500">Anda dapat memberikan penilaian terhadap petugas dan layanan yang kami diberikan.</p>
+                <h1 class="lg:text-4xl sm:text-2xl font-extrabold tracking-wider">Selamat Datang</h1>
+                <h1 class="mt-2 lg:text-4xl sm:text-2xl font-extrabold">Saran Pengaduan Online dan Rating Petugas Layanan</h1>
+                <p class="mt-5 lg:text-lg sm:text-xs text-zinc-500">Anda dapat memberikan penilaian terhadap petugas dan layanan yang kami diberikan.</p>
             </div>
             <hr>
             <div class="p-6 flex flex-wrap">
-                <div class="lg:w-1/3">
+                <div class="lg:w-1/3 sm:w-full">
                     <h1 class="text-2xl tracking-wide">Unit Kerja</h1>
                     <p class="mt-4 leading-6 text-base lg:pr-24">
                         Pilih unit kerja yang ingin anda berikan penilaian.
                     </p>
                 </div>
-                <div class="lg:w-2/3">
+                <div class="lg:w-2/3 sm:w-full">
                     <div class="my-6 w-full">
                         <label class="form-label font-bold" for="Unit Kerja">
                             Unit Kerja
@@ -47,13 +47,13 @@
             </div>
             <hr>
             <div class="p-6 flex flex-wrap">
-                <div class="lg:w-1/3">
+                <div class="lg:w-1/3 sm:w-full">
                     <h1 class="text-2xl tracking-wide">Informasi Penerima Layanan</h1>
                     <p class="mt-4 leading-6 text-base lg:pr-24">
                         Silahkan isi dengan jelas dan lengkap data diri anda sebagai penerima layanan
                         statistik terpadu.
                     </p></div>
-                <div class="lg:w-2/3">
+                <div class="lg:w-2/3 sm:w-full">
                     <div class="my-6 w-full">
                         @include('components.input.text', [
                             'model' => 'f_nama',
@@ -106,13 +106,13 @@
             </div>
             <hr>
             <div class="p-6 flex flex-wrap">
-                <div class="lg:w-1/3">
+                <div class="lg:w-1/3 sm:w-full">
                     <h1 class="text-2xl tracking-wide">Penilaian Layanan</h1>
                     <p class="mt-4 leading-6 text-base lg:pr-24">
                         Bagaimana penilaian anda terhadap layanan yang diberikan oleh
                         <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                     </p></div>
-                <div class="lg:w-2/3">
+                <div class="lg:w-2/3 sm:w-full">
                     <div class="my-6 w-full">
                         <label class="form-label font-bold" for="Nama Layanan">
                             Nama Layanan
@@ -149,13 +149,13 @@
             @if (isset($f_layanan) and explode('-', $f_layanan)[1] == 1)
                 <hr>
                 <div class="p-6 flex flex-wrap">
-                    <div class="lg:w-1/3">
+                    <div class="lg:w-1/3 sm:w-full">
                         <h1 class="text-2xl tracking-wide">Penilaian Petugas</h1>
                         <p class="mt-4 leading-6 text-base lg:pr-24">
                             Bagaimana penilaian anda terhadap petugas layanan di Pelayanan Statistik Terpadu
                             <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                         </p></div>
-                    <div class="lg:w-2/3">
+                    <div class="lg:w-2/3 sm:w-full">
                         <div class="my-6 w-full">
                             @include('components.input.select', [
                                 'model'     => 'f_petugas',
