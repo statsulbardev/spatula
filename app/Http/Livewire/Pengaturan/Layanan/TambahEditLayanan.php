@@ -38,10 +38,10 @@ class TambahEditLayanan extends Component
     public function storeNewService() : Redirector
     {
         m_layanan::create([
-            'kode_layanan' => $this->kode_layanan,
-            'nama_layanan' => $this->nama_layanan,
-            'deskripsi'    => $this->deskripsi,
-            'metode'       => '1'
+            'kode_layanan' => $this->f_kode_layanan,
+            'nama_layanan' => $this->f_nama_layanan,
+            'deskripsi'    => $this->f_deskripsi,
+            'metode'       => $this->f_metode
         ]);
 
         session()->flash('messages', 'Informasi Tersimpan !!');
@@ -64,13 +64,14 @@ class TambahEditLayanan extends Component
 
     private function fillService($layanan)
     {
-        $this->kode_layanan = $layanan->kode_layanan;
-        $this->nama_layanan = $layanan->nama_layanan;
-        $this->deskripsi    = $layanan->deskripsi;
+        $this->f_kode_layanan = $layanan->f_kode_layanan;
+        $this->f_nama_layanan = $layanan->f_nama_layanan;
+        $this->f_deskripsi    = $layanan->f_deskripsi;
+        $this->f_metode       = $layanan->f_metode;
     }
 
     private function callbackUrl() : Redirector
     {
-        return redirect(url(env('APP_URL') . '/pengaturan/layanan'));
+        return redirect(env('APP_URL') . '/pengaturan/layanan');
     }
 }

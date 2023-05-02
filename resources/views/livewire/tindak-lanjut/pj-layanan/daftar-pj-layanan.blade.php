@@ -65,7 +65,7 @@
                                 <td class="border-t" width="50%">
                                     <span
                                         x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
-                                        x-init="originalContent = $el.firstElementChild.textContent.trim(); content = originalContent.slice(0, maxLength)"
+                                        x-init="originalContent = @js($service->saran_pengaduan).trim(); content = originalContent.slice(0, maxLength)"
                                         class="flex flex-wrap">
                                         <span
                                             x-text="isCollapsed ? originalContent : content"
@@ -106,7 +106,7 @@
                                                 x-data
                                                 x-tooltip.raw="Edit Kategori"
                                                 class="text-purple-400 hover:text-purple-500"
-                                                href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}">
+                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}">
                                                 @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
                                             </a>
                                         @else
@@ -114,7 +114,7 @@
                                                 x-data
                                                 x-tooltip.raw="Verifikasi"
                                                 class="text-cyan-400 hover:text-cyan-500"
-                                                href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-layanan/kategorisasi/' . $service->id) }}">
+                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) }}">
                                                 @include('components.icon', ['name' => 'tag', 'size' => 'w-5 h-5'])
                                             </a>
                                         @endif

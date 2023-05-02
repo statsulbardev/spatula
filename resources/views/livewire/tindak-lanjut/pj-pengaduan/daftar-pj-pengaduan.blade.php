@@ -66,7 +66,7 @@
                                 <td class="border-t" width="50%">
                                     <span
                                         x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
-                                        x-init="originalContent = $el.firstElementChild.textContent.trim(); content = originalContent.slice(0, maxLength)"
+                                        x-init="originalContent = @js($complaint->saran_pengaduan).trim(); content = originalContent.slice(0, maxLength)"
                                         class="flex flex-wrap">
                                         <span
                                             x-text="isCollapsed ? originalContent : content"
@@ -111,7 +111,7 @@
                                             x-data
                                             x-tooltip.raw="Lihat Informasi"
                                             class="text-primary-400 hover:text-primary-500 cursor-pointer"
-                                            href="{{ url(env('APP_URL') . '/tindak-lanjut/pj-pengaduan/' . $complaint->id) }}">
+                                            href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan/' . $complaint->id) }}">
                                             @include('components.icon', ['name' => 'eye', 'size' => 'w-5 h-5'])
                                         </a>
                                         <button

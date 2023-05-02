@@ -48,6 +48,6 @@ class DaftarPjPengaduan extends Component
 
     private function callbackUrl() : Redirector
     {
-        return redirect(env('APP_URL') . '/tindak-lanjut/pj-pengaduan');
+        return redirect(env('APP_URL') . '/verifikasi/pj-pengaduan');
     }
 }

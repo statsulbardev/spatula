@@ -70,7 +70,7 @@
                                 <td class="border-t" width="45%">
                                     <span
                                         x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
-                                        x-init="originalContent = $el.firstElementChild.textContent.trim(); content = originalContent.slice(0, maxLength)"
+                                        x-init="originalContent = @js($done->saran_pengaduan).trim(); content = originalContent.slice(0, maxLength)"
                                         class="flex flex-wrap">
                                         <span
                                             x-text="isCollapsed ? originalContent : content"
@@ -112,7 +112,7 @@
                                         <a
                                             x-data
                                             x-tooltip.raw="Lihat Informasi"
-                                            href="{{ url(env('APP_URL'). '/tindak-lanjut/selesai/' . $done->id) }}"
+                                            href="{{ url(env('APP_URL'). '/verifikasi/selesai/' . $done->id) }}"
                                             class="text-primary-400 hover:text-primary-500 cursor-pointer">
                                             @include('components.icon', ['name' => 'eye', 'size' => 'w-5 h-5'])
                                         </a>
