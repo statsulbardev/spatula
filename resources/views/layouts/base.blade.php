@@ -21,7 +21,7 @@
         <script type="module" src="{{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['file']) }}"></script>
         <link rel="stylesheet" href={{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['css'][0]) }}">
     @else
-        <script type="module" src="{{ secure_asset(env('APP_URL') . ':5173/@vite/client') }}"></script>
+        <script type="module" src="https://localhost:5173/@vite/client"></script>
         <script type="module" src="{{ secure_asset(env('APP_URL') . ':5173/spatula/resources/js/app.js') }}"></script>
     @endproduction
 
