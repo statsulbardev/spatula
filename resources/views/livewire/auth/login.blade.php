@@ -12,20 +12,31 @@
                     <div>
                         <label class="form-label" for="username">Username</label>
                         <input wire:model="username" ref="input" class="form-input" type="text" autofocus autocapitalize="off">
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('username')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
                     </div>
                     <div class="mt-6">
                         <label class="form-label" for="password">Password</label>
                         <input wire:model="password" ref="input" class="form-input" type="password">
+                        <div
+                            x-data="{ shown: false, timeout: null }"
+                            x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
+                            x-show.transition.opacity.out.duration.2000ms="shown">
+                            @error('password')
+                                @include('components.input.error')
+                            @enderror
+                        </div>
                     </div>
                 </div>
-                @if($errors->has('message'))
-                <div class="mt-6 rounded bg-supportred-400 p-2 text-white text-sm leading-4 text-center">
-                    {{ $errors->first('message') }}
-                </div>
-                @endif
             </div>
             <div class="px-10 py-4 bg-glass flex justify-between items-center">
-                <button class="btn-secondary w-full" type="submit">Masuk</button>
+                <button type="submit" class="btn-secondary w-full">Masuk</button>
             </div>
         </form>
     </div>

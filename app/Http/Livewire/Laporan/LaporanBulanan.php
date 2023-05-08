@@ -64,7 +64,7 @@ class LaporanBulanan extends Component
                             YEAR(a.created_at) = ' . $this->selectedYear . '
                         GROUP BY
                             MONTH(a.created_at),
-                            kode_petugas'
+                            b.nama'
                         );
         } else {
             $result = DB::select(
@@ -82,7 +82,7 @@ class LaporanBulanan extends Component
                         GROUP BY
                             a.kode_satker_id,
                             MONTH(a.created_at),
-                            kode_petugas'
+                            b.nama'
                     );
         }
 

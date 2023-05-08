@@ -2,14 +2,12 @@
 
 namespace App\Http\Livewire\Formulir;
 
-use App\Models\d_penilaian;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
 use App\Repositories\PenilaianRepository;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Penilaian extends Component
@@ -28,6 +26,7 @@ class Penilaian extends Component
     public $f_saranpengaduan;
     public $f_unit;
 
+    // Rule Validasi Form
     protected $rules = [
         'f_unit'           => 'required',
         'f_nama'           => 'required|min:4|max:30',
@@ -38,6 +37,7 @@ class Penilaian extends Component
         'f_saranpengaduan' => 'required|min:4'
     ];
 
+    // Pesan Error Validasi Form
     protected $messages = [
         'f_nama.required'           => 'Nama lengkap tidak boleh kosong',
         'f_nama.min'                => 'Nama lengkap min. 4 karakter',
@@ -52,8 +52,12 @@ class Penilaian extends Component
         'f_saranpengaduan.min'      => 'Saran Pengaduan minimal terisi 4 karakter'
     ];
 
-
-    public function render()
+    /**
+     * Render Komponen Penilaian Customer
+     * @return View
+     * @throws BindingResolutionException
+     */
+    public function render() : View
     {
         return view('livewire.formulir.penilaian')
             -> layout('layouts.evaluation');
