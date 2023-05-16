@@ -131,3 +131,15 @@
     </section>
     {{ $offices->paginate(20)->links('vendor.spatula') }}
 </div>
+
+@push('scripts')
+    @if (session()->has('messages'))
+        <script>
+            window.onload = function() {
+                window.dispatchEvent(new CustomEvent('notify', {
+                    detail: '{{ session("messsages") }}'
+                }));
+            }
+        </script>
+    @endif
+@endpush

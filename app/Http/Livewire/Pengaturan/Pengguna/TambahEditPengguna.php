@@ -5,13 +5,17 @@ namespace App\Http\Livewire\Pengaturan\Pengguna;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
 use App\Repositories\MPenggunaRepository;
+use App\Traits\HasRedirectUrl;
+use App\Traits\HasRenderOption;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
-use Livewire\Redirector;
+
 use Spatie\Permission\Models\Role;
 
 class TambahEditPengguna extends Component
 {
+    use HasRedirectUrl, HasRenderOption;
+
     public $routeName;
     public $user;
     public $units;
@@ -46,41 +50,14 @@ class TambahEditPengguna extends Component
         }
     }
 
-    public function storeData(MPenggunaRepository $penggunaRepository) : Redirector
+    public function storeData(MPenggunaRepository $penggunaRepository)
     {
-
         $result = $this->routeName === 'tambah-pengguna'
             ? $penggunaRepository->store($this)
             : $penggunaRepository->update($this);
 
         session()->flash('messages', $result);
 
-        return $this->callbackUrl();
-    }
-
-    // Perlu dicari cara $item->nama_kolom otomatis sesuai hasil query
-    private function renderUnitsOption($queryResult) : string
-    {
-        $result = null;
-
-        foreach($queryResult as $item)
-            $result .= "<option value=" . $item->id . ">" . $item->nama . "</option>";
-
-        return $result;
-    }
-
-    private function renderRolesOption($queryResult) : string
-    {
-        $result = null;
-
-        foreach($queryResult as $item)
-            $result .= "<option value=" . $item->id . ">" . ucwords(str_replace("-", " ", $item->name)) . "</option>";
-
-        return $result;
-    }
-
-    private function callbackUrl() : Redirector
-    {
-        return redirect(env('APP_URL') . '/pengaturan/pengguna');
+        return $this->callbackUrl('/pengaturan/pengguna');
     }
 }

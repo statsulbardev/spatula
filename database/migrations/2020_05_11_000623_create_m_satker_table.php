@@ -15,7 +15,7 @@ class CreateMSatkerTable extends Migration
     {
         Schema::create('m_satker', function (Blueprint $table) {
             $table->id();
-            $table->char('kode_satker', 4);
+            $table->char('kode_satker', 4)->unique();
             $table->string('nama', 50);
             $table->char('level', 1);
             $table->string('alamat');

@@ -6,12 +6,15 @@ use App\Models\m_layanan;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
 use App\Repositories\PenilaianRepository;
+use App\Traits\HasRenderOption;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Penilaian extends Component
 {
+    use HasRenderOption;
+    
     public $officers;
     public $services;
     public $units;

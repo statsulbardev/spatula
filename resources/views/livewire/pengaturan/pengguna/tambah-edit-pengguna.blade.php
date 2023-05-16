@@ -68,7 +68,7 @@
                 </div>
                 <div class="px-8 py-4 bg-zinc-200 border-t border-gray-200 flex items-center">
                     <button class="btn-primary ml-auto">
-                        {{ $routeName === 'tambah-pengguna' ? 'Simpan' : 'Perbaharui'}}
+                        {{ $routeName === 'tambah-pengguna' ? 'Simpan' : 'Perbaharui' }}
                     </button>
                 </div>
             </form>

@@ -39,7 +39,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_unit')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_nama')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_email')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_notelpwhatsapp')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_layanan')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                         x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                         x-show.transition.opacity.out.duration.2000ms="shown">
                         @error('f_ratinglayanan')
-                            @include('components.input.error')
+                            @include('components.notification.error')
                         @enderror
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                                 x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_petugas')
-                                    @include('components.input.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_ratingpetugas')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_saranpengaduan')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
