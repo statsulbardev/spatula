@@ -1,7 +1,7 @@
 @section('title', 'Pengaturan Satker')
 
 <div>
-    @include('components.page.notification')
+    @include('components.notification.flash')
 
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Daftar Satuan Kerja'])
@@ -57,7 +57,7 @@
                     </a>
                 </div>
             </div>
-            @if($offices->count() === 0)
+            @if($offices->isEmpty())
                 <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
                 <table class="w-full table-auto">
@@ -75,7 +75,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($offices->paginate(20) as $office)
+                        @foreach ($offices as $office)
                             <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
                                 <td class="border-t px-6 py-4 w-2">
                                     <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $office->id }}">
@@ -116,8 +116,9 @@
                                         </a>
                                         <button
                                             x-data
-                                            x-tooltip.raw="Hapus Pengguna"
-                                            class="text-red-500 hover:text-red-600">
+                                            x-tooltip.raw="Hapus Satker"
+                                            class="text-red-500 hover:text-red-600"
+                                            wire:click="deleteItem({{ $office }})">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                     </span>
@@ -129,7 +130,7 @@
             @endif
         </div>
     </section>
-    {{ $offices->paginate(20)->links('vendor.spatula') }}
+    {{ $offices->links('vendor.livewire.tailwind') }}
 </div>
 
 @push('scripts')
@@ -141,5 +142,14 @@
                 }));
             }
         </script>
+
+        {{ session()->forget('messages') }}
     @endif
+    <script>
+        window.addEventListener('notification', event => {
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: event.detail.message
+            }));
+        })
+    </script>
 @endpush

@@ -7,11 +7,7 @@
     {{-- Content --}}
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">
-            @if ($routeName === 'tambah-layanan')
-            <form wire:submit.prevent="storeNewService">
-            @else
-            <form wire:submit.prevent="updateService">
-            @endif
+            <form wire:submit.prevent="submitData">
                 <div class="p-6 flex flex-wrap">
                     <div class="lg:w-1/3">
                         <h1 class="text-2xl tracking-wide">Informasi Jenis Layanan</h1>
@@ -21,33 +17,72 @@
                         </p>
                     </div>
                     <div class="pr-3 lg:w-2/3">
+                        {{-- Kode Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.text', [
-                                'model' => 'f_kode_layanan',
                                 'label' => 'Kode Layanan',
+                                'model' => 'layanan.kode_layanan',
                                 'type'  => 'text'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('layanan.kode_layanan')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
+
+                        {{-- Nama Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.text', [
-                                'model' => 'f_nama_layanan',
+                                'model' => 'layanan.nama_layanan',
                                 'label' => 'Nama Layanan',
                                 'type'  => 'text'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('layanan.nama_layanan')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
+
+                        {{-- Metode Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.select', [
-                                'model'     => 'f_metode',
+                                'model'     => 'layanan.metode',
                                 'label'     => 'Metode Layanan',
                                 'opt_title' => 'Pilih Metode Layanan ...',
                                 'opt_item'  => "<option value='1'>Luring (offline)</option><option value='2'>Daring (online)</option>"
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('layanan.metode')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
+
+                        {{-- Deskripsi Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.text-area', [
-                                'model' => 'f_deskripsi',
+                                'model' => 'layanan.deskripsi',
                                 'label' => 'Deskripsi Layanan'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('layanan.deskripsi')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

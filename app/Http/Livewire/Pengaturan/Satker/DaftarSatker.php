@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pengaturan\Satker;
 
 use App\Models\m_satker;
+use App\Traits\HasModelProcess;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -10,32 +11,26 @@ use Livewire\WithPagination;
 
 class DaftarSatker extends Component
 {
-    use WithPagination;
+    use HasModelProcess, WithPagination;
 
-    public $offices;
+    public int $numberOfPagination = 10;
 
     public function render() : View
     {
-        return view('livewire.pengaturan.satker.daftar-satker')
-            -> layout('layouts.app');
+        return view('livewire.pengaturan.satker.daftar-satker', [
+            'offices' => m_satker::paginate($this->numberOfPagination)
+        ])->layout('layouts.app');
     }
 
-    public function mount()
+    public function updatedNumberOfPagination()
     {
-        $this->offices = $this->getAllSatker();
+        $this->resetPage();
     }
 
-    private function getAllSatker() : Collection
+    public function deleteItem(m_satker $satker)
     {
-        $result = m_satker::get([
-            'id',
-            'kode_satker',
-            'nama',
-            'alamat',
-            'web',
-            'telepon'
-        ]);
+        $result = $this->delete($satker);
 
-        return $result;
+        $this->dispatchBrowserEvent('notification', ['message' => $result]);
     }
 }

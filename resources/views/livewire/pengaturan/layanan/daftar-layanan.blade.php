@@ -1,7 +1,7 @@
 @section('title', 'Pengaturan Daftar Layanan')
 
 <div>
-    @include('components.page.notification')
+    @include('components.notification.flash')
 
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Pengaturan Layanan'])
@@ -39,8 +39,12 @@
                     class="p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md">
                     @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
                 </a>
+                <select wire:model="numberOfPagination">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
             </div>
-            @if($services->count() === 0)
+            @if($services->isEmpty())
                 <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
                 <table class="w-full table-auto">
@@ -56,7 +60,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($services->paginate(20) as $service)
+                        @foreach ($services as $service)
                             <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
                                 <td class="border-t px-6 py-4 w-2">
                                     <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $service->id }}">
@@ -71,10 +75,8 @@
                                         {{ $service->nama_layanan }}
                                     </span>
                                 </td>
-                                <td class="border-t">
-                                    <span class="pl-6 py-4">
-                                        {{ $service->deskripsi ?? 'Lorem Ipsum Dolor Sit Amet' }}
-                                    </span>
+                                <td class="border-t pl-6">
+                                    {!! $service->deskripsi ?? '<span class="py-4">Lorem Ipsum Dolor Sit Amet</span>' !!}
                                 </td>
                                 <td class="border-t w-px">
                                     <span class="py-2 flex items-center space-x-2 mr-2">
@@ -88,7 +90,8 @@
                                         <button
                                             x-data
                                             x-tooltip.raw="Hapus Layanan"
-                                            class="text-red-500 hover:text-red-600">
+                                            class="text-red-500 hover:text-red-600"
+                                            wire:click="deleteItem({{ $service }})">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                     </span>
@@ -100,7 +103,7 @@
             @endif
         </div>
     </section>
-    {{ $services->paginate(20)->links('vendor.spatula') }}
+    {{ $services->links('vendor.livewire.tailwind') }}
 </div>
 
 @push('scripts')
@@ -112,5 +115,14 @@
                 }));
             }
         </script>
+
+        {{ session()->forget('messages') }}
     @endif
+    <script>
+        window.addEventListener('notification', event => {
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: event.detail.message
+            }));
+        })
+    </script>
 @endpush

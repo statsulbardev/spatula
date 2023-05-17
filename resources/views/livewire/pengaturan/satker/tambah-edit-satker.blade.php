@@ -7,7 +7,7 @@
     {{-- Content --}}
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">
-            <form wire:submit.prevent="storeData">
+            <form wire:submit.prevent="submitData">
                 <div class="p-6 flex flex-wrap">
                     <div class="lg:w-1/3 sm:w-full">
                         <h1 class="text-2xl tracking-wide">Informasi Satker</h1>

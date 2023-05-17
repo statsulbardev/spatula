@@ -3,21 +3,23 @@
 namespace App\Http\Livewire\Pengaturan\Layanan;
 
 use App\Models\m_layanan;
+use App\Traits\HasRedirectUrl;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\Redirector;
 
 class TambahEditLayanan extends Component
 {
-    public $routeName;
-    public $serviceMaster;
+    use HasRedirectUrl;
 
-    public $f_kode_layanan;
-    public $f_nama_layanan;
-    public $f_deskripsi;
-    public $f_metode;
+    public m_layanan $layanan;
+    public string $routeName;
+    public string $notification;
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.pengaturan.layanan.tambah-edit-layanan')
             -> layout('layouts.app');
@@ -25,53 +27,62 @@ class TambahEditLayanan extends Component
 
     public function mount(m_layanan $layanan)
     {
+        $this->layanan   = new m_layanan();
         $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'edit-layanan') {
+        if ($this->routeName === 'edit-layanan') $this->layanan = $layanan;
+    }
 
-            $this->serviceMaster = $layanan;
+    public function submitData()
+    {
+        $this->emit('saved');
 
-            $this->fillService($layanan);
+        $this->validate();
+
+        try {
+            DB::beginTransaction();
+
+            $this->layanan->save();
+
+            $this->notification = "Informasi telah disimpan.";
+
+            DB::commit();
+
+        } catch(Exception $error) {
+
+            DB::rollBack();
+
+            Log::error($error->getMessage());
+
+            $this->notification = "Informasi gagal disimpan.";
         }
+
+        session()->flash('messages', $this->notification);
+
+        return $this->callbackUrl('/pengaturan/layanan');
     }
 
-    public function storeNewService() : Redirector
+    /**
+     * Dynamic rules for validation
+     * https://laravel-livewire.com/docs/2.x/input-validation
+     * @return string[]
+     */
+    protected function rules()
     {
-        m_layanan::create([
-            'kode_layanan' => $this->f_kode_layanan,
-            'nama_layanan' => $this->f_nama_layanan,
-            'deskripsi'    => $this->f_deskripsi,
-            'metode'       => $this->f_metode
-        ]);
-
-        session()->flash('messages', 'Informasi Tersimpan !!');
-
-        return $this->callbackUrl();
+        return [
+            'layanan.kode_layanan' => 'required|unique:m_layanan,kode_layanan,' . $this->layanan->kode_layanan,
+            'layanan.nama_layanan' => 'required|min:5',
+            'layanan.metode'       => 'required',
+            'layanan.deskripsi'    => 'nullable|min:5'
+        ];
     }
 
-    public function updateService() : Redirector
-    {
-        $this->serviceMaster->update([
-            'kode_layanan' => $this->kode_layanan,
-            'nama_layanan' => $this->nama_layanan,
-            'deskripsi'    => $this->deskripsi
-        ]);
-
-        session()->flash('messages', 'Informasi Tersimpan !!');
-
-        return $this->callbackUrl();
-    }
-
-    private function fillService($layanan)
-    {
-        $this->f_kode_layanan = $layanan->f_kode_layanan;
-        $this->f_nama_layanan = $layanan->f_nama_layanan;
-        $this->f_deskripsi    = $layanan->f_deskripsi;
-        $this->f_metode       = $layanan->f_metode;
-    }
-
-    private function callbackUrl() : Redirector
-    {
-        return redirect(env('APP_URL') . '/pengaturan/layanan');
-    }
+    protected $messages = [
+        'layanan.kode_layanan.required' => 'Kode layanan tidak boleh kosong',
+        'layanan.kode_layanan.unique'   => 'Kode layanan sudah digunakan sebelumnya',
+        'layanan.nama_layanan.required' => 'Nama layanan tidak boleh kosong',
+        'layanan.nama_layanan.min'      => 'Nama layanan minimum 5 karakter',
+        'layanan.metode.required'       => 'Metode layanan harus terisi',
+        'layanan.deskripsi.min'         => 'Deskripsi layanan minimal 5 karakter'
+    ];
 }
