@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "158bfc0fc72510fd69568ccf63d5a03e",
+    "content-hash": "c81abc6dc6287e11e6c36f6d0feb6d64",
     "packages": [
         {
             "name": "brick/math",
@@ -1023,16 +1023,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.5.1",
+            "version": "7.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "b964ca597e86b752cd994f27293e9fa6b6a95ed9"
+                "reference": "8444a2bacf1960bc6a2b62ed86b8e72e11eebe51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b964ca597e86b752cd994f27293e9fa6b6a95ed9",
-                "reference": "b964ca597e86b752cd994f27293e9fa6b6a95ed9",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8444a2bacf1960bc6a2b62ed86b8e72e11eebe51",
+                "reference": "8444a2bacf1960bc6a2b62ed86b8e72e11eebe51",
                 "shasum": ""
             },
             "require": {
@@ -1063,9 +1063,6 @@
                 "bamarni-bin": {
                     "bin-links": true,
                     "forward-command": false
-                },
-                "branch-alias": {
-                    "dev-master": "7.5-dev"
                 }
             },
             "autoload": {
@@ -1131,7 +1128,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.5.1"
+                "source": "https://github.com/guzzle/guzzle/tree/7.6.1"
             },
             "funding": [
                 {
@@ -1147,7 +1144,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-17T16:30:08+00:00"
+            "time": "2023-05-15T20:43:01+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1686,6 +1683,81 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2023-04-25T13:44:05+00:00"
+        },
+        {
+            "name": "laravel/scout",
+            "version": "v10.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/scout.git",
+                "reference": "535dcb6e7cac7955759942272ccf149c9818ee60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/535dcb6e7cac7955759942272ccf149c9818ee60",
+                "reference": "535dcb6e7cac7955759942272ccf149c9818ee60",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/bus": "^9.0|^10.0",
+                "illuminate/contracts": "^9.0|^10.0",
+                "illuminate/database": "^9.0|^10.0",
+                "illuminate/http": "^9.0|^10.0",
+                "illuminate/pagination": "^9.0|^10.0",
+                "illuminate/queue": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "algolia/algoliasearch-client-php": "^3.2",
+                "meilisearch/meilisearch-php": "^1.0",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^7.0|^8.0",
+                "php-http/guzzle7-adapter": "^1.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.3"
+            },
+            "suggest": {
+                "algolia/algoliasearch-client-php": "Required to use the Algolia engine (^3.2).",
+                "meilisearch/meilisearch-php": "Required to use the Meilisearch engine (^1.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "10.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Scout\\ScoutServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Scout\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Scout provides a driver based solution to searching your Eloquent models.",
+            "keywords": [
+                "algolia",
+                "laravel",
+                "search"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/scout/issues",
+                "source": "https://github.com/laravel/scout"
+            },
+            "time": "2023-05-10T10:25:08+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3385,16 +3457,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.16",
+            "version": "v0.11.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "151b145906804eea8e5d71fea23bfb470c904bfb"
+                "reference": "3dc5d4018dabd80bceb8fe1e3191ba8460569f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/151b145906804eea8e5d71fea23bfb470c904bfb",
-                "reference": "151b145906804eea8e5d71fea23bfb470c904bfb",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/3dc5d4018dabd80bceb8fe1e3191ba8460569f0a",
+                "reference": "3dc5d4018dabd80bceb8fe1e3191ba8460569f0a",
                 "shasum": ""
             },
             "require": {
@@ -3455,9 +3527,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.16"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.17"
             },
-            "time": "2023-04-26T12:53:57+00:00"
+            "time": "2023-05-05T20:02:42+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -6443,16 +6515,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.21.0",
+            "version": "v1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "92efad6a967f0b79c499705c69b662f738cc9e4d"
+                "reference": "f85772abd508bd04e20bb4b1bbe260a68d0066d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/92efad6a967f0b79c499705c69b662f738cc9e4d",
-                "reference": "92efad6a967f0b79c499705c69b662f738cc9e4d",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/f85772abd508bd04e20bb4b1bbe260a68d0066d2",
+                "reference": "f85772abd508bd04e20bb4b1bbe260a68d0066d2",
                 "shasum": ""
             },
             "require": {
@@ -6505,9 +6577,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.21.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.22.0"
             },
-            "time": "2022-12-13T13:54:32+00:00"
+            "time": "2023-05-14T12:31:37+00:00"
         },
         {
             "name": "filp/whoops",
@@ -7347,16 +7419,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.7",
+            "version": "9.6.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c993f0d3b0489ffc42ee2fe0bd645af1538a63b2"
+                "reference": "17d621b3aff84d0c8b62539e269e87d8d5baa76e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c993f0d3b0489ffc42ee2fe0bd645af1538a63b2",
-                "reference": "c993f0d3b0489ffc42ee2fe0bd645af1538a63b2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/17d621b3aff84d0c8b62539e269e87d8d5baa76e",
+                "reference": "17d621b3aff84d0c8b62539e269e87d8d5baa76e",
                 "shasum": ""
             },
             "require": {
@@ -7430,7 +7502,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.7"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.8"
             },
             "funding": [
                 {
@@ -7446,7 +7518,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-14T08:58:40+00:00"
+            "time": "2023-05-11T05:14:45+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -7748,16 +7820,16 @@
         },
         {
             "name": "sebastian/diff",
-            "version": "4.0.4",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "3461e3fccc7cfdfc2720be910d3bd73c69be590d"
+                "reference": "74be17022044ebaaecfdf0c5cd504fc9cd5a7131"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/3461e3fccc7cfdfc2720be910d3bd73c69be590d",
-                "reference": "3461e3fccc7cfdfc2720be910d3bd73c69be590d",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/74be17022044ebaaecfdf0c5cd504fc9cd5a7131",
+                "reference": "74be17022044ebaaecfdf0c5cd504fc9cd5a7131",
                 "shasum": ""
             },
             "require": {
@@ -7802,7 +7874,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/diff/issues",
-                "source": "https://github.com/sebastianbergmann/diff/tree/4.0.4"
+                "source": "https://github.com/sebastianbergmann/diff/tree/4.0.5"
             },
             "funding": [
                 {
@@ -7810,7 +7882,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-26T13:10:38+00:00"
+            "time": "2023-05-07T05:35:17+00:00"
         },
         {
             "name": "sebastian/environment",

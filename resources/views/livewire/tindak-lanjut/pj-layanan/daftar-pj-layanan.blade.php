@@ -129,10 +129,15 @@
                                             @include('components.icon', ['name' => 'message', 'size' => 'w-5 h-5'])
                                         </button>
                                         <button
-                                            wire:click="deleteServiceItem({{ $service->id }})"
+                                            wire:click="deleteItem({{ $service->id }})"
+                                            type="button"
                                             x-data
                                             x-tooltip.raw="Hapus Penilaian"
-                                            class="text-red-500 hover:text-red-600">
+                                            class="text-red-500 hover:text-red-600"
+                                            data-te-toggle="modal"
+                                            data-te-target="#deleteModal"
+                                            data-te-ripple-init
+                                            data-te-ripple-color="light">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                         @if(!is_null($service->kode_saran))

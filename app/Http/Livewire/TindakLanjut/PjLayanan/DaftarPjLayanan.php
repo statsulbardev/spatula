@@ -14,6 +14,7 @@ class DaftarPjLayanan extends Component
 {
     use HasModelProcess, UnitCode, WithPagination;
 
+    public d_penilaian $penilaian;
     public int $numberOfPagination = 10;
 
     public function render()
@@ -21,6 +22,11 @@ class DaftarPjLayanan extends Component
         return view('livewire.tindak-lanjut.pj-layanan.daftar-pj-layanan', [
             'services' => $this->retrieveData()
         ])->layout('layouts.app');
+    }
+
+    public function updatedNumberOfPagination()
+    {
+        $this->resetPage();
     }
 
     public function finalizeServiceItem(d_penilaian $penilaian)
@@ -33,9 +39,14 @@ class DaftarPjLayanan extends Component
         $this->dispatchBrowserEvent('notification', ['message' => $result]);
     }
 
-    public function deleteServiceItem(d_penilaian $penilaian)
+    public function deleteItem(d_penilaian $penilaian)
     {
-        $result = $this->delete($penilaian);
+        $this->penilaian = $penilaian;
+    }
+
+    public function confirmDeleteItem()
+    {
+        $result = $this->delete($this->penilaian);
 
         $this->dispatchBrowserEvent('notification', ['message' => $result]);
     }
