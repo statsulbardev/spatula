@@ -3,8 +3,18 @@
 <div>
     @include('components.notification.flash')
 
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Daftar Satuan Kerja'])
+    <div class="flex flex-no-wrap justify-between mb-8">
+        {{-- Header --}}
+        @include('components.page.page-title', ['title' => 'Daftar Satuan Kerja'])
+
+        {{-- Satker Baru --}}
+        <a
+            href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}"
+            class="ml-6 p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md flex items-center">
+            @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-6 h-6'])
+            <span class="ml-2">Tambah Satker</span>
+        </a>
+    </div>
 
     {{-- Content --}}
     <section class="mt-10 mb-6">
@@ -47,14 +57,8 @@
                         </div>
                     @endrole
 
-                    {{-- Tambah office --}}
-                    <a
-                        x-data
-                        x-tooltip.raw="Tambah Satker"
-                        href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}"
-                        class="ml-6 p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md">
-                        @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-6 h-6'])
-                    </a>
+                    {{-- Pagination Filter --}}
+                    @include('components.input.pagination-selected')
                 </div>
             </div>
             @if($offices->isEmpty())
@@ -115,10 +119,15 @@
                                             @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
                                         </a>
                                         <button
+                                            wire:click="deleteItem({{ $office->id }})"
+                                            type="button"
                                             x-data
                                             x-tooltip.raw="Hapus Satker"
                                             class="text-red-500 hover:text-red-600"
-                                            wire:click="deleteItem({{ $office }})">
+                                            data-te-toggle="modal"
+                                            data-te-target="#deleteModal"
+                                            data-te-ripple-init
+                                            data-te-ripple-color="light">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                     </span>
@@ -131,6 +140,9 @@
         </div>
     </section>
     {{ $offices->links('vendor.livewire.tailwind') }}
+
+    {{-- Delete Confirmation Modal --}}
+    @include('components.input.delete-confirmation')
 </div>
 
 @push('scripts')
@@ -138,7 +150,7 @@
         <script>
             window.onload = function() {
                 window.dispatchEvent(new CustomEvent('notify', {
-                    detail: '{{ session("messsages") }}'
+                    detail: '{{ session("messages") }}'
                 }));
             }
         </script>

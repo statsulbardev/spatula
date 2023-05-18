@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Pengaturan\Layanan;
 
 use App\Models\m_layanan;
 use App\Traits\HasModelProcess;
-use Exception;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,12 +12,15 @@ class DaftarLayanan extends Component
 {
     use HasModelProcess, WithPagination;
 
+    public m_layanan $layanan;
     public int $numberOfPagination = 10;
 
     public function render() : View
     {
         return view('livewire.pengaturan.layanan.daftar-layanan', [
-            'services' => m_layanan::paginate($this->numberOfPagination)
+            'services' => m_layanan::query()
+                            -> orderBy('id', 'asc')
+                            -> paginate($this->numberOfPagination)
         ])->layout('layouts.app');
     }
 
@@ -30,7 +32,12 @@ class DaftarLayanan extends Component
 
     public function deleteItem(m_layanan $layanan)
     {
-        $result = $this->delete($layanan);
+        $this->layanan = $layanan;
+    }
+
+    public function confirmDeleteItem()
+    {
+        $result = $this->delete($this->layanan);
 
         $this->dispatchBrowserEvent('notification', ['message' => $result]);
     }

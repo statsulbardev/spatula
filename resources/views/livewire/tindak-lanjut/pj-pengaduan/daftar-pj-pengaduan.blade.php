@@ -1,14 +1,16 @@
 @section('title', 'Verifikasi PJ Pengaduan')
 
 <div>
-    @include('components.page.notification')
+    @include('components.notification.flash')
 
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Verifikasi PJ Pengaduan'])
+    <div class="mb-8">
+        {{-- Header --}}
+        @include('components.page.page-title', ['title' => 'Verifikasi PJ Pengaduan'])
+    </div>
 
     <section class="flex mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">
-            <div class="p-4 flex flex-wrap items-center">
+            <div class="p-4 flex flex-wrap justify-between items-center">
                 <div class="flex flex-no-wrap border rounded">
                     <div class="px-2 md:px-2 rounded-l border-r hover:bg-gray-100 focus:border-white focus:shadow-outline focus:z-10" x-data="{ open: false }">
                         <div class="flex py-3 items-center cursor-pointer" @click="open = true">
@@ -29,8 +31,11 @@
                     </div>
                     <input wire:model="search" class="relative w-full px-4 rounded-r focus:shadow-outline text-sm" type="text" placeholder="Cari …" />
                 </div>
+
+                {{-- Pagination Filter --}}
+                @include('components.input.pagination-selected')
             </div>
-            @if($complaints->count() === 0)
+            @if($complaints->isEmpty())
                 <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
                 <table class="w-full table-auto">
@@ -48,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($complaints->paginate(20) as $complaint)
+                        @foreach ($complaints as $complaint)
                             <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
                                 <td class="border-t px-6 py-4 w-2">
                                     <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $complaint->id }}">
@@ -138,7 +143,10 @@
             @endif
         </div>
     </section>
-    {{ $complaints->paginate(20)->links('vendor.spatula') }}
+    {{ $complaints->links('vendor.livewire.tailwind') }}
+
+    {{-- Delete Confirmation Modal --}}
+    @include('components.input.delete-confirmation')
 </div>
 
 @push('scripts')
@@ -151,4 +159,11 @@
             }
         </script>
     @endif
+    <script>
+        window.addEventListener('notification', event => {
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: event.detail.message
+            }));
+        })
+    </script>
 @endpush

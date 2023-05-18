@@ -5,7 +5,7 @@
 @endsection
 
 <div>
-    @include('components.page.notification')
+    @include('components.notification.flash')
 
     <form wire:submit.prevent="storeData">
         <div class="bg-white border-r border-t border-l border-gray-200 shadow-sm rounded-t-lg mt-4 py-4">

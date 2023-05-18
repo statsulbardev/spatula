@@ -3,8 +3,18 @@
 <div>
     @include('components.notification.flash')
 
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Pengaturan Layanan'])
+    <div class="flex flex-no-wrap justify-between mb-8">
+        {{-- Header --}}
+        @include('components.page.page-title', ['title' => 'Pengaturan Layanan'])
+
+        {{-- Layanan Baru --}}
+        <a
+            href="{{ url(env('APP_URL') . '/pengaturan/layanan/tambah') }}"
+            class="p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md flex items-center">
+            @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
+            <span class="ml-2">Tambah Layanan</span>
+        </a>
+    </div>
 
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">
@@ -31,18 +41,12 @@
                     <input wire:model="search" class="relative w-full px-4 rounded-r focus:shadow-outline text-sm" type="text" placeholder="Cari …" />
                 </div>
 
-                {{-- Tambah User --}}
-                <a
-                    x-data
-                    x-tooltip.raw="Tambah Jenis Layanan"
-                    href="{{ url(env('APP_URL') . '/pengaturan/layanan/tambah') }}"
-                    class="p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md">
-                    @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
-                </a>
-                <select wire:model="numberOfPagination">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                </select>
+                <div class="flex flex-wrap">
+
+
+                    {{-- Pagination Filter --}}
+                    @include('components.input.pagination-selected')
+                </div>
             </div>
             @if($services->isEmpty())
                 <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
@@ -88,10 +92,15 @@
                                             @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
                                         </a>
                                         <button
+                                            wire:click="deleteItem({{ $service->id }})"
+                                            type="button"
                                             x-data
                                             x-tooltip.raw="Hapus Layanan"
                                             class="text-red-500 hover:text-red-600"
-                                            wire:click="deleteItem({{ $service }})">
+                                            data-te-toggle="modal"
+                                            data-te-target="#deleteModal"
+                                            data-te-ripple-init
+                                            data-te-ripple-color="light">
                                             @include('components.icon', ['name' => 'trash', 'size' => 'w-5 h-5'])
                                         </button>
                                     </span>
@@ -104,6 +113,9 @@
         </div>
     </section>
     {{ $services->links('vendor.livewire.tailwind') }}
+
+    {{-- Delete Confirmation Modal --}}
+    @include('components.input.delete-confirmation')
 </div>
 
 @push('scripts')

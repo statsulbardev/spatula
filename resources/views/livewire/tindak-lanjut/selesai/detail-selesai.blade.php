@@ -1,8 +1,10 @@
 @section('title', 'Pengguna Layanan')
 
 <div>
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => $done->nama_konsumen])
+    <div class="mb-8">
+        {{-- Header --}}
+        @include('components.page.page-title', ['title' => $done->nama_konsumen])
+    </div>
 
     {{-- Informasi Pengguna Layanan --}}
     <section>

@@ -15,9 +15,9 @@ class CreateMLayananTable extends Migration
     {
         Schema::create('m_layanan', function (Blueprint $table) {
             $table->id();
-            $table->char('kode_layanan', 2);
+            $table->char('kode_layanan', 2)->unique();
             $table->string('nama_layanan', 50);
-            $table->string('deskripsi');
+            $table->string('deskripsi')->nullable();
             $table->char('metode', 1);
             $table->timestamps();
         });

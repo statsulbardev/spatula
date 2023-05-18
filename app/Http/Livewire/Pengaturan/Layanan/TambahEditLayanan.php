@@ -3,21 +3,18 @@
 namespace App\Http\Livewire\Pengaturan\Layanan;
 
 use App\Models\m_layanan;
+use App\Traits\HasModelProcess;
 use App\Traits\HasRedirectUrl;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class TambahEditLayanan extends Component
 {
-    use HasRedirectUrl;
+    use HasModelProcess, HasRedirectUrl;
 
     public m_layanan $layanan;
     public string $routeName;
-    public string $notification;
 
     public function render() : View
     {
@@ -39,25 +36,9 @@ class TambahEditLayanan extends Component
 
         $this->validate();
 
-        try {
-            DB::beginTransaction();
+        $result = $this->save($this->layanan);
 
-            $this->layanan->save();
-
-            $this->notification = "Informasi telah disimpan.";
-
-            DB::commit();
-
-        } catch(Exception $error) {
-
-            DB::rollBack();
-
-            Log::error($error->getMessage());
-
-            $this->notification = "Informasi gagal disimpan.";
-        }
-
-        session()->flash('messages', $this->notification);
+        session()->flash('messages', $result);
 
         return $this->callbackUrl('/pengaturan/layanan');
     }
@@ -67,10 +48,10 @@ class TambahEditLayanan extends Component
      * https://laravel-livewire.com/docs/2.x/input-validation
      * @return string[]
      */
-    protected function rules()
+    protected function rules() : array
     {
         return [
-            'layanan.kode_layanan' => 'required|unique:m_layanan,kode_layanan,' . $this->layanan->kode_layanan,
+            'layanan.kode_layanan' => 'required|unique:m_layanan,kode_layanan,' . $this->layanan->id,
             'layanan.nama_layanan' => 'required|min:5',
             'layanan.metode'       => 'required',
             'layanan.deskripsi'    => 'nullable|min:5'

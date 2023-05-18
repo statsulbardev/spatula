@@ -16,11 +16,11 @@ class CreateMSatkerTable extends Migration
         Schema::create('m_satker', function (Blueprint $table) {
             $table->id();
             $table->char('kode_satker', 4)->unique();
-            $table->string('nama', 50);
+            $table->string('nama', 100);
             $table->char('level', 1);
             $table->string('alamat');
-            $table->string('web', 30);
-            $table->string('telepon', 12);
+            $table->string('web', 50)->nullable();
+            $table->string('telepon', 12)->nullable();
             $table->timestamps();
         });
     }
