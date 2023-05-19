@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
-use function PHPSTORM_META\map;
+use Laravel\Scout\Searchable;
 
 class d_penilaian extends Model
 {
+    use Searchable;
+
     protected $table = 'd_penilaian';
 
     protected $fillable = [
@@ -56,5 +57,17 @@ class d_penilaian extends Model
     public function saran()
     {
         return $this->belongsTo(m_saran::class, 'kode_saran');
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'nama_konsumen'     => $this->nama_konsumen,
+            'email_konsumen'    => $this->email_konsumen,
+            'no_wa_telepon'     => $this->no_wa_telepon,
+            'saran_pengaduan'   => $this->saran_pengaduan,
+            'text_pj_layanan'   => $this->text_pj_layanan,
+            'text_pj_pengaduan' => $this->text_pj_pengaduan
+        ];
     }
 }

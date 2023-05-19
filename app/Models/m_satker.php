@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Attributes\SearchUsingFullText;
-use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 
 class m_satker extends Model
@@ -42,8 +40,6 @@ class m_satker extends Model
         return $this->hasMany(d_penilaian::class, 'kode_satker_id', 'kode_satker');
     }
 
-    #[SearchUsingPrefix(['nama', 'alamat'])]
-    #[SearchUsingFullText(['kode_satker'])]
     public function toSearchableArray(): array
     {
         return [

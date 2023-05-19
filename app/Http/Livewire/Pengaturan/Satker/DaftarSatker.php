@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pengaturan\Satker;
 
 use App\Models\m_satker;
 use App\Traits\HasModelProcess;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,11 +15,12 @@ class DaftarSatker extends Component
 
     public m_satker $satker;
     public int $numberOfPagination = 10;
+    public ?string $searchKeyword = null;
 
     public function render() : View
     {
         return view('livewire.pengaturan.satker.daftar-satker', [
-            'offices' => m_satker::query()
+            'offices' => m_satker::search($this->searchKeyword)
                             -> orderBy('kode_satker', 'asc')
                             -> paginate($this->numberOfPagination)
         ])->layout('layouts.app');

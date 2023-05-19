@@ -8,7 +8,6 @@ use App\Traits\UnitCode;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Component;
-use Livewire\Redirector;
 use Livewire\WithPagination;
 
 class DaftarPjPengaduan extends Component
@@ -16,6 +15,7 @@ class DaftarPjPengaduan extends Component
     use HasModelProcess, UnitCode, WithPagination;
 
     public int $numberOfPagination = 10;
+    public ?string $searchKeyword = null;
 
     public function render()
     {
@@ -37,16 +37,14 @@ class DaftarPjPengaduan extends Component
     private function retrieveData() : Paginator
     {
         $result = auth()->user()->hasRole('superadmin')
-            ? d_penilaian::query()
+            ? d_penilaian::search($this->searchKeyword)
                 -> where('selesai', 0)
                 -> where('is_pengaduan', 1)
-                -> paginate($this->numberOfPagination)
-            : d_penilaian::query()
+            : d_penilaian::search($this->searchKeyword)
                 -> where('selesai', 0)
                 -> where('kode_satker_id', $this->getUnitCode()->kode_satker)
-                -> where('is_pengaduan', 1)
-                -> paginate($this->numberOfPagination);
+                -> where('is_pengaduan', 1);
 
-        return $result;
+        return $result->paginate($this->numberOfPagination);
     }
 }

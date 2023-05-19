@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class m_layanan extends Model
 {
+    use Searchable;
+
     /**
      * Tabel terkait dengan model
      *
@@ -24,4 +27,13 @@ class m_layanan extends Model
         'deskripsi',
         'metode'
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'kode_layanan' => $this->kode_layanan,
+            'nama_layanan' => $this->nama_layanan,
+            'deskripsi'    => $this->deskripsi,
+        ];
+    }
 }

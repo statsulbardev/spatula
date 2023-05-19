@@ -2,12 +2,12 @@
 
 <div>
     {{-- Header --}}
-    @include('components.page.page-title', ['title' => $routeName === 'tambah-pengguna' ? 'Tambah Pengguna Baru' : 'Edit Informasi ' . $user->nama])
+    @include('components.page.page-title', ['title' => ucwords(str_replace('-', ' ', $routeName))])
 
     {{-- Content --}}
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">
-            <form wire:submit.prevent="storeData">
+            <form wire:submit.prevent="submitData">
                 <div class="p-6 flex flex-wrap">
                     <div class="lg:w-1/3">
                         <h1 class="text-2xl tracking-wide">Informasi Pengguna Aplikasi</h1>
@@ -21,48 +21,80 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Nama Lengkap Pegawai',
-                                'model' => 'f_name',
+                                'model' => 'pengguna.nama',
                                 'type'  => 'text'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('pengguna.nama')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label'     => 'Email',
-                                'model'     => 'f_email',
+                                'model'     => 'pengguna.email',
                                 'type'      => 'email',
                                 'label_opt' => 'Diutamakan Email BPS'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('pengguna.email')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label'     => 'Kata Sandi',
-                                'model'     => 'f_password',
+                                'model'     => 'pengguna.password',
                                 'type'      => 'password',
                                 'label_opt' => 'Setelah Login SSO, Kata Sandi Ini Akan Ditimpa Dengan Kata Sandi SSO'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('pengguna.password')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'NIP BPS',
-                                'model' => 'f_bpsid',
+                                'model' => 'pengguna.bpsid',
                                 'type'  => 'text'
                             ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('pengguna.bpsid')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
                         <div class="p-6 w-full">
                             @include('components.input.select', [
                                 'label'     => 'Unit Kerja',
-                                'model'     => 'f_unit',
+                                'model'     => 'pengguna.kode_satker_id',
                                 'opt_title' => 'Pilih Unit Kerja ...',
                                 'opt_item'  => $units
                             ])
-                        </div>
-                        <div class="p-6 w-full">
-                            @include('components.input.select', [
-                                'label'     => 'Hak Akses Pengguna',
-                                'model'     => 'f_role',
-                                'opt_title' => 'Pilih Hak Akses ...',
-                                'opt_item'  => $roles
-                            ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('pengguna.kode_satker_id')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

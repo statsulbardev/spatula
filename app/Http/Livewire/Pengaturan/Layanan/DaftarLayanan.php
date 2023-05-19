@@ -14,11 +14,12 @@ class DaftarLayanan extends Component
 
     public m_layanan $layanan;
     public int $numberOfPagination = 10;
+    public ?string $searchKeyword = null;
 
     public function render() : View
     {
         return view('livewire.pengaturan.layanan.daftar-layanan', [
-            'services' => m_layanan::query()
+            'services' => m_layanan::search($this->searchKeyword)
                             -> orderBy('id', 'asc')
                             -> paginate($this->numberOfPagination)
         ])->layout('layouts.app');

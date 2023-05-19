@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
 class m_pengguna extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable, Searchable;
 
     /**
      * Tabel terkait dengan model
@@ -44,5 +45,15 @@ class m_pengguna extends Authenticatable
     public function satker()
     {
         return $this->hasOne(m_satker::class, 'id', 'kode_satker_id');
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'nama'     => $this->nama,
+            'username' => $this->username,
+            'email'    => $this->email,
+            'bpsid'    => $this->bpsid,
+        ];
     }
 }

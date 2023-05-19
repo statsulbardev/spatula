@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\TindakLanjut\PJLayanan;
+namespace App\Http\Livewire\TindakLanjut\PjLayanan;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
@@ -16,6 +16,7 @@ class DaftarPjLayanan extends Component
 
     public d_penilaian $penilaian;
     public int $numberOfPagination = 10;
+    public ?string $searchKeyword = null;
 
     public function render()
     {
@@ -54,16 +55,14 @@ class DaftarPjLayanan extends Component
     private function retrieveData() : Paginator
     {
         $result = auth()->user()->hasRole('superadmin')
-            ? d_penilaian::query()
+            ? d_penilaian::search($this->searchKeyword)
                         -> where('selesai', 0)
-                        -> latest('created_at')
-                        -> paginate($this->numberOfPagination)
-            : d_penilaian::query()
+                        -> orderBy('created_at', 'desc')
+            : d_penilaian::search($this->searchKeyword)
                         -> where('kode_satker_id', $this->getUnitCode()->kode_satker)
                         -> where('selesai', 0)
-                        -> latest('created_at')
-                        -> paginate($this->numberOfPagination);
+                        -> orderBy('created_at', 'desc');
 
-        return $result;
+        return $result->paginate($this->numberOfPagination);
     }
 }
