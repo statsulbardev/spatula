@@ -17,8 +17,39 @@ class TambahEditPengguna extends Component
 
     public m_pengguna $pengguna;
     public string $routeName;
-    public $user;
-    public $units;
+    public string $units;
+    public string $f_password;
+
+    protected function rules() : array
+    {
+        $password = $this->routeName === 'tambah-pengguna'
+                    ? 'required|min:8'
+                    : 'nullable|min:8';
+
+        return [
+            'pengguna.nama'           => 'required|min:3|max:100',
+            'pengguna.email'          => 'required|email:rfc|unique:m_pengguna,email,' . $this->pengguna->id,
+            'pengguna.bpsid'          => 'required|digits:9',
+            'pengguna.kode_satker_id' => 'required',
+            'pengguna.is_petugas'     => 'required',
+            'f_password'              => $password
+        ];
+    }
+
+    protected $messages = [
+        'pengguna.nama.required'           => 'Nama pengguna tidak boleh kosong',
+        'pengguna.nama.min'                => 'Nama pengguna minimal 3 karakter dan maksimal 100 karakter',
+        'pengguna.nama.max'                => 'Nama pengguna minimal 3 karakter dan maksimal 100 karakter',
+        'pengguna.email.required'          => 'Email tidak boleh kosong',
+        'pengguna.email.email'             => 'Format email tidak benar',
+        'pengguna.email.unique'            => 'Email yang diiskan sudah pernah terdaftar',
+        'pengguna.bpsid.required'          => 'NIP BPS tidak boleh kosong',
+        'pengguna.bpsid.digits'            => 'NIP BPS harus terdiri dari 9 nomor',
+        'pengguna.kode_satker_id.required' => 'Unit kerja harus terpilih salah satu',
+        'pengguna.is_petugas.required'     => 'Jenis petugas harus terpilih salah satu',
+        'f_password.required'              => 'Password tidak boleh kosong',
+        'f_password.min'                   => 'Password minimal 8 karakter'
+    ];
 
     public function render() : View
     {
@@ -30,7 +61,11 @@ class TambahEditPengguna extends Component
     {
         $this->pengguna  = new m_pengguna();
         $this->routeName = Route::currentRouteName();
-        $this->units     = $this->renderUnitsOption(m_satker::get(['id', 'nama']));
+        $this->units     = $this->renderOption(
+                                m_satker::get(['kode_satker', 'nama'])
+                                -> map(function($item) { return [0 => $item->kode_satker, 1 => $item->nama];})
+                                -> toArray()
+                            );
 
         if ($this->routeName === 'edit-pengguna') $this->pengguna = $pengguna;
     }
@@ -41,42 +76,36 @@ class TambahEditPengguna extends Component
 
         $this->validate();
 
-        dd(isset($this->pengguna->password));
-        // $result = isset($this->pengguna->password)
-        //     ? 'jalan'
-        //     : $this->save($this->pengguna->exclude(['password']));
+        $result = $this->routeName === 'tambah-pengguna'
+                    ? $this->massAssignment(
+                            $this->pengguna,
+                            [
+                                'nama'           => $this->pengguna->nama,
+                                'username'       => substr($this->pengguna->email, 0, strrpos($this->pengguna->email, '@')),
+                                'email'          => $this->pengguna->email,
+                                'password'       => bcrypt($this->f_password),
+                                'bpsid'          => $this->pengguna->bpsid,
+                                'kode_satker_id' => $this->pengguna->kode_satker_id,
+                                'is_petugas'     => $this->pengguna->is_petugas
+                            ],
+                            'tambah'
+                        )
+                    : $this->massAssignment(
+                        $this->pengguna,
+                        [
+                            'nama'           => $this->pengguna->nama,
+                            'username'       => substr($this->pengguna->email, 0, strrpos($this->pengguna->email, '@')),
+                            'email'          => $this->pengguna->email,
+                            'password'       => empty($this->f_password) ? $this->pengguna->getOriginal('password') : bcrypt($this->f_password),
+                            'bpsid'          => $this->pengguna->bpsid,
+                            'kode_satker_id' => $this->pengguna->kode_satker_id,
+                            'is_petugas'     => $this->pengguna->is_petugas
+                        ],
+                        'edit'
+                    );
 
         session()->flash('messages', $result);
 
-        return $this->callbackUrl('/pengaturan/pengguna');
+        $this->callbackUrl('/pengaturan/pengguna');
     }
-
-    protected function rules() : array
-    {
-        $password = $this->routeName === 'edit-pengguna'
-                    ? 'nullable|min:8'
-                    : 'required|min:8';
-
-        return [
-            'pengguna.nama'           => 'required|min:3|max:100',
-            'pengguna.email'          => 'required|email:rfc|unique:m_pengguna,email,' . $this->pengguna->id,
-            'pengguna.password'       => $password,
-            'pengguna.bpsid'          => 'required|digits:9',
-            'pengguna.kode_satker_id' => 'required'
-        ];
-    }
-
-    protected $messages = [
-        'pengguna.nama.required'     => 'Nama pengguna tidak boleh kosong',
-        'pengguna.nama.min'          => 'Nama pengguna minimal 3 karakter dan maksimal 100 karakter',
-        'pengguna.nama.max'          => 'Nama pengguna minimal 3 karakter dan maksimal 100 karakter',
-        'pengguna.email.required'    => 'Email tidak boleh kosong',
-        'pengguna.email.email'       => 'Format email tidak benar',
-        'pengguna.email.unique'      => 'Email yang diiskan sudah pernah terdaftar',
-        'pengguna.password.required' => 'Password tidak boleh kosong',
-        'pengguna.password.min'      => 'Password minimal 8 karakter',
-        'pengguna.bpsid.required'    => 'NIP BPS tidak boleh kosong',
-        'pengguna.bpsid.digits'      => 'NIP BPS harus terdiri dari 9 nomor',
-        'pengguna.kode_satker.id'    => 'Unit kerja harus terpilih salah satu'
-    ];
 }

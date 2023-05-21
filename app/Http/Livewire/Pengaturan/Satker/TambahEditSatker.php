@@ -12,11 +12,10 @@ use Livewire\Component;
 
 class TambahEditSatker extends Component
 {
-    use HasModelProcess, HasRedirectUrl, HasRenderOption;
+    use HasModelProcess, HasRedirectUrl;
 
     public m_satker $satker;
     public string $routeName;
-    public string $levels;
 
     public function render() : View
     {
@@ -28,7 +27,6 @@ class TambahEditSatker extends Component
     {
         $this->satker    = new m_satker();
         $this->routeName = Route::currentRouteName();
-        $this->levels    = $this->renderLevelOption();
 
         if ($this->routeName === 'edit-satker') $this->satker = $satker;
     }

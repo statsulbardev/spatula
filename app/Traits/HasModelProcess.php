@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\m_pengguna;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 trait HasModelProcess
 {
     /**
-     * Use for save or update data with all field.
+     * Eloquent Create and Update Process.
      * @param mixed $model
      * @return string
      */
@@ -37,7 +38,7 @@ trait HasModelProcess
     }
 
     /**
-     * Use for delete record from database
+     * Eloquent Delete Process.
      * @param mixed $model
      * @return string
      */
@@ -65,31 +66,35 @@ trait HasModelProcess
     }
 
     /**
-     * Use for update data with specific field only.
-     * @param mixed $model
-     * @param array $data
+     * Mass Assignment Data
+     * @param mixed $data
      * @return string
      */
-    public function customUpdate($model, array $data) : string
+    public function massAssignment($model, array $data, string $step) : string
     {
         try {
             DB::beginTransaction();
 
-            $model->update($data);
+            if ($step === 'tambah') {
+                $model->create($data);
+
+                $result = "Informasi " . $this->getClassName($model, 2) . " telah disimpan.";
+            } else {
+                $model->update($data);
+
+                $result = "Informasi " . $this->getClassName($model, 2) . " telah diperbaharui.";
+            }
 
             DB::commit();
-
-            $notification = "Informasi " . $this->getClassName($model, 2) . " telah diperbaharui.";
-
         } catch(Exception $error) {
             DB::rollBack();
 
             Log::error($error->getMessage());
 
-            $notification = "Informasi " . $this->getClassName($model, 2) . " gagal diperbaharui.";
+            $result = "Informasi user gagal disimpan.";
         }
 
-        return $notification;
+        return $result;
     }
 
     private function getClassName($model, int $substr) : string

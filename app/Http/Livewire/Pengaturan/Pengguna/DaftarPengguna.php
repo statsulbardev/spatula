@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Pengaturan\Pengguna;
 
 use App\Models\m_pengguna;
-use App\Models\m_satker;
 use App\Traits\HasModelProcess;
 use App\Traits\UnitCode;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -48,7 +47,8 @@ class DaftarPengguna extends Component
         $authUser = auth()->user();
 
         if ($authUser->hasRole('superadmin')) {
-            $result = m_pengguna::search($this->searchKeyword);
+            $result = m_pengguna::search($this->searchKeyword)
+                        -> orderBy('kode_satker_id', 'asc');
         } elseif ($authUser->hasRole('admin') || $authUser->hasRole('pimpinan')) {
             $result = m_pengguna::search($this->searchKeyword)
                         -> where('kode_satker_id', $this->getUnitCode()->kode_satker)

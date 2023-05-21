@@ -28,55 +28,55 @@ class DaftarPetugas extends Component
         ])->layout('layouts.app');
     }
 
-    public function mount()
+    public function updatedNumberOfPagination()
     {
-        // $this->units = m_satker::get();
+        $this->resetPage();
     }
 
-    public function update(m_pengguna $data, $val)
-    {
-        $val == 0 ? $data->update(['aktif' => 1]) : $data->update(['aktif' => 0]);
+    // public function update(m_pengguna $data, $val)
+    // {
+    //     $val == 0 ? $data->update(['aktif' => 1]) : $data->update(['aktif' => 0]);
 
-        session()->flash('message', $val == 0 ? 'Petugas telah dinonaktifkan.' : 'Petugas telah diaktifkan.');
+    //     session()->flash('message', $val == 0 ? 'Petugas telah dinonaktifkan.' : 'Petugas telah diaktifkan.');
 
-        return redirect(env('APP_URL') . '/pengaturan/petugas');
-    }
+    //     return redirect(env('APP_URL') . '/pengaturan/petugas');
+    // }
 
-    public function updatedSelectedUnit()
-    {
-        $this->officers = m_pengguna::role('operator')
-                                    ->where('kode_satker_id', $this->selectedUnit)
-                                    ->orderBy('aktif', 'desc')
-                                    ->get();
-    }
+    // public function updatedSelectedUnit()
+    // {
+    //     $this->officers = m_pengguna::role('operator')
+    //                                 ->where('kode_satker_id', $this->selectedUnit)
+    //                                 ->orderBy('aktif', 'desc')
+    //                                 ->get();
+    // }
 
-    public function resetTable()
-    {
-        $this->officers = Auth::user()->hasRole('superadmin')
-            ? m_pengguna::role('operator')->orderBy('aktif', 'desc')->get()
-            : m_pengguna::role('operator')
-                        ->where('kode_satker_id', Auth::user()->kode_satker_id)
-                        ->get();
-    }
+    // public function resetTable()
+    // {
+    //     $this->officers = Auth::user()->hasRole('superadmin')
+    //         ? m_pengguna::role('operator')->orderBy('aktif', 'desc')->get()
+    //         : m_pengguna::role('operator')
+    //                     ->where('kode_satker_id', Auth::user()->kode_satker_id)
+    //                     ->get();
+    // }
 
     private function retrieveData() : Paginator
     {
-        $role = 'operator';
+        $role = ['pj-layanan', 'pj-pengaduan', 'operator'];
 
         $result = auth()->user()->hasRole('superadmin')
             ? m_pengguna::search($this->searchKeyword)
                 -> query(function (Builder $query) use ($role) {
-                        $query->whereHas('roles', function (Builder $query) use ($role) {
-                            $query->where('name', $role);
+                    $query
+                        -> where('is_petugas', 1)
+                        -> whereHas('roles', function (Builder $query) use ($role) {
+                            $query->whereIn('name', $role);
                         });
                 })
-                -> orderBy('aktif', 'desc')
-                -> paginate($this->numberOfPagination)
+                -> orderBy('kode_satker_id', 'asc')
             : m_pengguna::search($this->searchKeyword)
                 -> role('operator')
-                -> where('kode_satker_id', auth()->user()->kode_satker_id)
-                -> paginate($this->numberOfPagination);
+                -> where('kode_satker_id', auth()->user()->kode_satker_id);
 
-        return $result;
+        return $result->paginate($this->numberOfPagination);
     }
 }

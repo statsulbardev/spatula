@@ -57,7 +57,7 @@
                                 'label'     => 'Level',
                                 'model'     => 'satker.level',
                                 'opt_title' => 'Pilih Level Satker ...',
-                                'opt_item'  => $levels
+                                'opt_item'  => "<option value='1'>Provinsi</option><option value='2'>Kabupaten</option>"
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"

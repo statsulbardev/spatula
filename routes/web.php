@@ -12,6 +12,7 @@ use App\Http\Livewire\TindakLanjut\PjPengaduan\DetailPjPengaduan;
 use App\Http\Livewire\Laporan\LaporanHarian;
 use App\Http\Livewire\Laporan\LaporanBulanan;
 use App\Http\Livewire\Pengaturan\Petugas\DaftarPetugas;
+use App\Http\Livewire\Pengaturan\Petugas\TambahEditPetugas;
 use App\Http\Livewire\Pengaturan\Pengguna\DaftarPengguna;
 use App\Http\Livewire\Pengaturan\Pengguna\TambahEditPengguna;
 use App\Http\Livewire\Pengaturan\Layanan\DaftarLayanan;
@@ -48,6 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('/pengaturan/')->group(function () {
         Route::get('petugas', DaftarPetugas::class)->name('daftar-petugas');
+        Route::get('petugas/tambah', TambahEditPetugas::class)->name('tambah-petugas');
+        Route::get('petugas/{petugas}/edit', TambahEditPetugas::class)->name('edit-petugas');
         Route::get('pengguna', DaftarPengguna::class)->name('daftar-pengguna');
         Route::get('pengguna/tambah', TambahEditPengguna::class)->name('tambah-pengguna');
         Route::get('pengguna/{pengguna}/edit', TambahEditPengguna::class)->name('edit-pengguna');

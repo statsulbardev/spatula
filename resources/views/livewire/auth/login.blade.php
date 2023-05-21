@@ -17,7 +17,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('username')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('password')
-                                @include('components.input.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>

@@ -5,8 +5,7 @@
             <sup class="rounded bg-green-100 opacity-80 ml-1 p-1 text-xs text-green-700">{{ $label_opt }}</sup>
         @endif
     </label>
-    <select id="{{ $id }}" wire:model.defer="{{ $model }}" data-te-select-init data-te-select-filter="true" @isset($prop) {{ $prop }} @endisset>
-        <option hidden selected>{{ $opt_title }}</option>
+    <select id="{{ $id }}" wire:model.defer="{{ $model }}" data-te-select-init multiple @isset($prop) {{ $prop }} @endisset>
         {!! $opt_item !!}
     </select>
 </div>
@@ -15,6 +14,6 @@
 <script>
     te.Select
         .getInstance(document.querySelector("#{{ $id }}"))
-        .setValue("{{ $value }}");
+        .setValue({!! $value !!});
 </script>
 @endpush

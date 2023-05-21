@@ -14,17 +14,16 @@ class CreateMPenggunaTable extends Migration
     public function up()
     {
         Schema::create('m_pengguna', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('nama', 50);
             $table->string('username', 20);
             $table->string('email', 30)->unique();
             $table->string('password');
             $table->string('bpsid', 9)->unique()->nullable();
             $table->string('foto')->nullable();
-            $table->bigInteger('kode_satker_id');
+            $table->char('kode_satker_id')->unique();
             $table->bigInteger('role_id');
-            $table->tinyInteger('aktif');
-            $table->rememberToken();
+            $table->tinyInteger('is_petugas');
             $table->timestamps();
         });
     }

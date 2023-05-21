@@ -32,7 +32,7 @@ class m_satker extends Model
 
     public function pengguna()
     {
-        return $this->hasMany(m_pengguna::class, 'kode_satker_id');
+        return $this->hasMany(m_pengguna::class, 'kode_satker_id', 'kode_satker');
     }
 
     public function penilaian()

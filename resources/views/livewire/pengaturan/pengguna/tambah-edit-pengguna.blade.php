@@ -18,6 +18,7 @@
                         </p>
                     </div>
                     <div class="lg:w-2/3">
+                        {{-- Nama Pengguna --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Nama Lengkap Pegawai',
@@ -33,6 +34,8 @@
                                 @enderror
                             </div>
                         </div>
+
+                        {{-- Email --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label'     => 'Email',
@@ -49,27 +52,30 @@
                                 @enderror
                             </div>
                         </div>
+
+                        {{-- Kata Sandi --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label'     => 'Kata Sandi',
-                                'model'     => 'pengguna.password',
-                                'type'      => 'password',
-                                'label_opt' => 'Setelah Login SSO, Kata Sandi Ini Akan Ditimpa Dengan Kata Sandi SSO'
+                                'model'     => 'f_password',
+                                'type'      => 'password'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('pengguna.password')
+                                @error('f_password')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
+
+                        {{-- NIP BPS --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'NIP BPS',
                                 'model' => 'pengguna.bpsid',
-                                'type'  => 'text'
+                                'type'  => 'number'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
@@ -80,12 +86,36 @@
                                 @enderror
                             </div>
                         </div>
+
+                        {{-- Petugas Layanan --}}
+                        <div class="p-6 w-full">
+                            @include('components.input.select', [
+                                'label'     => 'Petugas Layanan',
+                                'model'     => 'pengguna.is_petugas',
+                                'opt_title' => 'Pilih Jenis Petugas ...',
+                                'opt_item'  => "<option value='0'>Bukan Petugas Layanan</option><option value='1'>Petugas Layanan</option>",
+                                'value'     => $routeName === 'tambah-pengguna' ? null : $pengguna->is_petugas,
+                                'id'        => 'petugas'
+                            ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('pengguna.is_petugas')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Unit Kerja --}}
                         <div class="p-6 w-full">
                             @include('components.input.select', [
                                 'label'     => 'Unit Kerja',
                                 'model'     => 'pengguna.kode_satker_id',
                                 'opt_title' => 'Pilih Unit Kerja ...',
-                                'opt_item'  => $units
+                                'opt_item'  => $units,
+                                'value'     => $routeName === 'tambah-pengguna' ? null : $pengguna->kode_satker_id,
+                                'id'        => 'unit'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"

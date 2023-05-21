@@ -55,9 +55,8 @@
                             <th class="px-6 pt-6 pb-4">Nama</th>
                             <th class="px-6 pt-6 pb-4">Username</th>
                             <th class="px-6 pt-6 pb-4">Email</th>
-                            <th class="px-6 pt-6 pb-4">Nomor Induk Pegawai</th>
-                            <th class="px-6 pt-6 pb-4">Role</th>
                             <th class="px-6 pt-6 pb-4">Unit Kerja</th>
+                            <th class="px-6 pt-6 pb-4">Hak Akses</th>
                             <th class="px-6 pt-6 pb-4"></th>
                         </tr>
                     </thead>
@@ -84,19 +83,17 @@
                                 </td>
                                 <td class="border-t">
                                     <span class="pl-6 py-4">
-                                        {{ $user->bpsid }}
+                                        {{ $user->satker->nama }}
                                     </span>
                                 </td>
                                 <td class="border-t">
                                     <span class="pl-6 py-4 flex items-center">
-                                        @foreach ($user->roles as $role)
-                                            {{ $role->name }}
+                                        @foreach ($user->roles as $index => $role)
+                                            <div class="{{ $index == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm text-green-900 leading-tight">
+                                                <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">{{ $role->name }}</span>
+                                            </div>
                                         @endforeach
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="pl-6 py-4">
-                                        {{ $user->satker->nama }}
                                     </span>
                                 </td>
                                 <td class="border-t w-px">

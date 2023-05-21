@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
@@ -19,11 +20,6 @@ class m_pengguna extends Authenticatable
      */
     protected $table = 'm_pengguna';
 
-    /**
-     * Atribut yang diperlukan untuk mass assignment.
-     *
-     * @var array
-     */
     protected $fillable = [
         'nama',
         'username',
@@ -32,19 +28,14 @@ class m_pengguna extends Authenticatable
         'bpsid',
         'foto',
         'kode_satker_id',
-        'aktif'
+        'is_petugas'
     ];
 
-    /**
-     * Atribut yang harus disembunyikan untuk array.\
-     *
-     * @var array
-     */
     protected $hidden = ['password'];
 
     public function satker()
     {
-        return $this->hasOne(m_satker::class, 'id', 'kode_satker_id');
+        return $this->hasOne(m_satker::class, 'kode_satker', 'kode_satker_id');
     }
 
     public function toSearchableArray(): array
