@@ -46,7 +46,7 @@ class TambahEditSatker extends Component
         session()->flash('messages', $result);
 
         // Redirect the page.
-        return $this->callbackUrl('/pengaturan/satker');
+        $this->callbackUrl('/pengaturan/satker');
     }
 
     /**

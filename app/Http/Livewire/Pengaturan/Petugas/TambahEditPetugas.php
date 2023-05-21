@@ -25,19 +25,6 @@ class TambahEditPetugas extends Component
     public array $f_role;
     public string $selectedRole;
 
-    protected function rules() : array
-    {
-        return [
-            'f_petugas' => 'required',
-            'f_role'    => 'required'
-        ];
-    }
-
-    protected $messages = [
-        'f_petugas.required' => 'Petugas harus terpilih salah satu.',
-        'f_role.required'    => 'Role petugas harus terpilih salah satu'
-    ];
-
     public function render() : View
     {
         return view('livewire.pengaturan.petugas.tambah-edit-petugas')
@@ -93,6 +80,19 @@ class TambahEditPetugas extends Component
 
         $this->callbackUrl('/pengaturan/petugas');
     }
+
+    protected function rules() : array
+    {
+        return [
+            'f_petugas' => 'required',
+            'f_role'    => 'required'
+        ];
+    }
+
+    protected $messages = [
+        'f_petugas.required' => 'Petugas harus terpilih salah satu.',
+        'f_role.required'    => 'Role petugas harus terpilih salah satu'
+    ];
 
     private function rolesToArray() : array
     {

@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Pengaturan\Layanan;
 use App\Models\m_layanan;
 use App\Traits\HasModelProcess;
 use App\Traits\HasRedirectUrl;
-use App\Traits\HasRenderOption;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -41,7 +40,7 @@ class TambahEditLayanan extends Component
 
         session()->flash('messages', $result);
 
-        return $this->callbackUrl('/pengaturan/layanan');
+        $this->callbackUrl('/pengaturan/layanan');
     }
 
     /**

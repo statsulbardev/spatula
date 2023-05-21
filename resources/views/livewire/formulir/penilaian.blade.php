@@ -24,16 +24,15 @@
                 </div>
                 <div class="lg:w-2/3 sm:w-full">
                     <div class="my-6 w-full">
-                        <label class="form-label font-bold" for="Unit Kerja">
-                            Unit Kerja
-                        </label>
-                        <select wire:model="f_unit" ref="input" class="form-select">
-                            <option value="" hidden selected>Pilih Unit Kerja ...</option>
-                            @foreach ($units as $unit)
-                                <option value="{{ $unit->id . '-' . $unit->nama }}">{{ $unit->nama }}</option>
-                            @endforeach
-                        </select>
-
+                        {{-- Unit Kerja yang Dinilai --}}
+                        @include('components.input.select-realtime', [
+                            'label'     => 'Unit Kerja',
+                            'model'     => 'f_unit',
+                            'opt_title' => 'Pilih Unit Kerja ...',
+                            'opt_item'  => $units,
+                            'value'     => null,
+                            'id'        => 'unit_kerja'
+                        ])
                         <div
                             x-data="{ shown: false, timeout: null }"
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -54,13 +53,13 @@
                         statistik terpadu.
                     </p></div>
                 <div class="lg:w-2/3 sm:w-full">
+                    {{-- Nama Konsumen --}}
                     <div class="my-6 w-full">
                         @include('components.input.text', [
-                            'model' => 'f_nama',
                             'label' => 'Nama Lengkap',
+                            'model' => 'f_nama',
                             'type'  => 'text'
                         ])
-
                         <div
                             x-data="{ shown: false, timeout: null }"
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -70,13 +69,13 @@
                             @enderror
                         </div>
                     </div>
+                    {{-- Email --}}
                     <div class="my-6 w-full">
                         @include('components.input.text', [
-                            'model' => 'f_email',
                             'label' => 'Akun Email',
+                            'model' => 'f_email',
                             'type'  => 'email'
                         ])
-
                         <div
                             x-data="{ shown: false, timeout: null }"
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -86,18 +85,18 @@
                             @enderror
                         </div>
                     </div>
+                    {{-- No. WA / Telepon --}}
                     <div class="my-6 w-full">
                         @include('components.input.text', [
-                            'model' => 'f_notelpwhatsapp',
                             'label' => 'No. Telepon / Whatsapp',
+                            'model' => 'f_nowatelp',
                             'type'  => 'text'
                         ])
-
                         <div
                             x-data="{ shown: false, timeout: null }"
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
-                            @error('f_notelpwhatsapp')
+                            @error('f_nowatelp')
                                 @include('components.notification.error')
                             @enderror
                         </div>
@@ -113,17 +112,16 @@
                         <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                     </p></div>
                 <div class="lg:w-2/3 sm:w-full">
+                    {{-- Nama Layanan --}}
                     <div class="my-6 w-full">
-                        <label class="form-label font-bold" for="Nama Layanan">
-                            Nama Layanan
-                        </label>
-                        <select wire:model="f_layanan" ref="input" class="form-select">
-                            <option value="" hidden selected>Pilih Jenis Layanan ...</option>
-                            @foreach ($services as $service)
-                                <option value="{{ $service->id .'-'. $service->metode }}">{{ $service->nama_layanan }}</option>
-                            @endforeach
-                        </select>
-
+                        @include('components.input.select-realtime', [
+                            'label'     => 'Nama Layanan',
+                            'model'     => 'f_layanan',
+                            'opt_title' => 'Pilih Jenis Layanan ...',
+                            'opt_item'  => $services,
+                            'value'     => null,
+                            'id'        => 'jenis_layanan'
+                        ])
                         <div
                             x-data="{ shown: false, timeout: null }"
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -133,8 +131,9 @@
                             @enderror
                         </div>
                     </div>
-                    @include('components.input.rating', ['model' => 'f_ratinglayanan'])
 
+                    {{-- Rating Layanan --}}
+                    @include('components.input.rating', ['model' => 'f_ratinglayanan'])
                     <div
                         x-data="{ shown: false, timeout: null }"
                         x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -154,16 +153,19 @@
                         <p class="mt-4 leading-6 text-base lg:pr-24">
                             Bagaimana penilaian anda terhadap petugas layanan di Pelayanan Statistik Terpadu
                             <b class="text-primary-500 font-bold">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
-                        </p></div>
+                        </p>
+                    </div>
                     <div class="lg:w-2/3 sm:w-full">
+                        {{-- Petugas Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.select', [
                                 'model'     => 'f_petugas',
                                 'label'     => 'Nama Petugas',
                                 'opt_title' => 'Pilih Petugas Layanan ...',
-                                'opt_item'  => $officers
+                                'opt_item'  => $officers,
+                                'id'        => 'petugas_layanan',
+                                'value'     => null
                             ])
-
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -173,8 +175,9 @@
                                 @enderror
                             </div>
                         </div>
-                        @include('components.input.rating', ['model' => 'f_ratingpetugas'])
 
+                        {{-- Rating Petugas --}}
+                        @include('components.input.rating', ['model' => 'f_ratingpetugas'])
                         <div
                             x-data="{ shown: false, timeout: null }"
                             x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -188,7 +191,7 @@
             @endif
 
             <hr>
-            <div class="p-6 flex flex-wrap">
+            <div wire:key="saran_pengaduan" class="p-6 flex flex-wrap">
                 <div class="lg:w-1/3">
                     <h1 class="text-2xl tracking-wide">Kotak Saran Pengaduan</h1>
                     <p class="mt-4 leading-6 text-base lg:pr-24">
