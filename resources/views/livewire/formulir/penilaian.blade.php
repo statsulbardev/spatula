@@ -7,7 +7,7 @@
 <div>
     @include('components.notification.flash')
 
-    <form wire:submit.prevent="storeData">
+    <form wire:submit.prevent="submitData">
         <div class="bg-white border-r border-t border-l border-gray-200 shadow-sm rounded-t-lg mt-4 py-4">
             <div class="py-10 px-12 text-center">
                 <h1 class="lg:text-4xl sm:text-2xl font-extrabold tracking-wider">Selamat Datang</h1>
@@ -147,7 +147,7 @@
 
             @if (isset($f_layanan) and explode('-', $f_layanan)[1] == 1)
                 <hr>
-                <div class="p-6 flex flex-wrap">
+                <div wire:key="petugas_layanan" class="p-6 flex flex-wrap">
                     <div class="lg:w-1/3 sm:w-full">
                         <h1 class="text-2xl tracking-wide">Penilaian Petugas</h1>
                         <p class="mt-4 leading-6 text-base lg:pr-24">
@@ -158,14 +158,15 @@
                     <div class="lg:w-2/3 sm:w-full">
                         {{-- Petugas Layanan --}}
                         <div class="my-6 w-full">
-                            @include('components.input.select', [
-                                'model'     => 'f_petugas',
-                                'label'     => 'Nama Petugas',
-                                'opt_title' => 'Pilih Petugas Layanan ...',
-                                'opt_item'  => $officers,
-                                'id'        => 'petugas_layanan',
-                                'value'     => null
-                            ])
+                            <div wire:ignore>
+                                <label class="form-label font-bold" for="nama_petugas">
+                                    Nama Petugas
+                                </label>
+                                <select wire:model.defer="{{ $f_petugas }}" ref="input" class="form-select border-neutral-300">
+                                    <option hidden selected>Pilih Petugas Layanan ...</option>
+                                    {!! $officers !!}
+                                </select>
+                            </div>
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -239,14 +240,11 @@
             });
         });
     </script>
-
-    @if (session()->has('messages'))
-        <script>
-            window.onload = function() {
-                window.dispatchEvent(new CustomEvent('notify', {
-                    detail: '{{ session("messages") }}'
-                }));
-            }
-        </script>
-    @endif
+    <script>
+        window.addEventListener('notification', event => {
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: event.detail.message
+            }));
+        })
+    </script>
 @endpush
