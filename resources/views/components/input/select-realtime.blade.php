@@ -13,8 +13,6 @@
 
 @push('scripts')
 <script>
-    te.Select
-        .getInstance(document.querySelector("#{{ $id }}"))
-        .setValue("{{ $value }}");
+    Select.getInstance(document.querySelector("#{{ $id }}")).setValue("{{ $value }}");
 </script>
 @endpush

@@ -48,6 +48,7 @@ class DaftarPengguna extends Component
 
         if ($authUser->hasRole('superadmin')) {
             $result = m_pengguna::search($this->searchKeyword)
+                        -> query(fn ($query) => $query->with(['satker', 'roles']))
                         -> orderBy('kode_satker_id', 'asc');
         } elseif ($authUser->hasRole('admin') || $authUser->hasRole('pimpinan')) {
             $result = m_pengguna::search($this->searchKeyword)

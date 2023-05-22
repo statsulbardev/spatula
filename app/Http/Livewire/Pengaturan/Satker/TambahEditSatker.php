@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Pengaturan\Satker;
 use App\Models\m_satker;
 use App\Traits\HasModelProcess;
 use App\Traits\HasRedirectUrl;
-use App\Traits\HasRenderOption;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
