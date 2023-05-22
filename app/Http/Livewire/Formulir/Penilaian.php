@@ -17,10 +17,7 @@ class Penilaian extends Component
 {
     use HasRenderOption;
 
-    // Master Data
-    public $units;
-    public $services;
-    public $officers;
+    public string $officers;
 
     // Form Data
     public $f_unit;
@@ -33,47 +30,41 @@ class Penilaian extends Component
     public $f_ratingpetugas;
     public $f_saranpengaduan;
 
+    // Computed Property : units
+    public function getUnitsProperty() : string
+    {
+        return
+            $this->renderOption(
+                m_satker::get(['kode_satker', 'nama'])
+                -> map(function($item) {
+                    return [
+                        0 => json_encode($item->kode_satker . '-' . $item->nama),
+                        1 => $item->nama
+                    ];
+                })
+                -> toArray()
+            );
+    }
+
+    // Computed Property : services
+    public function getServicesProperty() : string
+    {
+        return
+            $this->renderOption(
+                m_layanan::get(['kode_layanan', 'nama_layanan', 'metode'])
+                -> map(function($item) {
+                    return [
+                        0 => json_encode($item->kode_layanan . '-' . $item->metode),
+                        1 => $item->nama_layanan
+                    ];
+                })
+                -> toArray()
+            );
+    }
+
     public function render() : View
     {
         return view('livewire.formulir.penilaian')->layout('layouts.evaluation');
-    }
-
-    public function mount()
-    {
-        $this->units = $this->renderOption(
-                            m_satker::get(['kode_satker', 'nama'])
-                            -> map(function($item) {
-                                return [
-                                    0 => json_encode($item->kode_satker . '-' . $item->nama),
-                                    1 => $item->nama
-                                ];
-                            })
-                            -> toArray()
-                        );
-
-        $this->services = $this->renderOption(
-                            m_layanan::get(['kode_layanan', 'nama_layanan', 'metode'])
-                            -> map(function($item) {
-                                return [
-                                    0 => json_encode($item->kode_layanan . '-' . $item->metode),
-                                    1 => $item->nama_layanan
-                                ];
-                            })
-                            -> toArray()
-                          );
-
-        $this->officers = $this->renderOption(
-                            m_pengguna::role('operator')
-                                -> where('is_petugas', 1)
-                                -> get(['id', 'nama'])
-                                -> map(function($item) {
-                                    return [
-                                        0 => $item->id,
-                                        1 => $item->nama
-                                    ];
-                                })
-                                -> toArray()
-                          );
     }
 
     public function submitData()
@@ -101,16 +92,14 @@ class Penilaian extends Component
 
             DB::commit();
 
-            $message = "Terima kasih telah memberikan penilaian.";
+            $message = "Terima kasih telah memberikan penilaian..";
+
+            $this->dispatchBrowserEvent('notification', ['message' => $message]);
         } catch(Exception $error) {
             DB::rollBack();
 
             Log::alert($error->getMessage());
-
-            $message = "Penilaian anda gagal disimpan, mohon dicoba kembali.";
         }
-
-        $this->dispatchBrowserEvent('notification', ['message' => $message]);
 
         $this->resetExcept(['officers', 'services', 'units', 'message']);
     }
@@ -124,19 +113,20 @@ class Penilaian extends Component
 
     public function updatedFUnit()
     {
-        $this->officers = $this->renderOption(
-            m_pengguna::role('operator')
-                -> where('kode_satker_id', explode('-', $this->f_unit)[0])
-                -> where('is_petugas', 1)
-                -> get(['id', 'nama'])
-                -> map(function($item) {
-                    return [
-                        0 => $item->id,
-                        1 => $item->nama
-                    ];
-                })
-                -> toArray()
-          );
+        $this->officers =
+            $this->renderOption(
+                m_pengguna::query()
+                    -> where('kode_satker_id', explode('-', $this->f_unit)[0])
+                    -> where('is_petugas', 1)
+                    -> get(['id', 'nama'])
+                    -> map(function($item) {
+                        return [
+                            0 => $item->id,
+                            1 => $item->nama
+                        ];
+                    })
+                    -> toArray()
+            );
     }
 
     public function updatedFLayanan()
