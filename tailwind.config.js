@@ -4,7 +4,7 @@ module.exports = {
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
-        "./node_modules/tw-elements/dist/js/**/*.js",
+        // "./node_modules/tw-elements/dist/js/**/*.js",
     ],
     theme: {
         extend: {
@@ -56,6 +56,7 @@ module.exports = {
         textColor: ['responsive', 'hover', 'focus', 'group-hover'],
         zIndex: ['responsive', 'focus'],
     },
-    plugins: [require("tw-elements/dist/plugin.cjs")],
-    darkMode: 'class'
+    plugins: [],
+    // plugins: [require("tw-elements/dist/plugin.cjs")],
+    // darkMode: 'class'
 }

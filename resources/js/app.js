@@ -12,5 +12,5 @@ window.Alpine = Alpine
 Alpine.start()
 
 // Tailwind Elements
-import { Modal, Ripple, Select, initTE } from "tw-elements";
-initTE({ Modal, Ripple, Select });
+// import { Modal, Ripple, Select, initTE } from "tw-elements";
+// initTE({ Select, Modal, Ripple });
