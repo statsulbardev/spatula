@@ -25,13 +25,17 @@ class m_pengguna extends Authenticatable
         'username',
         'email',
         'password',
+        'remember_token',
         'bpsid',
         'foto',
         'kode_satker_id',
         'is_petugas'
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
 
     public function satker()
     {

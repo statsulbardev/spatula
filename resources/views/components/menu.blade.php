@@ -142,9 +142,6 @@
             <h1 class="hover:text-gray-200 cursor-pointer">
                 <a href="{{ url(env('APP_URL') . '/pengaturan/pengguna') }}">Pengguna</a>
             </h1>
-            <h1 class="hover:text-gray-200 cursor-pointer" x-bind:class="{ 'mt-2':$store.sidebar.full }">
-                <a href="{{ url(env('APP_URL') . '/pengaturan/petugas') }}">Petugas</a>
-            </h1>
             <h1 class="hover:text-gray-200 cursor-pointer">
                 <a href="{{ url(env('APP_URL') . '/pengaturan/satker') }}">Satuan Kerja</a>
             </h1>

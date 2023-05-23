@@ -12,9 +12,7 @@
                     <div class="lg:w-1/3">
                         <h1 class="text-2xl tracking-wide">Informasi Pengguna Aplikasi</h1>
                         <p class="mt-4 leading-6 text-base lg:pr-24">
-                            Pengguna backend aplikasi spatula adalah pegawai BPS sesuai dengan
-                            role/hak akses yang telah diberikan oleh administrator. Informasi
-                            pengguna dapat ditambah, diedit, atau dihapus.
+                            Pengguna aplikasi adalah pegawai BPS yang terlibat dalam kegiatan pelayanan publik.
                         </p>
                     </div>
                     <div class="lg:w-2/3">
@@ -22,14 +20,14 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Nama Lengkap Pegawai',
-                                'model' => 'pengguna.nama',
+                                'model' => 'f_nama',
                                 'type'  => 'text'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('pengguna.nama')
+                                @error('f_nama')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -39,7 +37,7 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label'     => 'Email',
-                                'model'     => 'pengguna.email',
+                                'model'     => 'f_email',
                                 'type'      => 'email',
                                 'label_opt' => 'Diutamakan Email BPS'
                             ])
@@ -47,7 +45,7 @@
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('pengguna.email')
+                                @error('f_email')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -74,24 +72,35 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'NIP BPS',
-                                'model' => 'pengguna.bpsid',
+                                'model' => 'f_nip',
                                 'type'  => 'number'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('pengguna.bpsid')
+                                @error('f_nip')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
-
+                    </div>
+                </div>
+                <hr>
+                <div class="p-6 flex flex-wrap">
+                    <div class="lg:w-1/3">
+                        <h1 class="text-2xl tracking-wide">Informasi Petugas Layanan</h1>
+                        <p class="mt-4 leading-6 text-base lg:pr-24">
+                            Petugas layanan adalah pegawai yang ditugaskan untuk melayani pengguna
+                            layanan pada unit Pelayanan Statistik Terpadu (PST).
+                        </p>
+                    </div>
+                    <div class="lg:w-2/3">
                         {{-- Petugas Layanan --}}
                         <div class="p-6 w-full">
                             @include('components.input.select', [
                                 'label'     => 'Petugas Layanan',
-                                'model'     => 'pengguna.is_petugas',
+                                'model'     => 'f_petugas',
                                 'opt_title' => 'Pilih Jenis Petugas ...',
                                 'opt_item'  => "<option value='0'>Bukan Petugas Layanan</option><option value='1'>Petugas Layanan</option>",
                                 'value'     => $routeName === 'tambah-pengguna' ? null : $pengguna->is_petugas,
@@ -101,7 +110,26 @@
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('pengguna.is_petugas')
+                                @error('f_petugas')
+                                    @include('components.notification.error')
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Role --}}
+                        <div class="p-6 w-full">
+                            @include('components.input.select-multiple', [
+                                'label'    => 'Role Petugas',
+                                'model'    => 'f_role',
+                                'opt_item' => $this->roles,
+                                'value'    => $routeName === 'tambah-pengguna' ? null : $selectedRole,
+                                'id'       => 'role'
+                            ])
+                            <div
+                                x-data="{ shown: false, timeout: null }"
+                                x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
+                                x-show.transition.opacity.out.duration.2000ms="shown">
+                                @error('f_role')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -111,9 +139,9 @@
                         <div class="p-6 w-full">
                             @include('components.input.select', [
                                 'label'     => 'Unit Kerja',
-                                'model'     => 'pengguna.kode_satker_id',
+                                'model'     => 'f_unit',
                                 'opt_title' => 'Pilih Unit Kerja ...',
-                                'opt_item'  => $units,
+                                'opt_item'  => $this->units,
                                 'value'     => $routeName === 'tambah-pengguna' ? null : $pengguna->kode_satker_id,
                                 'id'        => 'unit'
                             ])
@@ -121,7 +149,7 @@
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('pengguna.kode_satker_id')
+                                @error('f_unit')
                                     @include('components.notification.error')
                                 @enderror
                             </div>

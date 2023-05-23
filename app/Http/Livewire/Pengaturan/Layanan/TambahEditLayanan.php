@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Pengaturan\Layanan;
 
+use App\Http\Requests\StoreServiceRequest;
 use App\Models\m_layanan;
-use App\Traits\HasModelProcess;
+use App\Repositories\ServiceRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
@@ -11,10 +12,22 @@ use Livewire\Component;
 
 class TambahEditLayanan extends Component
 {
-    use HasModelProcess, HasRedirectUrl;
+    use HasRedirectUrl;
 
     public m_layanan $layanan;
     public string $routeName;
+    protected StoreServiceRequest $ruleValidation;
+
+    // Form Data
+    public $f_kode;
+    public $f_nama;
+    public $f_deskripsi;
+    public $f_metode;
+
+    public function boot()
+    {
+        $this->ruleValidation = new StoreServiceRequest();
+    }
 
     public function render() : View
     {
@@ -24,46 +37,39 @@ class TambahEditLayanan extends Component
 
     public function mount(m_layanan $layanan)
     {
-        $this->layanan   = new m_layanan();
         $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'edit-layanan') $this->layanan = $layanan;
+        if ($this->routeName === 'edit-layanan') {
+            $this->layanan     = $layanan;
+            $this->f_kode      = $layanan->kode_layanan;
+            $this->f_nama      = $layanan->nama_layanan;
+            $this->f_deskripsi = $layanan->deskripsi;
+            $this->f_metode    = $layanan->metode;
+        }
     }
 
-    public function submitData()
+    public function submitData(ServiceRepository $serviceRepository)
     {
         $this->emit('saved');
 
         $this->validate();
 
-        $result = $this->save($this->layanan);
+        $result = $this->routeName === 'tambah-layanan'
+                ? $serviceRepository->save($this)
+                : $serviceRepository->update($this);
 
         session()->flash('messages', $result);
 
         $this->callbackUrl('/pengaturan/layanan');
     }
 
-    /**
-     * Dynamic rules for validation
-     * https://laravel-livewire.com/docs/2.x/input-validation
-     * @return string[]
-     */
     protected function rules() : array
     {
-        return [
-            'layanan.kode_layanan' => 'required|unique:m_layanan,kode_layanan,' . $this->layanan->id,
-            'layanan.nama_layanan' => 'required|min:5',
-            'layanan.metode'       => 'required',
-            'layanan.deskripsi'    => 'nullable|min:5'
-        ];
+        return ($this->ruleValidation)->rules();
     }
 
-    protected $messages = [
-        'layanan.kode_layanan.required' => 'Kode layanan tidak boleh kosong',
-        'layanan.kode_layanan.unique'   => 'Kode layanan sudah digunakan sebelumnya',
-        'layanan.nama_layanan.required' => 'Nama layanan tidak boleh kosong',
-        'layanan.nama_layanan.min'      => 'Nama layanan minimum 5 karakter',
-        'layanan.metode.required'       => 'Metode layanan harus terisi',
-        'layanan.deskripsi.min'         => 'Deskripsi layanan minimal 5 karakter'
-    ];
+    protected function messages() : array
+    {
+        return ($this->ruleValidation)->messages();
+    }
 }

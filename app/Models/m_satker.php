@@ -16,11 +16,11 @@ class m_satker extends Model
      */
     protected $table = 'm_satker';
 
-    /**
-     * Atribut yang diperlukan untuk mass assignment.
-     *
-     * @var array
-     */
+    // /**
+    //  * Atribut yang diperlukan untuk mass assignment.
+    //  *
+    //  * @var array
+    //  */
     protected $fillable = [
         'kode_satker',
         'nama',

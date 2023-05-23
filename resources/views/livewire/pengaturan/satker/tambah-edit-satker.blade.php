@@ -21,14 +21,14 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Kode',
-                                'model' => 'satker.kode_satker',
+                                'model' => 'f_kode',
                                 'type'  => 'number'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('satker.kode_satker')
+                                @error('f_kode')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -38,14 +38,14 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Nama',
-                                'model' => 'satker.nama',
+                                'model' => 'f_nama',
                                 'type'  => 'text'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('satker.nama')
+                                @error('f_nama')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -55,15 +55,17 @@
                         <div class="p-6 w-full">
                             @include('components.input.select', [
                                 'label'     => 'Level',
-                                'model'     => 'satker.level',
+                                'model'     => 'f_level',
                                 'opt_title' => 'Pilih Level Satker ...',
-                                'opt_item'  => "<option value='1'>Provinsi</option><option value='2'>Kabupaten</option>"
+                                'opt_item'  => "<option value='1'>Provinsi</option><option value='2'>Kabupaten</option>",
+                                'id'        => 'level',
+                                'value'     => $routeName === 'tambah-satker' ? null : $this->f_level
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('satker.level')
+                                @error('f_level')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -73,14 +75,14 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Alamat',
-                                'model' => 'satker.alamat',
+                                'model' => 'f_alamat',
                                 'type'  => 'text'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('satker.alamat')
+                                @error('f_alamat')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -90,14 +92,14 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Website',
-                                'model' => 'satker.web',
+                                'model' => 'f_web',
                                 'type'  => 'text'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('satker.web')
+                                @error('f_web')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -107,14 +109,14 @@
                         <div class="p-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Telepon',
-                                'model' => 'satker.telepon',
+                                'model' => 'f_telepon',
                                 'type'  => 'numeric'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('satker.telepon')
+                                @error('f_telepon')
                                     @include('components.notification.error')
                                 @enderror
                             </div>

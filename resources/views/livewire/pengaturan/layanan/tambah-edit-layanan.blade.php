@@ -21,14 +21,14 @@
                         <div class="my-6 w-full">
                             @include('components.input.text', [
                                 'label' => 'Kode Layanan',
-                                'model' => 'layanan.kode_layanan',
+                                'model' => 'f_kode',
                                 'type'  => 'text'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('layanan.kode_layanan')
+                                @error('f_kode')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -37,15 +37,15 @@
                         {{-- Nama Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.text', [
-                                'model' => 'layanan.nama_layanan',
                                 'label' => 'Nama Layanan',
+                                'model' => 'f_nama',
                                 'type'  => 'text'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('layanan.nama_layanan')
+                                @error('f_nama')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -54,16 +54,18 @@
                         {{-- Metode Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.select', [
-                                'model'     => 'layanan.metode',
                                 'label'     => 'Metode Layanan',
+                                'model'     => 'f_metode',
                                 'opt_title' => 'Pilih Metode Layanan ...',
-                                'opt_item'  => "<option value='1'>Luring (offline)</option><option value='2'>Daring (online)</option>"
+                                'opt_item'  => "<option value='1'>Luring (offline)</option><option value='2'>Daring (online)</option>",
+                                'id'        => 'metode',
+                                'value'     => $routeName === 'tambah-layanan' ? null : $this->f_metode
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('layanan.metode')
+                                @error('f_metode')
                                     @include('components.notification.error')
                                 @enderror
                             </div>
@@ -72,14 +74,14 @@
                         {{-- Deskripsi Layanan --}}
                         <div class="my-6 w-full">
                             @include('components.input.text-area', [
-                                'model' => 'layanan.deskripsi',
+                                'model' => 'f_deskripsi',
                                 'label' => 'Deskripsi Layanan'
                             ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => {clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false}, 5000); })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('layanan.deskripsi')
+                                @error('f_deskripsi')
                                     @include('components.notification.error')
                                 @enderror
                             </div>

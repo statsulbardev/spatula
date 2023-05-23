@@ -24,6 +24,7 @@ class CreateMPenggunaTable extends Migration
             $table->char('kode_satker_id')->unique();
             $table->bigInteger('role_id');
             $table->tinyInteger('is_petugas');
+            $table->string('remember_token', 100);
             $table->timestamps();
         });
     }

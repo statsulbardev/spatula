@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Pengaturan\Pengguna;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\m_pengguna;
-use App\Models\m_satker;
-use App\Traits\HasModelProcess;
+use App\Repositories\UserRepository;
 use App\Traits\HasRedirectUrl;
 use App\Traits\HasRenderOption;
 use Illuminate\Support\Facades\Route;
@@ -13,12 +13,38 @@ use Livewire\Component;
 
 class TambahEditPengguna extends Component
 {
-    use HasModelProcess, HasRedirectUrl, HasRenderOption;
+    use HasRedirectUrl, HasRenderOption;
 
     public m_pengguna $pengguna;
     public string $routeName;
-    public string $units;
-    public string $f_password;
+    public string $selectedRole;
+    protected StoreUserRequest $ruleValidation;
+
+    // Form Data
+    public $f_nama;
+    public $f_email;
+    public $f_password;
+    public $f_nip;
+    public $f_petugas;
+    public $f_role;
+    public $f_unit;
+
+    // Computed Properties : units
+    public function getUnitsProperty(UserRepository $userRepository) : string
+    {
+        return $this->renderOption($userRepository->retrieveUnits());
+    }
+
+    // Computed Property : role
+    public function getRolesProperty(UserRepository $userRepository) : string
+    {
+        return $this->renderOption($userRepository->retrieveRoles());
+    }
+
+    public function boot()
+    {
+        $this->ruleValidation = new StoreUserRequest();
+    }
 
     public function render() : View
     {
@@ -28,50 +54,29 @@ class TambahEditPengguna extends Component
 
     public function mount(m_pengguna $pengguna)
     {
-        $this->pengguna  = new m_pengguna();
-        $this->routeName = Route::currentRouteName();
-        $this->units     = $this->renderOption(
-                                m_satker::get(['kode_satker', 'nama'])
-                                -> map(function($item) { return [0 => $item->kode_satker, 1 => $item->nama];})
-                                -> toArray()
-                            );
+        $this->routeName    = Route::currentRouteName();
 
-        if ($this->routeName === 'edit-pengguna') $this->pengguna = $pengguna;
+        if ($this->routeName === 'edit-pengguna') {
+            $this->pengguna     = $pengguna;
+            $this->f_nama       = $pengguna->nama;
+            $this->f_email      = $pengguna->email;
+            $this->f_nip        = $pengguna->bpsid;
+            $this->f_petugas    = $pengguna->is_petugas;
+            $this->f_role       = $this->rolesToArray();
+            $this->f_unit       = $pengguna->kode_satker_id;
+            $this->selectedRole = json_encode($this->rolesToArray());
+        }
     }
 
-    public function submitData()
+    public function submitData(UserRepository $userRepository)
     {
         $this->emit('saved');
 
         $this->validate();
 
         $result = $this->routeName === 'tambah-pengguna'
-                    ? $this->massAssignment(
-                            $this->pengguna,
-                            [
-                                'nama'           => $this->pengguna->nama,
-                                'username'       => explode('@', $this->pengguna->email)[0],
-                                'email'          => $this->pengguna->email,
-                                'password'       => bcrypt($this->f_password),
-                                'bpsid'          => $this->pengguna->bpsid,
-                                'kode_satker_id' => $this->pengguna->kode_satker_id,
-                                'is_petugas'     => $this->pengguna->is_petugas
-                            ],
-                            'tambah'
-                        )
-                    : $this->massAssignment(
-                        $this->pengguna,
-                        [
-                            'nama'           => $this->pengguna->nama,
-                            'username'       => explode('@', $this->pengguna->email)[0],
-                            'email'          => $this->pengguna->email,
-                            'password'       => empty($this->f_password) ? $this->pengguna->getOriginal('password') : bcrypt($this->f_password),
-                            'bpsid'          => $this->pengguna->bpsid,
-                            'kode_satker_id' => $this->pengguna->kode_satker_id,
-                            'is_petugas'     => $this->pengguna->is_petugas
-                        ],
-                        'edit'
-                    );
+                ? $userRepository->save($this)
+                : $userRepository->update($this);
 
         session()->flash('messages', $result);
 
@@ -80,32 +85,24 @@ class TambahEditPengguna extends Component
 
     protected function rules() : array
     {
-        $password = $this->routeName === 'tambah-pengguna'
-                    ? 'required|min:8'
-                    : 'nullable|min:8';
-
-        return [
-            'pengguna.nama'           => 'required|min:3|max:100',
-            'pengguna.email'          => 'required|email:rfc|unique:m_pengguna,email,' . $this->pengguna->id,
-            'pengguna.bpsid'          => 'required|digits:9',
-            'pengguna.kode_satker_id' => 'required',
-            'pengguna.is_petugas'     => 'required',
-            'f_password'              => $password
-        ];
+        return ($this->ruleValidation)->rules();
     }
 
-    protected $messages = [
-        'pengguna.nama.required'           => 'Nama pengguna tidak boleh kosong',
-        'pengguna.nama.min'                => 'Nama pengguna minimal 3 karakter dan maksimal 100 karakter',
-        'pengguna.nama.max'                => 'Nama pengguna minimal 3 karakter dan maksimal 100 karakter',
-        'pengguna.email.required'          => 'Email tidak boleh kosong',
-        'pengguna.email.email'             => 'Format email tidak benar',
-        'pengguna.email.unique'            => 'Email yang diiskan sudah pernah terdaftar',
-        'pengguna.bpsid.required'          => 'NIP BPS tidak boleh kosong',
-        'pengguna.bpsid.digits'            => 'NIP BPS harus terdiri dari 9 nomor',
-        'pengguna.kode_satker_id.required' => 'Unit kerja harus terpilih salah satu',
-        'pengguna.is_petugas.required'     => 'Jenis petugas harus terpilih salah satu',
-        'f_password.required'              => 'Password tidak boleh kosong',
-        'f_password.min'                   => 'Password minimal 8 karakter'
-    ];
+    protected function messages() : array
+    {
+        return ($this->ruleValidation)->messages();
+    }
+
+    private function rolesToArray() : array
+    {
+        return
+            array_column(
+                $this->pengguna->roles
+                    -> map(function($item) {
+                        return ['name' => $item->name];
+                    })
+                -> toArray(),
+                'name'
+            );
+    }
 }

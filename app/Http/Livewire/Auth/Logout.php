@@ -11,7 +11,7 @@ class Logout extends Component
     {
         Auth::logout();
 
-        return redirect()->intended(env('APP_URL'));
+        return redirect()->intended(env('APP_URL') . '/penilaian');
     }
 
     public function render()
