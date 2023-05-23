@@ -2,9 +2,9 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 21, 2023 at 11:56 PM
--- Server version: 10.4.28-MariaDB
+-- Host: localhost:3306
+-- Generation Time: May 23, 2023 at 07:40 AM
+-- Server version: 8.0.30
 -- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,25 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `d_penilaian` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `nama_konsumen` varchar(40) NOT NULL,
-  `email_konsumen` varchar(40) DEFAULT NULL,
-  `no_wa_telepon` varchar(15) DEFAULT NULL,
-  `kode_petugas` bigint(20) DEFAULT NULL,
-  `rating_petugas` char(1) DEFAULT NULL,
-  `kode_layanan` bigint(20) DEFAULT NULL,
-  `rating_layanan` char(1) DEFAULT NULL,
-  `kode_saran` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `is_pengaduan` tinyint(4) DEFAULT NULL,
-  `saran_pengaduan` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `nama_konsumen` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_konsumen` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_wa_telepon` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_petugas` bigint DEFAULT NULL,
+  `rating_petugas` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_layanan` bigint DEFAULT NULL,
+  `rating_layanan` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_saran` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `is_pengaduan` tinyint DEFAULT NULL,
+  `saran_pengaduan` text COLLATE utf8mb4_unicode_ci,
   `tanggal_notifikasi` datetime DEFAULT NULL,
   `tanggal_kategorisasi` datetime DEFAULT NULL,
   `tanggal_tl_pj_layanan` datetime DEFAULT NULL,
-  `text_pj_layanan` text DEFAULT NULL,
+  `text_pj_layanan` text COLLATE utf8mb4_unicode_ci,
   `tanggal_tl_pj_pengaduan` datetime DEFAULT NULL,
-  `text_pj_pengaduan` text DEFAULT NULL,
-  `kode_satker_id` char(4) NOT NULL,
-  `selesai` tinyint(4) NOT NULL,
+  `text_pj_pengaduan` text COLLATE utf8mb4_unicode_ci,
+  `kode_satker_id` char(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `selesai` tinyint NOT NULL,
   `tanggal_selesai` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -268,7 +268,12 @@ INSERT INTO `d_penilaian` (`id`, `nama_konsumen`, `email_konsumen`, `no_wa_telep
 (210, 'Fadlurrahman', 'fadlurrahman080@gmail.com', '082188927750', NULL, NULL, 7, '5', '[4]', 0, 'Pelayanan baik', NULL, '2023-03-28 14:49:55', NULL, NULL, NULL, NULL, '7600', 1, '2023-03-28 14:50:32', '2023-03-20 09:51:49', '2023-03-28 07:50:32'),
 (213, 'Bagas Raditya Nanggala', 'bagasraditya36@gmail.com', '08982945566', NULL, NULL, 10, '4', '[9]', 0, 'Respon pelayanan cukup baik', NULL, '2023-04-19 05:12:59', NULL, NULL, NULL, NULL, '7600', 1, '2023-04-19 05:16:17', '2023-04-05 05:53:57', '2023-04-18 21:16:17'),
 (215, 'Sulastri Yasim', 'lastriyasim@gmail.com', '085299366967', NULL, NULL, 10, '5', '[1,2]', 1, 'Pelayanannya cepat dan santun. 👍', NULL, '2023-04-19 04:58:52', NULL, NULL, NULL, NULL, '7600', 1, '2023-04-19 05:16:51', '2023-04-10 05:49:22', '2023-04-18 21:16:51'),
-(216, 'Sulastri Yasim', 'lastriyasim@gmail.com', '085299366967', NULL, NULL, 10, '5', '[1]', 0, 'Pelayanannya cepat dan santun. 👍', NULL, '2023-04-19 05:02:22', NULL, NULL, NULL, NULL, '7600', 1, '2023-05-18 07:17:41', '2023-04-10 05:49:25', '2023-05-17 23:17:41');
+(216, 'Sulastri Yasim', 'lastriyasim@gmail.com', '085299366967', NULL, NULL, 10, '5', '[1]', 0, 'Pelayanannya cepat dan santun. 👍', NULL, '2023-04-19 05:02:22', NULL, NULL, NULL, NULL, '7600', 1, '2023-05-18 07:17:41', '2023-04-10 05:49:25', '2023-05-17 23:17:41'),
+(297, 'Ipulmisaja', 'ipulmisaja@gmail.com', '081342357732', NULL, '4', 2, '4', NULL, NULL, '<div>Lorem Ipsum Dolor Sit Ame</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-05-21 23:30:28', '2023-05-21 23:30:28'),
+(298, 'Adiva Asmarini', 'adiva@gmail.com', '081342337732', NULL, '4', 2, '4', NULL, NULL, '<div>Lorem Ipsum Dolor Sit Ame</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-05-21 23:36:34', '2023-05-21 23:36:34'),
+(299, 'Alfionita', 'alfi@gmail.com', '081233422343', NULL, '5', 3, '5', NULL, NULL, '<div>Bagus perpustakaannya, bisala</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-05-21 23:41:01', '2023-05-21 23:41:01'),
+(300, 'Alfionita', 'alfi@gmail.com', '081233422343', NULL, '4', 2, '4', NULL, NULL, '<div>asdkjhl alkjsldjla slkjdas</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-05-21 23:42:46', '2023-05-21 23:42:46'),
+(303, 'Adiva Asmarini', 'adiva@gmail.com', '081342337732', NULL, '5', 3, '5', NULL, NULL, '<div>Lorem ipsum dolor sit ame</div>', NULL, NULL, NULL, NULL, NULL, NULL, '7600', 0, NULL, '2023-05-22 16:49:47', '2023-05-22 16:49:47');
 
 -- --------------------------------------------------------
 
@@ -277,12 +282,12 @@ INSERT INTO `d_penilaian` (`id`, `nama_konsumen`, `email_konsumen`, `no_wa_telep
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` bigint UNSIGNED NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -292,9 +297,9 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -319,9 +324,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `model_has_permissions` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(191) NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -331,9 +336,9 @@ CREATE TABLE `model_has_permissions` (
 --
 
 CREATE TABLE `model_has_roles` (
-  `role_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(191) NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL
+  `role_id` bigint UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -342,29 +347,25 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\m_pengguna', 1),
-(2, 'App\\Models\\m_pengguna', 3),
-(2, 'App\\Models\\m_pengguna', 15),
-(2, 'App\\Models\\m_pengguna', 18),
+(4, 'App\\Models\\m_pengguna', 3),
+(5, 'App\\Models\\m_pengguna', 3),
+(4, 'App\\Models\\m_pengguna', 4),
+(5, 'App\\Models\\m_pengguna', 4),
+(4, 'App\\Models\\m_pengguna', 5),
 (3, 'App\\Models\\m_pengguna', 6),
 (3, 'App\\Models\\m_pengguna', 7),
-(3, 'App\\Models\\m_pengguna', 9),
-(3, 'App\\Models\\m_pengguna', 14),
-(4, 'App\\Models\\m_pengguna', 3),
-(4, 'App\\Models\\m_pengguna', 4),
-(4, 'App\\Models\\m_pengguna', 5),
-(5, 'App\\Models\\m_pengguna', 2),
-(5, 'App\\Models\\m_pengguna', 4),
 (5, 'App\\Models\\m_pengguna', 8),
+(3, 'App\\Models\\m_pengguna', 9),
 (5, 'App\\Models\\m_pengguna', 10),
-(5, 'App\\Models\\m_pengguna', 18),
-(5, 'App\\Models\\m_pengguna', 38),
-(6, 'App\\Models\\m_pengguna', 2),
 (6, 'App\\Models\\m_pengguna', 11),
 (6, 'App\\Models\\m_pengguna', 12),
-(6, 'App\\Models\\m_pengguna', 13),
-(7, 'App\\Models\\m_pengguna', 2),
+(3, 'App\\Models\\m_pengguna', 14),
+(2, 'App\\Models\\m_pengguna', 15),
+(4, 'App\\Models\\m_pengguna', 16),
 (7, 'App\\Models\\m_pengguna', 16),
 (7, 'App\\Models\\m_pengguna', 17),
+(2, 'App\\Models\\m_pengguna', 18),
+(5, 'App\\Models\\m_pengguna', 18),
 (7, 'App\\Models\\m_pengguna', 36),
 (7, 'App\\Models\\m_pengguna', 39);
 
@@ -375,9 +376,9 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `m_akses` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kode_akses` int(11) NOT NULL,
-  `nama_akses` varchar(30) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `kode_akses` int NOT NULL,
+  `nama_akses` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -402,11 +403,11 @@ INSERT INTO `m_akses` (`id`, `kode_akses`, `nama_akses`, `created_at`, `updated_
 --
 
 CREATE TABLE `m_layanan` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kode_layanan` char(2) NOT NULL,
-  `nama_layanan` varchar(100) NOT NULL,
-  `deskripsi` varchar(255) DEFAULT NULL,
-  `metode` char(1) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `kode_layanan` char(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_layanan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metode` char(1) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -437,15 +438,16 @@ INSERT INTO `m_layanan` (`id`, `kode_layanan`, `nama_layanan`, `deskripsi`, `met
 --
 
 CREATE TABLE `m_pengguna` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `email` varchar(30) NOT NULL,
-  `password` varchar(191) NOT NULL,
-  `bpsid` varchar(9) DEFAULT NULL,
-  `foto` varchar(191) DEFAULT NULL,
-  `kode_satker_id` char(4) NOT NULL,
-  `is_petugas` tinyint(4) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `nama` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bpsid` varchar(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_satker_id` char(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_petugas` tinyint NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -454,27 +456,23 @@ CREATE TABLE `m_pengguna` (
 -- Dumping data for table `m_pengguna`
 --
 
-INSERT INTO `m_pengguna` (`id`, `nama`, `username`, `email`, `password`, `bpsid`, `foto`, `kode_satker_id`, `is_petugas`, `created_at`, `updated_at`) VALUES
-(1, 'Admin Spatula', 'spatula.admin', 'spatula.admin@mail.com', '$2y$10$RyHhppWr.Vb3UQ5l3L5RrO.nZqtBtU6ldGAHuJyNJY5hojI1u.1e.', NULL, NULL, '7600', 0, '2020-06-11 21:36:16', '2020-06-24 08:37:24'),
-(2, 'Irnanda Mas Putri', 'irnanda.mas', 'irnanda.mas@bps.go.id', '$2y$10$uFwqQHLDlGChg82GM4IuCekclA3AJqinGgF2vOeor0M3gdDvXMf/.', '340058302', NULL, '7600', 0, '2020-06-11 21:36:16', '2023-04-18 17:22:35'),
-(3, 'Misnawati Mansur', 'misna', 'misna@bps.go.id', '$2y$10$pT5debeiHp6kPD8EIeUss.jsiUa42UE3Oe2wW6QZji0NZSBfjVm8G', '340054318', NULL, '7600', 1, '2020-06-17 09:25:07', '2020-07-06 07:13:05'),
-(4, 'Syaifur Rijal', 'syaifur.rijal', 'syaifur.rijal@bps.go.id', '$2y$10$r4FYcGJNfDyhJdUMtIpg1eceqy9BWMwXqjc6Q8ZZOOwlTWI/jB5Da', '340056465', NULL, '7600', 1, '2020-06-19 13:17:11', '2023-04-18 17:32:33'),
-(5, 'Andra Citta P', 'andra', 'andra.citta@bps.go.id', '$2y$10$5bmVzFkjTIi/sPrSKXbzHOxoUqDi.GvuclTbd1WrXMo6zoTgZL3ca', '340012435', NULL, '7600', 1, '2020-06-19 13:40:17', '2020-06-19 13:40:17'),
-(6, 'Sri Andriyani', 'sri.baso', 'sri.baso@bps.go.id', '$2y$10$rGT7neLL83WLbYu1PBlP6.kg.rjt/ZOvspvaGVVcNarezTWSG7PFe', NULL, NULL, '7600', 0, '2020-07-01 06:36:33', '2023-04-18 17:32:42'),
-(7, 'Prayitno', 'prayitno', 'prayitno@bps.go.id', '$2y$10$MF2pYo8GlwzGrasWdoZYFOa1K0R8uLIaC/Dj/oV40nyJ2ZWRdrvOu', '340013008', NULL, '7600', 0, '2020-07-06 06:59:23', '2020-10-08 02:08:57'),
-(8, 'Abdul Syukur', 'Syukur', 'syukur@bps.go.id', '$2y$10$sjpwVHCi9UM7/bOZ/kPUl.sXlzKT1RRfMHQYZw3OODSzc9QBqrAmy', '340014270', NULL, '7600', 1, '2020-07-06 08:56:03', '2020-07-06 08:56:03'),
-(9, 'Sundari Budiani', 'sundari.budiani', 'sundari.budiani@bps.go.id', '$2y$10$pg.WhgAoEXk96vKm5I2E/uHPp/fn7n4d1eww8FQeA.zRcjU7xojMe', '340017872', NULL, '7603', 0, '2020-07-06 13:45:58', '2020-10-08 02:08:45'),
-(10, 'Nurwahida', 'nurwahida', 'nurwahida@bps.go.id', '$2y$10$KFAal5WLkRK84p/yI7hK3eUoG4GEA3.6U2h6anHLkN.Y1kd9vFPaC', '340057533', NULL, '7600', 1, '2020-07-06 13:47:00', '2020-10-08 02:08:34'),
-(11, 'Sri Mulyani', 'muyani', 'muyani@bps.go.id', '$2y$10$gRqQizVvDIX8c0cAtafNaeSMeqPC4yf3uxFa28oNpDIIp85rahJcu', '340017366', NULL, '7600', 1, '2020-07-06 13:50:11', '2020-10-08 02:08:14'),
-(12, 'Saiyed Andi Bangsawan', 'bangsawan', 'bangsawan@bps.go.id', '$2y$10$EErPouadXcWfzOwyI8PbUeIoHAdYF40J5ob972dc1UzaDGPSkWTPW', '340018954', NULL, '7600', 1, '2020-07-06 13:51:36', '2020-10-08 02:07:50'),
-(13, 'Sri Prasetyaningsih', 'sripras', 'sripras@bps.go.id', '$2y$10$N/KGM0Gb0cxdgOTt3elvyevxokd7Sq/Yz6IwjBfxCuCbUl3h9z1IC', '340054128', NULL, '7600', 1, '2020-07-06 13:52:31', '2020-10-08 02:08:01'),
-(15, 'Mohammad Jufri', 'jufri', 'jufri@bps.go.id', '$2y$10$PTPZL9hUBsyX5e/6e0uUXObiQO7TYk6D4xcWbf/JvvYFIK.GlKZE.', '340000000', NULL, '7602', 1, '2020-11-09 04:19:10', '2020-11-09 04:31:32'),
-(16, 'Yenni Kurnia', 'yenni.kurnia', 'yenni.kurnia@bps.go.id', '$2y$10$fKdlyPs2O8ulImWBfOfebOH4d4qAYeZi3WxYFirK.3zqRvp2GO8mS', '199999999', NULL, '7600', 1, '2021-06-25 08:34:40', '2023-04-30 17:50:31'),
-(17, 'Dea Aditya', 'Dea Aditya', 'dea.aditya@bps.go.id', '$2y$10$jST/wOO2qkDJNkUi5pWrXeeMqRWRyh/po6N1TPcf6EwqXOFUVu5Fe', '199706022', NULL, '7605', 1, '2022-07-19 03:17:18', '2023-04-30 17:50:19'),
-(18, 'Anggoro Rahmadi', 'anggoro.rahmadi', 'anggoro.rahmadi@bps.go.id', '$2y$10$N4jX9lSymuqNTbFy2OB7eO7z.yk4zMOL4U3jQJK0QFv6N0v2VdJXS', '199403222', NULL, '7603', 1, '2023-04-06 02:07:36', '2023-04-06 02:07:36'),
-(37, 'Ipulmisaja', 'ipulmisaja', 'ipulmisaja@bps.go.id', '$2y$10$faCsgFpwf76T77qLJDMInuAdxqAf0dgDq7C0YQG8rRkvu/yY5MkPm', '340056555', NULL, '7600', 0, '2023-05-19 06:13:19', '2023-05-20 19:02:28'),
-(38, 'Pratiwi Bahar', 'pratiwi', 'pratiwi@bps.go.id', '$2y$10$msD3wboHPxMkuYEi7jQOvueXcOBd9NzkKB1BnPS56FcRScQ4rSvWm', '340067564', NULL, '7600', 1, '2023-05-19 18:20:57', '2023-05-20 19:03:29'),
-(39, 'Reski Tanawali', 'reski', 'reski@bps.go.id', '$2y$10$gW1FIa663t.8AOyqzPC75O6jfsvo1xT7SLFVNLcas2EvuCxFtsfwy', '340055333', NULL, '7601', 1, '2023-05-19 18:33:29', '2023-05-19 18:37:42');
+INSERT INTO `m_pengguna` (`id`, `nama`, `username`, `email`, `password`, `bpsid`, `foto`, `kode_satker_id`, `is_petugas`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin Spatula', 'spatula.admin', 'spatula.admin@mail.com', '$2y$10$RyHhppWr.Vb3UQ5l3L5RrO.nZqtBtU6ldGAHuJyNJY5hojI1u.1e.', NULL, NULL, '7600', 0, NULL, '2020-06-11 21:36:16', '2020-06-24 08:37:24'),
+(3, 'Misnawati Mansur', 'misna', 'misna@bps.go.id', '$2y$10$pT5debeiHp6kPD8EIeUss.jsiUa42UE3Oe2wW6QZji0NZSBfjVm8G', '340054318', NULL, '7600', 1, NULL, '2020-06-17 09:25:07', '2020-07-06 07:13:05'),
+(4, 'Syaifur Rijal', 'syaifur.rijal', 'syaifur.rijal@bps.go.id', '$2y$10$r4FYcGJNfDyhJdUMtIpg1eceqy9BWMwXqjc6Q8ZZOOwlTWI/jB5Da', '340056465', NULL, '7600', 1, NULL, '2020-06-19 13:17:11', '2023-04-18 17:32:33'),
+(5, 'Andra Citta P', 'andra', 'andra.citta@bps.go.id', '$2y$10$5bmVzFkjTIi/sPrSKXbzHOxoUqDi.GvuclTbd1WrXMo6zoTgZL3ca', '340012435', NULL, '7600', 1, NULL, '2020-06-19 13:40:17', '2020-06-19 13:40:17'),
+(6, 'Sri Andriyani', 'sri.baso', 'sri.baso@bps.go.id', '$2y$10$rGT7neLL83WLbYu1PBlP6.kg.rjt/ZOvspvaGVVcNarezTWSG7PFe', NULL, NULL, '7600', 0, NULL, '2020-07-01 06:36:33', '2023-04-18 17:32:42'),
+(7, 'Prayitno', 'prayitno', 'prayitno@bps.go.id', '$2y$10$MF2pYo8GlwzGrasWdoZYFOa1K0R8uLIaC/Dj/oV40nyJ2ZWRdrvOu', '340013008', NULL, '7600', 0, NULL, '2020-07-06 06:59:23', '2020-10-08 02:08:57'),
+(8, 'Abdul Syukur', 'Syukur', 'syukur@bps.go.id', '$2y$10$sjpwVHCi9UM7/bOZ/kPUl.sXlzKT1RRfMHQYZw3OODSzc9QBqrAmy', '340014270', NULL, '7600', 1, NULL, '2020-07-06 08:56:03', '2020-07-06 08:56:03'),
+(9, 'Sundari Budiani', 'sundari.budiani', 'sundari.budiani@bps.go.id', '$2y$10$pg.WhgAoEXk96vKm5I2E/uHPp/fn7n4d1eww8FQeA.zRcjU7xojMe', '340017872', NULL, '7603', 0, NULL, '2020-07-06 13:45:58', '2020-10-08 02:08:45'),
+(10, 'Nurwahida', 'nurwahida', 'nurwahida@bps.go.id', '$2y$10$KFAal5WLkRK84p/yI7hK3eUoG4GEA3.6U2h6anHLkN.Y1kd9vFPaC', '340057533', NULL, '7600', 1, NULL, '2020-07-06 13:47:00', '2020-10-08 02:08:34'),
+(11, 'Sri Mulyani', 'muyani', 'muyani@bps.go.id', '$2y$10$gRqQizVvDIX8c0cAtafNaeSMeqPC4yf3uxFa28oNpDIIp85rahJcu', '340017366', NULL, '7600', 1, NULL, '2020-07-06 13:50:11', '2020-10-08 02:08:14'),
+(12, 'Saiyed Andi Bangsawan', 'bangsawan', 'bangsawan@bps.go.id', '$2y$10$EErPouadXcWfzOwyI8PbUeIoHAdYF40J5ob972dc1UzaDGPSkWTPW', '340018954', NULL, '7600', 1, NULL, '2020-07-06 13:51:36', '2020-10-08 02:07:50'),
+(15, 'Mohammad Jufri', 'jufri', 'jufri@bps.go.id', '$2y$10$PTPZL9hUBsyX5e/6e0uUXObiQO7TYk6D4xcWbf/JvvYFIK.GlKZE.', '340000000', NULL, '7602', 1, NULL, '2020-11-09 04:19:10', '2020-11-09 04:31:32'),
+(16, 'Yenni Kurnia', 'yenni.kurnia', 'yenni.kurnia@bps.go.id', '$2y$10$fKdlyPs2O8ulImWBfOfebOH4d4qAYeZi3WxYFirK.3zqRvp2GO8mS', '199999999', NULL, '7600', 1, NULL, '2021-06-25 08:34:40', '2023-04-30 17:50:31'),
+(17, 'Dea Aditya', 'Dea Aditya', 'dea.aditya@bps.go.id', '$2y$10$jST/wOO2qkDJNkUi5pWrXeeMqRWRyh/po6N1TPcf6EwqXOFUVu5Fe', '199706022', NULL, '7605', 1, NULL, '2022-07-19 03:17:18', '2023-04-30 17:50:19'),
+(18, 'Anggoro Rahmadi', 'anggoro.rahmadi', 'anggoro.rahmadi@bps.go.id', '$2y$10$N4jX9lSymuqNTbFy2OB7eO7z.yk4zMOL4U3jQJK0QFv6N0v2VdJXS', '199403222', NULL, '7603', 1, NULL, '2023-04-06 02:07:36', '2023-04-06 02:07:36'),
+(39, 'Reski Tanawali', 'reski', 'reski@bps.go.id', '$2y$10$gW1FIa663t.8AOyqzPC75O6jfsvo1xT7SLFVNLcas2EvuCxFtsfwy', '340055333', NULL, '7601', 1, NULL, '2023-05-19 18:33:29', '2023-05-19 18:37:42');
 
 -- --------------------------------------------------------
 
@@ -483,9 +481,9 @@ INSERT INTO `m_pengguna` (`id`, `nama`, `username`, `email`, `password`, `bpsid`
 --
 
 CREATE TABLE `m_saran` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kode_saran` char(1) NOT NULL,
-  `nama_saran` varchar(30) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `kode_saran` char(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_saran` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -508,13 +506,13 @@ INSERT INTO `m_saran` (`id`, `kode_saran`, `nama_saran`, `created_at`, `updated_
 --
 
 CREATE TABLE `m_satker` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kode_satker` char(4) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `level` char(1) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
-  `web` varchar(50) DEFAULT NULL,
-  `telepon` varchar(12) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `kode_satker` char(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` char(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `web` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telepon` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -529,7 +527,8 @@ INSERT INTO `m_satker` (`id`, `kode_satker`, `nama`, `level`, `alamat`, `web`, `
 (15, '7602', 'BPS Kabupaten Polewali Mandar', '2', 'Jl. Polewali', 'https://polewalimandarkab.bps.go.id', NULL, '2023-05-17 19:38:07', '2023-05-17 19:38:07'),
 (16, '7603', 'BPS Kabupaten Mamasa', '2', 'Jl. Poros Buntu Kasisi', 'https://mamasakab.bps.go.id', NULL, '2023-05-17 20:32:37', '2023-05-17 20:32:37'),
 (17, '7604', 'BPS Kabupaten Mamuju', '2', 'Jl. Poros Mamuju - Topoyo', 'https://mamujukab.bps.go.id', NULL, '2023-05-17 20:33:05', '2023-05-17 20:33:05'),
-(18, '7605', 'BPS Kabupaten Pasangkayu', '2', 'Jl. Poros Topoyo - Pasangkayu', 'https://pasangkayukab.bps.go.id', NULL, '2023-05-19 04:22:53', '2023-05-19 04:22:53');
+(18, '7605', 'BPS Kabupaten Pasangkayu', '2', 'Jl. Poros Topoyo - Pasangkayu', 'https://pasangkayukab.bps.go.id', NULL, '2023-05-19 04:22:53', '2023-05-19 04:22:53'),
+(19, '7606', 'BPS Kabupaten Mamuju Tengah', '2', 'Jl. Poros Topoyo - Tobadak', 'https://matengkab.bps.go.id/', '042822341', '2023-05-22 23:09:44', '2023-05-22 23:10:32');
 
 -- --------------------------------------------------------
 
@@ -538,8 +537,8 @@ INSERT INTO `m_satker` (`id`, `kode_satker`, `nama`, `level`, `alamat`, `web`, `
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) NOT NULL,
-  `token` varchar(191) NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -550,9 +549,9 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `guard_name` varchar(191) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -564,9 +563,9 @@ CREATE TABLE `permissions` (
 --
 
 CREATE TABLE `roles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) NOT NULL,
-  `guard_name` varchar(191) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -591,8 +590,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 --
 
 CREATE TABLE `role_has_permissions` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -701,61 +700,61 @@ ALTER TABLE `role_has_permissions`
 -- AUTO_INCREMENT for table `d_penilaian`
 --
 ALTER TABLE `d_penilaian`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=304;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `m_akses`
 --
 ALTER TABLE `m_akses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `m_layanan`
 --
 ALTER TABLE `m_layanan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `m_pengguna`
 --
 ALTER TABLE `m_pengguna`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `m_saran`
 --
 ALTER TABLE `m_saran`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `m_satker`
 --
 ALTER TABLE `m_satker`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
