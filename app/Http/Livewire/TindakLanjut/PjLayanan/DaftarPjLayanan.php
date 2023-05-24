@@ -15,7 +15,7 @@ class DaftarPjLayanan extends Component
     use HasModelProcess, UnitCode, WithPagination;
 
     public d_penilaian $penilaian;
-    public int $numberOfPagination = 10;
+    public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
     public function render()
@@ -56,6 +56,7 @@ class DaftarPjLayanan extends Component
     {
         $result = auth()->user()->hasRole('superadmin')
             ? d_penilaian::search($this->searchKeyword)
+                        -> query(fn ($query) => $query->with(['petugas', 'layanan', 'saran']))
                         -> where('selesai', 0)
                         -> orderBy('created_at', 'desc')
             : d_penilaian::search($this->searchKeyword)

@@ -51,7 +51,7 @@ class d_penilaian extends Model
 
     public function layanan()
     {
-        return $this->belongsTo(m_layanan::class, 'kode_layanan');
+        return $this->belongsTo(m_layanan::class, 'kode_layanan', 'kode_layanan');
     }
 
     public function saran()

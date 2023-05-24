@@ -12,7 +12,7 @@ class DaftarSelesai extends Component
 {
     use UnitCode, WithPagination;
 
-    public int $numberOfPagination = 10;
+    public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
     public function render()

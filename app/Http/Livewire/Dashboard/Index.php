@@ -14,33 +14,32 @@ class Index extends Component
     public $penilaianLayanan;
     public $jumlahPengaduan;
 
-    public function mount()
-    {
-        if (Auth::user()->hasRole('superadmin')) {
-            $this->petugasAktif     = m_pengguna::role('operator')->where('aktif', 1)->count();
-            $this->penilaianPetugas = d_penilaian::whereNotNull('kode_petugas')->count();
-            $this->penilaianLayanan = d_penilaian::where('rating_layanan', '>', 0)->count();
-            $this->jumlahPengaduan  = d_penilaian::where('is_pengaduan', 1)->count();
-        } else {
-            $kode = $this->getSatkerKode();
-            $this->petugasAktif     = m_pengguna::where('kode_satker_id', Auth::user()->kode_satker_id)->where('role_id', 7)->where('aktif', 1)->count();
-            $this->penilaianPetugas = d_penilaian::where('kode_satker_id', $kode->kode_satker)->whereNotNull('kode_petugas')->count();
-            $this->penilaianLayanan = d_penilaian::where('kode_satker_id', $kode->kode_satker)->where('rating_layanan', '>', 0)->count();
-            $this->jumlahPengaduan  = d_penilaian::where('kode_satker_id', $kode->kode_satker)->where('is_pengaduan', 1)->count();
-        }
-    }
+    // public function mount()
+    // {
+    //     if (Auth::user()->hasRole('superadmin')) {
+    //         $this->petugasAktif     = m_pengguna::role('operator')->where('aktif', 1)->count();
+    //         $this->penilaianPetugas = d_penilaian::whereNotNull('kode_petugas')->count();
+    //         $this->penilaianLayanan = d_penilaian::where('rating_layanan', '>', 0)->count();
+    //         $this->jumlahPengaduan  = d_penilaian::where('is_pengaduan', 1)->count();
+    //     } else {
+    //         $kode = $this->getSatkerKode();
+    //         $this->petugasAktif     = m_pengguna::where('kode_satker_id', Auth::user()->kode_satker_id)->where('role_id', 7)->where('aktif', 1)->count();
+    //         $this->penilaianPetugas = d_penilaian::where('kode_satker_id', $kode->kode_satker)->whereNotNull('kode_petugas')->count();
+    //         $this->penilaianLayanan = d_penilaian::where('kode_satker_id', $kode->kode_satker)->where('rating_layanan', '>', 0)->count();
+    //         $this->jumlahPengaduan  = d_penilaian::where('kode_satker_id', $kode->kode_satker)->where('is_pengaduan', 1)->count();
+    //     }
+    // }
 
     public function render()
     {
-        return view('livewire.dashboard.index')
-            -> layout('layouts.app');
+        return view('livewire.dashboard.index')->layout('layouts.app');
     }
 
-    private function getSatkerKode()
-    {
-        $userSatkerId = m_pengguna::find(Auth::id());
-        $kodeSatker   = $userSatkerId->satker()->first('kode_satker');
+    // private function getSatkerKode()
+    // {
+    //     $userSatkerId = m_pengguna::find(Auth::id());
+    //     $kodeSatker   = $userSatkerId->satker()->first('kode_satker');
 
-        return $kodeSatker;
-    }
+    //     return $kodeSatker;
+    // }
 }

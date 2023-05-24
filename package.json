@@ -6,8 +6,7 @@
     },
     "dependencies": {
         "@ryangjchandler/alpine-tooltip": "^1.2.0",
-        "alpinejs": "^3.11.1",
-        "tw-elements": "^1.0.0-beta2"
+        "alpinejs": "^3.11.1"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",

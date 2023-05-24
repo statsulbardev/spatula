@@ -6,7 +6,7 @@
     </div>
 
     <section class="flex mt-10 mb-6">
-        <div class="w-full bg-white rounded shadow overflow-x-auto">
+        <div class="w-full bg-white rounded shadow">
             <div class="p-4 flex flex-wrap justify-between">
                 {{-- Pencarian --}}
                 @include('components.input.search')

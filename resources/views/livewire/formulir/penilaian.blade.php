@@ -90,7 +90,7 @@
                         @include('components.input.text', [
                             'label' => 'No. Telepon / Whatsapp',
                             'model' => 'f_nowatelp',
-                            'type'  => 'text'
+                            'type'  => 'numeric'
                         ])
                         <div
                             x-data="{ shown: false, timeout: null }"
@@ -158,15 +158,14 @@
                     <div class="lg:w-2/3 sm:w-full">
                         {{-- Petugas Layanan --}}
                         <div class="my-6 w-full">
-                            <div wire:ignore>
-                                <label class="form-label font-bold" for="nama_petugas">
-                                    Nama Petugas
-                                </label>
-                                <select wire:model.defer="{{ $f_petugas }}" ref="input" class="form-select border-neutral-300">
-                                    <option hidden selected>Pilih Petugas Layanan ...</option>
-                                    {!! $officers !!}
-                                </select>
-                            </div>
+                            @include('components.input.select', [
+                                'label'     => 'Nama Petugas',
+                                'model'     => 'f_petugas',
+                                'opt_title' => 'Pilih Petugas Layanan ...',
+                                'opt_item'  => $officers,
+                                'id'        => 'petugas',
+                                'value'     => null
+                            ])
                             <div
                                 x-data="{ shown: false, timeout: null }"
                                 x-init="@this.on('saved', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 5000); })"
@@ -283,10 +282,13 @@
         });
 
         window.addEventListener('contentChanged', event => {
+            te.Select.getOrCreateInstance(document.querySelector('#petugas')).close();
+
             var starRatingControl = new StarRating('.star-rating', {
                 maxStars: 5,
                 showText: true,
             });
+
         });
 
         window.addEventListener('notification', event => {
