@@ -166,7 +166,7 @@
                                     <tr>
                                         <td class="pl-5 py-6 whitespace-nowrap font-semibold">Catatan</td>
                                         <td class="font-semibold">:</td>
-                                        <td><input wire:model.defer="f_catatan" type="text" ref="input" class="form-input"></td>
+                                        <td><input wire:model.defer="f_catatan" type="text" ref="input" class="form-input" placeholder="Contoh : Nama Kegiatan ..."></td>
                                     </tr>
                                 </tbody>
                             </table>
