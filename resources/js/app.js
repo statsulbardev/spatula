@@ -10,7 +10,3 @@ Alpine.plugin(Tooltip);
 
 window.Alpine = Alpine
 Alpine.start()
-
-// Tailwind Elements
-// import { Modal, Ripple, Select, initTE } from "tw-elements";
-// initTE({ Select, Modal, Ripple });

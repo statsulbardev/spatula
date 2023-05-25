@@ -1,9 +1,5 @@
 @section('title', 'Form Penilaian Layanan')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.css') }}">
-@endsection
-
 <div>
     @include('components.notification.flash')
 
@@ -274,7 +270,6 @@
 </div>
 
 @push('scripts')
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
     <script>
         var starRatingControl = new StarRating('.star-rating', {
             maxStars: 5,
@@ -288,7 +283,6 @@
                 maxStars: 5,
                 showText: true,
             });
-
         });
 
         window.addEventListener('notification', event => {

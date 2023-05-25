@@ -29,15 +29,15 @@ Route::get('/login', Login::class)->name('login');
 
 Route::get('/penilaian', Penilaian::class)->name('form-penilaian');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/dashboard', Index::class)->name('dashboard');
 
     Route::prefix('/verifikasi/')->group(function() {
         Route::get('selesai', DaftarSelesai::class)->name('daftar-selesai');
         Route::get('selesai/{customer}', DetailSelesai::class)->name('detail-selesai');
         Route::get('pj-layanan', DaftarPjLayanan::class)->name('daftar-pj-layanan');
-        Route::get('pj-layanan/kategorisasi/{customer}', KategorisasiLayanan::class)->name('tambah-kategorisasi-layanan');
-        Route::get('pj-layanan/kategorisasi/{customer}/edit', KategorisasiLayanan::class)->name('edit-kategorisasi-layanan');
+        Route::get('pj-layanan/kategorisasi/{pengguna_layanan}', KategorisasiLayanan::class)->name('tambah-kategorisasi-layanan');
+        Route::get('pj-layanan/kategorisasi/{pengguna_layanan}/edit', KategorisasiLayanan::class)->name('edit-kategorisasi-layanan');
         Route::get('pj-pengaduan', DaftarPjPengaduan::class)->name('daftar-pj-pengaduan');
         Route::get('pj-pengaduan/{customer}', DetailPjPengaduan::class)->name('detail-pj-pengaduan');
     });
