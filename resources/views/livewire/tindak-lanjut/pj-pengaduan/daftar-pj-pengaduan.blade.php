@@ -20,7 +20,7 @@
             @if($complaints->isEmpty())
                 <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
-                <table class="w-full table-auto">
+                <table class="table-auto w-full">
                     <thead>
                         <tr class="text-left font-bold bg-neutral-100">
                             <th class="px-6 pt-6 pb-4">
@@ -30,7 +30,6 @@
                             <th class="px-6 pt-6 pb-4">Pengguna Layanan</th>
                             <th class="px-6 pt-6 pb-4">Saran dan Pengaduan</th>
                             <th class="px-6 pt-6 pb-4">Kategori</th>
-                            <th class="px-6 pt-6 pb-4">Tanggal Kategorisasi</th>
                             <th class="px-6 pt-6 pb-4"></th>
                         </tr>
                     </thead>
@@ -40,25 +39,32 @@
                                 <td class="border-t px-6 py-4 w-2">
                                     <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $complaint->id }}">
                                 </td>
+
+                                {{-- Tanggal --}}
                                 <td class="border-t">
-                                    <span class="pl-6 py-4 items-center">
+                                    <div class="pl-6 py-4 items-center">
                                         <i class="fas fa-calendar opacity-50 text-sm"></i> {{ $complaint->created_at->format('d/m/Y') }}
-                                    </span>
+                                    </div>
                                 </td>
+
+                                {{-- Pengguna Layanan, Email, WA --}}
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
-                                        {{ $complaint->nama_konsumen }}
-                                    </span>
+                                    <div class="pl-6 py-4">
+                                        <div class="text-md">{{ ucwords(strtolower($complaint->nama_konsumen)) }}</div>
+                                        <div class="mb-2 text-sm text-neutral-500">{{ $complaint->email_konsumen }}</div>
+                                        <div class="text-sm text-primary-500">{{ $complaint->no_wa_telp ?? '-' }}</div>
+                                    </div>
                                 </td>
-                                <td class="border-t" width="50%">
-                                    <span
+
+                                {{-- Saran Pengaduan --}}
+                                <td class="border-t">
+                                    <div
                                         x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
                                         x-init="originalContent = @js($complaint->saran_pengaduan).trim(); content = originalContent.slice(0, maxLength)"
                                         class="flex flex-wrap">
                                         <span
-                                            x-text="isCollapsed ? originalContent : content"
+                                            x-html="isCollapsed ? originalContent : content"
                                             class="pl-6 py-4 leading-tight">
-                                            {!! $complaint->saran_pengaduan !!}
                                         </span>
                                         <button
                                             @click="isCollapsed = !isCollapsed"
@@ -66,34 +72,31 @@
                                             x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
                                             class="ml-6 mb-4 p-2 bg-violet-200 hover:bg-violet-300 text-violet-900 rounded-md text-sm">
                                         </button>
-                                    </span>
+                                    </div>
                                 </td>
+
+                                {{-- Kategori --}}
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
-                                        <span>
-                                            @if(!is_null($complaint->kode_saran))
-                                                @for($i = 0; $i < count($complaint->kode_saran); $i++)
-                                                    <div class="relative inline-block px-3 py-1 text-sm text-green-900 leading-tight">
-                                                        <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                                        <span class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
-                                                    </div>
-                                                @endfor
-                                            @else
-                                                <span class="relative inline-block px-3 py-1 text-sm text-red-900 leading-tight">
-                                                    <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                                    <span class="relative">Belum Dikategorisasi</span>
-                                                </span>
-                                            @endif
-                                        </span>
-                                    </span>
+                                    <div class="pl-6 py-4">
+                                        @if(!is_null($complaint->kode_saran))
+                                            @for($i = 0; $i < count($complaint->kode_saran); $i++)
+                                                <div class="relative inline-block px-3 py-1 text-sm text-green-900 leading-tight">
+                                                    <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                    <span class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
+                                                </div>
+                                            @endfor
+                                        @else
+                                            <span class="relative inline-block px-3 py-1 text-sm text-red-900 leading-tight">
+                                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">Belum Dikategorisasi</span>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
-                                <td class="border-t">
-                                    <span class="pl-6 py-4">
-                                        <i class="fas fa-calendar opacity-50 text-sm"></i> {{ $complaint->tanggal_kategorisasi->format('d/m/Y') }}
-                                    </span>
-                                </td>
+
+                                {{-- Aksi --}}
                                 <td class="border-t w-px">
-                                    <span class="py-2 flex items-center space-x-2 mr-2">
+                                    <div class="py-2 flex items-center space-x-2 mr-2">
                                         <a
                                             x-data
                                             x-tooltip.raw="Lihat Informasi"
@@ -116,7 +119,7 @@
                                                 @include('components.icon', ['name' => 'check-circle', 'size' => 'w-5 h-5'])
                                             </button>
                                         @endif
-                                    </span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

@@ -19,7 +19,7 @@ class VerificationRepository
                 'kode_petugas'         => $data->f_petugas ?? null,
                 'rating_petugas'       => 5,
                 'kode_saran'           => array_values(array_filter($verification)), // remove null values and reindex
-                'is_pengaduan'         => $data->cb_pengaduan ? 1 : 0,
+                'is_pengaduan'         => !is_null($data->cb_pengaduan) ? 1 : 0,
                 'tanggal_kategorisasi' => Carbon::now(),
                 'catatan'              => $data->f_catatan ?? null
             ]);
