@@ -30,7 +30,8 @@ class d_penilaian extends Model
         'text_pj_pengaduan',
         'kode_satker_id',
         'selesai',
-        'tanggal_selesai'
+        'tanggal_selesai',
+        'catatan'
     ];
 
     protected $casts = [
@@ -46,7 +47,7 @@ class d_penilaian extends Model
 
     public function petugas()
     {
-        return $this->belongsTo(m_pengguna::class, 'kode_petugas');
+        return $this->belongsTo(m_pengguna::class, 'kode_petugas', 'id');
     }
 
     public function layanan()
@@ -56,7 +57,7 @@ class d_penilaian extends Model
 
     public function saran()
     {
-        return $this->belongsTo(m_saran::class, 'kode_saran');
+        return $this->belongsTo(m_saran::class, 'kode_saran', 'kode_saran');
     }
 
     public function toSearchableArray(): array

@@ -56,7 +56,7 @@ class DaftarPjLayanan extends Component
     {
         $result = auth()->user()->hasRole('superadmin')
             ? d_penilaian::search($this->searchKeyword)
-                        -> query(fn ($query) => $query->with(['petugas', 'layanan', 'saran']))
+                        -> query(fn ($query) => $query->with(['petugas', 'layanan']))
                         -> where('selesai', 0)
                         -> orderBy('created_at', 'desc')
             : d_penilaian::search($this->searchKeyword)

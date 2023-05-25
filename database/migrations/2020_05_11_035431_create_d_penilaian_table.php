@@ -34,6 +34,7 @@ class CreateDPenilaianTable extends Migration
             $table->char('kode_satker_id', 4);
             $table->tinyInteger('selesai');
             $table->dateTime('tanggal_selesai')->nullable();
+            $table->string('catatan', 100)->nullable();
             $table->timestamps();
         });
     }

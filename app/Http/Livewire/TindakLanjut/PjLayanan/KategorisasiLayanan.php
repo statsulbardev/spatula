@@ -3,21 +3,50 @@
 namespace App\Http\Livewire\TindakLanjut\PjLayanan;
 
 use App\Models\d_penilaian;
-use Carbon\Carbon;
+use App\Models\m_layanan;
+use App\Models\m_pengguna;
+use App\Repositories\VerificationRepository;
+use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
-use Livewire\Redirector;
 
 class KategorisasiLayanan extends Component
 {
-    public $customer;
-    public $routeName;
+    use HasRedirectUrl;
 
+    public d_penilaian $pengguna_layanan;
+    public string $route_name;
+
+    /** @props */
+    public $f_layanan;
+    public $f_petugas;
+    public $f_catatan;
+
+    /** @props */
     public $cb_saran;
     public $cb_pengaduan;
     public $cb_kritik;
     public $cb_apresiasi;
     public $cb_lainnya;
+
+    // Computed Property : officers
+    public function getOfficersProperty()
+    {
+        return
+            m_pengguna::query()
+                -> where('is_petugas', 1)
+                -> get()
+                -> toArray();
+    }
+
+    // Computed Property : services
+    public function getServicesProperty()
+    {
+        return
+            m_layanan::query()
+                -> get(['kode_layanan', 'nama_layanan'])
+                -> toArray();
+    }
 
     public function render()
     {
@@ -25,21 +54,24 @@ class KategorisasiLayanan extends Component
             -> layout('layouts.app');
     }
 
-    public function mount(d_penilaian $customer)
+    public function mount(d_penilaian $pengguna_layanan)
     {
-        $this->routeName = Route::currentRouteName();
-        $this->customer  = $customer;
+        $this->route_name       = Route::currentRouteName();
+        $this->pengguna_layanan = $pengguna_layanan;
+        $this->f_layanan        = $pengguna_layanan->kode_layanan;
+        $this->f_petugas        = $pengguna_layanan->kode_petugas;
 
-        if ($this->routeName === 'edit-kategorisasi-layanan') {
-            $this->cb_saran     = in_array(1, $customer->kode_saran) ?? false;
-            $this->cb_pengaduan = in_array(2, $customer->kode_saran) ?? false;
-            $this->cb_kritik    = in_array(3, $customer->kode_saran) ?? false;
-            $this->cb_apresiasi = in_array(4, $customer->kode_saran) ?? false;
-            $this->cb_lainnya   = in_array(9, $customer->kode_saran) ?? false;
+        if ($this->route_name === "edit-kategorisasi-layanan") {
+            $this->cb_saran     = in_array(1, $this->pengguna_layanan->kode_saran) ?? false;
+            $this->cb_pengaduan = in_array(2, $this->pengguna_layanan->kode_saran) ?? false;
+            $this->cb_kritik    = in_array(3, $this->pengguna_layanan->kode_saran) ?? false;
+            $this->cb_apresiasi = in_array(4, $this->pengguna_layanan->kode_saran) ?? false;
+            $this->cb_lainnya   = in_array(9, $this->pengguna_layanan->kode_saran) ?? false;
+            $this->f_catatan    = $pengguna_layanan->catatan;
         }
     }
 
-    public function storeData() : Redirector
+    public function submitData(VerificationRepository $verificationRepository)
     {
         $data = [
             $this->cb_saran ? 1 : null,
@@ -51,25 +83,10 @@ class KategorisasiLayanan extends Component
 
         if (count(array_filter($data)) === 0) return redirect()->back();
 
-        $this->cb_pengaduan
-            ? $this->customer->update([
-                    'kode_saran'   => array_values(array_filter($data)), // remove null values and reindex
-                    'is_pengaduan' => 1,
-                    'tanggal_kategorisasi' => Carbon::now()
-                ])
-            : $this->customer->update([
-                    'kode_saran'   => array_values(array_filter($data)), // remove null values and reindex
-                    'is_pengaduan' => 0,
-                    'tanggal_kategorisasi' => Carbon::now()
-            ]);
+        $result = $verificationRepository->verifyByServiceOfficer($this, $data);
 
-        session()->flash('messages', 'Kategorisasi telah disimpan.');
+        session()->flash('messages', $result);
 
-        return $this->callbackUrl();
-    }
-
-    private function callbackUrl() : Redirector
-    {
-        return redirect(env('APP_URL') . '/verifikasi/pj-layanan');
+        $this->callbackUrl('/verifikasi/pj-layanan');
     }
 }
