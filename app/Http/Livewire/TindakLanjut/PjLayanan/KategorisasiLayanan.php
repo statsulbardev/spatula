@@ -19,7 +19,9 @@ class KategorisasiLayanan extends Component
 
     /** @props */
     public $f_layanan;
+    public $f_rating_layanan;
     public $f_petugas;
+    public $f_rating_petugas;
     public $f_catatan;
 
     /** @props */
@@ -59,7 +61,9 @@ class KategorisasiLayanan extends Component
         $this->route_name       = Route::currentRouteName();
         $this->pengguna_layanan = $pengguna_layanan;
         $this->f_layanan        = $pengguna_layanan->kode_layanan;
+        $this->f_rating_layanan = $pengguna_layanan->rating_layanan;
         $this->f_petugas        = $pengguna_layanan->kode_petugas;
+        $this->f_rating_petugas = $pengguna_layanan->rating_petugas;
 
         if ($this->route_name === "edit-kategorisasi-layanan") {
             $this->cb_saran     = in_array(1, $this->pengguna_layanan->kode_saran) ?? false;

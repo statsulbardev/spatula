@@ -3,60 +3,66 @@
 namespace App\Http\Livewire\Laporan;
 
 use App\Models\d_penilaian;
+use App\Traits\HasReportProperty;
 use App\Traits\UnitCode;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class LaporanHarian extends Component
 {
-    use UnitCode, WithPagination;
+    use HasReportProperty, UnitCode, WithPagination;
 
-    public $dailyReport;
-    public $years;
+    public int $numberOfPagination = 20;
+
+    /** @props */
     public $selectedMonth;
     public $selectedYear;
 
-    public function render()
+    /** @computed property : months */
+    public function getMonthsProperty()
     {
-        return view('livewire.laporan.laporan-harian')
-            -> layout('layouts.app');
+        return $this->initMonthsOption();
     }
 
-    public function mount()
+    /** @computed property : years */
+    public function getYearsProperty()
     {
-        $this->getYears();
+        return $this->initYearsOption();
+    }
 
-        $this->initData();
+    public function render()
+    {
+        return view('livewire.laporan.laporan-harian', [
+            'dailyReport' => isset($this->selectedYear)
+                                ? $this->updatedSelectedYear()
+                                : $this->retrieveData()
+        ]) -> layout('layouts.app');
     }
 
     public function updatedSelectedYear()
     {
-        $this->dailyReport = d_penilaian::whereYear('created_at', '=', $this->selectedYear)
-                ->whereMonth('created_at', '=', $this->selectedMonth)
-                ->where('selesai', 1)
-                ->get();
+        return d_penilaian::with(['petugas', 'layanan'])
+                -> whereYear('created_at', '=', $this->selectedYear)
+                -> whereMonth('created_at', '=', $this->selectedMonth)
+                -> where('selesai', 1)
+                -> paginate($this->numberOfPagination);
     }
 
     public function resetData()
     {
-        $this->initData();
+        $this->reset();
+
+        $this->retrieveData();
     }
 
-    private function initData()
+    private function retrieveData()
     {
-        $this->dailyReport = Auth::user()->hasRole('superadmin')
-            ? d_penilaian::where('selesai', 1)->orderBy('created_at', 'desc')->get()
+        $result = auth()->user()->hasRole('superadmin')
+            ? d_penilaian::with(['petugas', 'layanan'])->where('selesai', 1)->orderBy('tanggal_selesai', 'desc')
             : d_penilaian::where('kode_satker_id', $this->getUnitCode()->kode_satker)
                          ->where('selesai', 1)
-                         ->orderBy('created_at', 'desc')
-                         ->get();
-    }
+                         ->orderBy('created_at', 'desc');
 
-    private function getYears()
-    {
-        $result = d_penilaian::select(DB::Raw('YEAR(created_at) as year'))->distinct()->get();
-        $this->years  = $result->pluck('year');
+        return $result->paginate($this->numberOfPagination);
     }
 }

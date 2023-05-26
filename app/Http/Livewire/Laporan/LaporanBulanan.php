@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Laporan;
 
-use App\Models\d_penilaian;
+use App\Traits\HasReportProperty;
 use App\Traits\UnitCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,14 +11,25 @@ use Livewire\WithPagination;
 
 class LaporanBulanan extends Component
 {
-    use UnitCode, WithPagination;
+    use HasReportProperty, UnitCode, WithPagination;
 
     public $officerRating;
     public $serviceRating;
     public $complaintSuggestion;
-    public $years;
     public $selectedYear;
     public $selectedReport;
+
+    /** @computed property : months */
+    public function getMonthsProperty()
+    {
+        return $this->initMonthsOption();
+    }
+
+    /** @computed property : years */
+    public function getYearsProperty()
+    {
+        return $this->initYearsOption();
+    }
 
     public function render()
     {
@@ -30,10 +41,6 @@ class LaporanBulanan extends Component
     {
         $this->selectedYear = date('Y');
 
-        $this->getYears();
-
-        dd($this->getComplaintSuggestion(Auth::user()->hasRole('superadmin')));
-
         $this->officerRating = $this->getOfficerRating(Auth::user()->hasRole('superadmin'));
 
         $this->serviceRating = $this->getServiceRating(Auth::user()->hasRole('superadmin'));
@@ -41,31 +48,15 @@ class LaporanBulanan extends Component
         $this->complaintSuggestion = $this->getComplaintSuggestion(Auth::user()->hasRole('superadmin'));
     }
 
-    private function getYears()
-    {
-        $result = d_penilaian::select(DB::Raw('YEAR(created_at) as year'))->distinct()->get();
-        $this->years  = $result->pluck('year');
-    }
-
     private function getOfficerRating($role)
     {
         if ($role) {
-            $result = DB::select(
-                        'SELECT
-                            MONTH(a.created_at) as bulan,
-                            b.nama,
-                            AVG(a.rating_petugas) as rerata,
-                            COUNT(a.rating_petugas) as jumlah_terlayani
-                        FROM
-                            d_penilaian a,
-                            m_pengguna b
-                        WHERE
-                            a.kode_petugas = b.id AND
-                            YEAR(a.created_at) = ' . $this->selectedYear . '
-                        GROUP BY
-                            MONTH(a.created_at),
-                            b.nama'
-                        );
+            $result = DB::table('d_penilaian')
+                        -> join('m_pengguna', 'd_penilaian.kode_petugas', '=', 'm_pengguna.id')
+                        -> selectRaw('MONTH(d_penilaian.created_at) as bulan, m_pengguna.nama, AVG(d_penilaian.rating_petugas) as rerata, COUNT(d_penilaian.rating_petugas) as jumlah_terlayani')
+                        -> whereRaw('YEAR(d_penilaian.created_at) = ' . $this->selectedYear)
+                        -> groupByRaw('MONTH(d_penilaian.created_at), m_pengguna.id')
+                        -> get();
         } else {
             $result = DB::select(
                         'SELECT MONTH(a.created_at) as bulan,
@@ -94,22 +85,12 @@ class LaporanBulanan extends Component
     private function getServiceRating($role)
     {
         if ($role) {
-            $result = DB::select(
-                        'SELECT
-                            MONTH(a.created_at) as bulan,
-                            b.nama_layanan,
-                            AVG(a.rating_layanan) as rerata,
-                            COUNT(a.rating_layanan) as jumlah_terlayani
-                        FROM
-                            d_penilaian a,
-                            m_layanan b
-                        WHERE
-                            a.kode_layanan = b.kode_layanan AND
-                            YEAR(a.created_at) = '. $this->selectedYear .'
-                        GROUP BY
-                            MONTH(a.created_at),
-                            b.nama_layanan'
-                        );
+            $result = DB::table('d_penilaian')
+                        -> join('m_layanan', 'd_penilaian.kode_layanan', '=', 'm_layanan.kode_layanan')
+                        -> selectRaw('MONTH(d_penilaian.created_at) as bulan, m_layanan.nama_layanan, AVG(d_penilaian.rating_layanan) as rerata, COUNT(d_penilaian.rating_layanan) as jumlah_terlayani')
+                        -> whereRaw('YEAR(d_penilaian.created_at) = '. $this->selectedYear)
+                        -> groupByRaw('MONTH(d_penilaian.created_at), m_layanan.id')
+                        -> get();
         } else {
             $result = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
                     FROM d_penilaian a, m_layanan b WHERE a.kode_satker_id = ' . $this->getUnitCode()->kode_satker . ' AND a.kode_layanan=b.kode_layanan AND YEAR(a.created_at) = '. $this->selectedYear .'
@@ -124,6 +105,14 @@ class LaporanBulanan extends Component
     private function getComplaintSuggestion($role)
     {
         if ($role) {
+            $result = DB::table('d_penilaian')
+                        -> selectRaw('MONTH(created_at) as bulan, kode_saran')
+                        -> whereRaw('YEAR(created_at) = 2023')
+                        -> groupBy('created_at', 'kode_saran')
+                        -> get();
+            dd($result);
+
+
             $result = DB::select(
                         "SELECT
                             MONTH(a.created_at) as bulan,
@@ -145,6 +134,8 @@ class LaporanBulanan extends Component
                     GROUP BY YEAR(a.created_at), MONTH(a.created_at), b.kode_saran");
         }
 
-        return $result;
+        $column = ['Bulan', 'Kategori Saran Pengaduan', 'Jumlah Penilaian'];
+
+        return [$column, $result];
     }
 }

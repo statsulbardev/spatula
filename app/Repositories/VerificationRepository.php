@@ -17,7 +17,7 @@ class VerificationRepository
             $data->pengguna_layanan->update([
                 'kode_layanan'         => $data->f_layanan ?? null,
                 'kode_petugas'         => $data->f_petugas ?? null,
-                'rating_petugas'       => 5,
+                'rating_petugas'       => $data->f_rating_petugas ?? null,
                 'kode_saran'           => array_values(array_filter($verification)), // remove null values and reindex
                 'is_pengaduan'         => !is_null($data->cb_pengaduan) ? 1 : 0,
                 'tanggal_kategorisasi' => Carbon::now(),
