@@ -33,4 +33,15 @@ trait HasReportProperty
                 -> distinct()
                 -> pluck('year');
     }
+
+    public function initSuggestionsOption() : array
+    {
+        return [
+            ['1' => 'Saran'],
+            ['2' => 'Pengaduan'],
+            ['3' => 'Kritik'],
+            ['4' => 'Apresiasi'],
+            ['9' => 'Lainnya']
+        ];
+    }
 }

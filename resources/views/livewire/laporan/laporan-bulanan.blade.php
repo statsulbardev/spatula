@@ -160,34 +160,36 @@
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="text-left font-bold bg-neutral-100">
-                                @foreach ($serviceRating[0] as $columnService)
-                                    <th class="px-6 pt-6 pb-4">{{ $columnService }}</th>
+                                @foreach ($complaintSuggestion[0] as $columnComplaintSuggestion)
+                                    <th class="px-6 pt-6 pb-4">{{ $columnComplaintSuggestion }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($serviceRating[1] as $reportService)
+                            @foreach ($complaintSuggestion[1] as $monthIndex => $report)
                                 <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
-                                    <td class="border-t">
+                                    <td class="border-t" rowspan="{{ $report->count() + 1}}">
                                         <span class="pl-6 py-4 items-center">
-                                            {{ $this->months[$reportService->bulan - 1][1] }}
+                                            {{ $this->months[$monthIndex - 1][1] }}
                                         </span>
                                     </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ $reportService->nama_layanan ?? '-' }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4 flex items-center">
-                                            {{ round($reportService->rerata, 2) }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ $reportService->jumlah_terlayani }}
-                                        </span>
-                                    </td>
+                                    @foreach($report as $index => $item)
+                                        <tr>
+                                            <td class="border-t">
+                                                <span class="pl-6 py-4">
+                                                    {{
+                                                        '(' . array_search($item, $report->toArray()) . ') ' .
+                                                        array_column($this->suggestions, array_search($item, $report->toArray()))[0]
+                                                    }}
+                                                </span>
+                                            </td>
+                                            <td class="border-t">
+                                                <span class="pl-6 py-4 flex items-center">
+                                                    {{ $item }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tr>
                             @endforeach
                         </tbody>

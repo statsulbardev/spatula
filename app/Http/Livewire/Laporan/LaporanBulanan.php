@@ -31,6 +31,12 @@ class LaporanBulanan extends Component
         return $this->initYearsOption();
     }
 
+    /** @computed property : suggestions */
+    public function getSuggestionsProperty()
+    {
+        return $this->initSuggestionsOption();
+    }
+
     public function render()
     {
         return view('livewire.laporan.laporan-bulanan')
@@ -55,7 +61,7 @@ class LaporanBulanan extends Component
                         -> join('m_pengguna', 'd_penilaian.kode_petugas', '=', 'm_pengguna.id')
                         -> selectRaw('MONTH(d_penilaian.created_at) as bulan, m_pengguna.nama, AVG(d_penilaian.rating_petugas) as rerata, COUNT(d_penilaian.rating_petugas) as jumlah_terlayani')
                         -> whereRaw('YEAR(d_penilaian.created_at) = ' . $this->selectedYear)
-                        -> groupByRaw('MONTH(d_penilaian.created_at), m_pengguna.id')
+                        -> groupByRaw('MONTH(d_penilaian.created_at), m_pengguna.nama')
                         -> get();
         } else {
             $result = DB::select(
@@ -89,7 +95,7 @@ class LaporanBulanan extends Component
                         -> join('m_layanan', 'd_penilaian.kode_layanan', '=', 'm_layanan.kode_layanan')
                         -> selectRaw('MONTH(d_penilaian.created_at) as bulan, m_layanan.nama_layanan, AVG(d_penilaian.rating_layanan) as rerata, COUNT(d_penilaian.rating_layanan) as jumlah_terlayani')
                         -> whereRaw('YEAR(d_penilaian.created_at) = '. $this->selectedYear)
-                        -> groupByRaw('MONTH(d_penilaian.created_at), m_layanan.id')
+                        -> groupByRaw('MONTH(d_penilaian.created_at), m_layanan.nama_layanan')
                         -> get();
         } else {
             $result = DB::select('SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
@@ -104,30 +110,20 @@ class LaporanBulanan extends Component
 
     private function getComplaintSuggestion($role)
     {
+        $data = array();
+
         if ($role) {
             $result = DB::table('d_penilaian')
                         -> selectRaw('MONTH(created_at) as bulan, kode_saran')
                         -> whereRaw('YEAR(created_at) = 2023')
                         -> groupBy('created_at', 'kode_saran')
-                        -> get();
-            dd($result);
+                        -> get()
+                        -> mapToGroups(function($item, $key) {
+                            return [$item->bulan => json_decode($item->kode_saran)];
+                        })
+                        -> all();
 
-
-            $result = DB::select(
-                        "SELECT
-                            MONTH(a.created_at) as bulan,
-                            b.nama_saran,
-                            COUNT(a.kode_saran) as jumlah_saran
-                        FROM
-                            d_penilaian a,
-                            m_saran b
-                        WHERE
-                            YEAR(a.created_at) = '. $this->selectedYear .' AND
-                            a.kode_saran LIKE CONCAT('%', b.kode_saran ,'%')
-                        GROUP BY
-                            MONTH(a.created_at),
-                            b.nama_saran"
-                        );
+            foreach ($result as $index => $d) $data[$index] = $d->flatten()->countBy();
         } else {
             $result = DB::select("SELECT MONTH(a.created_at) as bulan, b.nama_saran , COUNT(a.kode_saran) as jumlah_saran
                     FROM d_penilaian a, m_saran b WHERE a.kode_satker_id = " . $this->getUnitCode()->kode_satker . " AND YEAR(a.created_at) = '. $this->selectedYear .' AND a.kode_saran LIKE CONCAT('%', b.kode_saran ,'%')
@@ -136,6 +132,8 @@ class LaporanBulanan extends Component
 
         $column = ['Bulan', 'Kategori Saran Pengaduan', 'Jumlah Penilaian'];
 
-        return [$column, $result];
+        dd($data);
+
+        return [$column, $data];
     }
 }

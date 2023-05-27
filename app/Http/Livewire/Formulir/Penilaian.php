@@ -18,10 +18,10 @@ class Penilaian extends Component
 {
     use HasRenderOption;
 
-    public string $officers;
+    public ?string $officers;
     protected StoreEvaluationRequest $ruleValidation;
 
-    // Form Data
+    /** @props */
     public $f_unit;
     public $f_nama;
     public $f_email;
@@ -32,7 +32,7 @@ class Penilaian extends Component
     public $f_ratingpetugas;
     public $f_saranpengaduan;
 
-    // Computed Property : units
+    /** @computed property : units */
     public function getUnitsProperty() : string
     {
         return
