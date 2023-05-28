@@ -10,7 +10,7 @@
             <li class="bg-white border-1 font-medium leading-tight p-3 rounded-l-md shadow hover:bg-gray-100" role="presentation">
                 <a
                     href="rating-petugas-layanan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary text-sm"
+                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-sm"
                     data-te-toggle="pill"
                     data-te-target="#rating-petugas-layanan"
                     data-te-nav-active
@@ -23,7 +23,7 @@
             <li class="bg-white border-1 font-medium leading-tight p-3 shadow hover:bg-gray-100" role="presentation">
                 <a
                     href="#rating-layanan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary text-sm"
+                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-sm"
                     data-te-toggle="pill"
                     data-te-target="#rating-layanan"
                     role="tab"
@@ -34,7 +34,7 @@
             <li class="bg-white border-1 font-medium leading-tight p-3 rounded-r-md shadow hover:bg-gray-100" role="presentation">
                 <a
                     href="#saran-pengaduan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary text-sm"
+                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-sm"
                     data-te-toggle="pill"
                     data-te-target="#saran-pengaduan"
                     role="tab"
@@ -50,16 +50,14 @@
         <div class="w-full bg-white rounded shadow">
             <div class="p-4 flex flex-wrap justify-between">
                 {{-- Tab --}}
-                <div class="px-4 flex flex-wrap items-center justify-between">
-                    <div class="year">
-                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
-                            <option hidden selected>Pilih Tahun ...</option>
-                            @foreach ($this->years as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                        <label data-te-select-label-ref>Tahun</label>
-                    </div>
+                <div class="flex flex-wrap items-center justify-between">
+                    <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                        <option hidden selected>Pilih Tahun ...</option>
+                        @foreach ($this->years as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
+                    </select>
+                    <label data-te-select-label-ref>Tahun</label>
                 </div>
             </div>
             {{-- Content --}}

@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .bg-gradient {
-    background: rgb(38,128,194);
-    background: linear-gradient(90deg, rgba(38,128,194,1) 0%, rgba(0,168,255,1) 100%);
+    background: rgba(157, 126, 213);
+    background: linear-gradient(90deg, rgba(157, 126, 213, 1) 30%, rgba(250, 219, 95, 1) 100%);
 }
 
 .bg-glass {

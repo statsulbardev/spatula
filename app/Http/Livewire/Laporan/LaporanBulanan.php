@@ -13,11 +13,8 @@ class LaporanBulanan extends Component
 {
     use HasReportProperty, UnitCode, WithPagination;
 
-    public $officerRating;
-    public $serviceRating;
-    public $complaintSuggestion;
+    /** @props */
     public $selectedYear;
-    public $selectedReport;
 
     /** @computed property : months */
     public function getMonthsProperty()
@@ -37,21 +34,18 @@ class LaporanBulanan extends Component
         return $this->initSuggestionsOption();
     }
 
-    public function render()
-    {
-        return view('livewire.laporan.laporan-bulanan')
-            -> layout('layouts.app');
-    }
-
-    public function mount()
+    public function boot()
     {
         $this->selectedYear = date('Y');
+    }
 
-        $this->officerRating = $this->getOfficerRating(Auth::user()->hasRole('superadmin'));
-
-        $this->serviceRating = $this->getServiceRating(Auth::user()->hasRole('superadmin'));
-
-        $this->complaintSuggestion = $this->getComplaintSuggestion(Auth::user()->hasRole('superadmin'));
+    public function render()
+    {
+        return view('livewire.laporan.laporan-bulanan'. [
+            'officerRating' => $this->getOfficerRating(auth()->user()->hasRole('superadmin')),
+            'serviceRating' => $this->getServiceRating(auth()->user()->hasRole('superadmin')),
+            'complaintSuggestion' => $this->getComplaintSuggestion(auth()->user()->hasRole('superadmin'))
+        ]) -> layout('layouts.app');
     }
 
     private function getOfficerRating($role)
@@ -63,6 +57,8 @@ class LaporanBulanan extends Component
                         -> whereRaw('YEAR(d_penilaian.created_at) = ' . $this->selectedYear)
                         -> groupByRaw('MONTH(d_penilaian.created_at), m_pengguna.nama')
                         -> get();
+
+                        // dd($result);
         } else {
             $result = DB::select(
                         'SELECT MONTH(a.created_at) as bulan,
@@ -131,8 +127,6 @@ class LaporanBulanan extends Component
         }
 
         $column = ['Bulan', 'Kategori Saran Pengaduan', 'Jumlah Penilaian'];
-
-        dd($data);
 
         return [$column, $data];
     }

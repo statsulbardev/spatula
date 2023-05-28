@@ -23,7 +23,7 @@
                     <div wire:ignore>
                         <select wire:model.defer="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Bulan...</option>
-                            @foreach ($months as $month)
+                            @foreach ($this->months as $month)
                                 <option value="{{ $month[0] }}">{{ $month[1] }}</option>
                             @endforeach
                         </select>
