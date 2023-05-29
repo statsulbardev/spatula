@@ -51,13 +51,15 @@
             <div class="p-4 flex flex-wrap justify-between">
                 {{-- Tab --}}
                 <div class="flex flex-wrap items-center justify-between">
-                    <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
-                        <option hidden selected>Pilih Tahun ...</option>
-                        @foreach ($this->years as $item)
-                            <option value="{{ $item }}">{{ $item }}</option>
-                        @endforeach
-                    </select>
-                    <label data-te-select-label-ref>Tahun</label>
+                    <div wire:ignore>
+                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                            <option hidden selected>Pilih Tahun ...</option>
+                            @foreach ($this->years as $item)
+                                <option value="{{ $item }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
+                        <label data-te-select-label-ref>Tahun</label>
+                    </div>
                 </div>
             </div>
             {{-- Content --}}

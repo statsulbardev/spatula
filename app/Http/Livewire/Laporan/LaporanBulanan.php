@@ -15,6 +15,9 @@ class LaporanBulanan extends Component
 
     /** @props */
     public $selectedYear;
+    public $officerRating;
+    public $serviceRating;
+    public $complaintSuggestion;
 
     /** @computed property : months */
     public function getMonthsProperty()
@@ -37,15 +40,21 @@ class LaporanBulanan extends Component
     public function boot()
     {
         $this->selectedYear = date('Y');
+        $this->officerRating = $this->getOfficerRating(auth()->user()->hasRole('superadmin'));
+        $this->serviceRating = $this->getServiceRating(auth()->user()->hasRole('superadmin'));
+        $this->complaintSuggestion = $this->getComplaintSuggestion(auth()->user()->hasRole('superadmin'));
     }
 
     public function render()
     {
-        return view('livewire.laporan.laporan-bulanan'. [
-            'officerRating' => $this->getOfficerRating(auth()->user()->hasRole('superadmin')),
-            'serviceRating' => $this->getServiceRating(auth()->user()->hasRole('superadmin')),
-            'complaintSuggestion' => $this->getComplaintSuggestion(auth()->user()->hasRole('superadmin'))
-        ]) -> layout('layouts.app');
+        return view('livewire.laporan.laporan-bulanan')->layout('layouts.app');
+    }
+
+    public function updatedSelectedYear()
+    {
+        $this->officerRating = $this->getOfficerRating(auth()->user()->hasRole('superadmin'));
+        $this->serviceRating = $this->getServiceRating(auth()->user()->hasRole('superadmin'));
+        $this->complaintSuggestion = $this->getComplaintSuggestion(auth()->user()->hasRole('superadmin'));
     }
 
     private function getOfficerRating($role)
@@ -57,8 +66,6 @@ class LaporanBulanan extends Component
                         -> whereRaw('YEAR(d_penilaian.created_at) = ' . $this->selectedYear)
                         -> groupByRaw('MONTH(d_penilaian.created_at), m_pengguna.nama')
                         -> get();
-
-                        // dd($result);
         } else {
             $result = DB::select(
                         'SELECT MONTH(a.created_at) as bulan,
@@ -111,7 +118,7 @@ class LaporanBulanan extends Component
         if ($role) {
             $result = DB::table('d_penilaian')
                         -> selectRaw('MONTH(created_at) as bulan, kode_saran')
-                        -> whereRaw('YEAR(created_at) = 2023')
+                        -> whereRaw('YEAR(created_at) = ' . $this->selectedYear)
                         -> groupBy('created_at', 'kode_saran')
                         -> get()
                         -> mapToGroups(function($item, $key) {
