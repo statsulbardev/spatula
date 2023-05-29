@@ -57,7 +57,7 @@
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t">
+                                <td class="border-t" width="35%">
                                     <div
                                         x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
                                         x-init="originalContent = @js($service->saran_pengaduan).trim(); content = originalContent.slice(0, maxLength)"
@@ -104,7 +104,7 @@
                                 {{-- Nama dan Rating Petugas --}}
                                 <td class="border-t">
                                     <div class="pl-6 py-4">
-                                        <div class="mb-2">{{ $service->petugas->nama }}</div>
+                                        <div class="mb-2">{{ $service->petugas->nama ?? '-' }}</div>
                                         <div class="flex">
                                             @if (!is_null($service->rating_petugas))
                                                 @for($i = 0; $i < 5; $i++)

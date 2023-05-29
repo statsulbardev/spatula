@@ -57,7 +57,7 @@
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t">
+                                <td class="border-t" width="45%">
                                     <div
                                         x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
                                         x-init="originalContent = @js($complaint->saran_pengaduan).trim(); content = originalContent.slice(0, maxLength)"
