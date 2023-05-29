@@ -53,6 +53,7 @@
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
                                             <select wire:model.defer="f_layanan" ref="input" class="form-select" :disabled="open">
+                                                <option hidden selected>Pilih Jenis Layanan ...</option>
                                                 @foreach($this->services as $service)
                                                     <option value="{{ $service['kode_layanan'] }}">{{ $service['nama_layanan'] }}</option>
                                                 @endforeach
@@ -87,6 +88,7 @@
                                             </div>
                                             <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
                                                 <select wire:model.defer="f_rating_layanan" ref="input" class="form-select" :disabled="open">
+                                                    <option hidden selected>Pilih Rating Layanan ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
                                                     <option value="2">Tidak Puas</option>
                                                     <option value="3">Cukup Puas</option>
@@ -106,6 +108,7 @@
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
                                             <select wire:model.defer="f_petugas" ref="input" class="form-select" :disabled="open">
+                                                <option hidden selected>Pilih Petugas Layanan ...</option>
                                                 @foreach ($this->officers as $officer)
                                                     <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
                                                 @endforeach
@@ -140,6 +143,7 @@
                                             </div>
                                             <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
                                                 <select wire:model.defer="f_rating_petugas" ref="input" class="form-select" :disabled="open">
+                                                    <option hidden selected>Pilih Rating Petugas ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
                                                     <option value="2">Tidak Puas</option>
                                                     <option value="3">Cukup Puas</option>
