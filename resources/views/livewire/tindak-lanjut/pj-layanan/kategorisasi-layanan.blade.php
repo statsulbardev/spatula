@@ -67,22 +67,36 @@
                                     <tr>
                                         <td class="pl-5 py-6 whitespace-nowrap font-semibold">Rating Layanan</td>
                                         <td class="font-semibold">:</td>
-                                        <td class="flex py-6">
-                                            @if (!is_null($pengguna_layanan->rating_layanan))
-                                                @for($i = 0; $i < 5; $i++)
-                                                    @if($i < $pengguna_layanan->rating_layanan)
-                                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                            @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
-                                                        </span>
-                                                    @else
-                                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                            @include('components.icon', ['name' => 'star-outline', 'size' => 'w-5 h-5'])
-                                                        </span>
-                                                    @endif
-                                                @endfor
-                                            @else
-                                                -
-                                            @endif
+                                        <td class="flex flex-nowrap items-center py-6">
+                                            <div class="flex mr-6">
+                                                @if (!is_null($pengguna_layanan->rating_layanan))
+                                                    @for($i = 0; $i < 5; $i++)
+                                                        @if($i < $pengguna_layanan->rating_layanan)
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
+                                                            </span>
+                                                        @else
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', ['name' => 'star-outline', 'size' => 'w-5 h-5'])
+                                                            </span>
+                                                        @endif
+                                                    @endfor
+                                                @else
+                                                    -
+                                                @endif
+                                            </div>
+                                            <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
+                                                <select wire:model.defer="f_rating_layanan" ref="input" class="form-select" :disabled="open">
+                                                    <option value="1">Sangat Tidak Puas</option>
+                                                    <option value="2">Tidak Puas</option>
+                                                    <option value="3">Cukup Puas</option>
+                                                    <option value="4">Puas</option>
+                                                    <option value="5">Sangat Puas</option>
+                                                </select>
+                                                <button type="button" x-data x-tooltip.raw="Edit Rating" @click="open = !open" class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
+                                                    @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -106,22 +120,36 @@
                                     <tr>
                                         <td class="pl-5 py-6 whitespace-nowrap font-semibold">Rating Petugas / Pemberi Layanan</td>
                                         <td class="font-semibold">:</td>
-                                        <td class="flex py-6">
-                                            @if (!is_null($pengguna_layanan->rating_petugas))
-                                                @for($i = 0; $i < 5; $i++)
-                                                    @if($i < $pengguna_layanan->rating_petugas)
-                                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                            @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
-                                                        </span>
-                                                    @else
-                                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                            @include('components.icon', ['name' => 'star-outline', 'size' => 'w-5 h-5'])
-                                                        </span>
-                                                    @endif
-                                                @endfor
-                                            @else
-                                                -
-                                            @endif
+                                        <td class="flex flex-nowrap items-center py-6">
+                                            <div class="flex mr-6">
+                                                @if (!is_null($pengguna_layanan->rating_petugas))
+                                                    @for($i = 0; $i < 5; $i++)
+                                                        @if($i < $pengguna_layanan->rating_petugas)
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
+                                                            </span>
+                                                        @else
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', ['name' => 'star-outline', 'size' => 'w-5 h-5'])
+                                                            </span>
+                                                        @endif
+                                                    @endfor
+                                                @else
+                                                    -
+                                                @endif
+                                            </div>
+                                            <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
+                                                <select wire:model.defer="f_rating_petugas" ref="input" class="form-select" :disabled="open">
+                                                    <option value="1">Sangat Tidak Puas</option>
+                                                    <option value="2">Tidak Puas</option>
+                                                    <option value="3">Cukup Puas</option>
+                                                    <option value="4">Puas</option>
+                                                    <option value="5">Sangat Puas</option>
+                                                </select>
+                                                <button type="button" x-data x-tooltip.raw="Edit Rating" @click="open = !open" class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
+                                                    @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
 

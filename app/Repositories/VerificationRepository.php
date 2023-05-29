@@ -16,6 +16,7 @@ class VerificationRepository
 
             $data->pengguna_layanan->update([
                 'kode_layanan'         => $data->f_layanan ?? null,
+                'rating_layanan'       => $data->f_rating_layanan ?? null,
                 'kode_petugas'         => $data->f_petugas ?? null,
                 'rating_petugas'       => $data->f_rating_petugas ?? null,
                 'kode_saran'           => array_values(array_filter($verification)), // remove null values and reindex
