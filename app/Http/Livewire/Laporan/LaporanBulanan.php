@@ -64,6 +64,7 @@ class LaporanBulanan extends Component
                         -> join('m_pengguna', 'd_penilaian.kode_petugas', '=', 'm_pengguna.id')
                         -> selectRaw('MONTH(d_penilaian.created_at) as bulan, m_pengguna.nama, AVG(d_penilaian.rating_petugas) as rerata, COUNT(d_penilaian.rating_petugas) as jumlah_terlayani')
                         -> whereRaw('YEAR(d_penilaian.created_at) = ' . $this->selectedYear)
+                        -> where('selesai', 1)
                         -> groupByRaw('MONTH(d_penilaian.created_at), m_pengguna.nama')
                         -> get();
         } else {
@@ -98,6 +99,7 @@ class LaporanBulanan extends Component
                         -> join('m_layanan', 'd_penilaian.kode_layanan', '=', 'm_layanan.kode_layanan')
                         -> selectRaw('MONTH(d_penilaian.created_at) as bulan, m_layanan.nama_layanan, AVG(d_penilaian.rating_layanan) as rerata, COUNT(d_penilaian.rating_layanan) as jumlah_terlayani')
                         -> whereRaw('YEAR(d_penilaian.created_at) = '. $this->selectedYear)
+                        -> where('selesai', 1)
                         -> groupByRaw('MONTH(d_penilaian.created_at), m_layanan.nama_layanan')
                         -> get();
         } else {
@@ -119,6 +121,7 @@ class LaporanBulanan extends Component
             $result = DB::table('d_penilaian')
                         -> selectRaw('MONTH(created_at) as bulan, kode_saran')
                         -> whereRaw('YEAR(created_at) = ' . $this->selectedYear)
+                        -> where('selesai', 1)
                         -> groupBy('created_at', 'kode_saran')
                         -> get()
                         -> mapToGroups(function($item, $key) {

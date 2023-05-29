@@ -15,7 +15,7 @@ class DaftarPengguna extends Component
     use HasModelProcess, UnitCode, WithPagination;
 
     public m_pengguna $pengguna;
-    public int $numberOfPagination = 10;
+    public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
     public function render() : View
