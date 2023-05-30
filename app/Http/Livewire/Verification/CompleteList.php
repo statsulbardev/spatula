@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\UnitCode;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -28,7 +27,7 @@ class CompleteList extends Component
         $this->resetPage();
     }
 
-    private function retrieveData() : Paginator
+    private function retrieveData()
     {
         $result = auth()->user()->hasRole('superadmin')
             ? d_penilaian::search($this->searchKeyword)
@@ -39,6 +38,7 @@ class CompleteList extends Component
                 -> where('selesai', 1)
                 -> orderBy('tanggal_selesai', 'desc');
 
-        return $result->paginate($this->numberOfPagination);
+        return $result->paginate($this->numberOfPagination)->withPath('/spatula/selesai');
+
     }
 }
