@@ -1,44 +1,44 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Layanan;
+namespace App\Http\Livewire\Configuration;
 
-use App\Models\m_layanan;
+use App\Models\m_satker;
 use App\Traits\HasModelProcess;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DaftarLayanan extends Component
+class UnitList extends Component
 {
     use HasModelProcess, WithPagination;
 
-    public m_layanan $layanan;
-    public int $numberOfPagination = 20;
+    public m_satker $satker;
+    public int $numberOfPagination = 10;
     public ?string $searchKeyword = null;
 
     public function render() : View
     {
-        return view('livewire.pengaturan.layanan.daftar-layanan', [
-            'services' => m_layanan::search($this->searchKeyword)
-                            -> orderBy('id', 'asc')
+        return view('livewire.configuration.unit-list', [
+            'offices' => m_satker::search($this->searchKeyword)
+                            -> orderBy('kode_satker', 'asc')
                             -> paginate($this->numberOfPagination)
         ])->layout('layouts.app');
     }
 
-    // reset pagination
     public function updatedNumberOfPagination()
     {
         $this->resetPage();
     }
 
-    public function deleteItem(m_layanan $layanan)
+    public function deleteItem(m_satker $satker)
     {
-        $this->layanan = $layanan;
+        $this->satker = $satker;
     }
 
     public function confirmDeleteItem()
     {
-        $result = $this->delete($this->layanan);
+        $result = $this->delete($this->satker);
 
         $this->dispatchBrowserEvent('notification', ['message' => $result]);
     }

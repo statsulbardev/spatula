@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Livewire\TindakLanjut\PjPengaduan;
+namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use Livewire\Component;
 
-class DetailPjPengaduan extends Component
+class ComplaintItem extends Component
 {
     public $complaint;
 
     public function render()
     {
-        return view('livewire.tindak-lanjut.pj-pengaduan.detail-pj-pengaduan')
+        return view('livewire.verification.complaint-item')
             -> layout('layouts.app');
     }
 

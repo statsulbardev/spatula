@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Pengguna;
+namespace App\Http\Livewire\Configuration;
 
 use App\Models\m_pengguna;
 use App\Traits\HasModelProcess;
@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DaftarPengguna extends Component
+class UserList extends Component
 {
     use HasModelProcess, UnitCode, WithPagination;
 
@@ -20,7 +20,7 @@ class DaftarPengguna extends Component
 
     public function render() : View
     {
-        return view('livewire.pengaturan.pengguna.daftar-pengguna', [
+        return view('livewire.configuration.user-list', [
             'users' => $this->retrieveData()
         ])->layout('layouts.app');
     }

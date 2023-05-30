@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\TindakLanjut\PjLayanan;
+namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Models\m_layanan;
@@ -10,7 +10,7 @@ use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
-class KategorisasiLayanan extends Component
+class ServiceCategorization extends Component
 {
     use HasRedirectUrl;
 
@@ -52,7 +52,7 @@ class KategorisasiLayanan extends Component
 
     public function render()
     {
-        return view('livewire.tindak-lanjut.pj-layanan.kategorisasi-layanan')
+        return view('livewire.verification.service-categorization')
             -> layout('layouts.app');
     }
 

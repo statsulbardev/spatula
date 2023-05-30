@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Livewire\TindakLanjut\Selesai;
+namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\UnitCode;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DaftarSelesai extends Component
+class CompleteList extends Component
 {
     use UnitCode, WithPagination;
 
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
-    public function render()
+    public function render() : View
     {
-        return view('livewire.tindak-lanjut.selesai.daftar-selesai', [
+        return view('livewire.verification.complete-list', [
             'dones' => $this->retrieveData()
         ])->layout('layouts.app');
     }

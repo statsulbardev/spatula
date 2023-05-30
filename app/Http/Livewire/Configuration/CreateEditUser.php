@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Pengguna;
+namespace App\Http\Livewire\Configuration;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\m_pengguna;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class TambahEditPengguna extends Component
+class CreateEditUser extends Component
 {
     use HasRedirectUrl, HasRenderOption;
 
@@ -48,7 +48,7 @@ class TambahEditPengguna extends Component
 
     public function render() : View
     {
-        return view('livewire.pengaturan.pengguna.tambah-edit-pengguna')
+        return view('livewire.configuration.create-edit-user')
             -> layout('layouts.app');
     }
 

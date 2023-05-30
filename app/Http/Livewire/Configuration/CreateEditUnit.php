@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Satker;
+namespace App\Http\Livewire\Configuration;
 
 use App\Http\Requests\StoreUnitRequest;
 use App\Models\m_satker;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class TambahEditSatker extends Component
+class CreateEditUnit extends Component
 {
     use HasRedirectUrl;
 
@@ -33,7 +33,7 @@ class TambahEditSatker extends Component
 
     public function render() : View
     {
-        return view('livewire.pengaturan.satker.tambah-edit-satker')
+        return view('livewire.configuration.create-edit-unit')
             -> layout('layouts.app');
     }
 

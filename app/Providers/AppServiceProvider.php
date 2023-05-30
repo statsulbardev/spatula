@@ -28,8 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        URL::forceScheme('https');
-
         Model::shouldBeStrict(! $this->app->isProduction());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pengaturan\Layanan;
+namespace App\Http\Livewire\Configuration;
 
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\m_layanan;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class TambahEditLayanan extends Component
+class CreateEditService extends Component
 {
     use HasRedirectUrl;
 
@@ -31,7 +31,7 @@ class TambahEditLayanan extends Component
 
     public function render() : View
     {
-        return view('livewire.pengaturan.layanan.tambah-edit-layanan')
+        return view('livewire.configuration.create-edit-service')
             -> layout('layouts.app');
     }
 

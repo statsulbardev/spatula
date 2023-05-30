@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Laporan;
+namespace App\Http\Livewire\Report;
 
 use App\Models\d_penilaian;
 use App\Traits\HasReportProperty;
@@ -8,7 +8,7 @@ use App\Traits\UnitCode;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class LaporanHarian extends Component
+class Daily extends Component
 {
     use HasReportProperty, UnitCode, WithPagination;
 
@@ -32,7 +32,7 @@ class LaporanHarian extends Component
 
     public function render()
     {
-        return view('livewire.laporan.laporan-harian', [
+        return view('livewire.report.daily', [
             'dailyReport' => isset($this->selectedYear)
                                 ? $this->updatedSelectedYear()
                                 : $this->retrieveData()

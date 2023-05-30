@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\TindakLanjut\PjLayanan;
+namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
@@ -10,7 +10,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DaftarPjLayanan extends Component
+class ServiceResponsibleList extends Component
 {
     use HasModelProcess, UnitCode, WithPagination;
 
@@ -20,7 +20,7 @@ class DaftarPjLayanan extends Component
 
     public function render()
     {
-        return view('livewire.tindak-lanjut.pj-layanan.daftar-pj-layanan', [
+        return view('livewire.verification.service-responsible-list', [
             'services' => $this->retrieveData()
         ])->layout('layouts.app');
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Laporan;
+namespace App\Http\Livewire\Report;
 
 use App\Traits\HasReportProperty;
 use App\Traits\UnitCode;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class LaporanBulanan extends Component
+class Monthly extends Component
 {
     use HasReportProperty, UnitCode, WithPagination;
 
@@ -47,7 +47,7 @@ class LaporanBulanan extends Component
 
     public function render()
     {
-        return view('livewire.laporan.laporan-bulanan')->layout('layouts.app');
+        return view('livewire.report.monthly')->layout('layouts.app');
     }
 
     public function updatedSelectedYear()

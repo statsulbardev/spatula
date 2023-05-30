@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Formulir;
+namespace App\Http\Livewire\Form;
 
 use App\Http\Requests\StoreEvaluationRequest;
 use App\Models\d_penilaian;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class Penilaian extends Component
+class Evaluation extends Component
 {
     use HasRenderOption;
 
@@ -71,7 +71,7 @@ class Penilaian extends Component
 
     public function render() : View
     {
-        return view('livewire.formulir.penilaian')->layout('layouts.evaluation');
+        return view('livewire.form.evaluation')->layout('layouts.evaluation');
     }
 
     public function submitData()
