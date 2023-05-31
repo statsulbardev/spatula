@@ -1,9 +1,15 @@
 @section('title', 'Pengguna Layanan')
 
 <div>
-    <div class="mb-8">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => $done->nama_konsumen])
+    {{-- Breadcrumb --}}
+    <div class="mx-auto mb-8">
+        @include('partials.breadcrumb', [
+            'routeLevelOne' => route('daftar-selesai'),
+            'levelOne'      => 'Daftar Selesai',
+            'routeLevelTwo' => route('detail-selesai', ['customer' => $done->id]),
+            'levelTwo'      => 'Item Selesai',
+            'levelThree'    => $done->nama_konsumen
+        ])
     </div>
 
     {{-- Informasi Pengguna Layanan --}}
@@ -12,7 +18,7 @@
             <!-- Table -->
             <div class="w-full mx-auto bg-white border-gray-200 shadow-sm rounded-md">
                 <header class="pl-3 py-4 border-b border-gray-100">
-                    <span class="pl-5 font-bold text-primary-500 text-lg">Informasi Pengguna Layanan</span>
+                    <span class="pl-5 font-bold text-primary-500 text-lg">Informasi Hasil Verifikasi</span>
                 </header>
                 <div class="p-3">
                     <div class="overflow-x-auto">

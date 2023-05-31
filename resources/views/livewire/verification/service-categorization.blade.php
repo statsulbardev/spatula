@@ -1,11 +1,17 @@
 @section('title', 'Kategorisasi')
 
 <div>
-
+    {{-- Breadcrumb --}}
     <div class="mb-8">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Verifikasi Pengguna Layanan'])
+        @include('partials.breadcrumb', [
+            'routeLevelOne' => route('daftar-pj-layanan'),
+            'levelOne'      => 'Daftar Verifikasi',
+            'routeLevelTwo' => Str::contains($route_name, 'tambah') ? route('tambah-kategorisasi-layanan', ['pengguna_layanan' => $pengguna_layanan->id]) : route('edit-kategorisasi-layanan', ['pengguna_layanan' => $pengguna_layanan->id]),
+            'levelTwo'      => 'Kategorisasi Layanan',
+            'levelThree'    => $pengguna_layanan->nama_konsumen
+        ])
     </div>
+
 
     {{-- Informasi Pengguna Layanan --}}
     <section>
@@ -13,7 +19,7 @@
             <form wire:submit.prevent="submitData">
                 <div class="w-full mx-auto bg-white border-gray-200 shadow-sm rounded-t-md">
                     <header class="pl-3 py-4 border-b border-gray-100">
-                        <span class="pl-5 font-bold text-primary-500 text-lg">Informasi Pengguna Layanan</span>
+                        <span class="pl-5 font-bold text-primary-500 text-lg">Verifikasi Penilaian dari Pengguna Layanan</span>
                     </header>
                     <div class="p-3">
                         <div class="overflow-x-auto">

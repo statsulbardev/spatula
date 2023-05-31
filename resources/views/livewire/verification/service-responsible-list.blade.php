@@ -3,6 +3,14 @@
 <div>
     @include('components.notification.flash')
 
+    {{-- Breadcrumb --}}
+    <div class="mb-8">
+        @include('partials.breadcrumb', [
+            'routeLevelOne' => route('daftar-pj-layanan'),
+            'levelOne'      => 'Daftar Verifikasi'
+        ])
+    </div>
+
     <div class="mb-8">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Verifikasi PJ Layanan'])
