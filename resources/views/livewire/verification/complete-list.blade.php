@@ -1,14 +1,6 @@
 @section('title', 'Selesai Tindak Lanjut')
 
 <div>
-    {{-- Breadcrumb --}}
-    <div class="mb-8">
-        @include('partials.breadcrumb', [
-            'routeLevelOne' => route('daftar-selesai'),
-            'levelOne'      => 'Daftar Selesai'
-        ])
-    </div>
-
     {{-- Header --}}
     <div class="mb-8">
         @include('components.page.page-title', ['title' => 'Daftar Hasil Verifikasi'])

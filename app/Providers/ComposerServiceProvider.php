@@ -24,6 +24,6 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('partials.navigation', 'App\Http\ViewComposers\UserComposer');
+        View::composer('partials.breadcrumb', 'App\Http\ViewComposers\BreadcrumbComposer');
     }
 }

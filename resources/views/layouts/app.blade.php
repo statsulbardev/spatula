@@ -35,6 +35,9 @@
     <div class="w-screen">
         {{-- Topbar --}}
         <div class="h-14 bg-white border-b md:px-8 text-sm flex justify-between items-center">
+            <div>
+                @include('partials.breadcrumb')
+            </div>
             <div>BPS Provinsi Sulawesi Barat</div>
         </div>
 
