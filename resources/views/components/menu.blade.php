@@ -17,11 +17,11 @@
         @click="$store.sidebar.active = 'dashboard'"
         class="relative flex items-center hover:text-gray-200 hover:bg-primary-600 space-x-2 rounded-md p-2 cursor-pointer"
         x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-primary-600':$store.sidebar.active == 'dashboard','text-gray-400 ':$store.sidebar.active != 'dashboard'}">
-        <a href="{{ url(env('APP_URL') . '/dashboard') }}">
+        <a href="{{ route('dashboard') }}">
             @include('components.icon', ['name' => 'home', 'size' => 'w-5 h-5'])
         </a>
         <h1 class="text-sm" x-cloak x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
-            <a href="{{ url(env('APP_URL') . '/dashboard') }}">Dashboard</a>
+            <a href="{{ route('dashboard') }}">Dashboard</a>
         </h1>
     </div>
 
@@ -56,17 +56,17 @@
 
             {{-- Submenu Selesai --}}
             <h1 class="hover:text-gray-300 cursor-pointer" x-bind:class="{'mt-2':$store.sidebar.full }">
-                <a href="{{ url(env('APP_URL') . '/verifikasi/selesai') }}">Selesai</a>
+                <a href="{{ route('daftar-selesai') }}">Selesai</a>
             </h1>
 
             {{-- Submenu PJ Layanan --}}
             <h1 class="hover:text-gray-300 cursor-pointer">
-                <a href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan') }}">PJ Layanan</a>
+                <a href="{{ route('daftar-pj-layanan') }}">PJ Layanan</a>
             </h1>
 
             {{-- Submenu PJ Pengaduan --}}
             <h1 class="hover:text-gray-300 cursor-pointer">
-                <a href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan') }}">PJ Pengaduan</a>
+                <a href="{{ route('daftar-pj-pengaduan') }}">PJ Pengaduan</a>
             </h1>
         </div>
     </div>
@@ -100,12 +100,12 @@
 
             {{-- Submenu Bulanan --}}
             <h1 class="hover:text-gray-300 cursor-pointer">
-                <a href="{{ url(env('APP_URL') . '/laporan/bulanan') }}">Bulanan</a>
+                <a href="{{ route('laporan-bulanan') }}">Bulanan</a>
             </h1>
 
             {{-- Submenu Harian --}}
             <h1 class="hover:text-gray-300 cursor-pointer" x-bind:class="{ 'mt-2':$store.sidebar.full }">
-                <a href="{{ url(env('APP_URL') . '/laporan/harian') }}">Harian</a>
+                <a href="{{ route('laporan-harian') }}">Harian</a>
             </h1>
         </div>
     </div>
@@ -137,13 +137,13 @@
             class="text-white space-y-3">
             {{-- Submenu --}}
             <h1 class="hover:text-gray-200 cursor-pointer">
-                <a href="{{ url(env('APP_URL') . '/pengaturan/layanan') }}">Layanan</a>
+                <a href="{{ route('daftar-layanan') }}">Layanan</a>
             </h1>
             <h1 class="hover:text-gray-200 cursor-pointer">
-                <a href="{{ url(env('APP_URL') . '/pengaturan/pengguna') }}">Pengguna</a>
+                <a href="{{ route('daftar-pengguna') }}">Pengguna</a>
             </h1>
             <h1 class="hover:text-gray-200 cursor-pointer">
-                <a href="{{ url(env('APP_URL') . '/pengaturan/satker') }}">Satuan Kerja</a>
+                <a href="{{ route('daftar-satker') }}">Satuan Kerja</a>
             </h1>
         </div>
     </div>
