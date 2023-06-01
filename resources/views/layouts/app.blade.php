@@ -20,11 +20,17 @@
         x-bind:class="{'w-64':$store.sidebar.full, 'w-64 sm:w-20':!$store.sidebar.full,'top-0 left-0':$store.sidebar.navOpen,'top-0 -left-64 sm:left-0':!$store.sidebar.navOpen}">
 
         {{-- Logo Aplikasi --}}
-        <div class="w-full bg-primary-600 h-14">
-            <a class="text-white"
-                x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
-                LOGO
-            </a>
+        <div class="w-full bg-primary-600 h-14 flex justify-center items-center" x-data="{ show: false }">
+            <template x-if="$store.sidebar.full != show">
+                <div>
+                    @include('components.logo.smalltwo')
+                </div>
+            </template>
+            <template x-if="$store.sidebar.full == show">
+                <div>
+                    @include('components.logo.small')
+                </div>
+            </template>
         </div>
 
         <div class="h-screen">

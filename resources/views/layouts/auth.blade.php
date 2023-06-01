@@ -3,11 +3,10 @@
 @section('content')
 <div class="p-6 min-h-screen flex justify-center items-center bg-gradient">
     <div class="w-full max-w-md">
+        <div class="pb-2 flex justify-center items-center">
+            @include('components.logo.login')
+        </div>
         <div class="bg-glass rounded-lg">
-            <div class="mx-auto w-9/12 fill-white">
-                {{-- @include('components.logo') --}}
-            </div>
-
             {{ $slot }}
         </div>
 
@@ -15,7 +14,7 @@
             Dikembangkan Oleh
         </span>
         <div class="block mt-4 mx-auto w-full max-w-xs fill-white" height="45">
-            {{-- @include('components.bps-logo') --}}
+            @include('components.logo.bps')
         </div>
     </div>
 </div>
