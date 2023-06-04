@@ -2,8 +2,9 @@
 
 <div>
     {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Verifikasi Pengaduan Layanan Dari ' .
-    $complaint->nama_konsumen,])
+    @include('components.page.page-title', [
+        'title' => 'Verifikasi Pengaduan Layanan Dari ' . $complaint->nama_konsumen,
+    ])
 
     {{-- Breadcrumb --}}
     @include('partials.breadcrumb')
@@ -47,25 +48,26 @@
                         <td class="font-semibold">:</td>
                         <td class="flex py-4">
                             @if (!is_null($complaint->rating_petugas))
-                            @for ($i = 0; $i < 5; $i++) @if ($i < $complaint->rating_petugas)
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-solid',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @else
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-outline',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @endif
+                                @for ($i = 0; $i < 5; $i++)
+                                    @if ($i < $complaint->rating_petugas)
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-solid',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @else
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-outline',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @endif
                                 @endfor
-                                @else
+                            @else
                                 -
-                                @endif
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -78,25 +80,26 @@
                         <td class="font-semibold">:</td>
                         <td class="flex py-4">
                             @if (!is_null($complaint->rating_layanan))
-                            @for ($i = 0; $i < 5; $i++) @if ($i < $complaint->rating_layanan)
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-solid',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @else
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-outline',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @endif
+                                @for ($i = 0; $i < 5; $i++)
+                                    @if ($i < $complaint->rating_layanan)
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-solid',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @else
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-outline',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @endif
                                 @endfor
-                                @else
+                            @else
                                 -
-                                @endif
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -104,20 +107,18 @@
                         <td class="font-semibold">:</td>
                         <td>
                             @if (!is_null($complaint->kode_saran))
-                            @if (count($complaint->kode_saran) > 1)
-                            <ul class="ml-td">
-                                @for ($i = 0; $i < count($complaint->kode_saran); $i++)
-                                    <li>{{ \App\Models\m_saran::where('kode_saran',
-                                        collect($complaint->kode_saran)->get($i))->pluck('nama_saran')[0] }}
-                                    </li>
-                                    @endfor
-                            </ul>
+                                @if (count($complaint->kode_saran) > 1)
+                                    <ul class="ml-td">
+                                        @for ($i = 0; $i < count($complaint->kode_saran); $i++)
+                                            <li>{{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran)->get($i))->pluck('nama_saran')[0] }}
+                                            </li>
+                                        @endfor
+                                    </ul>
+                                @else
+                                    {{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran))->pluck('nama_saran')[0] }}
+                                @endif
                             @else
-                            {{ \App\Models\m_saran::where('kode_saran',
-                            collect($complaint->kode_saran))->pluck('nama_saran')[0] }}
-                            @endif
-                            @else
-                            -
+                                -
                             @endif
                         </td>
                     </tr>
@@ -146,8 +147,7 @@
                     <td class="pl-5 py-6 whitespace-nowrap font-semibold">Tanggal Tindak Lanjut PJ Pelayanan</td>
                     <td class="font-semibold">:</td>
                     <td>
-                        {{ $complaint->tanggal_tl_pj_layanan ? $complaint->tanggal_tl_pj_layanan->format('d/m/Y') : '-'
-                        }}
+                        {{ $complaint->tanggal_tl_pj_layanan ? $complaint->tanggal_tl_pj_layanan->format('d/m/Y') : '-' }}
                     </td>
                 </tr>
                 <tr>
@@ -161,8 +161,7 @@
                     <td class="pl-5 py-6 whitespace-nowrap font-semibold">Tanggal Tindak Lanjut PJ Pengaduan</td>
                     <td class="font-semibold">:</td>
                     <td>
-                        {{ $complaint->tanggal_tl_pj_pengaduan ? $complaint->tanggal_tl_pj_pengaduan->format('d/m/Y') :
-                        '-' }}
+                        {{ $complaint->tanggal_tl_pj_pengaduan ? $complaint->tanggal_tl_pj_pengaduan->format('d/m/Y') : '-' }}
                     </td>
                 </tr>
                 <tr>

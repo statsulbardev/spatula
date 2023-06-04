@@ -47,25 +47,26 @@
                         <td class="font-semibold">:</td>
                         <td class="flex py-4">
                             @if (!is_null($done->rating_petugas))
-                            @for ($i = 0; $i < 5; $i++) @if ($i < $done->rating_petugas)
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-solid',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @else
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-outline',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @endif
+                                @for ($i = 0; $i < 5; $i++)
+                                    @if ($i < $done->rating_petugas)
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-solid',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @else
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-outline',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @endif
                                 @endfor
-                                @else
+                            @else
                                 -
-                                @endif
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -78,25 +79,26 @@
                         <td class="font-semibold">:</td>
                         <td class="flex py-4">
                             @if (!is_null($done->rating_layanan))
-                            @for ($i = 0; $i < 5; $i++) @if ($i < $done->rating_layanan)
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-solid',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @else
-                                <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                    @include('components.icon', [
-                                    'name' => 'star-outline',
-                                    'size' => 'w-5 h-5',
-                                    ])
-                                </span>
-                                @endif
+                                @for ($i = 0; $i < 5; $i++)
+                                    @if ($i < $done->rating_layanan)
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-solid',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @else
+                                        <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                            @include('components.icon', [
+                                                'name' => 'star-outline',
+                                                'size' => 'w-5 h-5',
+                                            ])
+                                        </span>
+                                    @endif
                                 @endfor
-                                @else
+                            @else
                                 -
-                                @endif
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -104,20 +106,18 @@
                         <td class="font-semibold">:</td>
                         <td>
                             @if (!is_null($done->kode_saran))
-                            @if (count($done->kode_saran) > 1)
-                            <ul class="ml-td">
-                                @for ($i = 0; $i < count($done->kode_saran); $i++)
-                                    <li>{{ \App\Models\m_saran::where('kode_saran',
-                                        collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}
-                                    </li>
-                                    @endfor
-                            </ul>
+                                @if (count($done->kode_saran) > 1)
+                                    <ul class="ml-td">
+                                        @for ($i = 0; $i < count($done->kode_saran); $i++)
+                                            <li>{{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}
+                                            </li>
+                                        @endfor
+                                    </ul>
+                                @else
+                                    {{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran))->pluck('nama_saran')[0] }}
+                                @endif
                             @else
-                            {{ \App\Models\m_saran::where('kode_saran',
-                            collect($done->kode_saran))->pluck('nama_saran')[0] }}
-                            @endif
-                            @else
-                            -
+                                -
                             @endif
                         </td>
                     </tr>

@@ -14,12 +14,14 @@
                             for="username">Username</label>
                         <input wire:model.defer="username" ref="input" class="form-input" type="text" autofocus
                             autocapitalize="off">
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('username')
-                            @include('components.notification.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>
@@ -27,12 +29,14 @@
                         <label class="block font-bold mb-2 text-sm text-white tracking-wider"
                             for="password">Password</label>
                         <input wire:model.defer="password" ref="input" class="form-input" type="password">
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('password')
-                            @include('components.notification.error')
+                                @include('components.notification.error')
                             @enderror
                         </div>
                     </div>

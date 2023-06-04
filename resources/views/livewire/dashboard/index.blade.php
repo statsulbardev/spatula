@@ -35,7 +35,8 @@
                             <path class="primary"
                                 d="M13 4.8l2.92 6.8a1 1 0 0 1 .08.4v8a2 2 0 0 1-2 2H8a4.28 4.28 0 0 1-3.7-2.45L2.07 14.4A1 1 0 0 1 2 14v-2a3 3 0 0 1 3-3h4V5a3 3 0 0 1 3-3 1 1 0 0 1 1 1v1.8z">
                             </path>
-                            <rect width="4" height="11" x="18" y="11" class="secondary" rx="1"></rect>
+                            <rect width="4" height="11" x="18" y="11" class="secondary"
+                                rx="1"></rect>
                         </svg>
                     </span>
                 </div>
@@ -53,8 +54,8 @@
                             <path class="primary"
                                 d="M11 19.2l-2.92-6.8A1 1 0 0 1 8 12V4c0-1.1.9-2 2-2h6c1.5 0 3.11 1.06 3.7 2.45l2.22 5.16A1 1 0 0 1 22 10v2a3 3 0 0 1-3 3h-4v4a3 3 0 0 1-3 3 1 1 0 0 1-1-1v-1.8z">
                             </path>
-                            <rect width="4" height="11" x="2" y="2" class="secondary" rx="1"
-                                transform="rotate(180 4 7.5)"></rect>
+                            <rect width="4" height="11" x="2" y="2" class="secondary"
+                                rx="1" transform="rotate(180 4 7.5)"></rect>
                         </svg>
 
                     </span>

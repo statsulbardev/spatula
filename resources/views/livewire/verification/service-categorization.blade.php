@@ -2,8 +2,9 @@
 
 <div>
 
-    @include('components.page.page-title', ['title' => 'Verifikasi Penilaian Layanan Dari ' .
-    $pengguna_layanan->nama_konsumen,])
+    @include('components.page.page-title', [
+        'title' => 'Verifikasi Penilaian Layanan Dari ' . $pengguna_layanan->nama_konsumen,
+    ])
 
     {{-- Breadcrumb --}}
     @include('partials.breadcrumb')
@@ -56,16 +57,16 @@
                                                 :disabled="open">
                                                 <option hidden selected>Pilih Jenis Layanan ...</option>
                                                 @foreach ($this->services as $service)
-                                                <option value="{{ $service['kode_layanan'] }}">
-                                                    {{ $service['nama_layanan'] }}</option>
+                                                    <option value="{{ $service['kode_layanan'] }}">
+                                                        {{ $service['nama_layanan'] }}</option>
                                                 @endforeach
                                             </select>
                                             <button type="button" x-data x-tooltip.raw="Edit Layanan"
                                                 @click="open = !open"
                                                 class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
                                                 @include('components.icon', [
-                                                'name' => 'pencil-square',
-                                                'size' => 'w-5 h-5',
+                                                    'name' => 'pencil-square',
+                                                    'size' => 'w-5 h-5',
                                                 ])
                                             </button>
                                         </td>
@@ -78,25 +79,26 @@
                                         <td class="flex flex-nowrap items-center py-6">
                                             <div class="flex mr-6">
                                                 @if (!is_null($pengguna_layanan->rating_layanan))
-                                                @for ($i = 0; $i < 5; $i++) @if ($i < $pengguna_layanan->rating_layanan)
-                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                        @include('components.icon', [
-                                                        'name' => 'star-solid',
-                                                        'size' => 'w-5 h-5',
-                                                        ])
-                                                    </span>
-                                                    @else
-                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                        @include('components.icon', [
-                                                        'name' => 'star-outline',
-                                                        'size' => 'w-5 h-5',
-                                                        ])
-                                                    </span>
-                                                    @endif
+                                                    @for ($i = 0; $i < 5; $i++)
+                                                        @if ($i < $pengguna_layanan->rating_layanan)
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', [
+                                                                    'name' => 'star-solid',
+                                                                    'size' => 'w-5 h-5',
+                                                                ])
+                                                            </span>
+                                                        @else
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', [
+                                                                    'name' => 'star-outline',
+                                                                    'size' => 'w-5 h-5',
+                                                                ])
+                                                            </span>
+                                                        @endif
                                                     @endfor
-                                                    @else
+                                                @else
                                                     -
-                                                    @endif
+                                                @endif
                                             </div>
                                             <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
                                                 <select wire:model.defer="f_rating_layanan" ref="input"
@@ -112,8 +114,8 @@
                                                     @click="open = !open"
                                                     class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
                                                     @include('components.icon', [
-                                                    'name' => 'pencil-square',
-                                                    'size' => 'w-5 h-5',
+                                                        'name' => 'pencil-square',
+                                                        'size' => 'w-5 h-5',
                                                     ])
                                                 </button>
                                             </div>
@@ -130,15 +132,15 @@
                                                 :disabled="open">
                                                 <option hidden selected>Pilih Petugas Layanan ...</option>
                                                 @foreach ($this->officers as $officer)
-                                                <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
+                                                    <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
                                                 @endforeach
                                             </select>
                                             <button type="button" x-data x-tooltip.raw="Edit Petugas"
                                                 @click="open = !open"
                                                 class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
                                                 @include('components.icon', [
-                                                'name' => 'pencil-square',
-                                                'size' => 'w-5 h-5',
+                                                    'name' => 'pencil-square',
+                                                    'size' => 'w-5 h-5',
                                                 ])
                                             </button>
                                         </td>
@@ -152,25 +154,26 @@
                                         <td class="flex flex-nowrap items-center py-6">
                                             <div class="flex mr-6">
                                                 @if (!is_null($pengguna_layanan->rating_petugas))
-                                                @for ($i = 0; $i < 5; $i++) @if ($i < $pengguna_layanan->rating_petugas)
-                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                        @include('components.icon', [
-                                                        'name' => 'star-solid',
-                                                        'size' => 'w-5 h-5',
-                                                        ])
-                                                    </span>
-                                                    @else
-                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                        @include('components.icon', [
-                                                        'name' => 'star-outline',
-                                                        'size' => 'w-5 h-5',
-                                                        ])
-                                                    </span>
-                                                    @endif
+                                                    @for ($i = 0; $i < 5; $i++)
+                                                        @if ($i < $pengguna_layanan->rating_petugas)
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', [
+                                                                    'name' => 'star-solid',
+                                                                    'size' => 'w-5 h-5',
+                                                                ])
+                                                            </span>
+                                                        @else
+                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                                @include('components.icon', [
+                                                                    'name' => 'star-outline',
+                                                                    'size' => 'w-5 h-5',
+                                                                ])
+                                                            </span>
+                                                        @endif
                                                     @endfor
-                                                    @else
+                                                @else
                                                     -
-                                                    @endif
+                                                @endif
                                             </div>
                                             <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
                                                 <select wire:model.defer="f_rating_petugas" ref="input"
@@ -186,8 +189,8 @@
                                                     @click="open = !open"
                                                     class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
                                                     @include('components.icon', [
-                                                    'name' => 'pencil-square',
-                                                    'size' => 'w-5 h-5',
+                                                        'name' => 'pencil-square',
+                                                        'size' => 'w-5 h-5',
                                                     ])
                                                 </button>
                                             </div>
@@ -213,7 +216,8 @@
                                                     <label>Saran</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_pengaduan" type="checkbox" class="mr-2">
+                                                    <input wire:model.defer="cb_pengaduan" type="checkbox"
+                                                        class="mr-2">
                                                     <label>Pengaduan</label>
                                                 </div>
                                                 <div class="flex">
@@ -221,11 +225,13 @@
                                                     <label>Kritik</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_apresiasi" type="checkbox" class="mr-2">
+                                                    <input wire:model.defer="cb_apresiasi" type="checkbox"
+                                                        class="mr-2">
                                                     <label>Apresiasi</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_lainnya" type="checkbox" class="mr-2">
+                                                    <input wire:model.defer="cb_lainnya" type="checkbox"
+                                                        class="mr-2">
                                                     <label>Lainnya</label>
                                                 </div>
                                             </div>

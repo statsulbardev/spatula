@@ -49,8 +49,7 @@
                     ? 'show'
                     : '' }}
             ">
-                <li
-                    class="{{ request()->is('followup/done') || request()->is('followup/done/*') ? 'active' : '' }}">
+                <li class="{{ request()->is('followup/done') || request()->is('followup/done/*') ? 'active' : '' }}">
                     <a href="{{ url(env('APP_URL') . 'tindak-lanjut/selesai') }}">Selesai</a>
                 </li>
                 <li

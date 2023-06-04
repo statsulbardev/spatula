@@ -23,16 +23,18 @@
                         {{-- Kode Satuan Kerja --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
-                            'label' => 'Kode',
-                            'model' => 'f_kode',
-                            'type' => 'number',
+                                'label' => 'Kode',
+                                'model' => 'f_kode',
+                                'type' => 'number',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_kode')
-                                @include('components.notification.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
@@ -40,16 +42,18 @@
                         {{-- Nama Satuan Kerja --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
-                            'label' => 'Nama',
-                            'model' => 'f_nama',
-                            'type' => 'text',
+                                'label' => 'Nama',
+                                'model' => 'f_nama',
+                                'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_nama')
-                                @include('components.notification.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
@@ -57,21 +61,22 @@
                         {{-- Level Satker --}}
                         <div class="p-6 w-full">
                             @include('components.input.select', [
-                            'label' => 'Level',
-                            'model' => 'f_level',
-                            'opt_title' => 'Pilih Level Satker ...',
-                            'opt_item' =>
-                            "<option value='1'>Provinsi</option>
-                            <option value='2'>Kabupaten</option>",
-                            'id' => 'level',
-                            'value' => $routeName === 'tambah-satker' ? null : $this->f_level,
+                                'label' => 'Level',
+                                'model' => 'f_level',
+                                'opt_title' => 'Pilih Level Satker ...',
+                                'opt_item' => "<option value='1'>Provinsi</option>
+                                                        <option value='2'>Kabupaten</option>",
+                                'id' => 'level',
+                                'value' => $routeName === 'tambah-satker' ? null : $this->f_level,
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_level')
-                                @include('components.notification.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
@@ -79,16 +84,18 @@
                         {{-- Alamat Satker --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
-                            'label' => 'Alamat',
-                            'model' => 'f_alamat',
-                            'type' => 'text',
+                                'label' => 'Alamat',
+                                'model' => 'f_alamat',
+                                'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_alamat')
-                                @include('components.notification.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
@@ -96,16 +103,18 @@
                         {{-- Website Satker --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
-                            'label' => 'Website',
-                            'model' => 'f_web',
-                            'type' => 'text',
+                                'label' => 'Website',
+                                'model' => 'f_web',
+                                'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_web')
-                                @include('components.notification.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>
@@ -113,16 +122,18 @@
                         {{-- Nomor Telepon --}}
                         <div class="p-6 w-full">
                             @include('components.input.text', [
-                            'label' => 'Telepon',
-                            'model' => 'f_telepon',
-                            'type' => 'numeric',
+                                'label' => 'Telepon',
+                                'model' => 'f_telepon',
+                                'type' => 'numeric',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_telepon')
-                                @include('components.notification.error')
+                                    @include('components.notification.error')
                                 @enderror
                             </div>
                         </div>

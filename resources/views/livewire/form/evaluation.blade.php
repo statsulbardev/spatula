@@ -31,9 +31,11 @@
                             'value' => null,
                             'id' => 'unit_kerja',
                         ])
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_unit')
                                 @include('components.notification.error')
@@ -59,9 +61,11 @@
                             'model' => 'f_nama',
                             'type' => 'text',
                         ])
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_nama')
                                 @include('components.notification.error')
@@ -75,9 +79,11 @@
                             'model' => 'f_email',
                             'type' => 'email',
                         ])
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_email')
                                 @include('components.notification.error')
@@ -91,9 +97,11 @@
                             'model' => 'f_nowatelp',
                             'type' => 'numeric',
                         ])
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_nowatelp')
                                 @include('components.notification.error')
@@ -122,9 +130,11 @@
                             'value' => null,
                             'id' => 'jenis_layanan',
                         ])
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_layanan')
                                 @include('components.notification.error')
@@ -134,9 +144,11 @@
 
                     {{-- Rating Layanan --}}
                     @include('components.input.rating', ['model' => 'f_ratinglayanan'])
-                    <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                    <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                        clearTimeout(timeout);
                         shown = true;
-                        timeout = setTimeout(() => { shown = false }, 5000); })"
+                        timeout = setTimeout(() => { shown = false }, 5000);
+                    })"
                         x-show.transition.opacity.out.duration.2000ms="shown">
                         @error('f_ratinglayanan')
                             @include('components.notification.error')
@@ -166,9 +178,11 @@
                                 'id' => 'petugas',
                                 'value' => null,
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
                                 shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000); })"
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })"
                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_petugas')
                                     @include('components.notification.error')
@@ -178,9 +192,11 @@
 
                         {{-- Rating Petugas --}}
                         @include('components.input.rating', ['model' => 'f_ratingpetugas'])
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_ratingpetugas')
                                 @include('components.notification.error')
@@ -206,9 +222,11 @@
                             'label' => 'Saran Pengaduan',
                         ])
 
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => { clearTimeout(timeout);
+                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                            clearTimeout(timeout);
                             shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000); })"
+                            timeout = setTimeout(() => { shown = false }, 5000);
+                        })"
                             x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('f_saranpengaduan')
                                 @include('components.notification.error')
