@@ -4,13 +4,15 @@ namespace App\Http\Livewire\Report;
 
 use App\Models\d_penilaian;
 use App\Traits\HasReportProperty;
-use App\Traits\UnitCode;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Daily extends Component
 {
-    use HasReportProperty, UnitCode, WithPagination;
+    use HasReportProperty, WithPagination;
 
     public int $numberOfPagination = 20;
 
@@ -30,7 +32,10 @@ class Daily extends Component
         return $this->initYearsOption();
     }
 
-    public function render()
+    public function boot()
+    {}
+
+    public function render() : View
     {
         return view('livewire.report.daily', [
             'dailyReport' => isset($this->selectedYear)
@@ -41,10 +46,18 @@ class Daily extends Component
 
     public function updatedSelectedYear()
     {
+        $superadmin_role = auth()->user()->hasRole('superadmin');
+
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+
         return d_penilaian::with(['petugas', 'layanan'])
+                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code) {
+                    $query->where('kode_satker_id', $user_unit_code);
+                })
                 -> whereYear('created_at', '=', $this->selectedYear)
                 -> whereMonth('created_at', '=', $this->selectedMonth)
                 -> where('selesai', 1)
+                -> orderBy('tanggal_selesai', 'desc')
                 -> paginate($this->numberOfPagination);
     }
 
@@ -55,14 +68,18 @@ class Daily extends Component
         $this->retrieveData();
     }
 
-    private function retrieveData()
+    private function retrieveData() : Paginator
     {
-        $result = auth()->user()->hasRole('superadmin')
-            ? d_penilaian::with(['petugas', 'layanan'])->where('selesai', 1)->orderBy('tanggal_selesai', 'desc')
-            : d_penilaian::where('kode_satker_id', $this->getUnitCode()->kode_satker)
-                         ->where('selesai', 1)
-                         ->orderBy('created_at', 'desc');
+        $superadmin_role = auth()->user()->hasRole('superadmin');
 
-        return $result->paginate($this->numberOfPagination);
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+
+        return d_penilaian::with(['petugas', 'layanan'])
+                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code)  {
+                    $query->where('kode_satker_id', $user_unit_code);
+                })
+                -> where('selesai', 1)
+                -> orderBy('tanggal_selesai', 'desc')
+                -> paginate($this->numberOfPagination);
     }
 }

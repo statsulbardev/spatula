@@ -1,11 +1,12 @@
 @section('title', 'Kategorisasi')
 
 <div>
-    {{-- Breadcrumb --}}
-    <div class="mb-8">
-        @include('components.page.page-title', ['title' => 'Verifikasi Penilaian Layanan Dari ' . $pengguna_layanan->nama_konsumen])
-    </div>
 
+    @include('components.page.page-title', ['title' => 'Verifikasi Penilaian Layanan Dari ' .
+    $pengguna_layanan->nama_konsumen,])
+
+    {{-- Breadcrumb --}}
+    @include('partials.breadcrumb')
 
     {{-- Informasi Pengguna Layanan --}}
     <section>
@@ -25,7 +26,8 @@
 
                                     {{-- Nama Pengguna Layanan --}}
                                     <tr>
-                                        <td width="30%" class="pl-5 py-6 whitespace-nowrap font-semibold">Nama Pengguna Layanan</td>
+                                        <td width="30%" class="pl-5 py-6 whitespace-nowrap font-semibold">Nama
+                                            Pengguna Layanan</td>
                                         <td width="1%" class="font-semibold">:</td>
                                         <td>{{ $pengguna_layanan->nama_konsumen }}</td>
                                     </tr>
@@ -39,7 +41,8 @@
 
                                     {{-- No. WA/Telepon Pengguna Layanan --}}
                                     <tr>
-                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Nomor Telepon / Whatsapp</td>
+                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Nomor Telepon / Whatsapp
+                                        </td>
                                         <td class="font-semibold">:</td>
                                         <td>{{ $pengguna_layanan->no_wa_telepon ?? '-' }}</td>
                                     </tr>
@@ -49,14 +52,21 @@
                                         <td class="pl-5 py-6 whitespace-nowrap font-semibold">Jenis Layanan</td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
-                                            <select wire:model.defer="f_layanan" ref="input" class="form-select" :disabled="open">
+                                            <select wire:model.defer="f_layanan" ref="input" class="form-select"
+                                                :disabled="open">
                                                 <option hidden selected>Pilih Jenis Layanan ...</option>
-                                                @foreach($this->services as $service)
-                                                    <option value="{{ $service['kode_layanan'] }}">{{ $service['nama_layanan'] }}</option>
+                                                @foreach ($this->services as $service)
+                                                <option value="{{ $service['kode_layanan'] }}">
+                                                    {{ $service['nama_layanan'] }}</option>
                                                 @endforeach
                                             </select>
-                                            <button type="button" x-data x-tooltip.raw="Edit Layanan" @click="open = !open" class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
-                                                @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
+                                            <button type="button" x-data x-tooltip.raw="Edit Layanan"
+                                                @click="open = !open"
+                                                class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
+                                                @include('components.icon', [
+                                                'name' => 'pencil-square',
+                                                'size' => 'w-5 h-5',
+                                                ])
                                             </button>
                                         </td>
                                     </tr>
@@ -68,23 +78,29 @@
                                         <td class="flex flex-nowrap items-center py-6">
                                             <div class="flex mr-6">
                                                 @if (!is_null($pengguna_layanan->rating_layanan))
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        @if($i < $pengguna_layanan->rating_layanan)
-                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                                @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
-                                                            </span>
-                                                        @else
-                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                                @include('components.icon', ['name' => 'star-outline', 'size' => 'w-5 h-5'])
-                                                            </span>
-                                                        @endif
+                                                @for ($i = 0; $i < 5; $i++) @if ($i < $pengguna_layanan->rating_layanan)
+                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                        @include('components.icon', [
+                                                        'name' => 'star-solid',
+                                                        'size' => 'w-5 h-5',
+                                                        ])
+                                                    </span>
+                                                    @else
+                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                        @include('components.icon', [
+                                                        'name' => 'star-outline',
+                                                        'size' => 'w-5 h-5',
+                                                        ])
+                                                    </span>
+                                                    @endif
                                                     @endfor
-                                                @else
+                                                    @else
                                                     -
-                                                @endif
+                                                    @endif
                                             </div>
                                             <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
-                                                <select wire:model.defer="f_rating_layanan" ref="input" class="form-select" :disabled="open">
+                                                <select wire:model.defer="f_rating_layanan" ref="input"
+                                                    class="form-select" :disabled="open">
                                                     <option hidden selected>Pilih Rating Layanan ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
                                                     <option value="2">Tidak Puas</option>
@@ -92,8 +108,13 @@
                                                     <option value="4">Puas</option>
                                                     <option value="5">Sangat Puas</option>
                                                 </select>
-                                                <button type="button" x-data x-tooltip.raw="Edit Rating" @click="open = !open" class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
-                                                    @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
+                                                <button type="button" x-data x-tooltip.raw="Edit Rating"
+                                                    @click="open = !open"
+                                                    class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
+                                                    @include('components.icon', [
+                                                    'name' => 'pencil-square',
+                                                    'size' => 'w-5 h-5',
+                                                    ])
                                                 </button>
                                             </div>
                                         </td>
@@ -101,45 +122,59 @@
 
                                     {{-- Nama Petugas Layanan --}}
                                     <tr>
-                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Nama Petugas / Pemberi Layanan</td>
+                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Nama Petugas / Pemberi
+                                            Layanan</td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
-                                            <select wire:model.defer="f_petugas" ref="input" class="form-select" :disabled="open">
+                                            <select wire:model.defer="f_petugas" ref="input" class="form-select"
+                                                :disabled="open">
                                                 <option hidden selected>Pilih Petugas Layanan ...</option>
                                                 @foreach ($this->officers as $officer)
-                                                    <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
+                                                <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
                                                 @endforeach
                                             </select>
-                                            <button type="button" x-data x-tooltip.raw="Edit Petugas" @click="open = !open" class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
-                                                @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
+                                            <button type="button" x-data x-tooltip.raw="Edit Petugas"
+                                                @click="open = !open"
+                                                class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
+                                                @include('components.icon', [
+                                                'name' => 'pencil-square',
+                                                'size' => 'w-5 h-5',
+                                                ])
                                             </button>
                                         </td>
                                     </tr>
 
                                     {{-- Rating Petugas Layanan --}}
                                     <tr>
-                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Rating Petugas / Pemberi Layanan</td>
+                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Rating Petugas / Pemberi
+                                            Layanan</td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6">
                                             <div class="flex mr-6">
                                                 @if (!is_null($pengguna_layanan->rating_petugas))
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        @if($i < $pengguna_layanan->rating_petugas)
-                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                                @include('components.icon', ['name' => 'star-solid', 'size' => 'w-5 h-5'])
-                                                            </span>
-                                                        @else
-                                                            <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
-                                                                @include('components.icon', ['name' => 'star-outline', 'size' => 'w-5 h-5'])
-                                                            </span>
-                                                        @endif
+                                                @for ($i = 0; $i < 5; $i++) @if ($i < $pengguna_layanan->rating_petugas)
+                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                        @include('components.icon', [
+                                                        'name' => 'star-solid',
+                                                        'size' => 'w-5 h-5',
+                                                        ])
+                                                    </span>
+                                                    @else
+                                                    <span class="text-secondary-400 {{ $i == 0 ?: 'ml-2' }}">
+                                                        @include('components.icon', [
+                                                        'name' => 'star-outline',
+                                                        'size' => 'w-5 h-5',
+                                                        ])
+                                                    </span>
+                                                    @endif
                                                     @endfor
-                                                @else
+                                                    @else
                                                     -
-                                                @endif
+                                                    @endif
                                             </div>
                                             <div class="flex flex-nowrap items-center w-full" x-data="{ open: true }">
-                                                <select wire:model.defer="f_rating_petugas" ref="input" class="form-select" :disabled="open">
+                                                <select wire:model.defer="f_rating_petugas" ref="input"
+                                                    class="form-select" :disabled="open">
                                                     <option hidden selected>Pilih Rating Petugas ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
                                                     <option value="2">Tidak Puas</option>
@@ -147,8 +182,13 @@
                                                     <option value="4">Puas</option>
                                                     <option value="5">Sangat Puas</option>
                                                 </select>
-                                                <button type="button" x-data x-tooltip.raw="Edit Rating" @click="open = !open" class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
-                                                    @include('components.icon', ['name' => 'pencil-square', 'size' => 'w-5 h-5'])
+                                                <button type="button" x-data x-tooltip.raw="Edit Rating"
+                                                    @click="open = !open"
+                                                    class="mx-5 text-red-500 hover:text-red-600 cursor-pointer">
+                                                    @include('components.icon', [
+                                                    'name' => 'pencil-square',
+                                                    'size' => 'w-5 h-5',
+                                                    ])
                                                 </button>
                                             </div>
                                         </td>
@@ -156,7 +196,8 @@
 
                                     {{-- Saran Pengaduan --}}
                                     <tr>
-                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Saran / Pengaduan / Kritik / Apresiasi</td>
+                                        <td class="pl-5 py-6 whitespace-nowrap font-semibold">Saran / Pengaduan / Kritik
+                                            / Apresiasi</td>
                                         <td class="font-semibold">:</td>
                                         <td>{!! ucwords(strtolower($pengguna_layanan->saran_pengaduan)) ?? '-' !!}</td>
                                     </tr>
@@ -195,7 +236,8 @@
                                     <tr>
                                         <td class="pl-5 py-6 whitespace-nowrap font-semibold">Catatan</td>
                                         <td class="font-semibold">:</td>
-                                        <td><input wire:model.defer="f_catatan" type="text" ref="input" class="form-input" placeholder="Contoh : Nama Kegiatan ..."></td>
+                                        <td><input wire:model.defer="f_catatan" type="text" ref="input"
+                                                class="form-input" placeholder="Contoh : Nama Kegiatan ..."></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -1,6 +1,6 @@
 <label class="form-label font-bold" for="{{ $label }}">
     {{ $label }}
-    @if(isset($label_opt))
+    @if (isset($label_opt))
         <sup class="rounded-lg bg-neutral-100 ml-1 p-1 text-xs text-gray-700">{{ $label_opt }}</sup>
     @endif
 </label>

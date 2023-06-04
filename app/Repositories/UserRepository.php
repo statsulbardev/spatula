@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Role;
 
 class UserRepository
 {
+
     public function save($data) : string
     {
         try {
@@ -22,11 +23,11 @@ class UserRepository
                 'email'          => $data->f_email,
                 'password'       => bcrypt($data->f_password),
                 'bpsid'          => $data->f_nip,
-                'kode_satker_id' => $data->f_unit,
+                'kode_satker_id' => $data->f_unit ?? auth()->user()->satker->kode_satker,
                 'is_petugas'     => $data->f_petugas
             ]);
 
-            $query->assignRoles($data->f_role);
+            $query->assignRole($data->f_role);
 
             DB::commit();
 

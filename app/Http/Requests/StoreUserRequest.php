@@ -30,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'f_nip'      => 'required|digits:9',
             'f_petugas'  => 'required',
             'f_role'     => 'required',
-            'f_unit'     => 'required',
+            'f_unit'     => 'nullable',
         ];
     }
 

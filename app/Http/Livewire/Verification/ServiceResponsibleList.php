@@ -4,15 +4,15 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
-use App\Traits\UnitCode;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
+use Laravel\Scout\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ServiceResponsibleList extends Component
 {
-    use HasModelProcess, UnitCode, WithPagination;
+    use HasModelProcess, WithPagination;
 
     public d_penilaian $penilaian;
     public int $numberOfPagination = 20;
@@ -54,16 +54,17 @@ class ServiceResponsibleList extends Component
 
     private function retrieveData() : Paginator
     {
-        $result = auth()->user()->hasRole('superadmin')
-            ? d_penilaian::search($this->searchKeyword)
+        $superadmin_role = auth()->user()->hasRole('superadmin');
+
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+
+        return d_penilaian::search($this->searchKeyword)
                         -> query(fn ($query) => $query->with(['petugas', 'layanan']))
+                        -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code) {
+                            $query->where('kode_satker_id', $user_unit_code);
+                        })
                         -> where('selesai', 0)
                         -> orderBy('created_at', 'desc')
-            : d_penilaian::search($this->searchKeyword)
-                        -> where('kode_satker_id', $this->getUnitCode()->kode_satker)
-                        -> where('selesai', 0)
-                        -> orderBy('created_at', 'desc');
-
-        return $result->paginate($this->numberOfPagination);
+                        -> paginate($this->numberOfPagination);
     }
 }

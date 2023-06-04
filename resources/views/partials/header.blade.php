@@ -32,7 +32,7 @@
                     <li class="nav-item d-flex align-items-center mr-3"><a id="search" href="#"><i class="icon-search"></i></a></li> --}}
                     <!-- Logout    -->
                     <li class="nav-item">
-                        <livewire:auth.logout/>
+                        <livewire:auth.logout />
                     </li>
                 </ul>
             </div>

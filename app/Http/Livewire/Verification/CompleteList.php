@@ -5,12 +5,13 @@ namespace App\Http\Livewire\Verification;
 use App\Models\d_penilaian;
 use App\Traits\UnitCode;
 use Illuminate\View\View;
+use Laravel\Scout\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class CompleteList extends Component
 {
-    use UnitCode, WithPagination;
+    use WithPagination;
 
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
@@ -29,15 +30,16 @@ class CompleteList extends Component
 
     private function retrieveData()
     {
-        $result = auth()->user()->hasRole('superadmin')
-            ? d_penilaian::search($this->searchKeyword)
+        $superadmin_role = auth()->user()->hasRole('superadmin');
+
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+
+        return d_penilaian::search($this->searchKeyword)
+                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code) {
+                    $query->where('kode_satker_id', $user_unit_code);
+                })
                 -> where('selesai', 1)
                 -> orderBy('tanggal_selesai', 'desc')
-            : d_penilaian::search($this->searchKeyword)
-                -> where('kode_satker_id', $this->getUnitCode()->kode_satker)
-                -> where('selesai', 1)
-                -> orderBy('tanggal_selesai', 'desc');
-
-        return $result->paginate($this->numberOfPagination);
+                -> paginate($this->numberOfPagination);
     }
 }

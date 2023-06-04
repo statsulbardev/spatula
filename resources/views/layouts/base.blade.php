@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +22,8 @@
             $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
         @endphp
         <script type="module" src="{{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['file']) }}"></script>
-        <link rel="stylesheet" href={{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['css'][0]) }}">
+        <link rel="stylesheet"
+            href={{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['css'][0]) }}">
     @else
         @vite('resources/js/app.js')
     @endproduction
@@ -30,8 +32,13 @@
 
     @livewireStyles
 
-    <style>[x-cloak] { display : none; }</style>
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
 </head>
+
 <body x-data class="h-screen mx-auto antialiased bg-gray-100 font-sans leading-none text-gray-700">
 
     @yield('content')
@@ -45,4 +52,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

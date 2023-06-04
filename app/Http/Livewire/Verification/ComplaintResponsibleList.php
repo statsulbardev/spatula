@@ -4,15 +4,15 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
-use App\Traits\UnitCode;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
+use Laravel\Scout\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ComplaintResponsibleList extends Component
 {
-    use HasModelProcess, UnitCode, WithPagination;
+    use HasModelProcess, WithPagination;
 
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
@@ -36,15 +36,16 @@ class ComplaintResponsibleList extends Component
 
     private function retrieveData() : Paginator
     {
-        $result = auth()->user()->hasRole('superadmin')
-            ? d_penilaian::search($this->searchKeyword)
+        $superadmin_role = auth()->user()->hasRole('superadmin');
+
+        $user_unit_role  = auth()->user()->satker->kode_satker;
+
+        return d_penilaian::search($this->searchKeyword)
+                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_role) {
+                    $query->where('kode_satker_id', $user_unit_role);
+                })
                 -> where('selesai', 0)
                 -> where('is_pengaduan', 1)
-            : d_penilaian::search($this->searchKeyword)
-                -> where('selesai', 0)
-                -> where('kode_satker_id', $this->getUnitCode()->kode_satker)
-                -> where('is_pengaduan', 1);
-
-        return $result->paginate($this->numberOfPagination);
+                -> paginate($this->numberOfPagination);
     }
 }

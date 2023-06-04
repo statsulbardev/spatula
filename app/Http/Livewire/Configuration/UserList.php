@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Configuration;
 
 use App\Models\m_pengguna;
 use App\Traits\HasModelProcess;
-use App\Traits\UnitCode;
+use Laravel\Scout\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -12,7 +12,7 @@ use Livewire\WithPagination;
 
 class UserList extends Component
 {
-    use HasModelProcess, UnitCode, WithPagination;
+    use HasModelProcess, WithPagination;
 
     public m_pengguna $pengguna;
     public int $numberOfPagination = 20;
@@ -44,20 +44,16 @@ class UserList extends Component
 
     private function retrieveData() : Paginator
     {
-        $authUser = auth()->user();
+        $superadmin_role = auth()->user()->hasRole('superadmin');
 
-        if ($authUser->hasRole('superadmin')) {
-            $result = m_pengguna::search($this->searchKeyword)
-                        -> query(fn ($query) => $query->with(['satker', 'roles']))
-                        -> orderBy('kode_satker_id', 'asc');
-        } elseif ($authUser->hasRole('admin') || $authUser->hasRole('pimpinan')) {
-            $result = m_pengguna::search($this->searchKeyword)
-                        -> where('kode_satker_id', $this->getUnitCode()->kode_satker)
-                        -> where('role_id', '>', 1);
-        } else {
-            $result = m_pengguna::search($this->searchKeyword)->where('id', auth()->id());
-        }
+        $user_unit_code  = auth()->user()->satker->kode_satker;
 
-        return $result->paginate($this->numberOfPagination);
+        return m_pengguna::search($this->searchKeyword)
+                -> query(fn ($query) => $query->with(['satker', 'roles']))
+                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code) {
+                    $query->where('kode_satker_id', $user_unit_code);
+                })
+                -> orderBy('kode_satker_id', 'asc')
+                -> paginate($this->numberOfPagination);
     }
 }
