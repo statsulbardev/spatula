@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 // Verification
-Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
+Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-layanan|pj-pengaduan']], function () {
     Route::prefix('/verifikasi/')->group(function() {
         Route::get('selesai', CompleteList::class)->name('daftar-selesai');
         Route::get('selesai/{customer}', CompleteItem::class)->name('detail-selesai');
