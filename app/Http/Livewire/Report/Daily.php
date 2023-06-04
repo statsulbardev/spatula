@@ -32,6 +32,21 @@ class Daily extends Component
         return $this->initYearsOption();
     }
 
+    /** @computed proprty : rootBreadcrumb */
+    public function getRootBreadcrumbProperty()
+    {
+        return [
+            'route' => route('laporan-harian'),
+            'label' => 'Laporan',
+        ];
+    }
+
+    /** @computed property : secondBreadcrumb */
+    public function getSecondBreadcrumbProperty()
+    {
+        return 'Harian';
+    }
+
     public function boot()
     {}
 

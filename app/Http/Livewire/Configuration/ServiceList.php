@@ -12,9 +12,19 @@ class ServiceList extends Component
 {
     use HasModelProcess, WithPagination;
 
+    /** @props */
     public m_layanan $layanan;
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
+
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-layanan'),
+            'label' => 'Daftar Layanan'
+        ];
+    }
 
     public function render() : View
     {

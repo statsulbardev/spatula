@@ -13,9 +13,19 @@ class UnitList extends Component
 {
     use HasModelProcess, WithPagination;
 
+    /** @props */
     public m_satker $satker;
     public int $numberOfPagination = 10;
     public ?string $searchKeyword = null;
+
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-satker'),
+            'label' => 'Daftar Satker'
+        ];
+    }
 
     public function render() : View
     {

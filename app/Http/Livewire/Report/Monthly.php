@@ -35,6 +35,21 @@ class Monthly extends Component
         return $this->initSuggestionsOption();
     }
 
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('laporan-bulanan'),
+            'label' => 'Laporan'
+        ];
+    }
+
+    /** @computed propery : secondBreadcrumb */
+    public function getSecondBreadcrumbProperty() : string
+    {
+        return 'Bulanan';
+    }
+
     public function boot()
     {
         $this->selectedYear = date("Y");

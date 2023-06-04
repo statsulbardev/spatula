@@ -8,6 +8,7 @@ use App\Models\m_pengguna;
 use App\Repositories\VerificationRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class ServiceCategorization extends Component
@@ -31,7 +32,7 @@ class ServiceCategorization extends Component
     public $cb_apresiasi;
     public $cb_lainnya;
 
-    // Computed Property : officers
+    /** @computed Property : officers */
     public function getOfficersProperty()
     {
         return
@@ -41,7 +42,7 @@ class ServiceCategorization extends Component
                 -> toArray();
     }
 
-    // Computed Property : services
+    /** @computed Property : services */
     public function getServicesProperty()
     {
         return
@@ -50,7 +51,31 @@ class ServiceCategorization extends Component
                 -> toArray();
     }
 
-    public function render()
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route'  => route('daftar-pj-layanan'),
+            'label'  => 'Daftar Verifikasi',
+        ];
+    }
+
+    /** @computed property : firstBreadcrumb */
+    public function getFirstBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('tambah-kategorisasi-layanan', request()->route()->originalParameters()),
+            'label' => 'Kategorisasi Layanan',
+        ];
+    }
+
+    /** @computed property : secondBreadcrumb */
+    public function getSecondBreadcrumbProperty() : string
+    {
+        return request()->route()->parameters()['pengguna_layanan']['nama_konsumen'];
+    }
+
+    public function render() : View
     {
         return view('livewire.verification.service-categorization')
             -> layout('layouts.app');

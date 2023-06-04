@@ -1,35 +1,32 @@
 @section('title', 'Laporan Bulanan')
 
 <div>
-    <div class="flex flex-no-wrap justify-between mb-8">
+    <div class="flex flex-no-wrap justify-between">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Laporan Bulanan Tahun ' . $selectedYear])
 
-        {{-- Breadcrumb --}}
-        @include('partials.breadcrumb')
-
         {{-- Menu --}}
         <ul class="flex flex-nowrap" role="tablist" data-te-nav-ref>
-            <li class="bg-white border-1 font-medium leading-tight p-3 rounded-l-md shadow hover:bg-gray-100"
+            <li class="bg-white border-1 font-medium leading-tight p-2 rounded-l-md shadow hover:bg-gray-100"
                 role="presentation">
                 <a href="rating-petugas-layanan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-sm"
+                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-xs"
                     data-te-toggle="pill" data-te-target="#rating-petugas-layanan" data-te-nav-active role="tab"
                     aria-controls="rating-petugas-layanan" aria-selected="true">
                     Rating Petugas Layanan
                 </a>
             </li>
-            <li class="bg-white border-1 font-medium leading-tight p-3 shadow hover:bg-gray-100" role="presentation">
+            <li class="bg-white border-1 font-medium leading-tight p-2 shadow hover:bg-gray-100" role="presentation">
                 <a href="#rating-layanan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-sm"
+                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-xs"
                     data-te-toggle="pill" data-te-target="#rating-layanan" role="tab" aria-controls="rating-layanan"
                     aria-selected="false">Rating Layanan
                 </a>
             </li>
-            <li class="bg-white border-1 font-medium leading-tight p-3 rounded-r-md shadow hover:bg-gray-100"
+            <li class="bg-white border-1 font-medium leading-tight p-2 rounded-r-md shadow hover:bg-gray-100"
                 role="presentation">
                 <a href="#saran-pengaduan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-sm"
+                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-xs"
                     data-te-toggle="pill" data-te-target="#saran-pengaduan" role="tab" aria-controls="saran-pengaduan"
                     aria-selected="false">
                     Saran Pengaduan
@@ -37,6 +34,9 @@
             </li>
         </ul>
     </div>
+
+    {{-- Breadcrumb --}}
+    @include('partials.breadcrumb')
 
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded shadow overflow-x-auto">

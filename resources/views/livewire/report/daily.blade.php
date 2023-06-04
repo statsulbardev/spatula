@@ -15,7 +15,7 @@
     </div>
 
     {{-- Breadcrumb --}}
-    {{-- @include('partials.breadcrumb') --}}
+    @include('partials.breadcrumb')
 
     <section class="mt-10 mb-6">
         <div class="w-full bg-white rounded-md shadow">

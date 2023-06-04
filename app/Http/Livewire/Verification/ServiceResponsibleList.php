@@ -18,6 +18,15 @@ class ServiceResponsibleList extends Component
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-pj-layanan'),
+            'label' => 'Daftar Verifikasi'
+        ];
+    }
+
     public function render()
     {
         return view('livewire.verification.service-responsible-list', [

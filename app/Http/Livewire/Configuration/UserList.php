@@ -14,9 +14,19 @@ class UserList extends Component
 {
     use HasModelProcess, WithPagination;
 
+    /** @props */
     public m_pengguna $pengguna;
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
+
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty()
+    {
+        return [
+            'route' => route('daftar-pengguna'),
+            'label' => 'Daftar Pengguna'
+        ];
+    }
 
     public function render() : View
     {

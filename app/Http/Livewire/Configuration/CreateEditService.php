@@ -14,6 +14,7 @@ class CreateEditService extends Component
 {
     use HasRedirectUrl;
 
+    /** @props */
     public m_layanan $layanan;
     public string $routeName;
     protected StoreServiceRequest $ruleValidation;
@@ -24,8 +25,36 @@ class CreateEditService extends Component
     public $f_deskripsi;
     public $f_metode;
 
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-layanan'),
+            'label' => 'Daftar Layanan',
+        ];
+    }
+
+    /** @computed property : firstBreadcrumb */
+    public function getFirstBreadcrumbProperty()
+    {
+        if ($this->routeName === 'edit-layanan')
+            return [
+                'route' => route('edit-layanan', request()->route()->originalParameters()),
+                'label' => 'Edit Layanan',
+            ];
+    }
+
+    /** @computed property : secondBreadcrumb */
+    public function getSecondBreadcrumbProperty() : string
+    {
+        return $this->routeName === 'tambah-layanan'
+                ? 'Tambah Layanan'
+                : request()->route()->parameters()['layanan']['nama_layanan'];
+    }
+
     public function boot()
     {
+        $this->routeName      = Route::currentRouteName();
         $this->ruleValidation = new StoreServiceRequest();
     }
 
@@ -37,8 +66,6 @@ class CreateEditService extends Component
 
     public function mount(m_layanan $layanan)
     {
-        $this->routeName = Route::currentRouteName();
-
         if ($this->routeName === 'edit-layanan') {
             $this->layanan     = $layanan;
             $this->f_kode      = $layanan->kode_layanan;

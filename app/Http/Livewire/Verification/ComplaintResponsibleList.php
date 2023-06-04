@@ -6,6 +6,7 @@ use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\View\View;
 use Laravel\Scout\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,10 +15,20 @@ class ComplaintResponsibleList extends Component
 {
     use HasModelProcess, WithPagination;
 
+    /** @props */
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
-    public function render()
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-pj-pengaduan'),
+            'label' => 'Daftar Verifikasi'
+        ];
+    }
+
+    public function render() : View
     {
         return view('livewire.verification.complaint-responsible-list', [
             'complaints' => $this->retrieveData()

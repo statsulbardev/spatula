@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
-use App\Traits\UnitCode;
 use Illuminate\View\View;
 use Laravel\Scout\Builder;
 use Livewire\Component;
@@ -15,6 +14,15 @@ class CompleteList extends Component
 
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
+
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-selesai'),
+            'label' => 'Hasil Verifikasi'
+        ];
+    }
 
     public function render() : View
     {

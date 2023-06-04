@@ -15,6 +15,7 @@ class CreateEditUser extends Component
 {
     use HasRedirectUrl, HasRenderOption;
 
+    /** @props */
     public m_pengguna $pengguna;
     public string $routeName;
     public string $selectedRole;
@@ -29,20 +30,48 @@ class CreateEditUser extends Component
     public $f_role;
     public $f_unit;
 
-    // Computed Properties : units
+    /** @computed property : units */
     public function getUnitsProperty(UserRepository $userRepository) : string
     {
         return $this->renderOption($userRepository->retrieveUnits());
     }
 
-    // Computed Property : role
+    /** @computed property : role */
     public function getRolesProperty(UserRepository $userRepository) : string
     {
         return $this->renderOption($userRepository->retrieveRoles());
     }
 
+    /** @computed propoert : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route'  => route('daftar-pengguna'),
+            'label'  => 'Daftar Pengguna'
+        ];
+    }
+
+    /** @computed property : firstBreadcrumb */
+    public function getFirstBreadcrumbProperty()
+    {
+        if ($this->routeName === 'edit-pengguna')
+            return [
+                'route' => route('edit-pengguna', request()->route()->originalParameters()),
+                'label' => 'Edit Pengguna',
+            ];
+    }
+
+    /** @computed property : secondBreadcrumb */
+    public function getSecondBreadcrumbProperty() : string
+    {
+        return $this->routeName === 'tambah-pengguna'
+                ? 'Tambah Pengguna'
+                : request()->route()->parameters()['pengguna']['nama'];
+    }
+
     public function boot()
     {
+        $this->routeName      = Route::currentRouteName();
         $this->ruleValidation = new StoreUserRequest();
     }
 
@@ -54,8 +83,6 @@ class CreateEditUser extends Component
 
     public function mount(m_pengguna $pengguna)
     {
-        $this->routeName    = Route::currentRouteName();
-
         if ($this->routeName === 'edit-pengguna') {
             $this->pengguna     = $pengguna;
             $this->f_nama       = $pengguna->nama;

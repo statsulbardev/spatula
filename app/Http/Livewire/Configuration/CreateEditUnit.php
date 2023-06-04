@@ -14,6 +14,7 @@ class CreateEditUnit extends Component
 {
     use HasRedirectUrl;
 
+    /** @props */
     public m_satker $satker;
     public string $routeName;
     protected StoreUnitRequest $ruleValidation;
@@ -26,8 +27,37 @@ class CreateEditUnit extends Component
     public $f_web;
     public $f_telepon;
 
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('daftar-satker'),
+            'label' => 'Daftar Satker',
+        ];
+    }
+
+    /** @computed property : firstBread */
+    public function getFirstBreadcrumbProperty()
+    {
+        if ($this->routeName === 'edit-satker')
+            return [
+                'route' => route('edit-satker', request()->route()->originalParameters()),
+                'label' => 'Edit Satker',
+            ];
+    }
+
+    /** @computed property : secondBreadcrumb */
+    public function getSecondBreadcrumbProperty() : string
+    {
+        return $this->routeName === 'tambah-satker'
+                ? 'Tambah Satker'
+                : request()->route()->parameters()['satker']['nama'];
+    }
+
+
     public function boot()
     {
+        $this->routeName      = Route::currentRouteName();
         $this->ruleValidation = new StoreUnitRequest();
     }
 
@@ -39,8 +69,6 @@ class CreateEditUnit extends Component
 
     public function mount(m_satker $satker)
     {
-        $this->routeName = Route::currentRouteName();
-
         if ($this->routeName === 'edit-satker') {
             $this->satker    = $satker;
             $this->f_kode    = $satker->kode_satker;

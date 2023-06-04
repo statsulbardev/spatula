@@ -9,6 +9,16 @@ use Livewire\Component;
 
 class Index extends Component
 {
+
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty() : array
+    {
+        return [
+            'route' => route('dashboard'),
+            'label' => 'Dashboard'
+        ];
+    }
+
     public $petugasAktif;
     public $penilaianPetugas;
     public $penilaianLayanan;

@@ -109,6 +109,7 @@
         </div>
     </div>
 
+    @role('superadmin')
     {{-- Pengaturan --}}
     <div x-data="dropdown" class="relative">
         <!-- Dropdown head -->
@@ -146,4 +147,20 @@
             </h1>
         </div>
     </div>
+    @else
+    <div x-data="tiptool" x-on:mouseover="show = true" x-on:mouseleave="show = false"
+        @click="$store.sidebar.active = 'userconfig'"
+        class="relative flex items-center hover:text-gray-200 hover:bg-primary-600 space-x-2 rounded-md p-2 cursor-pointer"
+        x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
+                .full, 'text-gray-200 bg-primary-600': $store.sidebar.active == 'userconfig', 'text-gray-400 ': $store
+                    .sidebar.active != 'userconfig' }">
+        <a href="{{ route('daftar-pengguna') }}">
+            @include('components.icon', ['name' => 'user-circle', 'size' => 'w-5 h-5'])
+        </a>
+        <h1 class="text-sm" x-cloak
+            x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ? 'sm:hidden' : ''">
+            <a href="{{ route('daftar-pengguna') }}">Pengguna Aplikasi</a>
+        </h1>
+    </div>
+    @endrole
 </div>
