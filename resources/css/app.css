@@ -4,11 +4,7 @@
 
 .bg-gradient {
     background: rgba(157, 126, 213);
-    background: linear-gradient(
-        90deg,
-        rgba(157, 126, 213, 1) 30%,
-        rgba(250, 219, 95, 1) 100%
-    );
+    background: linear-gradient(90deg, rgba(157, 126, 213, 1) 30%, rgba(250, 219, 95, 1) 100%);
 }
 
 .bg-glass {

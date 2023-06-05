@@ -8,13 +8,13 @@
     @include('partials.breadcrumb')
 
     {{-- Content --}}
-    <section class="mt-10 mb-6">
-        <div class="w-full bg-white rounded shadow overflow-x-auto">
+    <section class="mb-6 mt-10">
+        <div class="w-full overflow-x-auto rounded bg-white shadow">
             <form wire:submit.prevent="submitData">
-                <div class="p-6 flex flex-wrap">
+                <div class="flex flex-wrap p-6">
                     <div class="lg:w-1/3">
                         <h1 class="text-2xl tracking-wide">Informasi Jenis Layanan</h1>
-                        <p class="mt-4 leading-6 text-base lg:pr-24">
+                        <p class="mt-4 text-base leading-6 lg:pr-24">
                             Informasi jenis layanan terdiri dari kode layanan dan nama layanan
                             yang dapat ditambah atau dimodifikasi.
                         </p>
@@ -27,12 +27,13 @@
                                 'model' => 'f_kode',
                                 'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })"
-                                x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }"
+                                 x-init="@this.on('saved', () => {
+                                     clearTimeout(timeout);
+                                     shown = true;
+                                     timeout = setTimeout(() => { shown = false }, 5000);
+                                 })"
+                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_kode')
                                     @include('components.notification.error')
                                 @enderror
@@ -46,12 +47,13 @@
                                 'model' => 'f_nama',
                                 'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })"
-                                x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }"
+                                 x-init="@this.on('saved', () => {
+                                     clearTimeout(timeout);
+                                     shown = true;
+                                     timeout = setTimeout(() => { shown = false }, 5000);
+                                 })"
+                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_nama')
                                     @include('components.notification.error')
                                 @enderror
@@ -65,16 +67,17 @@
                                 'model' => 'f_metode',
                                 'opt_title' => 'Pilih Metode Layanan ...',
                                 'opt_item' => "<option value='1'>Luring (offline)</option>
-                                                        <option value='2'>Daring (online)</option>",
+                                                                                                                                                                                                                                                                                        <option value='2'>Daring (online)</option>",
                                 'id' => 'metode',
                                 'value' => $routeName === 'tambah-layanan' ? null : $this->f_metode,
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })"
-                                x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }"
+                                 x-init="@this.on('saved', () => {
+                                     clearTimeout(timeout);
+                                     shown = true;
+                                     timeout = setTimeout(() => { shown = false }, 5000);
+                                 })"
+                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_metode')
                                     @include('components.notification.error')
                                 @enderror
@@ -87,12 +90,13 @@
                                 'model' => 'f_deskripsi',
                                 'label' => 'Deskripsi Layanan',
                             ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })"
-                                x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }"
+                                 x-init="@this.on('saved', () => {
+                                     clearTimeout(timeout);
+                                     shown = true;
+                                     timeout = setTimeout(() => { shown = false }, 5000);
+                                 })"
+                                 x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_deskripsi')
                                     @include('components.notification.error')
                                 @enderror
@@ -100,7 +104,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-8 py-4 bg-zinc-200 border-t border-gray-200 flex items-center">
+                <div class="flex items-center border-t border-gray-200 bg-zinc-200 px-8 py-4">
                     <button class="btn-primary ml-auto">
                         {{ $routeName === 'tambah-layanan' ? 'Simpan' : 'Perbaharui' }}
                     </button>

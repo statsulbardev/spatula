@@ -20,14 +20,12 @@ document.addEventListener("alpine:init", () => {
     // Creating tooltip
     Alpine.data("tooltip", () => ({
         show: false,
-        visibleClass:
-            "block sm:absolute left-12 sm:text-sm sm:bg-gray-600 sm:px-2 sm:py-1 sm:rounded-md",
+        visibleClass: "block sm:absolute left-12 sm:text-sm sm:bg-gray-600 sm:px-2 sm:py-1 sm:rounded-md",
     }));
     // Dashboard tooltip
     Alpine.data("tiptool", () => ({
         show: false,
-        visibleClass:
-            "block sm:absolute left-14 sm:text-sm sm:bg-gray-600 sm:px-2 sm:py-1 sm:rounded-md",
+        visibleClass: "block sm:absolute left-14 sm:text-sm sm:bg-gray-600 sm:px-2 sm:py-1 sm:rounded-md",
     }));
     // Creating component Sub Dropdown
     // Alpine.data('sub_dropdown', () => ({

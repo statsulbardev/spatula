@@ -3,13 +3,13 @@
 <div>
     @include('components.notification.flash')
 
-    <div class="flex flex-no-wrap justify-between">
+    <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Daftar Satuan Kerja'])
 
         {{-- Satker Baru --}}
         <a href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}"
-            class="ml-6 p-3 text-white bg-primary-400 hover:bg-primary-500 rounded-md flex items-center">
+           class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
             @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
             <span class="ml-2 text-sm">Tambah Satker</span>
         </a>
@@ -19,9 +19,9 @@
     @include('partials.breadcrumb')
 
     {{-- Content --}}
-    <section class="mt-10 mb-6">
-        <div class="w-full bg-white rounded shadow overflow-x-auto">
-            <div class="p-4 flex flex-wrap justify-between">
+    <section class="mb-6 mt-10">
+        <div class="w-full overflow-x-auto rounded bg-white shadow">
+            <div class="flex flex-wrap justify-between p-4">
                 {{-- Pencarian --}}
                 @include('components.input.search')
 
@@ -47,68 +47,79 @@
                 </div>
             </div>
             @if ($offices->isEmpty())
-                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
+                <img src="{{ asset('files/404.svg') }}"
+                     class="w-full border-t">
             @else
                 <table class="w-full table-auto">
                     <thead>
-                        <tr class="text-left font-bold bg-neutral-100">
-                            <th class="px-6 pt-6 pb-4">
-                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
+                        <tr class="bg-neutral-100 text-left font-bold">
+                            <th class="px-6 pb-4 pt-6">
+                                <input type="checkbox"
+                                       class="h-5 w-5"
+                                       wire:model="selectAll">
                             </th>
-                            <th class="px-6 pt-6 pb-4">Kode Satker</th>
-                            <th class="px-6 pt-6 pb-4">Nama Satker</th>
-                            <th class="px-6 pt-6 pb-4">Alamat</th>
-                            <th class="px-6 pt-6 pb-4">Web</th>
-                            <th class="px-6 pt-6 pb-4">Telepon</th>
-                            <th class="px-6 pt-6 pb-4"></th>
+                            <th class="px-6 pb-4 pt-6">Kode Satker</th>
+                            <th class="px-6 pb-4 pt-6">Nama Satker</th>
+                            <th class="px-6 pb-4 pt-6">Alamat</th>
+                            <th class="px-6 pb-4 pt-6">Web</th>
+                            <th class="px-6 pb-4 pt-6">Telepon</th>
+                            <th class="px-6 pb-4 pt-6"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($offices as $office)
-                            <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
-                                <td class="border-t px-6 py-4 w-2">
-                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct"
-                                        value="{{ $office->id }}">
+                            <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
+                                <td class="w-2 border-t px-6 py-4">
+                                    <input type="checkbox"
+                                           class="h-5 w-5"
+                                           wire:model="selectProduct"
+                                           value="{{ $office->id }}">
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4 items-center">
+                                    <span class="items-center py-4 pl-6">
                                         {{ $office->kode_satker }}
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4 items-center">
+                                    <span class="items-center py-4 pl-6">
                                         {{ $office->nama }}
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
+                                    <span class="py-4 pl-6">
                                         {{ $office->alamat }}
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
+                                    <span class="py-4 pl-6">
                                         {{ $office->web }}
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
+                                    <span class="py-4 pl-6">
                                         {{ $office->telepon }}
                                     </span>
                                 </td>
-                                <td class="border-t w-px">
-                                    <span class="py-2 flex items-center space-x-2 mr-2">
-                                        <a x-data x-tooltip.raw="Edit Satker"
-                                            href="{{ url(env('APP_URL') . '/pengaturan/satker/' . $office->id . '/edit') }}"
-                                            class="text-violet-500 hover:text-violet-600 cursor-pointer">
+                                <td class="w-px border-t">
+                                    <span class="mr-2 flex items-center space-x-2 py-2">
+                                        <a x-data
+                                           x-tooltip.raw="Edit Satker"
+                                           href="{{ url(env('APP_URL') . '/pengaturan/satker/' . $office->id . '/edit') }}"
+                                           class="cursor-pointer text-violet-500 hover:text-violet-600">
                                             @include('components.icon', [
                                                 'name' => 'pencil-square',
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </a>
-                                        <button wire:click="deleteItem({{ $office->id }})" type="button" x-data
-                                            x-tooltip.raw="Hapus Satker" class="text-red-500 hover:text-red-600"
-                                            data-te-toggle="modal" data-te-target="#deleteModal" data-te-ripple-init
-                                            data-te-ripple-color="light">
+                                        <button wire:click="deleteItem({{ $office->id }})"
+                                                type="button"
+                                                x-data
+                                                x-tooltip.raw="Hapus Satker"
+                                                class="text-red-500 hover:text-red-600"
+                                                data-te-toggle="modal"
+                                                data-te-target="#deleteModal"
+                                                data-te-ripple-init
+                                                data-te-ripple-color="light">
                                             @include('components.icon', [
                                                 'name' => 'trash',
                                                 'size' => 'w-5 h-5',

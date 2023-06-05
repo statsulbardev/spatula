@@ -7,9 +7,9 @@
     {{-- Breadcrumb --}}
     @include('partials.breadcrumb')
 
-    <section class="flex mt-10 mb-6">
-        <div class="w-full bg-white rounded shadow">
-            <div class="p-4 flex flex-wrap justify-between">
+    <section class="mb-6 mt-10 flex">
+        <div class="w-full rounded bg-white shadow">
+            <div class="flex flex-wrap justify-between p-4">
                 {{-- Pencarian --}}
                 @include('components.input.search')
 
@@ -17,31 +17,36 @@
                 @include('components.input.pagination-selected')
             </div>
             @if ($dones->isEmpty())
-                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
+                <img src="{{ asset('files/404.svg') }}"
+                     class="w-full border-t">
             @else
                 <table class="w-full table-auto">
                     <thead>
-                        <tr class="text-left font-bold bg-neutral-100">
-                            <th class="px-6 pt-6 pb-4">
-                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
+                        <tr class="bg-neutral-100 text-left font-bold">
+                            <th class="px-6 pb-4 pt-6">
+                                <input type="checkbox"
+                                       class="h-5 w-5"
+                                       wire:model="selectAll">
                             </th>
-                            <th class="px-6 pt-6 pb-4">Tanggal</th>
-                            <th class="px-6 pt-6 pb-4">Pengguna Layanan</th>
-                            <th class="px-6 pt-6 pb-4">Saran dan Pengaduan</th>
-                            <th class="px-6 pt-6 pb-4">Kategori</th>
-                            <th class="px-6 pt-6 pb-4">Tanggal Selesai</th>
-                            <th class="px-6 pt-6 pb-4"></th>
+                            <th class="px-6 pb-4 pt-6">Tanggal</th>
+                            <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
+                            <th class="px-6 pb-4 pt-6">Saran dan Pengaduan</th>
+                            <th class="px-6 pb-4 pt-6">Kategori</th>
+                            <th class="px-6 pb-4 pt-6">Tanggal Selesai</th>
+                            <th class="px-6 pb-4 pt-6"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($dones as $done)
-                            <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
-                                <td class="border-t px-6 py-4 w-2">
-                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct"
-                                        value="{{ $done->id }}">
+                            <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
+                                <td class="w-2 border-t px-6 py-4">
+                                    <input type="checkbox"
+                                           class="h-5 w-5"
+                                           wire:model="selectProduct"
+                                           value="{{ $done->id }}">
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4 items-center">
+                                    <span class="items-center py-4 pl-6">
                                         <span>
                                             {{ $done->created_at->format('d/m/Y') }}
                                         </span>
@@ -53,56 +58,60 @@
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
+                                    <span class="py-4 pl-6">
                                         {{ ucwords(strtolower($done->nama_konsumen)) }}
                                     </span>
                                 </td>
-                                <td class="border-t" width="45%">
-                                    <span x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($done->saran_pengaduan).trim();
-                                    content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
+                                <td class="border-t"
+                                    width="45%">
+                                    <span x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
+                                          x-init="originalContent = @js($done->saran_pengaduan).trim();
+                                          content = originalContent.slice(0, maxLength)"
+                                          class="flex flex-wrap">
                                         <span x-text="isCollapsed ? originalContent : content"
-                                            class="pl-6 py-4 leading-tight">
+                                              class="py-4 pl-6 leading-tight">
                                             {!! $done->saran_pengaduan !!}
                                         </span>
                                         <button @click="isCollapsed = !isCollapsed"
-                                            x-show="originalContent.length > maxLength"
-                                            x-text="isCollapsed ? 'sedikit' : 'lebih banyak'"
-                                            class="ml-6 mb-4 p-2 bg-violet-200 hover:bg-violet-300 rounded-md text-sm">
+                                                x-show="originalContent.length > maxLength"
+                                                x-text="isCollapsed ? 'sedikit' : 'lebih banyak'"
+                                                class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm hover:bg-violet-300">
                                         </button>
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4">
+                                    <span class="py-4 pl-6">
                                         @if (!is_null($done->kode_saran))
                                             @for ($i = 0; $i < count($done->kode_saran); $i++)
                                                 <div
-                                                    class="{{ $i == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm text-green-900 leading-tight">
+                                                     class="{{ $i == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
                                                     <span aria-hidden
-                                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                          class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
                                                     <span
-                                                        class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
+                                                          class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else
                                             <span
-                                                class="relative inline-block px-3 py-1 text-sm text-red-900 leading-tight">
+                                                  class="relative inline-block px-3 py-1 text-sm leading-tight text-red-900">
                                                 <span aria-hidden
-                                                    class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                      class="absolute inset-0 rounded-full bg-red-200 opacity-50"></span>
                                                 <span class="relative">Belum Dikategorisasi</span>
                                             </span>
                                         @endif
                                     </span>
                                 </td>
                                 <td class="border-t">
-                                    <span class="pl-6 py-4 items-center">
+                                    <span class="items-center py-4 pl-6">
                                         {{ $done->tanggal_selesai->format('d/m/Y') }}
                                     </span>
                                 </td>
-                                <td class="border-t w-px">
-                                    <span class="py-2 flex items-center space-x-2 mr-2">
-                                        <a x-data x-tooltip.raw="Lihat Informasi"
-                                            href="{{ url(env('APP_URL') . '/verifikasi/selesai/' . $done->id) }}"
-                                            class="text-primary-400 hover:text-primary-500 cursor-pointer">
+                                <td class="w-px border-t">
+                                    <span class="mr-2 flex items-center space-x-2 py-2">
+                                        <a x-data
+                                           x-tooltip.raw="Lihat Informasi"
+                                           href="{{ url(env('APP_URL') . '/verifikasi/selesai/' . $done->id) }}"
+                                           class="cursor-pointer text-primary-400 hover:text-primary-500">
                                             @include('components.icon', [
                                                 'name' => 'eye',
                                                 'size' => 'w-5 h-5',

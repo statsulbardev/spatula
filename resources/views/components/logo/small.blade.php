@@ -1,21 +1,40 @@
-<svg width="10mm" height="12mm" viewBox="0 0 24 24" sodipodi:docname="spatula-dashboard.svg"
-    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg">
-    <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1">
-        <rect style="display:none;fill:#000000;stroke-width:0.0714706" id="rect427" width="25.361853"
-            height="26.708443" x="0" y="0" inkscape:label="Canvas" />
-        <g id="g57" transform="matrix(0.95332121,0,0,0.95332121,1.3147041,-1.782055)" inkscape:label="Logo">
-            <path fill="none" d="M 0,0 H 24 V 24 H 0 Z" id="path53" />
-            <path
-                d="m 14.121,10.48 a 1,1 0 0 0 -1.414,0 L 12,11.186 A 2,2 0 1 1 9.172,8.358 l 5.63,-5.632 a 6.5,6.5 0 0 1 6.377,10.568 l -2.108,2.135 -4.95,-4.95 z M 3.161,4.468 A 6.503,6.503 0 0 1 11.17,3.53 L 7.757,6.944 a 4,4 0 0 0 5.513,5.794 l 0.144,-0.137 4.243,4.242 -4.243,4.243 a 2,2 0 0 1 -2.828,0 L 3.16,13.66 a 6.5,6.5 0 0 1 0,-9.192 z"
-                id="path55" style="fill:#ffffff" />
+<svg width="10mm"
+     height="12mm"
+     viewBox="0 0 24 24"
+     sodipodi:docname="spatula-dashboard.svg"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+     xmlns="http://www.w3.org/2000/svg">
+    <g inkscape:label="Layer 1"
+       inkscape:groupmode="layer"
+       id="layer1">
+        <rect style="display:none;fill:#000000;stroke-width:0.0714706"
+              id="rect427"
+              width="25.361853"
+              height="26.708443"
+              x="0"
+              y="0"
+              inkscape:label="Canvas" />
+        <g id="g57"
+           transform="matrix(0.95332121,0,0,0.95332121,1.3147041,-1.782055)"
+           inkscape:label="Logo">
+            <path fill="none"
+                  d="M 0,0 H 24 V 24 H 0 Z"
+                  id="path53" />
+            <path d="m 14.121,10.48 a 1,1 0 0 0 -1.414,0 L 12,11.186 A 2,2 0 1 1 9.172,8.358 l 5.63,-5.632 a 6.5,6.5 0 0 1 6.377,10.568 l -2.108,2.135 -4.95,-4.95 z M 3.161,4.468 A 6.503,6.503 0 0 1 11.17,3.53 L 7.757,6.944 a 4,4 0 0 0 5.513,5.794 l 0.144,-0.137 4.243,4.242 -4.243,4.243 a 2,2 0 0 1 -2.828,0 L 3.16,13.66 a 6.5,6.5 0 0 1 0,-9.192 z"
+                  id="path55"
+                  style="fill:#ffffff" />
         </g>
         <text xml:space="preserve"
-            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.48211px;font-family:Jost;-inkscape-font-specification:Jost;fill:#ffffff;stroke-width:0.228421"
-            x="1.5107813" y="25.198261" id="text562">
-            <tspan sodipodi:role="line" id="tspan560"
-                style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Jost;-inkscape-font-specification:'Jost Medium';stroke-width:0.228421"
-                x="1.5107813" y="25.198261">SPATULA
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.48211px;font-family:Jost;-inkscape-font-specification:Jost;fill:#ffffff;stroke-width:0.228421"
+              x="1.5107813"
+              y="25.198261"
+              id="text562">
+            <tspan sodipodi:role="line"
+                   id="tspan560"
+                   style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Jost;-inkscape-font-specification:'Jost Medium';stroke-width:0.228421"
+                   x="1.5107813"
+                   y="25.198261">SPATULA
             </tspan>
         </text>
     </g>
