@@ -1,34 +1,34 @@
 @section('title', 'Laporan Bulanan')
 
 <div>
-    <div class="flex flex-no-wrap justify-between">
+    <div class="flex flex-none justify-between">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Laporan Bulanan Tahun ' . $selectedYear])
 
         {{-- Menu --}}
         <ul class="flex flex-nowrap" role="tablist" data-te-nav-ref>
-            <li class="bg-white border-1 font-medium leading-tight p-2 rounded-l-md shadow hover:bg-gray-100"
+            <li class="border-1 rounded-l-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100"
                 role="presentation">
                 <a href="rating-petugas-layanan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-xs"
+                    class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
                     data-te-toggle="pill" data-te-target="#rating-petugas-layanan" data-te-nav-active role="tab"
                     aria-controls="rating-petugas-layanan" aria-selected="true">
                     Rating Petugas Layanan
                 </a>
             </li>
-            <li class="bg-white border-1 font-medium leading-tight p-2 shadow hover:bg-gray-100" role="presentation">
+            <li class="border-1 bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
                 <a href="#rating-layanan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-xs"
+                    class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
                     data-te-toggle="pill" data-te-target="#rating-layanan" role="tab" aria-controls="rating-layanan"
                     aria-selected="false">Rating Layanan
                 </a>
             </li>
-            <li class="bg-white border-1 font-medium leading-tight p-2 rounded-r-md shadow hover:bg-gray-100"
+            <li class="border-1 rounded-r-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100"
                 role="presentation">
                 <a href="#saran-pengaduan"
-                    class="block uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 text-xs"
-                    data-te-toggle="pill" data-te-target="#saran-pengaduan" role="tab"
-                    aria-controls="saran-pengaduan" aria-selected="false">
+                    class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
+                    data-te-toggle="pill" data-te-target="#saran-pengaduan" role="tab" aria-controls="saran-pengaduan"
+                    aria-selected="false">
                     Saran Pengaduan
                 </a>
             </li>
@@ -38,9 +38,9 @@
     {{-- Breadcrumb --}}
     @include('partials.breadcrumb')
 
-    <section class="mt-10 mb-6">
-        <div class="w-full bg-white rounded shadow overflow-x-auto">
-            <div class="p-4 flex flex-wrap justify-between">
+    <section class="mb-6 mt-10">
+        <div class="w-full overflow-x-auto rounded bg-white shadow">
+            <div class="flex flex-wrap justify-between p-4">
                 {{-- Tab --}}
                 <div class="flex flex-wrap items-center justify-between">
                     <div wire:ignore>
@@ -48,7 +48,7 @@
                             data-te-select-size="lg">
                             <option hidden selected>Pilih Tahun ...</option>
                             @foreach ($this->years as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
+                            <option value="{{ $item }}">{{ $item }}</option>
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Tahun</label>
@@ -61,38 +61,65 @@
                 <div class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
                     id="rating-petugas-layanan" role="tabpanel" aria-labelledby="rating-petugas-layanan-tab"
                     data-te-tab-active>
-                    <table class="table-fixed w-full">
+                    <table class="w-full table-fixed">
                         <thead>
-                            <tr class="text-left font-bold bg-neutral-100">
+                            <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($officerRating[0] as $columnOfficer)
-                                    <th class="px-6 pt-6 pb-4">{{ $columnOfficer }}</th>
+                                <th class="px-6 pb-4 pt-6">{{ $columnOfficer }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($officerRating[1] as $reportOfficer)
-                                <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4 items-center">
-                                            {{ $this->months[$reportOfficer->bulan - 1][1] }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ $reportOfficer->nama ?? '-' }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4 flex items-center">
-                                            {{ round($reportOfficer->rerata, 2) }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ $reportOfficer->jumlah_terlayani }}
-                                        </span>
-                                    </td>
-                                </tr>
+                            <tr class="focus-within:bg-grey-lightest">
+                                @if ($reportOfficer->count() == 1)
+                                <td class="border-t">
+                                    <span class="items-center py-4 pl-6">
+                                        {{ $this->months[$reportOfficer->flatten()[0]->bulan - 1][1] }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $reportOfficer->flatten()[0]->nama ?? '-' }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="flex items-center py-4 pl-6">
+                                        {{ round($reportOfficer->flatten()[0]->rerata, 2) }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $reportOfficer->flatten()[0]->jumlah_terlayani }}
+                                    </span>
+                                </td>
+                                @else
+                                <td class="border-t" rowspan="{{ $reportOfficer->count() + 1 }}">
+                                    <span class="items-center py-4 pl-6">
+                                        {{ $this->months[$reportOfficer->flatten()[0]->bulan - 1][1] }}
+                                    </span>
+                                </td>
+                                @foreach ($reportOfficer as $subReportOfficer)
+                            <tr>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $subReportOfficer->nama ?? '-' }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="flex items-center py-4 pl-6">
+                                        {{ round($subReportOfficer->rerata, 2) }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $subReportOfficer->jumlah_terlayani }}
+                                    </span>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @endif
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -101,38 +128,65 @@
                 {{-- Rating Layanan --}}
                 <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
                     id="rating-layanan" role="tabpanel" aria-labelledby="rating-layanan-tab">
-                    <table class="table-auto w-full">
+                    <table class="w-full table-auto">
                         <thead>
-                            <tr class="text-left font-bold bg-neutral-100">
+                            <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($serviceRating[0] as $columnService)
-                                    <th class="px-6 pt-6 pb-4">{{ $columnService }}</th>
+                                <th class="px-6 pb-4 pt-6">{{ $columnService }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($serviceRating[1] as $reportService)
-                                <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4 items-center">
-                                            {{ $this->months[$reportService->bulan - 1][1] }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ $reportService->nama_layanan ?? '-' }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4 flex items-center">
-                                            {{ round($reportService->rerata, 2) }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ $reportService->jumlah_terlayani }}
-                                        </span>
-                                    </td>
-                                </tr>
+                            <tr class="focus-within:bg-grey-lightest">
+                                @if ($reportService->count() == 1)
+                                <td class="border-t">
+                                    <span class="items-center py-4 pl-6">
+                                        {{ $this->months[$reportService->flatten()[0]->bulan - 1][1] }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $reportService->flatten()[0]->nama_layanan ?? '-' }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="flex items-center py-4 pl-6">
+                                        {{ round($reportService->flatten()[0]->rerata, 2) }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $reportService->flatten()[0]->jumlah_terlayani }}
+                                    </span>
+                                </td>
+                                @else
+                                <td class="border-t" rowspan="{{ $reportService->count() + 1 }}">
+                                    <span class="items-center py-4 pl-6">
+                                        {{ $this->months[$reportService->flatten()[0]->bulan - 1][1] }}
+                                    </span>
+                                </td>
+                                @foreach ($reportService as $subReportService)
+                            <tr>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $subReportService->nama_layanan ?? '-' }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="flex items-center py-4 pl-6">
+                                        {{ round($subReportService->rerata, 2) }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ $subReportService->jumlah_terlayani }}
+                                    </span>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @endif
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -141,38 +195,38 @@
                 {{-- Saran Pengaduan --}}
                 <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
                     id="saran-pengaduan" role="tabpanel" aria-labelledby="rating-layanan-tab">
-                    <table class="table-auto w-full">
+                    <table class="w-full table-auto">
                         <thead>
-                            <tr class="text-left font-bold bg-neutral-100">
+                            <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($complaintSuggestion[0] as $columnComplaintSuggestion)
-                                    <th class="px-6 pt-6 pb-4">{{ $columnComplaintSuggestion }}</th>
+                                <th class="px-6 pb-4 pt-6">{{ $columnComplaintSuggestion }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($complaintSuggestion[1] as $monthIndex => $report)
-                                <tr class="hover:bg-gray-200 focus-within:bg-grey-lightest">
-                                    <td class="border-t" rowspan="{{ $report->count() + 1 }}">
-                                        <span class="pl-6 py-4 items-center">
-                                            {{ $this->months[$monthIndex - 1][1] }}
-                                        </span>
-                                    </td>
-                                    @foreach ($report as $index => $item)
-                                <tr>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4">
-                                            {{ '(' .
-                                                array_search($item, $report->toArray()) .
-                                                ') ' .
-                                                array_column($this->suggestions, array_search($item, $report->toArray()))[0] }}
-                                        </span>
-                                    </td>
-                                    <td class="border-t">
-                                        <span class="pl-6 py-4 flex items-center">
-                                            {{ $item }}
-                                        </span>
-                                    </td>
-                                </tr>
+                            <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
+                                <td class="border-t" rowspan="{{ $report->count() + 1 }}">
+                                    <span class="items-center py-4 pl-6">
+                                        {{ $this->months[$monthIndex - 1][1] }}
+                                    </span>
+                                </td>
+                                @foreach ($report as $index => $item)
+                            <tr>
+                                <td class="border-t">
+                                    <span class="py-4 pl-6">
+                                        {{ '(' .
+                                        array_search($item, $report->toArray()) .
+                                        ') ' .
+                                        array_column($this->suggestions, array_search($item, $report->toArray()))[0] }}
+                                    </span>
+                                </td>
+                                <td class="border-t">
+                                    <span class="flex items-center py-4 pl-6">
+                                        {{ $item }}
+                                    </span>
+                                </td>
+                            </tr>
                             @endforeach
                             </tr>
                             @endforeach

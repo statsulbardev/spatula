@@ -85,15 +85,18 @@ class Monthly extends Component
     private function getOfficerRating($role)
     {
         if ($role) {
-            $data = array();
-
             $result = DB::table("d_penilaian")
-                    ->join("m_pengguna", "d_penilaian.kode_petugas", "=", "m_pengguna.id")
-                    ->selectRaw("MONTH(d_penilaian.created_at) as bulan, m_pengguna.nama, AVG(d_penilaian.rating_petugas) as rerata, COUNT(d_penilaian.rating_petugas) as jumlah_terlayani")
-                    ->whereRaw("YEAR(d_penilaian.created_at) = 2022")
-                    ->where("selesai", 1)
-                    ->groupByRaw("MONTH(d_penilaian.created_at), m_pengguna.nama")
-                    ->get();
+                        -> join("m_pengguna", "d_penilaian.kode_petugas", "=", "m_pengguna.id")
+                        -> selectRaw(
+                                "MONTH(d_penilaian.created_at) as bulan,
+                                m_pengguna.nama,
+                                AVG(d_penilaian.rating_petugas) as rerata,
+                                COUNT(d_penilaian.rating_petugas) as jumlah_terlayani")
+                        -> whereRaw("YEAR(d_penilaian.created_at) = " . $this->selectedYear)
+                        -> where("selesai", 1)
+                        -> groupByRaw("MONTH(d_penilaian.created_at), m_pengguna.nama")
+                        -> get()
+                        -> groupBy('bulan');
         } else {
             $result = DB::select(
                 'SELECT MONTH(a.created_at) as bulan,
@@ -118,12 +121,7 @@ class Monthly extends Component
             );
         }
 
-        $column = [
-            "Bulan",
-            "Nama Petugas",
-            "Rating Rata-Rata",
-            "Jumlah Penilaian",
-        ];
+        $column = ["Bulan", "Nama Petugas", "Rating Rata-Rata", "Jumlah Penilaian"];
 
         return [$column, $result];
     }
@@ -132,23 +130,17 @@ class Monthly extends Component
     {
         if ($role) {
             $result = DB::table("d_penilaian")
-                ->join(
-                    "m_layanan",
-                    "d_penilaian.kode_layanan",
-                    "=",
-                    "m_layanan.kode_layanan"
-                )
-                ->selectRaw(
-                    "MONTH(d_penilaian.created_at) as bulan, m_layanan.nama_layanan, AVG(d_penilaian.rating_layanan) as rerata, COUNT(d_penilaian.rating_layanan) as jumlah_terlayani"
-                )
-                ->whereRaw(
-                    "YEAR(d_penilaian.created_at) = " . $this->selectedYear
-                )
-                ->where("selesai", 1)
-                ->groupByRaw(
-                    "MONTH(d_penilaian.created_at), m_layanan.nama_layanan"
-                )
-                ->get();
+                        -> join("m_layanan", "d_penilaian.kode_layanan", "=", "m_layanan.kode_layanan")
+                        -> selectRaw(
+                                "MONTH(d_penilaian.created_at) as bulan,
+                                m_layanan.nama_layanan,
+                                AVG(d_penilaian.rating_layanan) as rerata,
+                                COUNT(d_penilaian.rating_layanan) as jumlah_terlayani")
+                        -> whereRaw("YEAR(d_penilaian.created_at) = " . $this->selectedYear)
+                        -> where("selesai", 1)
+                        -> groupByRaw("MONTH(d_penilaian.created_at), m_layanan.nama_layanan")
+                        -> get()
+                        -> groupBy('bulan');
         } else {
             $result = DB::select(
                 'SELECT MONTH(a.created_at) as bulan, b.nama_layanan , AVG(rating_layanan) as rerata, COUNT(rating_layanan) as jumlah_terlayani
