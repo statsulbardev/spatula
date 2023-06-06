@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\d_penilaian;
+use App\Models\m_saran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
@@ -11,18 +12,18 @@ trait HasReportProperty
     public function initMonthsOption() : array
     {
         return [
-            ['1', 'Januari'],
-            ['2', 'Februari'],
-            ['3', 'Maret'],
-            ['4', 'April'],
-            ['5', 'Mei'],
-            ['6', 'Juni'],
-            ['7', 'Juli'],
-            ['8', 'Agustus'],
-            ['9', 'September'],
-            ['10', 'Oktober'],
-            ['11', 'November'],
-            ['12', 'Desember']
+            ['1' => 'Januari'],
+            ['2' => 'Februari'],
+            ['3' => 'Maret'],
+            ['4' => 'April'],
+            ['5' => 'Mei'],
+            ['6' => 'Juni'],
+            ['7' => 'Juli'],
+            ['8' => 'Agustus'],
+            ['9' => 'September'],
+            ['10' => 'Oktober'],
+            ['11' => 'November'],
+            ['12' => 'Desember']
         ];
     }
 
@@ -36,12 +37,14 @@ trait HasReportProperty
 
     public function initSuggestionsOption() : array
     {
-        return [
-            ['1' => 'Saran'],
-            ['2' => 'Pengaduan'],
-            ['3' => 'Kritik'],
-            ['4' => 'Apresiasi'],
-            ['9' => 'Lainnya']
-        ];
+        return
+            m_saran::query()
+                -> get(['kode_saran', 'nama_saran'])
+                -> map(function($item) {
+                    return [
+                        $item->kode_saran => $item->nama_saran
+                    ];
+                })
+                -> toArray();
     }
 }

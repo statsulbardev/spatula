@@ -65,61 +65,61 @@
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($officerRating[0] as $columnOfficer)
-                                <th class="px-6 pb-4 pt-6">{{ $columnOfficer }}</th>
+                                    <th class="px-6 pb-4 pt-6">{{ $columnOfficer }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($officerRating[1] as $reportOfficer)
-                            <tr class="focus-within:bg-grey-lightest">
-                                @if ($reportOfficer->count() == 1)
-                                <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
-                                        {{ $this->months[$reportOfficer->flatten()[0]->bulan - 1][1] }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $reportOfficer->flatten()[0]->nama ?? '-' }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="flex items-center py-4 pl-6">
-                                        {{ round($reportOfficer->flatten()[0]->rerata, 2) }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $reportOfficer->flatten()[0]->jumlah_terlayani }}
-                                    </span>
-                                </td>
-                                @else
-                                <td class="border-t" rowspan="{{ $reportOfficer->count() + 1 }}">
-                                    <span class="items-center py-4 pl-6">
-                                        {{ $this->months[$reportOfficer->flatten()[0]->bulan - 1][1] }}
-                                    </span>
-                                </td>
-                                @foreach ($reportOfficer as $subReportOfficer)
-                            <tr>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $subReportOfficer->nama ?? '-' }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="flex items-center py-4 pl-6">
-                                        {{ round($subReportOfficer->rerata, 2) }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $subReportOfficer->jumlah_terlayani }}
-                                    </span>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @endif
-                            </tr>
+                            @foreach ($officerRating[1] as $monthIndex => $reportOfficer)
+                                <tr class="focus-within:bg-grey-lightest">
+                                    @if ($reportOfficer->count() == 1)
+                                        <td class="border-t">
+                                            <span class="items-center py-4 pl-6">
+                                                {{ array_column($this->months, $monthIndex)[0] }}
+                                            </span>
+                                        </td>
+                                        <td class="border-t">
+                                            <span class="py-4 pl-6">
+                                                {{ $reportOfficer->flatten()[0]->nama ?? '-' }}
+                                            </span>
+                                        </td>
+                                        <td class="border-t">
+                                            <span class="flex items-center py-4 pl-6">
+                                                {{ round($reportOfficer->flatten()[0]->rerata, 2) }}
+                                            </span>
+                                        </td>
+                                        <td class="border-t">
+                                            <span class="py-4 pl-6">
+                                                {{ $reportOfficer->flatten()[0]->jumlah_terlayani }}
+                                            </span>
+                                        </td>
+                                    @else
+                                        <td class="border-t" rowspan="{{ $reportOfficer->count() + 1 }}">
+                                            <span class="items-center py-4 pl-6">
+                                                {{ array_column($this->months, $monthIndex)[0] }}
+                                            </span>
+                                        </td>
+                                        @foreach ($reportOfficer as $subReportOfficer)
+                                            <tr>
+                                                <td class="border-t">
+                                                    <span class="py-4 pl-6">
+                                                        {{ $subReportOfficer->nama ?? '-' }}
+                                                    </span>
+                                                </td>
+                                                <td class="border-t">
+                                                    <span class="flex items-center py-4 pl-6">
+                                                        {{ round($subReportOfficer->rerata, 2) }}
+                                                    </span>
+                                                </td>
+                                                <td class="border-t">
+                                                    <span class="py-4 pl-6">
+                                                        {{ $subReportOfficer->jumlah_terlayani }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -132,61 +132,61 @@
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($serviceRating[0] as $columnService)
-                                <th class="px-6 pb-4 pt-6">{{ $columnService }}</th>
+                                    <th class="px-6 pb-4 pt-6">{{ $columnService }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($serviceRating[1] as $reportService)
-                            <tr class="focus-within:bg-grey-lightest">
-                                @if ($reportService->count() == 1)
-                                <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
-                                        {{ $this->months[$reportService->flatten()[0]->bulan - 1][1] }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $reportService->flatten()[0]->nama_layanan ?? '-' }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="flex items-center py-4 pl-6">
-                                        {{ round($reportService->flatten()[0]->rerata, 2) }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $reportService->flatten()[0]->jumlah_terlayani }}
-                                    </span>
-                                </td>
-                                @else
-                                <td class="border-t" rowspan="{{ $reportService->count() + 1 }}">
-                                    <span class="items-center py-4 pl-6">
-                                        {{ $this->months[$reportService->flatten()[0]->bulan - 1][1] }}
-                                    </span>
-                                </td>
-                                @foreach ($reportService as $subReportService)
-                            <tr>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $subReportService->nama_layanan ?? '-' }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="flex items-center py-4 pl-6">
-                                        {{ round($subReportService->rerata, 2) }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ $subReportService->jumlah_terlayani }}
-                                    </span>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @endif
-                            </tr>
+                            @foreach ($serviceRating[1] as $monthIndex => $reportService)
+                                <tr class="focus-within:bg-grey-lightest">
+                                    @if ($reportService->count() == 1)
+                                        <td class="border-t">
+                                            <span class="items-center py-4 pl-6">
+                                                {{ array_column($this->months, $monthIndex)[0] }}
+                                            </span>
+                                        </td>
+                                        <td class="border-t">
+                                            <span class="py-4 pl-6">
+                                                {{ $reportService->flatten()[0]->nama_layanan ?? '-' }}
+                                            </span>
+                                        </td>
+                                        <td class="border-t">
+                                            <span class="flex items-center py-4 pl-6">
+                                                {{ round($reportService->flatten()[0]->rerata, 2) }}
+                                            </span>
+                                        </td>
+                                        <td class="border-t">
+                                            <span class="py-4 pl-6">
+                                                {{ $reportService->flatten()[0]->jumlah_terlayani }}
+                                            </span>
+                                        </td>
+                                    @else
+                                        <td class="border-t" rowspan="{{ $reportService->count() + 1 }}">
+                                            <span class="items-center py-4 pl-6">
+                                                {{ array_column($this->months, $monthIndex)[0] }}
+                                            </span>
+                                        </td>
+                                        @foreach ($reportService as $subReportService)
+                                        <tr>
+                                            <td class="border-t">
+                                                <span class="py-4 pl-6">
+                                                    {{ $subReportService->nama_layanan ?? '-' }}
+                                                </span>
+                                            </td>
+                                            <td class="border-t">
+                                                <span class="flex items-center py-4 pl-6">
+                                                    {{ round($subReportService->rerata, 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="border-t">
+                                                <span class="py-4 pl-6">
+                                                    {{ $subReportService->jumlah_terlayani }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -199,36 +199,33 @@
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($complaintSuggestion[0] as $columnComplaintSuggestion)
-                                <th class="px-6 pb-4 pt-6">{{ $columnComplaintSuggestion }}</th>
+                                    <th class="px-6 pb-4 pt-6">{{ $columnComplaintSuggestion }}</th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($complaintSuggestion[1] as $monthIndex => $report)
-                            <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
-                                <td class="border-t" rowspan="{{ $report->count() + 1 }}">
-                                    <span class="items-center py-4 pl-6">
-                                        {{ $this->months[$monthIndex - 1][1] }}
-                                    </span>
-                                </td>
-                                @foreach ($report as $index => $item)
-                            <tr>
-                                <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ '(' .
-                                        array_search($item, $report->toArray()) .
-                                        ') ' .
-                                        array_column($this->suggestions, array_search($item, $report->toArray()))[0] }}
-                                    </span>
-                                </td>
-                                <td class="border-t">
-                                    <span class="flex items-center py-4 pl-6">
-                                        {{ $item }}
-                                    </span>
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tr>
+                                <tr class="focus-within:bg-grey-lightest">
+                                    <td class="border-t" rowspan="{{ $report->count() + 1 }}">
+                                        <span class="items-center py-4 pl-6">
+                                            {{ array_column($this->months, $monthIndex)[0] }}
+                                        </span>
+                                    </td>
+                                    @foreach ($report as $index => $item)
+                                        <tr>
+                                            <td class="border-t">
+                                                <span class="py-4 pl-6">
+                                                    {{ '(' . $index . ') ' . array_column($this->suggestions, $index)[0] }}
+                                                </span>
+                                            </td>
+                                            <td class="border-t">
+                                                <span class="flex items-center py-4 pl-6">
+                                                    {{ $item }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
