@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Configuration;
 
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\m_layanan;
-use App\Repositories\Interfaces\ConfigurationInterface;
 use App\Repositories\ServiceRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +15,6 @@ class CreateEditService extends Component
     use HasRedirectUrl;
 
     /** protected props */
-    protected ConfigurationInterface $serviceRepository;
     protected StoreServiceRequest $ruleValidation;
 
     /** @props */
@@ -56,13 +54,6 @@ class CreateEditService extends Component
                 : request()->route()->parameters()['layanan']['nama_layanan'];
     }
 
-    public function boot(ConfigurationInterface $serviceRepository)
-    {
-        $this->routeName         = Route::currentRouteName();
-        $this->ruleValidation    = new StoreServiceRequest();
-        $this->serviceRepository = $serviceRepository;
-    }
-
     public function render() : View
     {
         return view('livewire.configuration.create-edit-service')
@@ -71,6 +62,9 @@ class CreateEditService extends Component
 
     public function mount(m_layanan $layanan)
     {
+        $this->routeName         = Route::currentRouteName();
+        $this->ruleValidation    = new StoreServiceRequest();
+
         if ($this->routeName === 'edit-layanan') {
             $this->layanan     = $layanan;
             $this->f_kode      = $layanan->kode_layanan;
@@ -80,15 +74,15 @@ class CreateEditService extends Component
         }
     }
 
-    public function submitData()
+    public function submitData(ServiceRepository $serviceRepository)
     {
         $this->emit('saved');
 
         $this->validate();
 
         $result = $this->routeName === 'tambah-layanan'
-                ? $this->serviceRepository->save($this)
-                : $this->serviceRepository->update($this);
+                ? $serviceRepository->save($this)
+                : $serviceRepository->update($this);
 
         session()->flash('messages', $result);
 

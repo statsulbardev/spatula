@@ -27,18 +27,13 @@ class RepositoryServiceProvider extends ServiceProvider
        $this->app
             -> when(CreateEditService::class)
             -> needs(ConfigurationInterface::class)
-            -> give(function() {
-                return new ServiceRepository;
-            });
-
+            -> give(ServiceRepository::class);
 
         // Unit Configurtion (Daftar Satker)
         $this->app
             -> when(CreateEditUnit::class)
             -> needs(ConfigurationInterface::class)
-            -> give(function() {
-                return new UnitRepository;
-            });
+            -> give(UnitRepository::class);
     }
 
     /**
