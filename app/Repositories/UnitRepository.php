@@ -3,12 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\m_satker;
+use App\Repositories\Interfaces\ConfigurationInterface;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class UnitRepository
+class UnitRepository implements ConfigurationInterface
 {
+    /**
+     * Store New Data Into Database.
+     * @param mixed $data
+     * @return string
+     */
     public function save($data) : string
     {
         try {
@@ -38,6 +44,11 @@ class UnitRepository
         return $message;
     }
 
+    /**
+     * Update Database With Present Values.
+     * @param mixed $data
+     * @return string
+     */
     public function update($data) : string
     {
         try {

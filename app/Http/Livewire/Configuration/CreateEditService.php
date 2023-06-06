@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Configuration;
 
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\m_layanan;
+use App\Repositories\Interfaces\ConfigurationInterface;
 use App\Repositories\ServiceRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
@@ -14,10 +15,13 @@ class CreateEditService extends Component
 {
     use HasRedirectUrl;
 
+    /** protected props */
+    protected ConfigurationInterface $serviceRepository;
+    protected StoreServiceRequest $ruleValidation;
+
     /** @props */
     public m_layanan $layanan;
     public string $routeName;
-    protected StoreServiceRequest $ruleValidation;
 
     // Form Data
     public $f_kode;
@@ -52,10 +56,11 @@ class CreateEditService extends Component
                 : request()->route()->parameters()['layanan']['nama_layanan'];
     }
 
-    public function boot()
+    public function boot(ConfigurationInterface $serviceRepository)
     {
-        $this->routeName      = Route::currentRouteName();
-        $this->ruleValidation = new StoreServiceRequest();
+        $this->routeName         = Route::currentRouteName();
+        $this->ruleValidation    = new StoreServiceRequest();
+        $this->serviceRepository = $serviceRepository;
     }
 
     public function render() : View
@@ -75,15 +80,15 @@ class CreateEditService extends Component
         }
     }
 
-    public function submitData(ServiceRepository $serviceRepository)
+    public function submitData()
     {
         $this->emit('saved');
 
         $this->validate();
 
         $result = $this->routeName === 'tambah-layanan'
-                ? $serviceRepository->save($this)
-                : $serviceRepository->update($this);
+                ? $this->serviceRepository->save($this)
+                : $this->serviceRepository->update($this);
 
         session()->flash('messages', $result);
 

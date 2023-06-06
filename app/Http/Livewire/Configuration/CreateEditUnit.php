@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Configuration;
 
 use App\Http\Requests\StoreUnitRequest;
 use App\Models\m_satker;
-use App\Repositories\UnitRepository;
+use App\Repositories\Interfaces\ConfigurationInterface;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
@@ -14,10 +14,13 @@ class CreateEditUnit extends Component
 {
     use HasRedirectUrl;
 
+    /** protected props */
+    protected ConfigurationInterface $unitRepository;
+    protected StoreUnitRequest $ruleValidation;
+
     /** @props */
     public m_satker $satker;
     public string $routeName;
-    protected StoreUnitRequest $ruleValidation;
 
     // Form Data
     public $f_kode;
@@ -54,11 +57,11 @@ class CreateEditUnit extends Component
                 : request()->route()->parameters()['satker']['nama'];
     }
 
-
-    public function boot()
+    public function boot(ConfigurationInterface $unitRepository)
     {
         $this->routeName      = Route::currentRouteName();
         $this->ruleValidation = new StoreUnitRequest();
+        $this->unitRepository = $unitRepository;
     }
 
     public function render() : View
@@ -80,7 +83,7 @@ class CreateEditUnit extends Component
         }
     }
 
-    public function submitData(UnitRepository $unitRepository)
+    public function submitData()
     {
         // Event for error message notification in blade.
         $this->emit('saved');
@@ -90,8 +93,8 @@ class CreateEditUnit extends Component
 
         // Save data to database.
         $result = $this->routeName === 'tambah-satker'
-                ? $unitRepository->save($this)
-                : $unitRepository->update($this);
+                ? $this->unitRepository->save($this)
+                : $this->unitRepository->update($this);
 
         // Send notification to redirect page.
         session()->flash('messages', $result);
