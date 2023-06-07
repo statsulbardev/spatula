@@ -154,7 +154,7 @@
                                                     <span aria-hidden
                                                           class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
                                                     <span
-                                                          class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($service->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
+                                                          class="relative">{{ array_column($this->suggestions, $service->kode_saran[$i])[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
+use App\Traits\HasReportProperty;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Laravel\Scout\Builder;
@@ -12,7 +13,7 @@ use Livewire\WithPagination;
 
 class ServiceResponsibleList extends Component
 {
-    use HasModelProcess, WithPagination;
+    use HasModelProcess, HasReportProperty, WithPagination;
 
     public d_penilaian $penilaian;
     public int $numberOfPagination = 20;
@@ -25,6 +26,12 @@ class ServiceResponsibleList extends Component
             'route' => route('daftar-pj-layanan'),
             'label' => 'Daftar Verifikasi'
         ];
+    }
+
+    /** @computed property : suggestions */
+    public function getSuggestionsProperty()
+    {
+        return $this->initSuggestionsOption();
     }
 
     public function render()

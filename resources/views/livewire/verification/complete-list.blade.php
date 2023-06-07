@@ -83,12 +83,12 @@
                                     <span class="py-4 pl-6">
                                         @if (!is_null($done->kode_saran))
                                             @for ($i = 0; $i < count($done->kode_saran); $i++)
-                                                <div
-                                                     class="{{ $i == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
-                                                    <span aria-hidden
-                                                          class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
-                                                    <span
-                                                          class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
+                                                <div class="{{ $i == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
+                                                    <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
+                                                    <span class="relative">
+                                                        {{ array_column($this->suggestions, $done->kode_saran[$i])[0] }}
+                                                        {{-- {{ \App\Models\m_saran::where('kode_saran', collect($done->kode_saran)->get($i))->pluck('nama_saran')[0] }} --}}
+                                                    </span>
                                                 </div>
                                             @endfor
                                         @else

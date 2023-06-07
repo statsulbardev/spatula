@@ -32,6 +32,12 @@ class Daily extends Component
         return $this->initYearsOption();
     }
 
+    /** @computed property : suggestions */
+    public function getSuggestionsProperty()
+    {
+        return $this->initSuggestionsOption();
+    }
+
     /** @computed proprty : rootBreadcrumb */
     public function getRootBreadcrumbProperty()
     {

@@ -27,10 +27,11 @@
                                 data-te-select-init
                                 data-te-select-filter="true"
                                 data-te-select-size="lg">
-                            <option hidden
-                                    selected>Pilih Bulan...</option>
+                            <option hidden selected>Pilih Bulan...</option>
                             @foreach ($this->months as $month)
-                                <option value="{{ $month[0] }}">{{ $month[1] }}</option>
+                                @foreach ($month as $index => $item)
+                                    <option value="{{ $index }}">{{ $item }}</option>
+                                @endforeach
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Bulan</label>
@@ -179,7 +180,7 @@
                                                     <span aria-hidden
                                                           class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
                                                     <span
-                                                          class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($report->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
+                                                          class="relative">{{ array_column($this->suggestions, $report->kode_saran[$i])[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else

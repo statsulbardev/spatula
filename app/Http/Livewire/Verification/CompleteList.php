@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
+use App\Traits\HasReportProperty;
 use Illuminate\View\View;
 use Laravel\Scout\Builder;
 use Livewire\Component;
@@ -10,10 +11,10 @@ use Livewire\WithPagination;
 
 class CompleteList extends Component
 {
-    use WithPagination;
+    use HasReportProperty, WithPagination;
 
     public int $numberOfPagination = 20;
-    public ?string $searchKeyword = null;
+    public ?string $searchKeyword  = null;
 
     /** @computed property : rootBreadcrumb */
     public function getRootBreadcrumbProperty() : array
@@ -22,6 +23,12 @@ class CompleteList extends Component
             'route' => route('daftar-selesai'),
             'label' => 'Hasil Verifikasi'
         ];
+    }
+
+    /** @computed property : suggestions */
+    public function getSuggestionsProperty()
+    {
+        return $this->initSuggestionsOption();
     }
 
     public function render() : View

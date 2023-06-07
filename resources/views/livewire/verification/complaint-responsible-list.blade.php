@@ -88,12 +88,9 @@
                                     <div class="py-4 pl-6">
                                         @if (!is_null($complaint->kode_saran))
                                             @for ($i = 0; $i < count($complaint->kode_saran); $i++)
-                                                <div
-                                                     class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
-                                                    <span aria-hidden
-                                                          class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
-                                                    <span
-                                                          class="relative">{{ \App\Models\m_saran::where('kode_saran', collect($complaint->kode_saran)->get($i))->pluck('nama_saran')[0] }}</span>
+                                                <div class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
+                                                    <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
+                                                    <span class="relative">{{ array_column($this->suggestions, $complaint->kode_saran[$i])[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else

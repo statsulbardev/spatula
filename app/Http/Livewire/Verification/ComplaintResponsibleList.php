@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
+use App\Traits\HasReportProperty;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
@@ -13,7 +14,7 @@ use Livewire\WithPagination;
 
 class ComplaintResponsibleList extends Component
 {
-    use HasModelProcess, WithPagination;
+    use HasModelProcess, HasReportProperty, WithPagination;
 
     /** @props */
     public int $numberOfPagination = 20;
@@ -26,6 +27,12 @@ class ComplaintResponsibleList extends Component
             'route' => route('daftar-pj-pengaduan'),
             'label' => 'Daftar Verifikasi'
         ];
+    }
+
+    /** @computed property : suggestions */
+    public function getSuggestionsProperty()
+    {
+        return $this->initSuggestionsOption();
     }
 
     public function render() : View
@@ -52,6 +59,7 @@ class ComplaintResponsibleList extends Component
         $user_unit_role  = auth()->user()->satker->kode_satker;
 
         return d_penilaian::search($this->searchKeyword)
+                -> query(fn ($query) => $query->with(['petugas', 'layanan']))
                 -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_role) {
                     $query->where('kode_satker_id', $user_unit_role);
                 })
