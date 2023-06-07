@@ -2,14 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-gradient {
-    background: rgba(157, 126, 213);
-    background: linear-gradient(90deg, rgba(157, 126, 213, 1) 30%, rgba(250, 219, 95, 1) 100%);
-}
-
 .bg-glass {
     /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     /* border-radius: 16px; */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(7.4px);

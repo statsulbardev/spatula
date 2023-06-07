@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="bg-gradient flex min-h-screen items-center justify-center p-6">
+    <div class="bg-gradient-to-r from-primary-500 to-indigo-500 flex min-h-screen items-center justify-center p-6">
         <div class="w-full max-w-md">
             <div class="flex items-center justify-center pb-2">
                 @include('components.logo.login')

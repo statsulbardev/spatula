@@ -4,7 +4,9 @@ import "../css/app.css";
 // AlpineJS
 import Alpine from "alpinejs";
 import Tooltip from "@ryangjchandler/alpine-tooltip";
-import "../js/sidebar";
+
+// Turbo
+import * as Turbo from "@hotwired/turbo";
 
 Alpine.plugin(Tooltip);
 
