@@ -5,3 +5,4 @@ database
 public
 routes
 storage
+resources/views/components/icon.blade.php

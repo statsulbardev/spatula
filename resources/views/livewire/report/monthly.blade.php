@@ -7,8 +7,7 @@
 
         {{-- Menu --}}
         <ul class="flex flex-nowrap" role="tablist" data-te-nav-ref>
-            <li class="border-1 rounded-l-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100"
-                role="presentation">
+            <li class="border-1 rounded-l-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
                 <a href="rating-petugas-layanan"
                     class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
                     data-te-toggle="pill" data-te-target="#rating-petugas-layanan" data-te-nav-active role="tab"
@@ -23,8 +22,7 @@
                     aria-selected="false">Rating Layanan
                 </a>
             </li>
-            <li class="border-1 rounded-r-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100"
-                role="presentation">
+            <li class="border-1 rounded-r-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
                 <a href="#saran-pengaduan"
                     class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
                     data-te-toggle="pill" data-te-target="#saran-pengaduan" role="tab" aria-controls="saran-pengaduan"
@@ -44,11 +42,10 @@
                 {{-- Tab --}}
                 <div class="flex flex-wrap items-center justify-between">
                     <div wire:ignore>
-                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true"
-                            data-te-select-size="lg">
+                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Tahun ...</option>
                             @foreach ($this->years as $item)
-                            <option value="{{ $item }}">{{ $item }}</option>
+                                <option value="{{ $item }}">{{ $item }}</option>
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Tahun</label>
@@ -59,8 +56,7 @@
             <div class="mb-6">
                 {{-- Rating Petugas --}}
                 <div class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
-                    id="rating-petugas-layanan" role="tabpanel" aria-labelledby="rating-petugas-layanan-tab"
-                    data-te-tab-active>
+                    id="rating-petugas-layanan" role="tabpanel" aria-labelledby="rating-petugas-layanan-tab" data-te-tab-active>
                     <table class="w-full table-fixed">
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
@@ -100,34 +96,34 @@
                                             </span>
                                         </td>
                                         @foreach ($reportOfficer as $subReportOfficer)
-                                            <tr>
-                                                <td class="border-t">
-                                                    <span class="py-4 pl-6">
-                                                        {{ $subReportOfficer->nama ?? '-' }}
-                                                    </span>
-                                                </td>
-                                                <td class="border-t">
-                                                    <span class="flex items-center py-4 pl-6">
-                                                        {{ round($subReportOfficer->rerata, 2) }}
-                                                    </span>
-                                                </td>
-                                                <td class="border-t">
-                                                    <span class="py-4 pl-6">
-                                                        {{ $subReportOfficer->jumlah_terlayani }}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
+                                <tr>
+                                    <td class="border-t">
+                                        <span class="py-4 pl-6">
+                                            {{ $subReportOfficer->nama ?? '-' }}
+                                        </span>
+                                    </td>
+                                    <td class="border-t">
+                                        <span class="flex items-center py-4 pl-6">
+                                            {{ round($subReportOfficer->rerata, 2) }}
+                                        </span>
+                                    </td>
+                                    <td class="border-t">
+                                        <span class="py-4 pl-6">
+                                            {{ $subReportOfficer->jumlah_terlayani }}
+                                        </span>
+                                    </td>
                                 </tr>
+                            @endforeach
+                            @endif
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
 
                 {{-- Rating Layanan --}}
-                <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
-                    id="rating-layanan" role="tabpanel" aria-labelledby="rating-layanan-tab">
+                <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block" id="rating-layanan"
+                    role="tabpanel" aria-labelledby="rating-layanan-tab">
                     <table class="w-full table-auto">
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
@@ -167,34 +163,34 @@
                                             </span>
                                         </td>
                                         @foreach ($reportService as $subReportService)
-                                        <tr>
-                                            <td class="border-t">
-                                                <span class="py-4 pl-6">
-                                                    {{ $subReportService->nama_layanan ?? '-' }}
-                                                </span>
-                                            </td>
-                                            <td class="border-t">
-                                                <span class="flex items-center py-4 pl-6">
-                                                    {{ round($subReportService->rerata, 2) }}
-                                                </span>
-                                            </td>
-                                            <td class="border-t">
-                                                <span class="py-4 pl-6">
-                                                    {{ $subReportService->jumlah_terlayani }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    @endif
+                                <tr>
+                                    <td class="border-t">
+                                        <span class="py-4 pl-6">
+                                            {{ $subReportService->nama_layanan ?? '-' }}
+                                        </span>
+                                    </td>
+                                    <td class="border-t">
+                                        <span class="flex items-center py-4 pl-6">
+                                            {{ round($subReportService->rerata, 2) }}
+                                        </span>
+                                    </td>
+                                    <td class="border-t">
+                                        <span class="py-4 pl-6">
+                                            {{ $subReportService->jumlah_terlayani }}
+                                        </span>
+                                    </td>
                                 </tr>
+                            @endforeach
+                            @endif
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
 
                 {{-- Saran Pengaduan --}}
-                <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
-                    id="saran-pengaduan" role="tabpanel" aria-labelledby="rating-layanan-tab">
+                <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block" id="saran-pengaduan"
+                    role="tabpanel" aria-labelledby="rating-layanan-tab">
                     <table class="w-full table-auto">
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
@@ -212,20 +208,20 @@
                                         </span>
                                     </td>
                                     @foreach ($report as $index => $item)
-                                        <tr>
-                                            <td class="border-t">
-                                                <span class="py-4 pl-6">
-                                                    {{ '(' . $index . ') ' . array_column($this->suggestions, $index)[0] }}
-                                                </span>
-                                            </td>
-                                            <td class="border-t">
-                                                <span class="flex items-center py-4 pl-6">
-                                                    {{ $item }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                <tr>
+                                    <td class="border-t">
+                                        <span class="py-4 pl-6">
+                                            {{ '(' . $index . ') ' . array_column($this->suggestions, $index)[0] }}
+                                        </span>
+                                    </td>
+                                    <td class="border-t">
+                                        <span class="flex items-center py-4 pl-6">
+                                            {{ $item }}
+                                        </span>
+                                    </td>
                                 </tr>
+                            @endforeach
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>

@@ -1,17 +1,20 @@
 {
-    "plugins": ["@shufo/prettier-plugin-blade"],
+    "plugins": [
+        "@shufo/prettier-plugin-blade"
+    ],
     "overrides": [
         {
-            "files": ["*.blade.php"],
+            "files": [
+                "*.blade.php"
+            ],
             "options": {
                 "parser": "blade",
                 "tabWidth": 4
             }
         }
     ],
-    "printWidth": 120,
-    "tabWidth": 4,
-    "wrapAttributes": "force-aligned",
+    "printWidth": 140,
+    "wrapAttributes": "auto",
     "sortTailwindcssClasses": true,
     "sortHtmlAttributes": "none",
     "noPhpSyntaxCheck": false

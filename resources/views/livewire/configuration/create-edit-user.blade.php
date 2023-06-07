@@ -26,13 +26,11 @@
                                 'model' => 'f_nama',
                                 'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_nama')
                                     @include('components.notification.error')
                                 @enderror
@@ -47,13 +45,11 @@
                                 'type' => 'email',
                                 'label_opt' => 'Diutamakan Email BPS',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_email')
                                     @include('components.notification.error')
                                 @enderror
@@ -67,13 +63,11 @@
                                 'model' => 'f_password',
                                 'type' => 'password',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_password')
                                     @include('components.notification.error')
                                 @enderror
@@ -87,13 +81,11 @@
                                 'model' => 'f_nip',
                                 'type' => 'number',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_nip')
                                     @include('components.notification.error')
                                 @enderror
@@ -118,17 +110,15 @@
                                 'model' => 'f_petugas',
                                 'opt_title' => 'Pilih Jenis Petugas ...',
                                 'opt_item' => "<option value='0'>Bukan Petugas Layanan</option>
-                                                                                                                                                                                                                                                                                        <option value='1'>Petugas Layanan</option>",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value='1'>Petugas Layanan</option>",
                                 'value' => $routeName === 'tambah-pengguna' ? null : $pengguna->is_petugas,
                                 'id' => 'petugas',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_petugas')
                                     @include('components.notification.error')
                                 @enderror
@@ -144,13 +134,11 @@
                                 'value' => $routeName === 'tambah-pengguna' ? null : $selectedRole,
                                 'id' => 'role',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_role')
                                     @include('components.notification.error')
                                 @enderror
@@ -165,17 +153,14 @@
                                     'model' => 'f_unit',
                                     'opt_title' => 'Pilih Unit Kerja ...',
                                     'opt_item' => $this->units,
-                                    'value' =>
-                                        $routeName === 'tambah-pengguna' ? null : $pengguna->kode_satker_id,
+                                    'value' => $routeName === 'tambah-pengguna' ? null : $pengguna->kode_satker_id,
                                     'id' => 'unit',
                                 ])
-                                <div x-data="{ shown: false, timeout: null }"
-                                     x-init="@this.on('saved', () => {
-                                         clearTimeout(timeout);
-                                         shown = true;
-                                         timeout = setTimeout(() => { shown = false }, 5000);
-                                     })"
-                                     x-show.transition.opacity.out.duration.2000ms="shown">
+                                <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                    clearTimeout(timeout);
+                                    shown = true;
+                                    timeout = setTimeout(() => { shown = false }, 5000);
+                                })" x-show.transition.opacity.out.duration.2000ms="shown">
                                     @error('f_unit')
                                         @include('components.notification.error')
                                     @enderror

@@ -1,15 +1,13 @@
 @section('title', 'Laporan Harian')
 
 <div>
-
     <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Laporan Harian'])
 
         {{-- Reset Tampilan --}}
-        <button wire:click="resetData"
-                type="button"
-                class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
+        <button wire:click="resetData" type="button"
+            class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
             @include('components.icon', ['name' => 'cursor-arrow-ripple', 'size' => 'w-5 h-5'])
             <span class="ml-2 text-sm">Reset Tabel</span>
         </button>
@@ -19,14 +17,11 @@
     @include('partials.breadcrumb')
 
     <section class="mb-6 mt-10">
-        <div class="w-full rounded-md bg-white shadow">
+        <div class="w-full overflow-x-auto rounded-md bg-white shadow">
             <div class="flex flex-wrap items-center justify-between p-4">
                 <div class="flex flex-wrap">
                     <div wire:ignore>
-                        <select wire:model.defer="selectedMonth"
-                                data-te-select-init
-                                data-te-select-filter="true"
-                                data-te-select-size="lg">
+                        <select wire:model.defer="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Bulan...</option>
                             @foreach ($this->months as $month)
                                 @foreach ($month as $index => $item)
@@ -36,14 +31,9 @@
                         </select>
                         <label data-te-select-label-ref>Bulan</label>
                     </div>
-                    <div wire:ignore
-                         class="ml-4">
-                        <select wire:model="selectedYear"
-                                data-te-select-init
-                                data-te-select-filter="true"
-                                data-te-select-size="lg">
-                            <option hidden
-                                    selected>Pilih Tahun...</option>
+                    <div wire:ignore class="ml-4">
+                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                            <option hidden selected>Pilih Tahun...</option>
                             @foreach ($this->years as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>
                             @endforeach
@@ -56,8 +46,7 @@
                 @include('components.input.pagination-selected')
             </div>
             @if ($dailyReport->isEmpty())
-                <img src="{{ asset('files/404.svg') }}"
-                     class="w-full border-t">
+                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
                 <table class="w-full table-auto">
                     <thead>
@@ -91,21 +80,16 @@
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t"
-                                    width="35%">
-                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
-                                         x-init="originalContent = @js($report->saran_pengaduan).trim();
-                                         content = originalContent.slice(0, maxLength)"
-                                         class="flex flex-wrap">
+                                <td class="border-t" width="35%">
+                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($report->saran_pengaduan).trim();
+                                    content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
 
-                                        <span x-html="isCollapsed ? originalContent : content"
-                                              class="py-4 pl-6 leading-tight">
+                                        <span x-html="isCollapsed ? originalContent : content" class="py-4 pl-6 leading-tight">
                                         </span>
 
-                                        <button @click="isCollapsed = !isCollapsed"
-                                                x-show="originalContent.length > maxLength"
-                                                x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
-                                                class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
+                                        <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
+                                            x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
+                                            class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
                                         </button>
                                     </div>
                                 </td>
@@ -175,12 +159,10 @@
                                     <span class="py-4 pl-6">
                                         @if (!is_null($report->kode_saran))
                                             @for ($i = 0; $i < count($report->kode_saran); $i++)
-                                                <div
-                                                     class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
-                                                    <span aria-hidden
-                                                          class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
+                                                <div class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
+                                                    <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
                                                     <span
-                                                          class="relative">{{ array_column($this->suggestions, $report->kode_saran[$i])[0] }}</span>
+                                                        class="relative">{{ array_column($this->suggestions, $report->kode_saran[$i])[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else

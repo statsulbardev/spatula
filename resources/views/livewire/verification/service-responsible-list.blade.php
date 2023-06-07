@@ -10,7 +10,7 @@
     @include('partials.breadcrumb')
 
     <section class="mb-6 mt-10">
-        <div class="w-full rounded bg-white shadow">
+        <div class="w-full overflow-x-auto rounded bg-white shadow">
             <div class="flex flex-wrap justify-between p-4">
                 {{-- Pencarian --}}
                 @include('components.input.search')
@@ -19,16 +19,13 @@
                 @include('components.input.pagination-selected')
             </div>
             @if ($services->isEmpty())
-                <img src="{{ asset('files/404.svg') }}"
-                     class="w-full border-t">
+                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-6 pb-4 pt-6">
-                                <input type="checkbox"
-                                       class="h-5 w-5"
-                                       wire:model="selectAll">
+                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
                             </th>
                             <th class="px-6 pb-4 pt-6">Tanggal</th>
                             <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
@@ -43,10 +40,7 @@
                         @foreach ($services as $service)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
                                 <td class="w-2 border-t px-6 py-4">
-                                    <input type="checkbox"
-                                           class="h-5 w-5"
-                                           wire:model="selectProduct"
-                                           value="{{ $service->id }}">
+                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $service->id }}">
                                 </td>
                                 {{-- Tanggal --}}
                                 <td class="border-t">
@@ -65,21 +59,16 @@
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t"
-                                    width="35%">
-                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
-                                         x-init="originalContent = @js($service->saran_pengaduan).trim();
-                                         content = originalContent.slice(0, maxLength)"
-                                         class="flex flex-wrap">
+                                <td class="border-t" width="35%">
+                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($service->saran_pengaduan).trim();
+                                    content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
 
-                                        <span x-html="isCollapsed ? originalContent : content"
-                                              class="py-4 pl-6 leading-tight">
+                                        <span x-html="isCollapsed ? originalContent : content" class="py-4 pl-6 leading-tight">
                                         </span>
 
-                                        <button @click="isCollapsed = !isCollapsed"
-                                                x-show="originalContent.length > maxLength"
-                                                x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
-                                                class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
+                                        <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
+                                            x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
+                                            class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
                                         </button>
                                     </div>
                                 </td>
@@ -150,18 +139,15 @@
                                         @if (!is_null($service->kode_saran))
                                             @for ($i = 0; $i < count($service->kode_saran); $i++)
                                                 <div
-                                                     class="{{ $i == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
-                                                    <span aria-hidden
-                                                          class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
+                                                    class="{{ $i == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
+                                                    <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
                                                     <span
-                                                          class="relative">{{ array_column($this->suggestions, $service->kode_saran[$i])[0] }}</span>
+                                                        class="relative">{{ array_column($this->suggestions, $service->kode_saran[$i])[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else
-                                            <span
-                                                  class="relative inline-block px-3 py-1 text-sm leading-tight text-red-900">
-                                                <span aria-hidden
-                                                      class="absolute inset-0 rounded-full bg-red-200 opacity-50"></span>
+                                            <span class="relative inline-block px-3 py-1 text-sm leading-tight text-red-900">
+                                                <span aria-hidden class="absolute inset-0 rounded-full bg-red-200 opacity-50"></span>
                                                 <span class="relative">Belum Dikategorisasi</span>
                                             </span>
                                         @endif
@@ -172,53 +158,39 @@
                                 <td class="w-px border-t">
                                     <div class="mr-2 flex items-center space-x-2 py-2">
                                         @if (!is_null($service->kode_saran))
-                                            <a x-data
-                                               x-tooltip.raw="Edit Kategori"
-                                               class="text-purple-400 hover:text-purple-500"
-                                               href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}">
+                                            <a x-data x-tooltip.raw="Edit Kategori" class="text-purple-400 hover:text-purple-500"
+                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}">
                                                 @include('components.icon', [
                                                     'name' => 'pencil-square',
                                                     'size' => 'w-5 h-5',
                                                 ])
                                             </a>
                                         @else
-                                            <a x-data
-                                               x-tooltip.raw="Verifikasi"
-                                               class="text-cyan-400 hover:text-cyan-500"
-                                               href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) }}">
+                                            <a x-data x-tooltip.raw="Verifikasi" class="text-cyan-400 hover:text-cyan-500"
+                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) }}">
                                                 @include('components.icon', [
                                                     'name' => 'tag',
                                                     'size' => 'w-5 h-5',
                                                 ])
                                             </a>
                                         @endif
-                                        <button x-data
-                                                x-tooltip.raw="Kirim Pesan"
-                                                class="text-secondary-400 hover:text-secondary-500">
+                                        <button x-data x-tooltip.raw="Kirim Pesan" class="text-secondary-400 hover:text-secondary-500">
                                             @include('components.icon', [
                                                 'name' => 'message',
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
-                                        <button wire:click="deleteItem({{ $service->id }})"
-                                                type="button"
-                                                x-data
-                                                x-tooltip.raw="Hapus Penilaian"
-                                                class="text-red-500 hover:text-red-600"
-                                                data-te-toggle="modal"
-                                                data-te-target="#deleteModal"
-                                                data-te-ripple-init
-                                                data-te-ripple-color="light">
+                                        <button wire:click="deleteItem({{ $service->id }})" type="button" x-data
+                                            x-tooltip.raw="Hapus Penilaian" class="text-red-500 hover:text-red-600" data-te-toggle="modal"
+                                            data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
                                             @include('components.icon', [
                                                 'name' => 'trash',
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
                                         @if (!is_null($service->kode_saran))
-                                            <button wire:click="finalizeServiceItem({{ $service->id }})"
-                                                    x-data
-                                                    x-tooltip.raw="Selesaikan Verifikasi"
-                                                    class="text-green-400 hover:text-green-500">
+                                            <button wire:click="finalizeServiceItem({{ $service->id }})" x-data
+                                                x-tooltip.raw="Selesaikan Verifikasi" class="text-green-400 hover:text-green-500">
                                                 @include('components.icon', [
                                                     'name' => 'check-circle',
                                                     'size' => 'w-5 h-5',

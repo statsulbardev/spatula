@@ -1,17 +1,12 @@
 <!-- Side Navbar -->
-<nav id="sidenav"
-     class="side-navbar">
+<nav id="sidenav" class="side-navbar">
     <!-- Sidebar Header-->
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar">
             @if (auth()->user()->foto)
-                <img src="{{ auth()->user()->foto }}"
-                     alt="{{ auth()->user()->nama }}"
-                     class="img-fluid rounded">
+                <img src="{{ auth()->user()->foto }}" alt="{{ auth()->user()->nama }}" class="img-fluid rounded">
             @else
-                <img src="{{ secure_asset('/public/files/image/user.png') }}"
-                     alt="user"
-                     class="img-fluid rounded-circle">
+                <img src="{{ secure_asset('/public/files/image/user.png') }}" alt="user" class="img-fluid rounded-circle">
             @endif
         </div>
         <div class="title">
@@ -29,16 +24,16 @@
         </li>
         <li>
             <a href="#followUp"
-               @if (request()->is('followup/done') ||
-                       request()->is('followup/done/*') ||
-                       request()->is('followup/konfirmasi-pj-layanan') ||
-                       request()->is('followup/kategorisasi/*') ||
-                       request()->is('followup/kirim/*') ||
-                       request()->is('followup/konfirmasi-pj-pengaduan') ||
-                       request()->is('followup/kirim-pengaduan/*')) aria-expanded="true"
+                @if (request()->is('followup/done') ||
+                        request()->is('followup/done/*') ||
+                        request()->is('followup/konfirmasi-pj-layanan') ||
+                        request()->is('followup/kategorisasi/*') ||
+                        request()->is('followup/kirim/*') ||
+                        request()->is('followup/konfirmasi-pj-pengaduan') ||
+                        request()->is('followup/kirim-pengaduan/*')) aria-expanded="true"
                 @else
                     aria-expanded="false" @endif
-               data-toggle="collapse">
+                data-toggle="collapse">
                 <i class="icon-website"></i>Tindak Lanjut
             </a>
             <ul id="followUp"
@@ -55,18 +50,14 @@
                     <a href="{{ url(env('APP_URL') . 'tindak-lanjut/selesai') }}">Selesai</a>
                 </li>
                 <li
-                    class="{{ request()->is('followup/service/*') ||
-                    request()->is('followup/kategorisasi/*') ||
-                    request()->is('followup/kirim/*')
+                    class="{{ request()->is('followup/service/*') || request()->is('followup/kategorisasi/*') || request()->is('followup/kirim/*')
                         ? 'active'
                         : '' }}">
                     <a href="{{ url(env('APP_URL') . 'tindak-lanjut/konfirmasi-pj-layanan') }}">Konfirmasi PJ
                         Layanan</a>
                 </li>
                 <li
-                    class="{{ request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') || request()->is('tindak-lanjut/kirim-pengaduan/*')
-                        ? 'active'
-                        : '' }}">
+                    class="{{ request()->is('tindak-lanjut/konfirmasi-pj-pengaduan') || request()->is('tindak-lanjut/kirim-pengaduan/*') ? 'active' : '' }}">
                     {{-- <a href="{{ route('followup.complaint') }}">Konfirmasi PJ Pengaduan</a> --}}
                     <a href="">Konfirmasi PJ Pengaduan</a>
                 </li>
@@ -75,10 +66,10 @@
         @if (Auth::user()->role_id <= 6)
             <li>
                 <a href="#laporan"
-                   @if (request()->is('laporan/bulanan') || request()->is('laporan/harian')) aria-expanded="true"
+                    @if (request()->is('laporan/bulanan') || request()->is('laporan/harian')) aria-expanded="true"
                     @else
                         aria-expanded="false" @endif
-                   data-toggle="collapse">
+                    data-toggle="collapse">
                     <i class="icon-form"></i>Laporan
                 </a>
                 <ul id="laporan"

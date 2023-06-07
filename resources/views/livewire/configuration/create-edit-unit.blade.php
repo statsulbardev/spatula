@@ -27,13 +27,11 @@
                                 'model' => 'f_kode',
                                 'type' => 'number',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_kode')
                                     @include('components.notification.error')
                                 @enderror
@@ -47,13 +45,11 @@
                                 'model' => 'f_nama',
                                 'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_nama')
                                     @include('components.notification.error')
                                 @enderror
@@ -67,17 +63,15 @@
                                 'model' => 'f_level',
                                 'opt_title' => 'Pilih Level Satker ...',
                                 'opt_item' => "<option value='1'>Provinsi</option>
-                                                                                                                                                                                                                                                                                        <option value='2'>Kabupaten</option>",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value='2'>Kabupaten</option>",
                                 'id' => 'level',
                                 'value' => $routeName === 'tambah-satker' ? null : $this->f_level,
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_level')
                                     @include('components.notification.error')
                                 @enderror
@@ -91,13 +85,11 @@
                                 'model' => 'f_alamat',
                                 'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_alamat')
                                     @include('components.notification.error')
                                 @enderror
@@ -111,13 +103,11 @@
                                 'model' => 'f_web',
                                 'type' => 'text',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_web')
                                     @include('components.notification.error')
                                 @enderror
@@ -131,13 +121,11 @@
                                 'model' => 'f_telepon',
                                 'type' => 'numeric',
                             ])
-                            <div x-data="{ shown: false, timeout: null }"
-                                 x-init="@this.on('saved', () => {
-                                     clearTimeout(timeout);
-                                     shown = true;
-                                     timeout = setTimeout(() => { shown = false }, 5000);
-                                 })"
-                                 x-show.transition.opacity.out.duration.2000ms="shown">
+                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
+                                clearTimeout(timeout);
+                                shown = true;
+                                timeout = setTimeout(() => { shown = false }, 5000);
+                            })" x-show.transition.opacity.out.duration.2000ms="shown">
                                 @error('f_telepon')
                                     @include('components.notification.error')
                                 @enderror

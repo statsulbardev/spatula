@@ -19,16 +19,13 @@
                 @include('components.input.pagination-selected')
             </div>
             @if ($complaints->isEmpty())
-                <img src="{{ asset('files/404.svg') }}"
-                     class="w-full border-t">
+                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
             @else
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-6 pb-4 pt-6">
-                                <input type="checkbox"
-                                       class="h-5 w-5"
-                                       wire:model="selectAll">
+                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
                             </th>
                             <th class="px-6 pb-4 pt-6">Tanggal</th>
                             <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
@@ -41,10 +38,7 @@
                         @foreach ($complaints as $complaint)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
                                 <td class="w-2 border-t px-6 py-4">
-                                    <input type="checkbox"
-                                           class="h-5 w-5"
-                                           wire:model="selectProduct"
-                                           value="{{ $complaint->id }}">
+                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $complaint->id }}">
                                 </td>
 
                                 {{-- Tanggal --}}
@@ -66,19 +60,14 @@
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t"
-                                    width="45%">
-                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
-                                         x-init="originalContent = @js($complaint->saran_pengaduan).trim();
-                                         content = originalContent.slice(0, maxLength)"
-                                         class="flex flex-wrap">
-                                        <span x-html="isCollapsed ? originalContent : content"
-                                              class="py-4 pl-6 leading-tight">
+                                <td class="border-t" width="45%">
+                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($complaint->saran_pengaduan).trim();
+                                    content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
+                                        <span x-html="isCollapsed ? originalContent : content" class="py-4 pl-6 leading-tight">
                                         </span>
-                                        <button @click="isCollapsed = !isCollapsed"
-                                                x-show="originalContent.length > maxLength"
-                                                x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
-                                                class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
+                                        <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
+                                            x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
+                                            class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
                                         </button>
                                     </div>
                                 </td>
@@ -90,14 +79,13 @@
                                             @for ($i = 0; $i < count($complaint->kode_saran); $i++)
                                                 <div class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
                                                     <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
-                                                    <span class="relative">{{ array_column($this->suggestions, $complaint->kode_saran[$i])[0] }}</span>
+                                                    <span
+                                                        class="relative">{{ array_column($this->suggestions, $complaint->kode_saran[$i])[0] }}</span>
                                                 </div>
                                             @endfor
                                         @else
-                                            <span
-                                                  class="relative inline-block px-3 py-1 text-sm leading-tight text-red-900">
-                                                <span aria-hidden
-                                                      class="absolute inset-0 rounded-full bg-red-200 opacity-50"></span>
+                                            <span class="relative inline-block px-3 py-1 text-sm leading-tight text-red-900">
+                                                <span aria-hidden class="absolute inset-0 rounded-full bg-red-200 opacity-50"></span>
                                                 <span class="relative">Belum Dikategorisasi</span>
                                             </span>
                                         @endif
@@ -107,28 +95,23 @@
                                 {{-- Aksi --}}
                                 <td class="w-px border-t">
                                     <div class="mr-2 flex items-center space-x-2 py-2">
-                                        <a x-data
-                                           x-tooltip.raw="Lihat Informasi"
-                                           class="cursor-pointer text-primary-400 hover:text-primary-500"
-                                           href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan/' . $complaint->id) }}">
+                                        <a x-data x-tooltip.raw="Lihat Informasi"
+                                            class="cursor-pointer text-primary-400 hover:text-primary-500"
+                                            href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan/' . $complaint->id) }}">
                                             @include('components.icon', [
                                                 'name' => 'eye',
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </a>
-                                        <button x-data
-                                                x-tooltip.raw="Kirim Pesan"
-                                                class="text-secondary-400 hover:text-secondary-500">
+                                        <button x-data x-tooltip.raw="Kirim Pesan" class="text-secondary-400 hover:text-secondary-500">
                                             @include('components.icon', [
                                                 'name' => 'message',
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
                                         @if (!is_null($complaint->kode_saran))
-                                            <button wire:click="finalize({{ $complaint->id }})"
-                                                    x-data
-                                                    x-tooltip.raw="Selesaikan Verifikasi"
-                                                    class="text-green-400 hover:text-green-500">
+                                            <button wire:click="finalize({{ $complaint->id }})" x-data x-tooltip.raw="Selesaikan Verifikasi"
+                                                class="text-green-400 hover:text-green-500">
                                                 @include('components.icon', [
                                                     'name' => 'check-circle',
                                                     'size' => 'w-5 h-5',

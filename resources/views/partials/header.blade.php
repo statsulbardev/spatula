@@ -3,12 +3,8 @@
         <!-- Search Box-->
         <div class="search-box">
             <button class="dismiss"><i class="icon-close"></i></button>
-            <form id="searchForm"
-                  action="#"
-                  role="search">
-                <input type="search"
-                       placeholder="What are you looking for..."
-                       class="form-control">
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="What are you looking for..." class="form-control">
             </form>
         </div>
         <div class="container-fluid">
@@ -16,18 +12,14 @@
                 <!-- Navbar Header-->
                 <div class="navbar-header">
                     <!-- Navbar Brand -->
-                    <a href="index.html"
-                       class="navbar-brand d-none d-sm-inline-block">
+                    <a href="index.html" class="navbar-brand d-none d-sm-inline-block">
                         <div class="brand-text d-none d-lg-inline-block"><strong>SPATULA</strong></div>
                         <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
                     </a>
                     <span class="ml-4 mr-3"></span>
                     <span class="ml-4"></span>
                     <!-- Toggle Button-->
-                    <a wire:ignore
-                       id="toggle-btn"
-                       href="#"
-                       class="menu-btn active">
+                    <a wire:ignore id="toggle-btn" href="#" class="menu-btn active">
                         <span></span><span></span><span></span>
                     </a>
                     <span class="ml-2">

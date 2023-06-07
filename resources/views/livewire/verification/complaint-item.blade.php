@@ -18,11 +18,9 @@
                         <table class="w-full table-auto">
                             <tbody class="divide-y divide-gray-100 text-sm">
                                 <tr>
-                                    <td width="25%"
-                                        class="whitespace-nowrap py-6 pl-5 font-semibold">Tanggal Layanan
+                                    <td width="25%" class="whitespace-nowrap py-6 pl-5 font-semibold">Tanggal Layanan
                                     </td>
-                                    <td width="1%"
-                                        class="font-semibold">:</td>
+                                    <td width="1%" class="font-semibold">:</td>
                                     <td>{{ $complaint->created_at->format('d/m/Y') }}</td>
                                 </tr>
                                 <tr>
