@@ -4,17 +4,20 @@
         <div class="w-4 h-4 mr-2 {{ request()->is('dashboard') ? 'text-white' : 'text-primary-100 group-hover:text-white' }}">
             @include('components.icon', ['name' => 'home', 'size' => 'w-4 h-4'])
         </div>
-        <div class="text-sm {{ request()->is('dashboard') ? 'text-white' : 'text-primary-100 group-hover:text-white' }}">Dashboard</div>
+        <div class="text-sm font-semibold tracking-wider {{ request()->is('dashboard') ? 'text-white' : 'text-primary-100 group-hover:text-white' }}">Dashboard</div>
     </a>
 </div>
 
 {{-- Verifikasi --}}
+@role('superadmin|admin|pj-layanan|pj-pengaduan')
 <div class="mb-8 cursor-pointer" x-data="{ visible: false }">
     <div class="flex items-center group pb-1" @click="visible = true">
         <div class="{{ request()->is('verifikasi/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-4 h-4 mr-2">
             @include('components.icon', ['name' => 'rectangle-stack', 'size' => 'w-4 h-4'])
         </div>
-        <div class="text-sm {{ request()->is('verifikasi/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-7/12">Verifikasi</div>
+        <div class="text-sm font-semibold tracking-wider {{ request()->is('verifikasi/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-7/12">
+            Verifikasi
+        </div>
         <div class="{{ request()->is('verifikasi/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-4 h-4" x-show="!visible">
             @include('components.icon', ['name' => 'chevron-right', 'size' => 'w-4 h-4'])
         </div>
@@ -50,14 +53,16 @@
         </li>
     </ul>
 </div>
+@endrole
 
 {{-- Laporan --}}
+@role('superadmin|admin|pimpinan')
 <div class="mb-8 cursor-pointer" x-data="{ visible: false }">
     <div class="flex items-center group pb-1" @click="visible = true">
         <div class="{{ request()->is('laporan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-4 h-4 mr-2">
             @include('components.icon', ['name' => 'presentation-chart', 'size' => 'w-4 h-4'])
         </div>
-        <div class="text-sm {{ request()->is('laporan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-7/12">
+        <div class="text-sm font-semibold tracking-wider {{ request()->is('laporan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-7/12">
             Laporan
         </div>
         <div class="{{ request()->is('laporan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-4 h-4" x-show="!visible">
@@ -89,14 +94,16 @@
         </li>
     </ul>
 </div>
+@endrole
 
 {{-- Konfigurasi --}}
+@role('superadmin')
 <div class="mb-6 cursor-pointer" x-data="{ visible: false }">
     <div class="flex items-center group pb-1" @click="visible = true">
         <div class="{{ request()->is('pengaturan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-4 h-4 mr-2">
             @include('components.icon', ['name' => 'cog', 'size' => 'w-4 h-4'])
         </div>
-        <div class="text-sm {{ request()->is('pengaturan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-7/12">
+        <div class="text-sm font-semibold tracking-wider {{ request()->is('pengaturan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-7/12">
             Pengaturan
         </div>
         <div class="{{ request()->is('pengaturan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} w-4 h-4" x-show="!visible">
@@ -143,5 +150,15 @@
         </li>
     </ul>
 </div>
+@endrole
 
-
+@role('admin')
+<div class="mb-8">
+    <a class="flex items-center group cursor-pointer" href="{{ route('daftar-pengguna') }}">
+        <div class="w-4 h-4 mr-2 {{ request()->is('pengaturan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }}">
+            @include('components.icon', ['name' => 'user-circle', 'size' => 'w-4 h-4'])
+        </div>
+        <div class="text-sm font-semibold tracking-wider {{ request()->is('pengaturan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }}">Atur Pengguna</div>
+    </a>
+</div>
+@endrole

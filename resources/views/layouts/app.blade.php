@@ -21,20 +21,28 @@
                 </div>
             </div>
             <div class="bg-white border-b w-full p-4 md:py-0 md:px-12 text-sm md:text-md flex justify-between items-center">
-                <div class="mt-1 mr-4">BPS Provinsi Sulawesi Barat</div>
+                <div class="mt-1 mr-4">{{ $satker ?? null }}</div>
                 {{-- Dropdown --}}
                 <div class="mt-1" x-data="{ open: false }">
                     <div class="flex items-center cursor-pointer select-none group" @click="open = true">
-                        <img class="block w-6 h-6 rounded-full mr-2 -my-2" src="{{ $photo ?? null }}">
-                        <div class="text-gray-700 group-hover:text-primary-500 focus:text-primary-500 mr-1 whitespace-no-wrap">
-                            <span class="hidden md:inline">{{ $name ?? null }}</span>
+                        <div class="text-gray-700 group-hover:text-primary-500 focus:text-primary-500 mr-2 whitespace-nowrap">
+                            <span class="hidden md:inline">{{ $nama }}</span>
                         </div>
-                        <div class="w-5 h-5 group-hover:fill-primary-500 fill-gray-700 focus:fill-primary-500">
-                            {{-- @include('components.icon', ['name' => 'cheveron-down']) --}}
-                        </div>
+                        <img class="block w-6 h-6 rounded-full -my-2" src="{{
+                            $foto ?? 'https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png'
+                        }}">
+                        <div class="w-5"></div>
                     </div>
-                    <ul class="sm:mr-4 md:mr-12 lg:mr-12 text-right right-0 mt-2 py-2 shadow bg-white rounded text-sm absolute z-50" x-show.transition.duration.50ms="open" @click.away="open = false">
-                        <li class="block px-6 py-2 hover:bg-primary-500 hover:text-white">
+                    <ul
+                        x-show="open"
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-300"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-90"
+                        class="mr-4 md:mr-16 lg:mr-16 text-right right-0 mt-2 py-2 shadow bg-white rounded text-sm absolute z-50" @click.away="open = false">
+                        <li class="block px-6 py-2 hover:bg-primary-500 hover:text-white cursor-pointer">
                             @livewire('auth.logout')
                         </li>
                     </ul>
@@ -43,7 +51,7 @@
             </div>
         </div>
         <div class="flex flex-grow overflow-hidden">
-            <div class="bg-gradient-to-b from-primary-500 to-indigo-500 flex-shrink-0 w-56 pl-10 py-12 hidden md:block overflow-y-auto">
+            <div class="bg-gradient-to-b from-primary-500 to-fuchsia-700 flex-shrink-0 w-56 pl-10 py-12 hidden md:block overflow-y-auto">
                 @include('partials.menu')
             </div>
             <div class="flex-1 px-4 py-8 md:p-12 overflow-y-auto" scroll-region>

@@ -11,7 +11,7 @@
                 <div class="mb-8">
                     <div>
                         <label class="mb-2 block text-sm font-bold tracking-wider text-white"
-                               for="username">Username</label>
+                               for="username">USERNAME</label>
                         <input wire:model.defer="username"
                                ref="input"
                                class="form-input"
@@ -32,7 +32,7 @@
                     </div>
                     <div class="mt-6">
                         <label class="mb-2 block text-sm font-bold tracking-wider text-white"
-                               for="password">Password</label>
+                               for="password">PASSWORD</label>
                         <input wire:model.defer="password"
                                ref="input"
                                class="form-input"
