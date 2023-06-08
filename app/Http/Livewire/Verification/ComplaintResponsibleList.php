@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
-use App\Traits\HasReportProperty;
+use App\Traits\HasInitialProperty;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
@@ -14,14 +14,14 @@ use Livewire\WithPagination;
 
 class ComplaintResponsibleList extends Component
 {
-    use HasModelProcess, HasReportProperty, WithPagination;
+    use HasModelProcess, HasInitialProperty, WithPagination;
 
     /** @props */
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
     /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty() : array
+    public function getRootBreadcrumbProperty(): array
     {
         return [
             'route' => route('daftar-pj-pengaduan'),
@@ -35,7 +35,7 @@ class ComplaintResponsibleList extends Component
         return $this->initSuggestionsOption();
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.verification.complaint-responsible-list', [
             'complaints' => $this->retrieveData()
@@ -45,26 +45,26 @@ class ComplaintResponsibleList extends Component
     public function finalize(d_penilaian $penilaian)
     {
         $result = $this->customUpdate($penilaian, [
-                    'selesai' => 1,
-                    'tanggal_selesai' => Carbon::now()
-                ]);
+            'selesai' => 1,
+            'tanggal_selesai' => Carbon::now()
+        ]);
 
         $this->dispatchBrowserEvent('notification', ['message' => $result]);
     }
 
-    private function retrieveData() : Paginator
+    private function retrieveData(): Paginator
     {
         $superadmin_role = auth()->user()->hasRole('superadmin');
 
         $user_unit_role  = auth()->user()->satker->kode_satker;
 
         return d_penilaian::search($this->searchKeyword)
-                -> query(fn ($query) => $query->with(['petugas', 'layanan']))
-                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_role) {
-                    $query->where('kode_satker_id', $user_unit_role);
-                })
-                -> where('selesai', 0)
-                -> where('is_pengaduan', 1)
-                -> paginate($this->numberOfPagination);
+            ->query(fn ($query) => $query->with(['petugas', 'layanan']))
+            ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_role) {
+                $query->where('kode_satker_id', $user_unit_role);
+            })
+            ->where('selesai', 0)
+            ->where('is_pengaduan', 1)
+            ->paginate($this->numberOfPagination);
     }
 }

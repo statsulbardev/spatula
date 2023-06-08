@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Verification;
 
 use App\Models\d_penilaian;
 use App\Traits\HasModelProcess;
-use App\Traits\HasReportProperty;
+use App\Traits\HasInitialProperty;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -15,7 +15,7 @@ use Livewire\WithPagination;
 
 class ServiceResponsibleList extends Component
 {
-    use HasModelProcess, HasReportProperty, WithPagination;
+    use HasModelProcess, HasInitialProperty, WithPagination;
 
     public d_penilaian $penilaian;
     public int $numberOfPagination = 20;

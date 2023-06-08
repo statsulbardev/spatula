@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Report;
 
 use App\Models\d_penilaian;
-use App\Traits\HasReportProperty;
+use App\Traits\HasInitialProperty;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
@@ -12,7 +12,7 @@ use Livewire\WithPagination;
 
 class Daily extends Component
 {
-    use HasReportProperty, WithPagination;
+    use HasInitialProperty, WithPagination;
 
     public int $numberOfPagination = 20;
 
@@ -54,15 +54,16 @@ class Daily extends Component
     }
 
     public function boot()
-    {}
+    {
+    }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.report.daily', [
             'dailyReport' => isset($this->selectedYear)
-                                ? $this->updatedSelectedYear()
-                                : $this->retrieveData()
-        ]) -> layout('layouts.app');
+                ? $this->updatedSelectedYear()
+                : $this->retrieveData()
+        ])->layout('layouts.app');
     }
 
     public function updatedSelectedYear()
@@ -72,14 +73,14 @@ class Daily extends Component
         $user_unit_code  = auth()->user()->satker->kode_satker;
 
         return d_penilaian::with(['petugas', 'layanan'])
-                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code) {
-                    $query->where('kode_satker_id', $user_unit_code);
-                })
-                -> whereYear('created_at', '=', $this->selectedYear)
-                -> whereMonth('created_at', '=', $this->selectedMonth)
-                -> where('selesai', 1)
-                -> orderBy('tanggal_selesai', 'desc')
-                -> paginate($this->numberOfPagination);
+            ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_code) {
+                $query->where('kode_satker_id', $user_unit_code);
+            })
+            ->whereYear('created_at', '=', $this->selectedYear)
+            ->whereMonth('created_at', '=', $this->selectedMonth)
+            ->where('selesai', 1)
+            ->orderBy('tanggal_selesai', 'desc')
+            ->paginate($this->numberOfPagination);
     }
 
     public function resetData()
@@ -89,18 +90,18 @@ class Daily extends Component
         $this->retrieveData();
     }
 
-    private function retrieveData() : Paginator
+    private function retrieveData(): Paginator
     {
         $superadmin_role = auth()->user()->hasRole('superadmin');
 
         $user_unit_code  = auth()->user()->satker->kode_satker;
 
         return d_penilaian::with(['petugas', 'layanan'])
-                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code)  {
-                    $query->where('kode_satker_id', $user_unit_code);
-                })
-                -> where('selesai', 1)
-                -> orderBy('tanggal_selesai', 'desc')
-                -> paginate($this->numberOfPagination);
+            ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_code) {
+                $query->where('kode_satker_id', $user_unit_code);
+            })
+            ->where('selesai', 1)
+            ->orderBy('tanggal_selesai', 'desc')
+            ->paginate($this->numberOfPagination);
     }
 }
