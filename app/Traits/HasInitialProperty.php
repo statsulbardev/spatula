@@ -7,9 +7,9 @@ use App\Models\m_saran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
-trait HasReportProperty
+trait HasInitialProperty
 {
-    public function initMonthsOption() : array
+    public function initMonthsOption(): array
     {
         return [
             ['1' => 'Januari'],
@@ -27,24 +27,24 @@ trait HasReportProperty
         ];
     }
 
-    public function initYearsOption() : Collection
+    public function initYearsOption(): Collection
     {
         return d_penilaian::query()
-                -> select(DB::Raw('YEAR(created_at) as year'))
-                -> distinct()
-                -> pluck('year');
+            ->select(DB::Raw('YEAR(created_at) as year'))
+            ->distinct()
+            ->pluck('year');
     }
 
-    public function initSuggestionsOption() : array
+    public function initSuggestionsOption(): array
     {
         return
             m_saran::query()
-                -> get(['kode_saran', 'nama_saran'])
-                -> map(function($item) {
-                    return [
-                        $item->kode_saran => $item->nama_saran
-                    ];
-                })
-                -> toArray();
+            ->get(['kode_saran', 'nama_saran'])
+            ->map(function ($item) {
+                return [
+                    $item->kode_saran => $item->nama_saran
+                ];
+            })
+            ->toArray();
     }
 }
