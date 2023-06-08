@@ -5,23 +5,26 @@
 
     <form wire:submit.prevent="submitData">
         <div class="mt-4 rounded-t-lg border-l border-r border-t border-gray-200 bg-white py-4 shadow-sm">
+            {{-- Header --}}
             <div class="px-12 py-10 text-center">
-                <h1 class="font-extrabold tracking-wider sm:text-2xl lg:text-4xl">Selamat Datang</h1>
-                <h1 class="mt-2 font-extrabold sm:text-2xl lg:text-4xl">Saran Pengaduan Online dan Rating Petugas Layanan
+                <h1 class="font-extrabold tracking-wider text-xl lg:text-4xl">Selamat Datang</h1>
+                <h1 class="mt-2 font-extrabold text-xl lg:text-4xl">Saran Pengaduan Online dan Rating Petugas Layanan
                 </h1>
-                <p class="mt-5 text-zinc-500 sm:text-xs lg:text-lg">Anda dapat memberikan penilaian terhadap petugas dan
+                <p class="mt-5 text-zinc-500 text-sm lg:text-lg">Anda dapat memberikan penilaian terhadap petugas dan
                     layanan yang kami diberikan.</p>
             </div>
+
+            {{-- Unit Kerja --}}
             <hr>
             <div class="flex flex-wrap p-6">
-                <div class="sm:w-full lg:w-1/3">
-                    <h1 class="text-2xl tracking-wide">Unit Kerja</h1>
-                    <p class="mt-4 text-base leading-6 lg:pr-24">
+                <div class="w-full lg:w-1/3">
+                    <h1 class="text-xl lg:text-2xl tracking-wide">Unit Kerja</h1>
+                    <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
                         Pilih unit kerja yang ingin anda berikan penilaian.
                     </p>
                 </div>
-                <div class="sm:w-full lg:w-2/3">
-                    <div class="my-6 w-full">
+                <div class="w-full lg:w-2/3">
+                    <div class="my-6">
                         {{-- Unit Kerja yang Dinilai --}}
                         @include('components.input.select-realtime', [
                             'label' => 'Unit Kerja',
@@ -43,18 +46,20 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Informasi Pengguna Layanan --}}
             <hr>
             <div class="flex flex-wrap p-6">
-                <div class="sm:w-full lg:w-1/3">
-                    <h1 class="text-2xl tracking-wide">Informasi Penerima Layanan</h1>
-                    <p class="mt-4 text-base leading-6 lg:pr-24">
+                <div class="w-full lg:w-1/3">
+                    <h1 class="text-xl lg:text-2xl tracking-wide">Informasi Penerima Layanan</h1>
+                    <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
                         Silahkan isi dengan jelas dan lengkap data diri anda sebagai penerima layanan
                         statistik terpadu.
                     </p>
                 </div>
-                <div class="sm:w-full lg:w-2/3">
+                <div class="w-full lg:w-2/3">
                     {{-- Nama Konsumen --}}
-                    <div class="my-6 w-full">
+                    <div class="my-6">
                         @include('components.input.text', [
                             'label' => 'Nama Lengkap',
                             'model' => 'f_nama',
@@ -71,7 +76,7 @@
                         </div>
                     </div>
                     {{-- Email --}}
-                    <div class="my-6 w-full">
+                    <div class="my-6">
                         @include('components.input.text', [
                             'label' => 'Akun Email',
                             'model' => 'f_email',
@@ -88,7 +93,7 @@
                         </div>
                     </div>
                     {{-- No. WA / Telepon --}}
-                    <div class="my-6 w-full">
+                    <div class="my-6">
                         @include('components.input.text', [
                             'label' => 'No. Telepon / Whatsapp',
                             'model' => 'f_nowatelp',
@@ -106,18 +111,20 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Penilaian Layanan --}}
             <hr>
             <div class="flex flex-wrap p-6">
-                <div class="sm:w-full lg:w-1/3">
-                    <h1 class="text-2xl tracking-wide">Penilaian Layanan</h1>
-                    <p class="mt-4 text-base leading-6 lg:pr-24">
+                <div class="w-full lg:w-1/3">
+                    <h1 class="text-xl lg:text-2xl tracking-wide">Penilaian Layanan</h1>
+                    <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
                         Bagaimana penilaian anda terhadap layanan yang diberikan oleh
                         <b class="font-bold text-primary-500">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                     </p>
                 </div>
-                <div class="sm:w-full lg:w-2/3">
+                <div class="w-full lg:w-2/3">
                     {{-- Nama Layanan --}}
-                    <div class="my-6 w-full">
+                    <div class="my-6">
                         @include('components.input.select-realtime', [
                             'label' => 'Nama Layanan',
                             'model' => 'f_layanan',
@@ -151,19 +158,20 @@
                 </div>
             </div>
 
+            {{-- Petugas Layanan --}}
             @if (isset($f_layanan) and explode('-', $f_layanan)[1] == 1)
                 <hr>
                 <div wire:key="petugas_layanan" class="flex flex-wrap p-6">
-                    <div class="sm:w-full lg:w-1/3">
-                        <h1 class="text-2xl tracking-wide">Penilaian Petugas</h1>
-                        <p class="mt-4 text-base leading-6 lg:pr-24">
+                    <div class="w-full lg:w-1/3">
+                        <h1 class="text-xl lg:text-2xl tracking-wide">Penilaian Petugas</h1>
+                        <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
                             Bagaimana penilaian anda terhadap petugas layanan di Pelayanan Statistik Terpadu
                             <b class="font-bold text-primary-500">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                         </p>
                     </div>
-                    <div class="sm:w-full lg:w-2/3">
+                    <div class="w-full lg:w-2/3">
                         {{-- Petugas Layanan --}}
-                        <div class="my-6 w-full">
+                        <div class="my-6">
                             @include('components.input.select', [
                                 'label' => 'Nama Petugas',
                                 'model' => 'f_petugas',
@@ -198,17 +206,18 @@
                 </div>
             @endif
 
+            {{-- Saran Pengaduan --}}
             <hr>
             <div wire:key="saran_pengaduan" class="flex flex-wrap p-6">
                 <div class="lg:w-1/3">
-                    <h1 class="text-2xl tracking-wide">Kotak Saran Pengaduan</h1>
-                    <p class="mt-4 text-base leading-6 lg:pr-24">
+                    <h1 class="text-xl lg:text-2xl tracking-wide">Kotak Saran Pengaduan</h1>
+                    <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
                         Berikan saran / pengaduan / kritik / apresiasi untuk layanan di
                         <b class="font-bold text-primary-500">{{ explode('-', $f_unit)[1] ?? '...' }}</b> ?
                     </p>
                 </div>
-                <div class="lg:w-2/3">
-                    <div class="my-6 w-full">
+                <div class="w-full lg:w-2/3">
+                    <div class="my-6">
                         @include('components.input.text-area', [
                             'model' => 'f_saranpengaduan',
                             'label' => 'Saran Pengaduan',
