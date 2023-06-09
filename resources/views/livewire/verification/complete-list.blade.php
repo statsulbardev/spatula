@@ -51,22 +51,28 @@
                                 @endif --}}
                                     </span>
                                 </td>
+                                {{-- Pengguna Layanan, Email, dan WA --}}
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
-                                        {{ ucwords(strtolower($done->nama_konsumen)) }}
-                                    </span>
+                                    <div class="py-4 pl-6">
+                                        <div class="text-md">{{ ucwords(strtolower($done->nama_konsumen)) }}</div>
+                                        <div class="mb-2 text-sm text-neutral-500">{{ $done->email_konsumen }}</div>
+                                        <div class="text-sm text-primary-500">{{ $done->no_wa_telepon ?? '-' }}</div>
+                                    </div>
                                 </td>
-                                <td class="border-t" width="45%">
-                                    <span x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($done->saran_pengaduan).trim();
-                                    content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
-                                        <span x-text="isCollapsed ? originalContent : content" class="py-4 pl-6 leading-tight">
-                                            {!! $done->saran_pengaduan !!}
+
+                               {{-- Saran Pengaduan --}}
+                                <td class="border-t" width="35%">
+                                    <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($done->saran_pengaduan).trim();
+                                        content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
+
+                                        <span x-html="isCollapsed ? originalContent : content" class="py-4 pl-6 leading-tight">
                                         </span>
+
                                         <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
-                                            x-text="isCollapsed ? 'sedikit' : 'lebih banyak'"
-                                            class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm hover:bg-violet-300">
+                                            x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
+                                            class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
                                         </button>
-                                    </span>
+                                    </div>
                                 </td>
                                 <td class="border-t">
                                     <span class="py-4 pl-6">
