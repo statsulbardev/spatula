@@ -4,9 +4,9 @@
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Dashboard Spatula'])
 
-    <section class="mb-6 mt-10 flex flex-wrap">
+    <section class="mb-6 mt-10 columns-1 lg:columns-2 gap-4 space-y-4 mx-auto">
         {{-- Informasi Verifikasi --}}
-        <div class="lg:mb-4 w-full lg:w-2/3">
+        <div class="break-inside-avoid">
             <div class="bg-white rounded-md shadow-md mb-4 lg:mr-4">
                 {{-- Card Header --}}
                 <div class="border-b mb-2 p-4 text-sm font-medium">INFORMASI LAYANAN</div>
@@ -64,38 +64,8 @@
             </div>
         </div>
 
-        {{-- Petugas Layanan --}}
-        <div class="lg:mb-4 w-full lg:w-1/3">
-            <div class="bg-white rounded-md shadow-md">
-                {{-- Card Header --}}
-                <div class="border-b mb-2 p-4 text-sm font-medium">PETUGAS LAYANAN</div>
-                {{-- Card Content --}}
-                <div class="p-4">
-                    @foreach ($officers as $officerIndex => $officer)
-                        <div class="flex flex-wrap px-4 py-2 border mb-2 rounded-md">
-                            <div class="flex items-center w-full lg:w-2/3">
-                                {{-- Foto --}}
-                                <img class="block h-12 w-12 rounded-full" src="https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png">
-                                {{-- Identitas --}}
-                                <div class="ml-2">
-                                    <div class="font-semibold text-base">{{ array_column($this->listOfficers, $officerIndex)[0]['nama'] ?? 'Belum Assign Petugas' }}</div>
-                                    <span class="text-xs text-primary-500">{{ array_column($this->listOfficers, $officerIndex)[0]['email'] ?? '-' }}</span>
-                                </div>
-                            </div>
-                            <div class="w-full lg:w-1/3">
-                                <div class="text-xs text-gray-400 text-right">Jumlah Penugasan</div>
-                                <div class="text-right">
-                                    <span class="text-xl font-bold">{{ $officers->get($officerIndex) }}</span><small class="ml-1">penilaian</small>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
         {{-- Saran Pengaduan --}}
-        <div class="lg:mb-4 w-full lg:w-2/3">
+        <div class="break-inside-avoid">
             <div class="bg-white rounded-md shadow-md mb-4 lg:mr-4">
                 {{-- Card Header --}}
                 <div class="border-b mb-2 p-4 text-sm font-medium">KATEGORI SARAN PENGADUAN</div>
@@ -181,8 +151,42 @@
             </div>
         </div>
 
+        {{-- Petugas Layanan --}}
+        <div class="break-inside-avoid">
+            <div class="bg-white rounded-md shadow-md">
+                {{-- Card Header --}}
+                <div class="border-b mb-2 p-4 text-sm font-medium">PETUGAS LAYANAN</div>
+                {{-- Card Content --}}
+                <div class="p-4">
+                    @foreach ($officers as $officerIndex => $officer)
+                    <div class="flex flex-wrap px-4 py-2 border mb-2 rounded-md">
+                        <div class="flex items-center w-full lg:w-2/3">
+                            {{-- Foto --}}
+                            <img class="block h-12 w-12 rounded-full"
+                                src="https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png">
+                            {{-- Identitas --}}
+                            <div class="ml-2">
+                                <div class="font-semibold text-base">{{ array_column($this->listOfficers,
+                                    $officerIndex)[0]['nama'] ?? 'Belum Assign Petugas' }}</div>
+                                <span class="text-xs text-primary-500">{{ array_column($this->listOfficers,
+                                    $officerIndex)[0]['email'] ?? '-' }}</span>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-1/3">
+                            <div class="text-xs text-gray-400 text-right">Jumlah Penugasan</div>
+                            <div class="text-right">
+                                <span class="text-xl font-bold">{{ $officers->get($officerIndex) }}</span><small
+                                    class="ml-1">penilaian</small>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
         {{-- Jenis Layanan --}}
-        <div class="w-full lg:w-1/3">
+        <div class="break-inside-avoid">
             <div class="bg-white rounded-md shadow-md">
                 {{-- Card Header --}}
                 <div class="border-b mb-2 p-4 text-sm font-medium">LAYANAN DENGAN KEPUASAN TERTINGGI</div>
