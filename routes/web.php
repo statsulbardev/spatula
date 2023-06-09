@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Dashboard\Index;
 use App\Http\Livewire\Verification\CompleteList;
 use App\Http\Livewire\Verification\CompleteItem;
 use App\Http\Livewire\Verification\ServiceResponsibleList;
@@ -17,6 +16,7 @@ use App\Http\Livewire\Configuration\ServiceList;
 use App\Http\Livewire\Configuration\CreateEditService;
 use App\Http\Livewire\Configuration\UnitList;
 use App\Http\Livewire\Configuration\CreateEditUnit;
+use App\Http\Livewire\Dashboard\Dashboard;
 use App\Http\Livewire\Form\Evaluation;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +29,7 @@ Route::get('/penilaian', Evaluation::class)->name('form-penilaian');
 
 // Dashboard
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/dashboard', Index::class)->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
 });
 
 // Verification
