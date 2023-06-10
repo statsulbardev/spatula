@@ -26,9 +26,14 @@ class CompleteList extends Component
     }
 
     /** @computed property : suggestions */
-    public function getSuggestionsProperty()
+    public function getSuggestionsProperty(): array
     {
         return $this->initSuggestionsOption();
+    }
+    /** @computed property : colorSuggestions */
+    public function getColorSuggestionsProperty(): array
+    {
+        return $this->initColorSuggestionsOption();
     }
 
     public function render(): View
@@ -50,6 +55,7 @@ class CompleteList extends Component
         $user_unit_code  = auth()->user()->satker->kode_satker;
 
         return d_penilaian::search($this->searchKeyword)
+            ->query(fn ($query) => $query->with(['petugas', 'layanan']))
             ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_code) {
                 $query->where('kode_satker_id', $user_unit_code);
             })

@@ -28,13 +28,13 @@ Route::get('/login', Login::class)->name('login');
 Route::get('/penilaian', Evaluation::class)->name('form-penilaian');
 
 // Dashboard
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 });
 
 // Verification
 Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-layanan|pj-pengaduan']], function () {
-    Route::prefix('/verifikasi/')->group(function() {
+    Route::prefix('/verifikasi/')->group(function () {
         Route::get('selesai', CompleteList::class)->name('daftar-selesai');
         Route::get('selesai/{customer}', CompleteItem::class)->name('detail-selesai');
         Route::get('pj-layanan', ServiceResponsibleList::class)->name('daftar-pj-layanan');
@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
 });
 
 // User Configuration
-Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function() {
+Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
     Route::get('/pengaturan/pengguna', UserList::class)->name('daftar-pengguna');
     Route::get('/pengaturan/pengguna/tambah', CreateEditUser::class)->name('tambah-pengguna');
     Route::get('/pengaturan/pengguna/{pengguna}/edit', CreateEditUser::class)->name('edit-pengguna');

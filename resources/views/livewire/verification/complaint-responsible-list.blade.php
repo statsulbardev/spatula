@@ -30,6 +30,9 @@
                             <th class="px-6 pb-4 pt-6">Tanggal</th>
                             <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
                             <th class="px-6 pb-4 pt-6">Saran dan Pengaduan</th>
+                            <th class="px-6 pb-4 pt-6">Nama Layanan</th>
+                            <th class="px-6 pb-4 pt-6">Nama Petugas</th>
+                            <th class="px-6 pb-4 pt-6">Keterangan</th>
                             <th class="px-6 pb-4 pt-6">Kategori</th>
                             <th class="px-6 pb-4 pt-6"></th>
                         </tr>
@@ -60,41 +63,105 @@
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t" width="45%">
+                                <td class="border-t" width="35%">
                                     <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($complaint->saran_pengaduan).trim();
                                     content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
                                         <span x-html="isCollapsed ? originalContent : content" class="py-4 pl-6 leading-tight">
                                         </span>
                                         <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
-                                            x-text="isCollapsed ? 'Sedikit' : 'Lebih Banyak'"
+                                            x-text="isCollapsed ? 'less..' : 'more..'"
                                             class="mb-4 ml-6 rounded-md bg-violet-200 p-2 text-sm text-violet-900 hover:bg-violet-300">
                                         </button>
+                                    </div>
+                                </td>
+
+                                {{-- Nama dan Rating Layanan --}}
+                                <td class="border-t">
+                                    <div class="py-4 pl-6">
+                                        <div class="mb-2">{{ $complaint->layanan->nama_layanan }}</div>
+                                        <div class="flex flex-nowrap">
+                                            @if (!is_null($complaint->rating_layanan))
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    @if ($i < $complaint->rating_layanan)
+                                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                            @include('components.icon', [
+                                                                'name' => 'star-solid',
+                                                                'size' => 'w-4 h-4',
+                                                            ])
+                                                        </span>
+                                                    @else
+                                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                            @include('components.icon', [
+                                                                'name' => 'star-outline',
+                                                                'size' => 'w-4 h-4',
+                                                            ])
+                                                        </span>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                -
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+
+                                {{-- Nama dan Rating Petugas --}}
+                                <td class="border-t">
+                                    <div class="py-4 pl-6">
+                                        <div class="mb-2">{{ $complaint->petugas->nama ?? '-' }}</div>
+                                        <div class="flex flex-nowrap">
+                                            @if (!is_null($complaint->rating_petugas))
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    @if ($i < $complaint->rating_petugas)
+                                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                            @include('components.icon', [
+                                                                'name' => 'star-solid',
+                                                                'size' => 'w-4 h-4',
+                                                            ])
+                                                        </span>
+                                                    @else
+                                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                            @include('components.icon', [
+                                                                'name' => 'star-outline',
+                                                                'size' => 'w-4 h-4',
+                                                            ])
+                                                        </span>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                -
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+
+                                {{-- Keterangan --}}
+                                <td class="border-t">
+                                    <div class="items-center py-4 pl-6">
+                                        <i class="fas fa-calendar text-sm opacity-50"></i>
+                                        {!! $complaint->catatan ?? '-' !!}
                                     </div>
                                 </td>
 
                                 {{-- Kategori --}}
                                 <td class="border-t">
                                     <div class="py-4 pl-6">
-                                        @if (!is_null($complaint->kode_saran))
-                                            @for ($i = 0; $i < count($complaint->kode_saran); $i++)
-                                                <div class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
-                                                    <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
-                                                    <span
-                                                        class="relative">{{ array_column($this->suggestions, $complaint->kode_saran[$i])[0] }}</span>
-                                                </div>
-                                            @endfor
-                                        @else
-                                            <span class="relative inline-block px-3 py-1 text-sm leading-tight text-red-900">
-                                                <span aria-hidden class="absolute inset-0 rounded-full bg-red-200 opacity-50"></span>
-                                                <span class="relative">Belum Dikategorisasi</span>
-                                            </span>
-                                        @endif
+                                        @for ($i = 0; $i < count($complaint->kode_saran); $i++)
+                                            <div class="mb-1 flex flex-nowrap items-center">
+                                                <span class="text-{{ array_column($this->colorSuggestions, $complaint->kode_saran[$i])[0] }}-400">
+                                                    @include('components.icon', ['name' => 'tag', 'size' => 'w-4 h-4'])
+                                                </span>
+                                                <span class="text-{{ array_column($this->colorSuggestions, $complaint->kode_saran[$i])[0] }}-400 ml-1">
+                                                    {{ array_column($this->suggestions, $complaint->kode_saran[$i])[0] }}
+                                                </span>
+                                            </div>
+                                        @endfor
                                     </div>
                                 </td>
 
                                 {{-- Aksi --}}
                                 <td class="w-px border-t">
-                                    <div class="mr-2 flex items-center space-x-2 py-2">
+                                    <div class="pl-4 mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Lihat Informasi"
                                             class="cursor-pointer text-primary-400 hover:text-primary-500"
                                             href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan/' . $complaint->id) }}">
