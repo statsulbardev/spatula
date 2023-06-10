@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dashboard;
 
 use App\Models\d_penilaian;
 use App\Traits\HasInitialProperty;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -29,20 +30,27 @@ class Dashboard extends Component
     public Collection $ratingService;
 
     /** @computed property : listOfficers */
-    public function getListOfficersProperty() : array
+    public function getListOfficersProperty(): array
     {
         return $this->initOfficersOption();
     }
 
     /** @computed propert : services */
-    public function getServicesProperty() : array
+    public function getServicesProperty(): array
     {
         return $this->initServicesOption();
     }
 
-    public function mount() : void
+    public function mount(): void
     {
-        $result = d_penilaian::with(['petugas', 'layanan'])->get();
+        $superadmin_role = auth()->user()->hasRole('superadmin');
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+
+        $result = d_penilaian::with(['petugas', 'layanan'])
+            ->when(!$superadmin_role, function (Builder $query) use ($user_unit_code) {
+                $query->where('kode_satker_id', $user_unit_code);
+            })
+            ->get();
 
         $this->completes            = $result->where('selesai', 1)->count();
         $this->notCompletes         = $result->where('selesai', 0)->count();

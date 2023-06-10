@@ -68,7 +68,8 @@ class d_penilaian extends Model
             'no_wa_telepon'     => $this->no_wa_telepon,
             'saran_pengaduan'   => $this->saran_pengaduan,
             'text_pj_layanan'   => $this->text_pj_layanan,
-            'text_pj_pengaduan' => $this->text_pj_pengaduan
+            'text_pj_pengaduan' => $this->text_pj_pengaduan,
+            'catatan'           => $this->catatan
         ];
     }
 }

@@ -37,32 +37,32 @@ trait HasInitialProperty
 
         return
             m_pengguna::query()
-                -> when(! $superadmin_role, function(Builder $query, $data) use ($user_unit_code) {
-                        $query->where('kode_satker_id', $user_unit_code);
-                })
-                -> get(['id', 'nama', 'email'])
-                -> map(function($item) {
-                        return [
-                            $item->id => [
-                                'nama'  => $item->nama,
-                                'email' => $item->email
-                            ]
-                        ];
-                })
-                -> toArray();
+            ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_code) {
+                $query->where('kode_satker_id', $user_unit_code);
+            })
+            ->get(['id', 'nama', 'email'])
+            ->map(function ($item) {
+                return [
+                    $item->id => [
+                        'nama'  => $item->nama,
+                        'email' => $item->email
+                    ]
+                ];
+            })
+            ->toArray();
     }
 
-    public function initServicesOption() : array
+    public function initServicesOption(): array
     {
         return
             m_layanan::query()
-                -> get(['kode_layanan', 'nama_layanan'])
-                -> map(function($item) {
-                        return [
-                            $item->kode_layanan => $item->nama_layanan
-                        ];
-                })
-                -> toArray();
+            ->get(['kode_layanan', 'nama_layanan'])
+            ->map(function ($item) {
+                return [
+                    $item->kode_layanan => $item->nama_layanan
+                ];
+            })
+            ->toArray();
     }
 
     public function initYearsOption(): Collection
@@ -84,5 +84,16 @@ trait HasInitialProperty
                 ];
             })
             ->toArray();
+    }
+
+    public function initColorSuggestionsOption(): array
+    {
+        return [
+            ['1' => 'violet'],
+            ['2' => 'cyan'],
+            ['3' => 'rose'],
+            ['4' => 'green'],
+            ['9' => 'zinc']
+        ];
     }
 }

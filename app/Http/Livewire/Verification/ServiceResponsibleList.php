@@ -31,9 +31,15 @@ class ServiceResponsibleList extends Component
     }
 
     /** @computed property : suggestions */
-    public function getSuggestionsProperty()
+    public function getSuggestionsProperty(): array
     {
         return $this->initSuggestionsOption();
+    }
+
+    /** @computed property : colorSuggestions */
+    public function getColorSuggestionsProperty(): array
+    {
+        return $this->initColorSuggestionsOption();
     }
 
     public function render()
