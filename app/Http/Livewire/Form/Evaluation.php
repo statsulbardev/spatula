@@ -33,43 +33,43 @@ class Evaluation extends Component
     public $f_saranpengaduan;
 
     /** @computed property : units */
-    public function getUnitsProperty() : string
+    public function getUnitsProperty(): string
     {
         return
             $this->renderOption(
                 m_satker::get(['kode_satker', 'nama'])
-                -> map(function($item) {
-                    return [
-                        0 => json_encode($item->kode_satker . '-' . $item->nama),
-                        1 => $item->nama
-                    ];
-                })
-                -> toArray()
+                    ->map(function ($item) {
+                        return [
+                            0 => json_encode($item->kode_satker . '-' . $item->nama),
+                            1 => $item->nama
+                        ];
+                    })
+                    ->toArray()
             );
     }
 
     // Computed Property : services
-    public function getServicesProperty() : string
+    public function getServicesProperty(): string
     {
         return
             $this->renderOption(
                 m_layanan::get(['kode_layanan', 'nama_layanan', 'metode'])
-                -> map(function($item) {
-                    return [
-                        0 => json_encode($item->kode_layanan . '-' . $item->metode),
-                        1 => $item->nama_layanan
-                    ];
-                })
-                -> toArray()
+                    ->map(function ($item) {
+                        return [
+                            0 => json_encode($item->kode_layanan . '-' . $item->metode),
+                            1 => $item->nama_layanan
+                        ];
+                    })
+                    ->toArray()
             );
     }
 
-    public function boot()
+    public function mount()
     {
         $this->ruleValidation = new StoreEvaluationRequest();
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.form.evaluation')->layout('layouts.evaluation');
     }
@@ -102,7 +102,7 @@ class Evaluation extends Component
             $message = "Terima kasih telah memberikan penilaian..";
 
             $this->dispatchBrowserEvent('notification', ['message' => $message]);
-        } catch(Exception $error) {
+        } catch (Exception $error) {
             DB::rollBack();
 
             Log::alert($error->getMessage());
@@ -123,17 +123,19 @@ class Evaluation extends Component
         $this->officers =
             $this->renderOption(
                 m_pengguna::query()
-                    -> where('kode_satker_id', explode('-', $this->f_unit)[0])
-                    -> where('is_petugas', 1)
-                    -> get(['id', 'nama'])
-                    -> map(function($item) {
+                    ->where('kode_satker_id', explode('-', $this->f_unit)[0])
+                    ->where('is_petugas', 1)
+                    ->get(['id', 'nama'])
+                    ->map(function ($item) {
                         return [
                             0 => $item->id,
                             1 => $item->nama
                         ];
                     })
-                    -> toArray()
+                    ->toArray()
             );
+
+        $this->reset(['f_layanan', 'f_ratinglayanan', 'f_petugas', 'f_ratingpetugas']);
     }
 
     public function updatedFLayanan()
@@ -146,12 +148,12 @@ class Evaluation extends Component
             $this->reset(['f_petugas', 'f_ratingpetugas']);
     }
 
-    protected function rules() : array
+    protected function rules(): array
     {
         return ($this->ruleValidation)->rules();
     }
 
-    protected function messages() : array
+    protected function messages(): array
     {
         return ($this->ruleValidation)->messages();
     }
