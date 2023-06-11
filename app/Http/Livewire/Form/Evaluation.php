@@ -64,8 +64,11 @@ class Evaluation extends Component
             );
     }
 
-    public function mount()
+    public function boot()
     {
+        // Rule Validasi mesti method boot
+        // Karena validasi dilakukan disetiap request
+        // sehingga method boot cocok digunakan.
         $this->ruleValidation = new StoreEvaluationRequest();
     }
 
