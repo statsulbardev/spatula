@@ -4,6 +4,11 @@
     @include('components.notification.flash')
 
     <form wire:submit.prevent="submitData">
+        <div class="text-xs text-right mt-3">
+            <span class="font-medium">Admin Spatula, </span>
+            <a href="{{ route('login') }}" target="_blank" class="font-medium text-primary-400 hover:text-primary-500">Login
+                Disini</a>
+        </div>
         <div class="mt-4 rounded-t-lg border-l border-r border-t border-gray-200 bg-white py-4 shadow-sm">
             {{-- Header --}}
             <div class="px-12 py-10 text-center">

@@ -7,6 +7,7 @@ use App\Models\m_layanan;
 use App\Models\m_pengguna;
 use App\Repositories\VerificationRepository;
 use App\Traits\HasRedirectUrl;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -35,11 +36,16 @@ class ServiceCategorization extends Component
     /** @computed Property : officers */
     public function getOfficersProperty()
     {
+        $superadmin_role = auth()->user()->hasRole('superadmin');
+        $user_unit_code  = auth()->user()->kode_satker_id;
+
         return
             m_pengguna::query()
-                -> where('is_petugas', 1)
-                -> get()
-                -> toArray();
+            ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_code) {
+                $query->where('kode_satker_id', $user_unit_code);
+            })
+            ->get(['id', 'nama'])
+            ->toArray();
     }
 
     /** @computed Property : services */
@@ -47,12 +53,12 @@ class ServiceCategorization extends Component
     {
         return
             m_layanan::query()
-                -> get(['kode_layanan', 'nama_layanan'])
-                -> toArray();
+            ->get(['kode_layanan', 'nama_layanan'])
+            ->toArray();
     }
 
     /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty() : array
+    public function getRootBreadcrumbProperty(): array
     {
         return [
             'route'  => route('daftar-pj-layanan'),
@@ -61,7 +67,7 @@ class ServiceCategorization extends Component
     }
 
     /** @computed property : firstBreadcrumb */
-    public function getFirstBreadcrumbProperty() : array
+    public function getFirstBreadcrumbProperty(): array
     {
         return [
             'route' => route('tambah-kategorisasi-layanan', request()->route()->originalParameters()),
@@ -70,15 +76,15 @@ class ServiceCategorization extends Component
     }
 
     /** @computed property : secondBreadcrumb */
-    public function getSecondBreadcrumbProperty() : string
+    public function getSecondBreadcrumbProperty(): string
     {
         return request()->route()->parameters()['pengguna_layanan']['nama_konsumen'];
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.verification.service-categorization')
-            -> layout('layouts.app');
+            ->layout('layouts.app');
     }
 
     public function mount(d_penilaian $pengguna_layanan)
