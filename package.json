@@ -5,6 +5,7 @@
         "production": "vite build"
     },
     "dependencies": {
+        "@alpinejs/persist": "^3.12.2",
         "@hotwired/turbo": "^7.3.0",
         "@ryangjchandler/alpine-tooltip": "^1.2.0",
         "alpinejs": "^3.11.1"
