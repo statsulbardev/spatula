@@ -1,6 +1,6 @@
 @section('title', 'Pengaturan Daftar Layanan')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     @include('components.notification.flash')
 
     <div class="flex flex-nowrap items-center justify-between">
@@ -16,7 +16,7 @@
     </div>
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow">

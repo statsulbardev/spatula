@@ -1,6 +1,6 @@
 @section('title', 'Pengaturan Satker')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     @include('components.notification.flash')
 
     <div class="flex-no-wrap flex justify-between">
@@ -16,7 +16,7 @@
     </div>
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">

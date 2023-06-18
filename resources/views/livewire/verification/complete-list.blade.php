@@ -1,11 +1,11 @@
 @section('title', 'Selesai Tindak Lanjut')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Daftar Hasil Verifikasi'])
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     <section class="mb-6 mt-10 flex">
         <div class="w-full overflow-x-auto rounded bg-white shadow">
