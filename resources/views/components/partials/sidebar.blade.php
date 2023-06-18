@@ -50,10 +50,10 @@
                                                 ? 'text-white'
                                                 : 'text-primary-100 group-hover:text-white'
                                         }}"
-                                @click.prevent="selected = (selected === 'Verification' ? '':'Verification')"">
+                                @click.prevent="selected = (selected === 'Verification' ? '':'Verification')">
                                 @include('components.icons.heroline', ['name' => 'square-3-stack-3d', 'size' => 'w-5 h-5'])
                                 <span class="text-sm font-medium tracking-wider w-1/2">Verifikasi</span>
-                                @include('components.icon', ['name' => 'chevron-down', 'size' => 'w-4 h-4'])
+                                @include('components.icons.heroline', ['name' => 'chevron-down', 'size' => 'w-4 h-4', 'page' => 'Verification'])
                             </div>
                             <div class="flex flex-row" :class="(selected === 'Verification') ? 'mt-2' : ''">
                                 <span class="border-l border-white border-1 ml-2 {{ request()->is('verifikasi/*') ? '' : 'opacity-50' }}"></span>
