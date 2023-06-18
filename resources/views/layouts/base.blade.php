@@ -38,7 +38,11 @@
     </style>
 </head>
 
-<body x-data class="mx-auto h-screen bg-gray-100 font-sans leading-none text-gray-700 antialiased">
+<body
+    x-data="{ 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+    $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{ 'dark text-bodydark bg-boxdark-2': darkMode === true }">
 
     @yield('content')
 

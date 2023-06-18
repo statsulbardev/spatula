@@ -29,7 +29,6 @@ module.exports = {
                     900: "#8D2B0B",
                 },
                 neutral: {
-                    000: "#F0F4F8",
                     100: "#D9E2EC",
                     200: "#BCCCDC",
                     300: "#9FB3C8",
@@ -43,6 +42,15 @@ module.exports = {
                 supportred: {
                     400: "#D64545",
                 },
+            },
+            zIndex: {
+                999999: "999999",
+                99999: "99999",
+                9999: "9999",
+                999: "999",
+                99: "99",
+                9: "9",
+                1: "1",
             },
             boxShadow: theme => ({
                 outline: '0 0 0 2px' + theme('colors.primary.400'),

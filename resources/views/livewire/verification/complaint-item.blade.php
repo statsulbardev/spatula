@@ -1,13 +1,13 @@
 @section('title', 'Pengaduan Pengguna Layanan')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     {{-- Header --}}
     @include('components.page.page-title', [
         'title' => 'Verifikasi Pengaduan Layanan Dari ' . $complaint->nama_konsumen,
     ])
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     <section>
         <div class="h-full">

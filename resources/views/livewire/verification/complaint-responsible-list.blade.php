@@ -1,13 +1,13 @@
 @section('title', 'Verifikasi PJ Pengaduan')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     @include('components.notification.flash')
 
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Verifikasi PJ Pengaduan'])
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     <section class="mb-6 mt-10 flex">
         <div class="w-full overflow-x-auto rounded bg-white shadow">

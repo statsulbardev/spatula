@@ -1,11 +1,11 @@
 @section('title', ucwords(str_replace('-', ' ', $routeName)))
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     {{-- Header --}}
     @include('components.page.page-title', ['title' => ucwords(str_replace('-', ' ', $routeName))])
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">

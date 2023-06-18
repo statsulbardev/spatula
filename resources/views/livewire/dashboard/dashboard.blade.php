@@ -1,6 +1,6 @@
 @section('title', 'Dashboard')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Dashboard Spatula'])
 

@@ -1,11 +1,11 @@
 @section('title', 'Pengguna Layanan')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Hasil Verifikasi ' . $done->nama_konsumen])
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     {{-- Informasi Pengguna Layanan --}}
     <section>

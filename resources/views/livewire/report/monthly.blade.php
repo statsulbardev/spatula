@@ -1,6 +1,6 @@
 @section('title', 'Laporan Bulanan')
 
-<div>
+<div class="px-4 md:px-6 2xl:px-11 py-8">
     <div class="flex flex-none justify-between">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Laporan Bulanan Tahun ' . $selectedYear])
@@ -34,7 +34,7 @@
     </div>
 
     {{-- Breadcrumb --}}
-    @include('partials.breadcrumb')
+    @include('components.partials.breadcrumb')
 
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow">
