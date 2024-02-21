@@ -70,6 +70,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_layanan');
             $table->string('konsumen_nama', 255);
             $table->string('konsumen_tahun_lahir', 4);
+            $table->date('tanggal');
+            $table->tinyInteger('antrian');
             $table->string('konsumen_email', 255)->nullable();
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
             $table->text('deskripsi')->nullable();

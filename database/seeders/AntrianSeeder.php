@@ -18,7 +18,7 @@ class AntrianSeeder extends Seeder
     public function run()
     {
         $this->insert_m_antrian_satker_layanan();
-        $this->antrian_add_role();
+        // $this->antrian_add_role();
     }
 
     private function insert_m_antrian_satker_layanan()
