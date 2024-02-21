@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_layanan;
 use App\Models\m_satker;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
 
 class AntrianSeeder extends Seeder
@@ -17,6 +18,7 @@ class AntrianSeeder extends Seeder
     public function run()
     {
         $this->insert_m_antrian_satker_layanan();
+        $this->antrian_add_role();
     }
 
     private function insert_m_antrian_satker_layanan()
@@ -32,6 +34,18 @@ class AntrianSeeder extends Seeder
                 $item_m_layanan->id_layanan = $item_layanan->id;
                 $item_m_layanan->save();
             }
+        }
+    }
+
+    private function antrian_add_role()
+    {
+        $data = [
+            'pj-antrian',
+            'operator-antrian',
+        ];
+
+        for ($i = 0; $i < count($data); $i++) {
+            Role::create(['name' => $data[$i]]);
         }
     }
 }
