@@ -18,6 +18,9 @@ use App\Http\Livewire\Configuration\UnitList;
 use App\Http\Livewire\Configuration\CreateEditUnit;
 use App\Http\Livewire\Dashboard\Dashboard;
 use App\Http\Livewire\Form\Evaluation;
+
+
+
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'penilaian');
@@ -67,3 +70,16 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
     Route::get('/pengaturan/pengguna/tambah', CreateEditUser::class)->name('tambah-pengguna');
     Route::get('/pengaturan/pengguna/{pengguna}/edit', CreateEditUser::class)->name('edit-pengguna');
 });
+
+// antrian config Configuration
+Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-antrian']], function () {
+    Route::get('/pengaturan/antrian/daftar-layanan', UserList::class)->name('daftar-antrian-daftar-layanan');
+});
+Route::group(['middleware' => ['auth', 'role:pj-antrian|operator-antrian']], function () {
+    Route::get('/pengaturan/antrian/config_view', UserList::class)->name('daftar-antrian-config-view');
+    Route::get('/pengaturan/antrian/daftar', UserList::class)->name('daftar-antrian-daftar');
+    Route::get('/pengaturan/antrian/caller', UserList::class)->name('daftar-antrian-caller');
+});
+
+// Route::get('/antrian/dashboard', Evaluation::class)->name('form-penilaian');
+// Route::get('/antrian/daftar', Evaluation::class)->name('form-penilaian');

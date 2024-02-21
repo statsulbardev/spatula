@@ -276,12 +276,12 @@
             <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
                 <a class="flex items-center gap-4" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
                     <span class="hidden text-right lg:block">
-                        <span class="block text-sm font-medium text-black dark:text-white">{{ $nama ?? null }}</span>
-                        <span class="block text-xs font-medium">UX Designer</span>
+                        <span class="text-sm font-medium text-black dark:text-white">{{ $nama ?? null }}</span>
+                        {{-- <span class="block text-xs font-medium">UX Designer</span> --}}
                     </span>
 
-                    <span class="h-12 w-12 rounded-full">
-                        <img src="./images/user/user-01.png" alt="{{ $nama ?? 'user'}}" />
+                    <span class="h-10 w-10 flex flex-nowrap items-center rounded-full">
+                        <img src="https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png" alt="user" />
                     </span>
 
                     <svg :class="dropdownOpen && 'rotate-180'" class="hidden fill-current sm:block" width="12"
