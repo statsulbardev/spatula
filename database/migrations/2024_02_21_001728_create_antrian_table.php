@@ -71,6 +71,7 @@ return new class extends Migration
             $table->string('konsumen_nama', 255);
             $table->string('konsumen_tahun_lahir', 4);
             $table->date('tanggal');
+            $table->string('is_active', 1)->default('1');
             $table->tinyInteger('antrian');
             $table->string('konsumen_email', 255)->nullable();
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
@@ -107,7 +108,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('d_antrian_satker');
-        Schema::dropIfExists('d_antrian_satker_view');
+        Schema::dropIfExists('d_antrian_satker_config_view');
         Schema::dropIfExists('m_antrian_satker_layanan');
     }
 };

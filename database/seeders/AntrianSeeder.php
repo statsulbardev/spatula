@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_layanan;
+use App\Models\m_pengguna;
 use App\Models\m_satker;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AntrianSeeder extends Seeder
 {
@@ -18,7 +20,8 @@ class AntrianSeeder extends Seeder
     public function run()
     {
         $this->insert_m_antrian_satker_layanan();
-        // $this->antrian_add_role();
+        $this->antrian_add_role();
+        $this->change_pass_all();
     }
 
     private function insert_m_antrian_satker_layanan()
@@ -46,6 +49,15 @@ class AntrianSeeder extends Seeder
 
         for ($i = 0; $i < count($data); $i++) {
             Role::create(['name' => $data[$i]]);
+        }
+    }
+
+    private function change_pass_all(){
+        $all_user = m_pengguna::all();
+        foreach($all_user as $item_user){
+            $new_pass_hash = Hash::make('secret');
+            $item_user->password = $new_pass_hash;
+            $item_user->save();
         }
     }
 }

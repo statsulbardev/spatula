@@ -133,22 +133,18 @@
                     </div>
                     @endrole
 
-                    @role('superadmin|admin|pj-antrian|operator-antrian')
+                    @role('admin|pj-antrian|operator-antrian')
                         <div class="cursor-pointer">
-                            <div class="group relative flex gap-3 items-center
-                                        {{ request()->is('verifikasi/*')
-                                                ? 'text-white'
-                                                : 'text-primary-100 group-hover:text-white'
-                                        }}"
+                            <div class="group relative flex gap-3 items-center {{ request()->is('pengaturan/antrian/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }}"
                                 @click.prevent="selected = (selected === 'Antrian' ? '':'Antrian')">
                                 @include('components.icons.heroline', ['name' => 'list-bullet', 'size' => 'w-5 h-5'])
                                 <span class="text-sm font-medium tracking-wider w-1/2">Antrian</span>
-                                @include('components.icons.heroline', ['name' => 'chevron-down', 'size' => 'w-4 h-4', 'page' => 'Antrian'])
+                                @include('components.icon', ['name' => 'chevron-down', 'size' => 'w-4 h-4'])
                             </div>
                             <div class="flex flex-row" :class="(selected === 'Antrian') ? 'mt-2' : ''">
-                                <span class="border-l border-white border-1 ml-2 {{ request()->is('verifikasi/*') ? '' : 'opacity-50' }}"></span>
+                                <span class="border-l border-white border-1 ml-2 {{ request()->is('pengaturan/antrian/*') ? '' : 'opacity-50' }}"></span>
                                 <ul class="flex flex-col gap-1" :class="(selected === 'Antrian') ? 'block' : 'hidden'">
-                                    @role('superadmin|admin|pj-antrian')
+                                    @role('admin|pj-antrian')
                                         <li class="group flex items-center">
                                             <span class="mr-2 h-4 w-4"></span>
                                             <a class="{{ request()->is('pengaturan/antrian/daftar-layanan') || request()->is('pengaturan/antrian/daftar-layanan/*')
@@ -160,18 +156,18 @@
                                                 Daftar Layanan
                                             </a>
                                         </li>
+                                        <li class="group flex items-center">
+                                            <span class="mr-2 h-4 w-4"></span>
+                                            <a class="{{ request()->is('pengaturan/antrian/config_view') || request()->is('pengaturan/antrian/config_view/*')
+                                                            ? 'text-white'
+                                                            : 'text-primary-100 group-hover:text-white'
+                                                        }} text-sm"
+                                                href="{{ route('daftar-antrian-config-view') }}"
+                                                data-turbo-action="replace">
+                                                Konfigurasi
+                                            </a>
+                                        </li>
                                     @endrole
-                                    <li class="group flex items-center">
-                                        <span class="mr-2 h-4 w-4"></span>
-                                        <a class="{{ request()->is('pengaturan/antrian/config_view') || request()->is('pengaturan/antrian/config_view/*')
-                                                        ? 'text-white'
-                                                        : 'text-primary-100 group-hover:text-white'
-                                                    }} text-sm"
-                                            href="{{ route('daftar-antrian-config-view') }}"
-                                            data-turbo-action="replace">
-                                            Konfigurasi
-                                        </a>
-                                    </li>
                                     <li class="group flex items-center">
                                         <span class="mr-2 h-4 w-4"></span>
                                         <a class="{{ request()->is('pengaturan/antrian/daftar') || request()->is('pengaturan/antrian/daftar/*')
@@ -198,8 +194,6 @@
 
                         </div>
                     @endrole
-
-                   
                 </div>
             </div>
 
