@@ -5,6 +5,7 @@
             <button
                 class="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
                 @click.stop="sidebarToggle = !sidebarToggle">
+                @include('components.icons.heroline', ['name' => 'bars-3', 'size' => 'w-5 h-5'])
                 <span class="relative block h-5.5 w-5.5 cursor-pointer">
                     <span class="du-block absolute right-0 h-full w-full">
                         <span
@@ -28,9 +29,9 @@
                 </span>
             </button>
             <!-- Hamburger Toggle BTN -->
-            <a class="block flex-shrink-0 lg:hidden" href="index.html">
-                <img src="./images/logo/logo-icon.svg" alt="Logo" />
-            </a>
+            <!-- <a class="block flex-shrink-0 lg:hidden" href="index.html">
+                @include('components.icons.heroline', ['name' => 'bars-3', 'size' => 'w-5 h-5'])
+            </a> -->
         </div>
         {{-- Identitas Satker --}}
         <span class="mr-4 mt-1 text-sm">{{ $satker ?? null }}</span>
@@ -295,7 +296,7 @@
                 <!-- Dropdown Start -->
                 <div x-show="dropdownOpen"
                     class="absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                    <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+                    <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark py-5">
                         <li>
                             <a href="profile.html"
                                 class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
@@ -338,10 +339,11 @@
                                 Account Settings
                             </a>
                         </li>
+                        <li>
+                            {{-- Logout --}}
+                            @livewire('auth.logout')
+                        </li>
                     </ul>
-
-                    {{-- Logout --}}
-                    @livewire('auth.logout')
                 </div>
                 <!-- Dropdown End -->
             </div>

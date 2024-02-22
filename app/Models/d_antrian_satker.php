@@ -28,6 +28,7 @@ class d_antrian_satker extends Model
         'konsumen_no_wa_telepon',
         'tanggal',
         'antrian',
+        'is_active',
         'deskripsi',
     ];
 }

@@ -4,13 +4,8 @@ namespace App\Http\Livewire\Auth;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use InvalidArgumentException;
 use Livewire\Component;
-use Livewire\Redirector;
-use Throwable;
-use RuntimeException;
 
 class Login extends Component
 {
@@ -30,6 +25,13 @@ class Login extends Component
         'password.required' => 'Password tidak boleh kosong',
         'password.min'      => 'Password minimal 5 karakter'
     ];
+
+    public function mount()
+    {
+        if(Auth::check()){
+            return redirect('/dashboard');
+        }
+    }
 
     /**
      * Render Komponen Login
