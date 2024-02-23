@@ -20,6 +20,8 @@ use App\Http\Livewire\Dashboard\Dashboard;
 use App\Http\Livewire\Form\Evaluation;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Livewire\Antrian_Configuration\DaftarLayanan;
+
 Route::redirect('/', 'penilaian');
 
 Route::get('sso', [LoginController::class, 'sso'])->name('sso');
@@ -73,12 +75,12 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
     
 // });
 Route::group(['middleware' => ['auth', 'role:admin|pj-antrian']], function () {
-    Route::get('/pengaturan/antrian/daftar-layanan', UserList::class)->name('daftar-antrian-daftar-layanan');
-    Route::get('/pengaturan/antrian/config_view', UserList::class)->name('daftar-antrian-config-view');
+    Route::get('/pengaturan/antrian/daftar-layanan', DaftarLayanan::class)->name('antrian-daftar-layanan');
+    Route::get('/pengaturan/antrian/config_view', UserList::class)->name('antrian-config-view');
 });
 Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']], function () {
-    Route::get('/pengaturan/antrian/daftar', UserList::class)->name('daftar-antrian-daftar');
-    Route::get('/pengaturan/antrian/caller', UserList::class)->name('daftar-antrian-caller');
+    Route::get('/pengaturan/antrian/daftar', UserList::class)->name('antrian-daftar');
+    Route::get('/pengaturan/antrian/caller', UserList::class)->name('antrian-caller');
 });
 // Route::get('/antrian/dashboard', Evaluation::class)->name('form-penilaian');
 // Route::get('/antrian/daftar', Evaluation::class)->name('form-penilaian');

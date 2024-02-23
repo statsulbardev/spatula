@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class CreateEditConfigView extends Component
+class ConfigView extends Component
 {
     use HasRedirectUrl;
 

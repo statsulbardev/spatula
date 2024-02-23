@@ -12,6 +12,8 @@ class m_antrian_satker_layanan extends Model
      * @var string
      */
     protected $table = 'm_antrian_satker_layanan';
+    public $incrementing = false;
+    public $timestamps = true;
 
     /**
      * Atribut yang diperlukan untuk mass assignment.
@@ -19,7 +21,21 @@ class m_antrian_satker_layanan extends Model
      * @var array
      */
     protected $fillable = [
-        'id_satker',
-        'id_layanan'
+        'kode_satker',
+        'kode_layanan',
+        'is_active'
     ];
+
+    public function satker()
+    {
+        return $this->hasOne(m_satker::class, 'kode_satker', 'kode_satker');
+    }
+
+
+    public function layanan()
+    {
+        return $this->hasOne(m_layanan::class, 'kode_layanan', 'kode_layanan');
+    }
+
+
 }
