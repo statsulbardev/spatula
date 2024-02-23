@@ -12,23 +12,27 @@ class d_antrian_satker extends Model
      * @var string
      */
     protected $table = 'd_antrian_satker';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = true;
 
     /**
      * Atribut yang diperlukan untuk mass assignment.
      *
      * @var array
      */
+
     protected $fillable = [
-        'id_antrian_satker_layanan',
-        'id_satker',
-        'id_layanan',
+        'id',
+        'kode_satker',
+        'kode_layanan',
         'konsumen_nama',
         'konsumen_tahun_lahir',
+        'tanggal',
+        'is_active',
+        'antrian',
         'konsumen_email',
         'konsumen_no_wa_telepon',
-        'tanggal',
-        'antrian',
-        'is_active',
         'deskripsi',
     ];
 }

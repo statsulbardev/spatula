@@ -13,20 +13,29 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('m_satker', function (Blueprint $table) {
+            $table->unique(['kode_satker']);
+        });
+        Schema::table('m_layanan', function (Blueprint $table) {
+            $table->unique(['kode_layanan']);
+        });
+
         Schema::create('m_antrian_satker_layanan', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_satker');
-            $table->unsignedBigInteger('id_layanan');
+            $table->char('kode_satker',4);
+            $table->char('kode_layanan',2);
+            $table->char('is_active',1)->default('0'); // 0: non active 1: active
             $table->timestamps();
 
-            $table->foreign('id_satker')
-                ->references('id')
+            $table->primary(['kode_satker', 'kode_layanan']);
+
+            $table->foreign('kode_satker')
+                ->references('kode_satker')
                 ->on('m_satker')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('id_layanan')
-                ->references('id')
+            $table->foreign('kode_layanan')
+                ->references('kode_layanan')
                 ->on('m_layanan')
                 ->constrained()
                 ->onUpdate('cascade')
@@ -34,40 +43,26 @@ return new class extends Migration
         });
 
         Schema::create('d_antrian_satker_config_view', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_antrian_satker_layanan');
-            $table->unsignedBigInteger('id_satker');
-            $table->unsignedBigInteger('id_layanan');
+            $table->char('kode_satker',4);
             $table->string('config_key', 50); //running text, 
             $table->tinyInteger('config_index');
             $table->string('config_value', 1024);
             $table->timestamps();
 
-            $table->foreign('id_antrian_satker_layanan')
-                ->references('id')
-                ->on('m_antrian_satker_layanan')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_satker')
-                ->references('id')
+            $table->primary(['kode_satker', 'config_key', 'config_index']);
+
+            $table->foreign('kode_satker')
+                ->references('kode_satker')
                 ->on('m_satker')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_layanan')
-                ->references('id')
-                ->on('m_layanan')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
 
         Schema::create('d_antrian_satker', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_antrian_satker_layanan');
-            $table->unsignedBigInteger('id_satker');
-            $table->unsignedBigInteger('id_layanan');
+            $table->string('id', 36)->primary();
+            $table->char('kode_satker',4);
+            $table->char('kode_layanan',2);
             $table->string('konsumen_nama', 255);
             $table->string('konsumen_tahun_lahir', 4);
             $table->date('tanggal');
@@ -77,22 +72,20 @@ return new class extends Migration
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
             $table->text('deskripsi')->nullable();
             
-            $table->timestamps();
+            $table->index(['kode_satker']);
+            $table->index(['kode_layanan']);
 
-            $table->foreign('id_antrian_satker_layanan')
-                ->references('id')
-                ->on('m_antrian_satker_layanan')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('id_satker')
-                ->references('id')
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('kode_satker')
+                ->references('kode_satker')
                 ->on('m_satker')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('id_layanan')
-                ->references('id')
+            $table->foreign('kode_layanan')
+                ->references('kode_layanan')
                 ->on('m_layanan')
                 ->constrained()
                 ->onUpdate('cascade')

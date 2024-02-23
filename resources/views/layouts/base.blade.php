@@ -10,7 +10,7 @@
     <title>@yield('title') - Spatula</title>
 
     <!-- Favicon-->
-    {{-- <link rel="shortcut icon" href="{{ secure_asset(env('APP_URL') . '/img/favicon.ico') }}"> --}}
+    <link id="favicon" rel="icon" href="{{ secure_asset(env('APP_URL') . '/public/files/logo_2.ico') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@200..900&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />

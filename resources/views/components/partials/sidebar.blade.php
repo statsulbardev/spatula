@@ -151,7 +151,7 @@
                                                             ? 'text-white'
                                                             : 'text-primary-100 group-hover:text-white'
                                                         }} text-sm"
-                                                href="{{ route('daftar-antrian-daftar-layanan') }}"
+                                                href="{{ route('antrian-daftar-layanan') }}"
                                                 data-turbo-action="replace">
                                                 Daftar Layanan
                                             </a>
@@ -162,7 +162,7 @@
                                                             ? 'text-white'
                                                             : 'text-primary-100 group-hover:text-white'
                                                         }} text-sm"
-                                                href="{{ route('daftar-antrian-config-view') }}"
+                                                href="{{ route('antrian-config-view') }}"
                                                 data-turbo-action="replace">
                                                 Konfigurasi
                                             </a>
@@ -174,7 +174,7 @@
                                                         ? 'text-white'
                                                         : 'text-primary-100 group-hover:text-white'
                                                     }} text-sm"
-                                            href="{{ route('daftar-antrian-daftar') }}"
+                                            href="{{ route('antrian-daftar') }}"
                                             data-turbo-action="replace">
                                             Daftar
                                         </a>
@@ -184,7 +184,7 @@
                                         <a class="{{ request()->is('pengaturan/antrian/caller') || request()->is('pengaturan/antrian/caller/*') 
                                                 ? 'text-white' 
                                                 : 'text-primary-100 group-hover:text-white' }} text-sm"
-                                            href="{{ route('daftar-antrian-caller') }}"
+                                            href="{{ route('antrian-caller') }}"
                                             data-turbo-action="replace">
                                             Pemanggil
                                         </a>

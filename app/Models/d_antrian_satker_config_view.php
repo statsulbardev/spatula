@@ -12,6 +12,8 @@ class d_antrian_satker_config_view extends Model
      * @var string
      */
     protected $table = 'd_antrian_satker_config_view';
+    public $incrementing = false;
+    public $timestamps = true;
 
     /**
      * Atribut yang diperlukan untuk mass assignment.
@@ -19,11 +21,9 @@ class d_antrian_satker_config_view extends Model
      * @var array
      */
     protected $fillable = [
-        'id_antrian_satker_layanan',
-        'id_satker',
-        'id_layanan',
+        'kode_satker',
         'config_key',
         'config_index',
-        'config_value'
+        'config_value',
     ];
 }
