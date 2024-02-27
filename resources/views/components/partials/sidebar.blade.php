@@ -170,6 +170,16 @@
                                     @endrole
                                     <li class="group flex items-center">
                                         <span class="mr-2 h-4 w-4"></span>
+                                        <a class="{{ request()->is('pengaturan/antrian/caller') || request()->is('pengaturan/antrian/caller/*') 
+                                                ? 'text-white' 
+                                                : 'text-primary-100 group-hover:text-white' }} text-sm"
+                                            href="{{ route('antrian-caller') }}"
+                                            data-turbo-action="replace">
+                                            Pemanggil
+                                        </a>
+                                    </li>
+                                    <li class="group flex items-center">
+                                        <span class="mr-2 h-4 w-4"></span>
                                         <a class="{{ request()->is('pengaturan/antrian/daftar') || request()->is('pengaturan/antrian/daftar/*')
                                                         ? 'text-white'
                                                         : 'text-primary-100 group-hover:text-white'
@@ -177,16 +187,6 @@
                                             href="{{ route('antrian-daftar') }}"
                                             data-turbo-action="replace">
                                             Daftar
-                                        </a>
-                                    </li>
-                                    <li class="group flex items-center">
-                                        <span class="mr-2 h-4 w-4"></span>
-                                        <a class="{{ request()->is('pengaturan/antrian/caller') || request()->is('pengaturan/antrian/caller/*') 
-                                                ? 'text-white' 
-                                                : 'text-primary-100 group-hover:text-white' }} text-sm"
-                                            href="{{ route('antrian-caller') }}"
-                                            data-turbo-action="replace">
-                                            Pemanggil
                                         </a>
                                     </li>
                                 </ul>
