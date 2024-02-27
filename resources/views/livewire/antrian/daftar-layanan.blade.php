@@ -25,6 +25,7 @@
                             <th class="px-6 pb-4 pt-6">Nama Satker</th>
                             <th class="px-6 pb-4 pt-6">Nama Layanan</th>
                             <th class="px-6 pb-4 pt-6">Antrian Online</th>
+                            <th class="px-6 pb-4 pt-6">Nama Loket</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,8 +43,24 @@
                                 </td>
                                 <td class="border-t py-6 pl-6">
                                     <select class="w-1/2 py-2 px-2" wire:change="changeValueActive({{ $item->kode_satker }}, {{ $item->kode_layanan }}, $event.target.value)">
-                                        <option value="1" {{ $item->is_active }}>Aktif</option>
-                                        <option value="0">Tidak Aktif</option>
+                                        @if ($item->is_active == 1)
+                                            <option value="1" selected>Aktif</option>
+                                            <option value="0">Tidak Aktif</option>
+                                        @elseif ($item->is_active == 0)
+                                            <option value="1">Aktif</option>
+                                            <option value="0" selected>Tidak Aktif</option>
+                                        @endif
+                                    </select>
+                                </td>
+                                <td class="border-t py-6 pl-6">
+                                    <select class="w-1/2 py-2 px-2" wire:change="changeValueLoket({{ $item->kode_satker }}, {{ $item->kode_layanan }}, $event.target.value)">
+                                        @foreach (['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P','Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'] as $alpabet)
+                                            @if ($item->loket == $alpabet)
+                                                <option value="{{$alpabet}}" selected>{{$alpabet}}</option>
+                                            @else
+                                                <option value="{{$alpabet}}">{{$alpabet}}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </td>
                             </tr>

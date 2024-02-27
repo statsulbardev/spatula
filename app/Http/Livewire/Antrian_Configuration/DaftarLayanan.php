@@ -3,13 +3,10 @@
 namespace App\Http\Livewire\Antrian_Configuration;
 
 use App\Models\m_antrian_satker_layanan;
-use App\Models\m_pengguna;
 use App\Traits\HasModelProcess;
-use Laravel\Scout\Builder;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class DaftarLayanan extends Component
 {
@@ -24,10 +21,17 @@ class DaftarLayanan extends Component
         ];
     }
 
+    // public function mount()
+    // {
+    //     m_a
+    // }
+
     public function render() : View
     {
+        $data_to_render = $this->retrieveData();
+
         return view('livewire.antrian.daftar-layanan', [
-            'data' => $this->retrieveData()
+            'data' => $data_to_render
         ])->layout('layouts.app');
     }
 
@@ -37,6 +41,18 @@ class DaftarLayanan extends Component
             m_antrian_satker_layanan::where('kode_satker', $kode_satker)
                 ->where('kode_layanan', $kode_layanan)
                 ->update(['is_active' => $kondisi_baru]);
+            $dict_loket[$kode_satker.'--'.$kode_layanan] = $kondisi_baru;
+        }
+    }
+
+    public function changeValueLoket($kode_satker, $kode_layanan, $kondisi_baru)
+    {
+        if(in_array($kondisi_baru, ['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P',
+            'Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'])){
+                m_antrian_satker_layanan::where('kode_satker', $kode_satker)
+                    ->where('kode_layanan', $kode_layanan)
+                    ->update(['loket' => $kondisi_baru]);
+            $dict_is_active[$kode_satker.'--'.$kode_layanan] = $kondisi_baru;
         }
     }
 
