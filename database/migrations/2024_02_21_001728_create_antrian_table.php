@@ -23,6 +23,7 @@ return new class extends Migration
         Schema::create('m_antrian_satker_layanan', function (Blueprint $table) {
             $table->char('kode_satker',4);
             $table->char('kode_layanan',2);
+            $table->char('loket',1)->default('A');
             $table->char('is_active',1)->default('0'); // 0: non active 1: active
             $table->timestamps();
 

@@ -274,7 +274,7 @@
             </ul> --}}
 
             <!-- User Area -->
-            <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
+            <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false" x-cloak>
                 <a class="flex items-center gap-4" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
                     <span class="hidden text-right lg:block">
                         <span class="text-sm font-medium text-black dark:text-white">{{ $nama ?? null }}</span>

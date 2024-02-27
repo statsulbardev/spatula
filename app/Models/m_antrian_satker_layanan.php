@@ -23,6 +23,7 @@ class m_antrian_satker_layanan extends Model
     protected $fillable = [
         'kode_satker',
         'kode_layanan',
+        'loket',
         'is_active'
     ];
 
