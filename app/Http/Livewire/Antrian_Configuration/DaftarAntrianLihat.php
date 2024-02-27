@@ -7,7 +7,7 @@ use App\Traits\HasModelProcess;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class Konfigurasi extends Component
+class DaftarAntrianLihat extends Component
 {
     use HasModelProcess;
 
