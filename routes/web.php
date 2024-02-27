@@ -21,6 +21,7 @@ use App\Http\Livewire\Form\Evaluation;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Livewire\Antrian_Configuration\DaftarLayanan;
+use App\Http\Livewire\Antrian_Configuration\Konfigurasi;
 
 Route::redirect('/', 'penilaian');
 
@@ -76,10 +77,11 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
 // });
 Route::group(['middleware' => ['auth', 'role:admin|pj-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar-layanan', DaftarLayanan::class)->name('antrian-daftar-layanan');
-    Route::get('/pengaturan/antrian/config_view', UserList::class)->name('antrian-config-view');
+    Route::get('/pengaturan/antrian/config_view', Konfigurasi::class)->name('antrian-config-view');
 });
 Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar', UserList::class)->name('antrian-daftar');
+    Route::get('/pengaturan/antrian/{id}/daftar', UserList::class)->name('antrian-daftar-lihat');
     Route::get('/pengaturan/antrian/caller', UserList::class)->name('antrian-caller');
 });
 // Route::get('/antrian/dashboard', Evaluation::class)->name('form-penilaian');
