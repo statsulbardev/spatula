@@ -5,7 +5,7 @@
 
     <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Daftar Layanan Antrian'])
+        @include('components.page.page-title', ['title' => 'Konfigurasi Antrian'])
 
     </div>
 
