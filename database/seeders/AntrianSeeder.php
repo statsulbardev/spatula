@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Http\Livewire\Antrian\Traits\Helper_Firestore;
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AntrianSeeder extends Seeder
 {
+    use Helper_Firestore;
     /**
      * Run the database seeds.
      *
@@ -19,9 +21,10 @@ class AntrianSeeder extends Seeder
      */
     public function run()
     {
-        $this->insert_m_antrian_satker_layanan();
-        $this->antrian_add_role();
-        $this->change_pass_all();
+        // $this->insert_m_antrian_satker_layanan();
+        // $this->antrian_add_role();
+        // $this->change_pass_all();
+        $this->init_firebase();
     }
 
     private function insert_m_antrian_satker_layanan()
@@ -59,6 +62,16 @@ class AntrianSeeder extends Seeder
             $new_pass_hash = Hash::make('secret');
             $item_user->password = $new_pass_hash;
             $item_user->save();
+        }
+    }
+    private function init_firebase()
+    {
+        $db_client = $this->setup_client_create();
+        $m_satker_arr = m_satker::all();
+        foreach($m_satker_arr as $item){
+            $this->set_daftar_layanan($db_client, $item->kode_satker);
+            $this->set_konfigurasi($db_client, $item->kode_satker);
+            $this->set_antrian($db_client, $item->kode_satker);
         }
     }
 }

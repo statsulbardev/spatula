@@ -20,11 +20,11 @@ use App\Http\Livewire\Dashboard\Dashboard;
 use App\Http\Livewire\Form\Evaluation;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Livewire\Antrian_Configuration\DaftarLayanan;
-use App\Http\Livewire\Antrian_Configuration\Konfigurasi;
-use App\Http\Livewire\Antrian_Configuration\Pemanggil;
-use App\Http\Livewire\Antrian_Configuration\DaftarAntrian;
-use App\Http\Livewire\Antrian_Configuration\DaftarAntrianLihat;
+use App\Http\Livewire\Antrian\Admin\DaftarLayanan;
+use App\Http\Livewire\Antrian\Admin\Konfigurasi;
+use App\Http\Livewire\Antrian\Admin\Pemanggil;
+use App\Http\Livewire\Antrian\Admin\DaftarAntrian;
+use App\Http\Livewire\Antrian\Admin\DaftarAntrianLihat;
 
 Route::redirect('/', 'penilaian');
 

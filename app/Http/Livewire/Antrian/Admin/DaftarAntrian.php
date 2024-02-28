@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Antrian_Configuration;
+namespace App\Http\Livewire\Antrian\Admin;
 
 use App\Models\m_antrian_satker_layanan;
 use App\Traits\HasModelProcess;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class Konfigurasi extends Component
+class DaftarAntrian extends Component
 {
     use HasModelProcess;
 
@@ -15,8 +15,8 @@ class Konfigurasi extends Component
     public function getRootBreadcrumbProperty()
     {
         return [
-            'route' => route('antrian-config-view'),
-            'label' => 'Konfigurasi Antrian'
+            'route' => route('antrian-daftar'),
+            'label' => 'Daftar Antrian'
         ];
     }
 
@@ -29,7 +29,7 @@ class Konfigurasi extends Component
     {
         $data_to_render = $this->retrieveData();
 
-        return view('livewire.antrian.konfigurasi', [
+        return view('livewire.antrian.daftar-antrian', [
             'data' => $data_to_render
         ])->layout('layouts.app');
     }
