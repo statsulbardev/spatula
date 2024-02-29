@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Antrian\Admin;
 
-use App\Models\m_antrian_satker_layanan;
-use App\Traits\HasModelProcess;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
+use Exception;
+
+use App\Models\m_antrian_satker_layanan;
+use App\Http\Livewire\Antrian\Traits\Helper_Firestore;
 
 class DaftarLayanan extends Component
 {
-    use HasModelProcess;
+    use Helper_Firestore;
 
     /** @computed property : rootBreadcrumb */
     public function getRootBreadcrumbProperty()
@@ -19,11 +23,6 @@ class DaftarLayanan extends Component
             'label' => 'Daftar Layanan Antrian'
         ];
     }
-
-    // public function mount()
-    // {
-    //     m_a
-    // }
 
     public function render() : View
     {
@@ -37,10 +36,19 @@ class DaftarLayanan extends Component
     public function changeValueActive($kode_satker, $kode_layanan, $kondisi_baru)
     {
         if(in_array($kondisi_baru, ['0', '1'])){
-            m_antrian_satker_layanan::where('kode_satker', $kode_satker)
-                ->where('kode_layanan', $kode_layanan)
-                ->update(['is_active' => $kondisi_baru]);
-            $dict_loket[$kode_satker.'--'.$kode_layanan] = $kondisi_baru;
+            DB::beginTransaction();
+            try{  
+                m_antrian_satker_layanan::where('kode_satker', $kode_satker)
+                    ->where('kode_layanan', $kode_layanan)
+                    ->update(['is_active' => $kondisi_baru]);
+                $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
+                DB::commit();
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                throw new Exception(500);
+            }
+           
         }
     }
 
@@ -48,10 +56,18 @@ class DaftarLayanan extends Component
     {
         if(in_array($kondisi_baru, ['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P',
             'Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'])){
-                m_antrian_satker_layanan::where('kode_satker', $kode_satker)
-                    ->where('kode_layanan', $kode_layanan)
-                    ->update(['loket' => $kondisi_baru]);
-            $dict_is_active[$kode_satker.'--'.$kode_layanan] = $kondisi_baru;
+                DB::beginTransaction();
+                try{  
+                    m_antrian_satker_layanan::where('kode_satker', $kode_satker)
+                        ->where('kode_layanan', $kode_layanan)
+                        ->update(['loket' => $kondisi_baru]);
+                    $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
+                    DB::commit();
+                }catch(Exception $ex){
+                    DB::rollBack();
+                    Log::error($ex);
+                    throw new Exception(500);
+                }
         }
     }
 
@@ -71,7 +87,4 @@ class DaftarLayanan extends Component
                 ->get();
     }
 
-    private function change_real_time_database(){
-        
-    }
 }

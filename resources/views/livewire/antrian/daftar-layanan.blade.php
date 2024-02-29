@@ -31,18 +31,14 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200 py-10">
-                                <td class="border-t">
-                                    <span class="items-center py-6 pl-6">
-                                        {{ $item->satker->nama }}
-                                    </span>
+                                <td class="border-t items-center py-6 pl-6">
+                                    {{ $item->satker->nama }}
                                 </td>
-                                <td class="border-t">
-                                    <span class="items-center py-6 pl-6">
-                                        {{ $item->layanan->nama_layanan }}
-                                    </span>
+                                <td class="border-t items-center py-6 pl-6">
+                                    {{ $item->layanan->nama_layanan }}
                                 </td>
                                 <td class="border-t py-6 pl-6">
-                                    <select class="w-1/2 py-2 px-2" wire:change="changeValueActive({{ $item->kode_satker }}, {{ $item->kode_layanan }}, $event.target.value)">
+                                    <select class="py-2 px-2" wire:change="changeValueActive({{ $item->kode_satker }}, {{ $item->kode_layanan }}, $event.target.value)">
                                         @if ($item->is_active == 1)
                                             <option value="1" selected>Aktif</option>
                                             <option value="0">Tidak Aktif</option>
@@ -54,7 +50,7 @@
                                 </td>
                                 <td class="border-t py-6 pl-6">
                                     @if ($item->is_active == 1)
-                                    <select class="w-1/2 py-2 px-2" wire:change="changeValueLoket({{ $item->kode_satker }}, {{ $item->kode_layanan }}, $event.target.value)">
+                                    <select class="py-2 px-2" wire:change="changeValueLoket({{ $item->kode_satker }}, {{ $item->kode_layanan }}, $event.target.value)">
                                         @foreach (['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P','Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'] as $alpabet)
                                             @if ($item->loket == $alpabet)
                                                 <option value="{{$alpabet}}" selected>{{$alpabet}}</option>
