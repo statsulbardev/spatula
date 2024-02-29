@@ -29,7 +29,7 @@ class DaftarAntrian extends Component
     {
         $data_to_render = $this->retrieveData();
 
-        return view('livewire.antrian.daftar-antrian', [
+        return view('livewire.antrian.admin.daftar-antrian', [
             'data' => $data_to_render
         ])->layout('layouts.app');
     }

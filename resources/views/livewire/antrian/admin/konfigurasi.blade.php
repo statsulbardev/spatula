@@ -96,7 +96,7 @@
                        Masukkan tulisan footer.
                     </p>
                 </div>
-                <div wire:key="{{ rand() }}"  class="w-full mt-3" x-data='{ data_footer : @json($data_footer) }'>
+                <div wire:key="{{ rand() }}"  class="w-full mt-3">
                     <form wire:submit.prevent="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))">
                         <select name="footer_type" class="form-input border-neutral-300 py-1">
                             @if ($data_footer_type == 'with_footer')
@@ -111,10 +111,9 @@
                                 <option value="without_footer">Sembunyikan Footer</option>
                             @endif
                         </select>
-
-                        <div x-data="{value_footer = data_footer}">
-                            <input id="note_id_1" name="footer" class="form-input border-neutral-300 py-1 mt-3" type="hidden" x-model="value_footer">
-                            <div class="py-1 mt-3" x-on:trix-change="value_footer = event.target.value">
+                        <div>
+                            <input id="note_id_1" name="footer" class="form-input border-neutral-300 py-1 mt-3" type="hidden" value="{!! $data_footer !!}">
+                            <div class="py-1 mt-3">
                                 <trix-editor input="note_id_1"></trix-editor>
                             </div>
                         </div>
