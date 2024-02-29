@@ -29,7 +29,7 @@ class Pemanggil extends Component
     {
         $data_to_render = $this->retrieveData();
 
-        return view('livewire.antrian.pemanggil', [
+        return view('livewire.antrian.admin.pemanggil', [
             'data' => $data_to_render
         ])->layout('layouts.app');
     }

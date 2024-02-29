@@ -28,7 +28,7 @@ class DaftarLayanan extends Component
     {
         $data_to_render = $this->retrieveData();
 
-        return view('livewire.antrian.daftar-layanan', [
+        return view('livewire.antrian.admin.daftar-layanan', [
             'data' => $data_to_render
         ])->layout('layouts.app');
     }

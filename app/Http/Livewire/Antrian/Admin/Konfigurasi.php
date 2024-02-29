@@ -35,8 +35,8 @@ class Konfigurasi extends Component
     public function render() : View
     {
         $data_to_render = $this->retrieveData();
-        // Log::info($data_to_render);
-        return view('livewire.antrian.konfigurasi', [
+        Log::info($data_to_render);
+        return view('livewire.antrian.admin.konfigurasi', [
             'data_playlist_type' => $data_to_render['playlist_type'],
             'data_playlist' => $data_to_render['playlist'],
             'data_footer_type' => $data_to_render['footer_type'],
