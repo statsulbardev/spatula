@@ -25,6 +25,9 @@ use App\Http\Livewire\Antrian\Admin\Konfigurasi;
 use App\Http\Livewire\Antrian\Admin\Pemanggil;
 use App\Http\Livewire\Antrian\Admin\DaftarAntrian;
 use App\Http\Livewire\Antrian\Admin\DaftarAntrianLihat;
+use App\Http\Livewire\Antrian\Non_Admin\Auth_Antrian;
+use App\Http\Livewire\Antrian\Non_Admin\DashboardAntrian;
+use App\Http\Livewire\Antrian\Non_Admin\FormAntrian;
 
 Route::redirect('/', 'penilaian');
 
@@ -74,10 +77,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
     Route::get('/pengaturan/pengguna/{pengguna}/edit', CreateEditUser::class)->name('edit-pengguna');
 });
 
-// antrian config Configuration
-// Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-antrian']], function () {
-    
-// });
+
 Route::group(['middleware' => ['auth', 'role:admin|pj-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar-layanan', DaftarLayanan::class)->name('antrian-daftar-layanan');
     Route::get('/pengaturan/antrian/config_view', Konfigurasi::class)->name('antrian-config-view');
@@ -87,5 +87,7 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
     Route::get('/pengaturan/antrian/{id}/daftar', DaftarAntrianLihat::class)->name('antrian-daftar-lihat');
     Route::get('/pengaturan/antrian/caller', Pemanggil::class)->name('antrian-caller');
 });
-// Route::get('/antrian/dashboard', Evaluation::class)->name('form-penilaian');
-// Route::get('/antrian/daftar', Evaluation::class)->name('form-penilaian');
+
+Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
+Route::get('/antrian/form', FormAntrian::class)->name('antrian-non_admin-pendaftaran');
+Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non_admin-dashboard');
