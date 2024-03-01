@@ -68,7 +68,6 @@ trait Helper_Firestore
 
     function set_antrian(FirestoreClient $db_client, $kode_satker)
     {
-        return null;
         $data_arr =  d_antrian_satker::where('kode_satker', $kode_satker)
             ->get()
             ->toArray();
