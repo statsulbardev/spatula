@@ -89,5 +89,11 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
 });
 
 Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
-Route::get('/antrian/form', FormAntrian::class)->name('antrian-non_admin-pendaftaran');
 Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non_admin-dashboard');
+
+Route::group(['middleware' => ['auth_antrian']], function () {
+    Route::get('/antrian/lihat', DashboardAntrian::class)->name('antrian-non_admin-lihat');
+    Route::get('/antrian/tambah', DashboardAntrian::class)->name('antrian-non_admin-item-tambah');
+    Route::get('/antrian/{id_antrian}/edit', DashboardAntrian::class)->name('antrian-non_admin-item-edit');
+    Route::get('/antrian/{id_antrian}/lihat', DashboardAntrian::class)->name('antrian-non_admin-item-lihat');
+});

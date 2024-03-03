@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Antrian\Traits;
 use App\Models\d_antrian_satker;
 use App\Models\d_antrian_satker_config_view;
 use App\Models\m_antrian_satker_layanan;
+use Carbon\Carbon;
 use Google\Cloud\Firestore\FirestoreClient;
 use Illuminate\Support\Facades\Log;
 
@@ -27,6 +28,9 @@ trait Helper_Firestore
     //         } 
     //     }
     // }
+    
+    private $sync_with_firebase = false;
+
     function setup_client_create() :FirestoreClient
     {
         return  new FirestoreClient([
@@ -36,7 +40,9 @@ trait Helper_Firestore
 
     function set_daftar_layanan(FirestoreClient $db_client, $kode_satker)
     {
-        // return null;
+        if(!$this->sync_with_firebase){
+            return null;
+        }
         $data_arr =  m_antrian_satker_layanan::with(['satker', 'layanan'])
             ->where('kode_satker', $kode_satker)
             ->get()
@@ -50,7 +56,9 @@ trait Helper_Firestore
 
     function set_konfigurasi(FirestoreClient $db_client, $kode_satker)
     {
-        // return null;
+        if(!$this->sync_with_firebase){
+            return null;
+        }
         $data_arr =  d_antrian_satker_config_view::where('kode_satker', $kode_satker)
             ->orderby('config_key', 'asc')
             ->orderby('config_index', 'asc')
@@ -68,7 +76,12 @@ trait Helper_Firestore
 
     function set_antrian(FirestoreClient $db_client, $kode_satker)
     {
+        if(!$this->sync_with_firebase){
+            return null;
+        }
+
         $data_arr =  d_antrian_satker::where('kode_satker', $kode_satker)
+            ->whereDate('tanggal', Carbon::today())
             ->get()
             ->toArray();
         $data_dict = [];
