@@ -89,7 +89,7 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
     Route::get('/pengaturan/antrian/caller', Pemanggil::class)->name('antrian-caller');
 });
 
-Route::redirect('/antrian', '/antrian/dashboard');
+Route::redirect('/antrian', 'antrian/dashboard');
 Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non_admin-dashboard');
 Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
 

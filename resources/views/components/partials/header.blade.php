@@ -34,7 +34,7 @@
             </a> -->
         </div>
         {{-- Identitas Satker --}}
-        <span class="mr-4 mt-1 text-sm">{{ $satker ?? null }}</span>
+        <div class="mr-4 mt-1 text-sm leading-3 sm:leading-6">{{ $satker ?? null }}</div>
 
         <div class="flex items-center gap-3 2xsm:gap-7">
             {{-- <ul class="flex items-center gap-2 2xsm:gap-4">
@@ -276,10 +276,13 @@
             <!-- User Area -->
             <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false" x-cloak>
                 <a class="flex items-center gap-4" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
-                    <span class="hidden text-right lg:block">
-                        <span class="text-sm font-medium text-black dark:text-white">{{ $nama ?? null }}</span>
-                        {{-- <span class="block text-xs font-medium">UX Designer</span> --}}
-                    </span>
+                    <div class="text-right lg:block">
+                        <div class="text-sm font-medium text-black leading-3 sm:leading-6">
+                            @if(Auth::check())
+                                {{ Auth::user()->nama }}
+                            @endif
+                        </div>
+                    </div>
 
                     <span class="h-10 w-10 flex flex-nowrap items-center rounded-full">
                         <img src="https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png" alt="user" />
