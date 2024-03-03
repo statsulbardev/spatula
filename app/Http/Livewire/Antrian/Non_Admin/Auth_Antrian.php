@@ -3,48 +3,66 @@
 namespace App\Http\Livewire\Antrian\Non_Admin;
 
 use App\Http\Livewire\Antrian\Traits\Helper_Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Exception;
 
 class Auth_Antrian extends Component
 {
     use Helper_Auth;
 
-    public $type; //0 login 1 registrasi
+    public $type = 0; //0 login 1 registrasi
     public $konsumen_email;
     public $konsumen_no_wa_telepon;
     public $konsumen_tahun_lahir;
     public $konsumen_nama;
+    public $error_login_text = '';
 
-    protected $rules_01 = [
-        'type' => 'required|string|min:5',
-        'konsumen_email' => 'required|string|min:5',
-        'konsumen_no_wa_telepon' => 'required|string|min:5',
-        'konsumen_tahun_lahir' => 'required|string|min:5',
+    private $rules_01 = [
+        'type' => 'bail|required|in:0,1',
+        'konsumen_email' => 'required|email',
+        'konsumen_no_wa_telepon' => 'required|numeric|digits_between:10,13',
+        'konsumen_tahun_lahir' => 'required|numeric|digits:4|min:1900',
     ];
 
-    protected $messages_01 = [
-        'username.required' => 'Username tidak boleh kosong',
-        'username.min'      => 'Username minimal 5 karakter',
-        'password.required' => 'Password tidak boleh kosong',
-        'password.min'      => 'Password minimal 5 karakter'
+    private $messages_01 = [
+        'type.required' => 'Tipe harus terisi',
+        'type.in'      => 'Tipe tidak sesuai pilihan',
+        'konsumen_email.required' => 'Password tidak boleh kosong',
+        'konsumen_email.email'      => 'Password minimal 5 karakter',
+        'konsumen_no_wa_telepon.required' => 'No hp tidak boleh kosong',
+        'konsumen_no_wa_telepon.numeric'      => 'No hp hanya boleh angka',
+        'konsumen_no_wa_telepon.digits_between' => 'No hp tidak sesuai format',
+        'konsumen_tahun_lahir.required' => 'Tahun lahir tidak boleh kosong',
+        'konsumen_tahun_lahir.numeric'      => 'Tahun lahir hanya boleh angka',
+        'konsumen_tahun_lahir.digits' => 'Tahun lahir tidak sesuai',
+        'konsumen_tahun_lahir.min' => 'Tahun lahir tidak sesuai',
     ];
 
-    protected $rules_02 = [
-        'type' => 'required|string|min:5',
-        'konsumen_email' => 'required|string|min:5',
-        'konsumen_no_wa_telepon' => 'required|string|min:5',
-        'konsumen_tahun_lahir' => 'required|string|min:5',
-        'konsumen_nama' => 'required|string|min:5',
+    private $rules_02 = [
+        'type' => 'bail|required|in:0,1',
+        'konsumen_email' => 'required|email',
+        'konsumen_no_wa_telepon' => 'required|numeric|digits_between:10,13',
+        'konsumen_tahun_lahir' => 'required|numeric|digits:4|min:1900',
+        'konsumen_nama' => 'required|string',
     ];
 
-    protected $messages_02 = [
-        'username.required' => 'Username tidak boleh kosong',
-        'username.min'      => 'Username minimal 5 karakter',
-        'password.required' => 'Password tidak boleh kosong',
-        'password.min'      => 'Password minimal 5 karakter'
+    private $messages_02 = [
+        'type.required' => 'Tipe harus terisi',
+        'type.in'      => 'Tipe tidak sesuai pilihan',
+        'konsumen_email.required' => 'Password tidak boleh kosong',
+        'konsumen_email.email'      => 'Password minimal 5 karakter',
+        'konsumen_no_wa_telepon.required' => 'No hp tidak boleh kosong',
+        'konsumen_no_wa_telepon.numeric'      => 'No hp hanya boleh angka',
+        'konsumen_no_wa_telepon.digits_between' => 'No hp tidak sesuai format',
+        'konsumen_tahun_lahir.required' => 'Tahun lahir tidak boleh kosong',
+        'konsumen_tahun_lahir.numeric'      => 'Tahun lahir hanya boleh angka',
+        'konsumen_tahun_lahir.digits' => 'Tahun lahir tidak sesuai',
+        'konsumen_tahun_lahir.min' => 'Tahun lahir tidak sesuai',
+        'konsumen_nama.required' => 'Nama tidak boleh kosong',
+        'konsumen_nama.string' => 'Nama adalah text',
     ];
 
     public function mount()
@@ -59,13 +77,39 @@ class Auth_Antrian extends Component
         return view('livewire.antrian.non_admin.auth_antrian')->layout('layouts.auth_antrian');
     }
 
-    public function submit_auth_login($form_data)
+    public function submit_auth()
     {
-        
-    }
+        if(!is_null($this->type)){
+            if($this->type == 0){
+                $this->validate($this->rules_01, $this->messages_01);
+            }else if($this->type == 0){
+                $this->validate($this->rules_02, $this->messages_02);
+            }
+        }
 
-    public function submit_auth_registrasi ($form_data)
-    {
+
+        if(Carbon::today()->year - $this->konsumen_tahun_lahir <= 10){
+            $this->addError('konsumen_tahun_lahir', 'Tahun lahir terlalu awal');
+            return;
+        }
+
+        if( ! (str_starts_with($this->konsumen_no_wa_telepon, '0') or str_starts_with($this->konsumen_no_wa_telepon, '62'))){
+            $this->addError('konsumen_no_wa_telepon', 'No hp tidak sesuai format');
+            return;
+        }
+
+        $result = -1;
+        if($this->type == 0){
+            $result = $this->auth_antrian_login($this->konsumen_email, $this->konsumen_no_wa_telepon, $this->konsumen_tahun_lahir);
+        }else if($this->type == 1){
+            $result = $this->auth_antrian_register($this->konsumen_email, $this->konsumen_no_wa_telepon, $this->konsumen_tahun_lahir, $this->konsumen_nama);
+        }
+
+        if ($result === 1) {
+            return redirect()->route('antrian-non_admin-lihat');
+        }else{
+            $this->error_login_text = 'Tidak terdapat user dengan informasi yang tersedia';
+        }
         
     }
 

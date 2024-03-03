@@ -9,7 +9,11 @@ trait Helper_Auth
     function auth_antrian_check()
     {
         if(session('check_have_antrian_auth', null)){
-            return true;
+            if(session('check_have_antrian_auth') == 1){
+                return true;
+            }else{
+                return false;
+            }
         }
         return false;
     }
@@ -53,6 +57,7 @@ trait Helper_Auth
                 'konsumen_no_wa_telepon' => $konsumen_no_wa_telepon,
                 'konsumen_tahun_lahir' => $konsumen_tahun_lahir,
                 'konsumen_nama' => $konsumen_nama,
+                'is_registrasi' => 0
             ]);
             return 1;
         }else{
@@ -62,24 +67,7 @@ trait Helper_Auth
 
     function auth_antrian_logout()
     {
-        session()->forget([])
-        $one_antrian = d_antrian_satker::where('konsumen_email', $konsumen_email)
-            ->where('konsumen_no_wa_telepon', $konsumen_no_wa_telepon)
-            ->where('konsumen_tahun_lahir', $konsumen_tahun_lahir)
-            ->first();
-        if($one_antrian){
-            $konsumen_nama = $one_antrian->konsumen_nama;
-            session([
-                'check_have_antrian_auth' => 1,
-                'konsumen_email' => $konsumen_email,
-                'konsumen_no_wa_telepon' => $konsumen_no_wa_telepon,
-                'konsumen_tahun_lahir' => $konsumen_tahun_lahir,
-                'konsumen_nama' => $konsumen_nama,
-            ]);
-            return 1;
-        }else{
-            return 0;
-        }
+        session()->forget(['check_have_antrian_auth', 'konsumen_email', 'konsumen_no_wa_telepon', 'konsumen_tahun_lahir', 'konsumen_nama', 'is_registrasi']);
     }
 
 }
