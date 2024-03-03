@@ -17,7 +17,7 @@ class DashboardAntrian extends Component
 
     public function render() : View
     {
-        return view('livewire.antrian.konfigurasi')->layout('layouts.app');
+        return view('livewire.antrian.non_admin.dashboard', ['satu' => 'satu']) -> layout('layouts.auth_antrian');
     }
 
 
@@ -27,6 +27,7 @@ class DashboardAntrian extends Component
         $arr_kode_satker_active = collect(m_antrian_satker_layanan::where('is_active', '1')->get())->pluck('kode_satker')->toArray();
         return m_satker::whereIn('kode_satker', $arr_kode_satker_active)->get();
     }
+    
     private function retrieveData_satker($kode_satker)
     {
         $arr_kode_layanan_active = collect(m_antrian_satker_layanan::where('kode_satker', $kode_satker)->where('is_active', '1')->get())->pluck('kode_layanan')->toArray();
