@@ -7,7 +7,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Exception;
 
-class ItemLihatTambahUbah extends Component
+class LihatAntrian extends Component
 {
     public function render() : View
     {

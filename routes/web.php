@@ -27,7 +27,8 @@ use App\Http\Livewire\Antrian\Admin\DaftarAntrian;
 use App\Http\Livewire\Antrian\Admin\DaftarAntrianLihat;
 use App\Http\Livewire\Antrian\Non_Admin\Auth_Antrian;
 use App\Http\Livewire\Antrian\Non_Admin\DashboardAntrian;
-use App\Http\Livewire\Antrian\Non_Admin\FormAntrian;
+use App\Http\Livewire\Antrian\Non_Admin\ItemLihatTambahUbah;
+use App\Http\Livewire\Antrian\Non_Admin\LihatAntrian;
 
 Route::redirect('/', 'penilaian');
 
@@ -88,12 +89,13 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
     Route::get('/pengaturan/antrian/caller', Pemanggil::class)->name('antrian-caller');
 });
 
-Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
+Route::redirect('/antrian', '/antrian/dashboard');
 Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non_admin-dashboard');
+Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
 
 Route::group(['middleware' => ['auth_antrian']], function () {
-    Route::get('/antrian/lihat', DashboardAntrian::class)->name('antrian-non_admin-lihat');
-    Route::get('/antrian/tambah', DashboardAntrian::class)->name('antrian-non_admin-item-tambah');
-    Route::get('/antrian/{id_antrian}/edit', DashboardAntrian::class)->name('antrian-non_admin-item-edit');
-    Route::get('/antrian/{id_antrian}/lihat', DashboardAntrian::class)->name('antrian-non_admin-item-lihat');
+    Route::get('/antrian/lihat', LihatAntrian::class)->name('antrian-non_admin-lihat');
+    Route::get('/antrian/tambah', ItemLihatTambahUbah::class)->name('antrian-non_admin-item-tambah');
+    Route::get('/antrian/{id_antrian}/edit', ItemLihatTambahUbah::class)->name('antrian-non_admin-item-edit');
+    Route::get('/antrian/{id_antrian}/lihat', ItemLihatTambahUbah::class)->name('antrian-non_admin-item-lihat');
 });

@@ -91,10 +91,11 @@ class Konfigurasi extends Component
                 }
                 $this->set_konfigurasi($this->setup_client_create(), $user_unit_code);
                 DB::commit();
+                $this->dispatchBrowserEvent('notification', ['message' => 'Berhasil menyimpan data.']);
             }catch(Exception $ex){
                 DB::rollBack();
                 Log::error($ex);
-                throw new Exception(500);
+                $this->dispatchBrowserEvent('notification', ['message' => 'Gagal menyimpan data.']);
             }
         }else if($type == 'footer'){
             DB::beginTransaction();
@@ -129,10 +130,11 @@ class Konfigurasi extends Component
                 }
                 $this->set_konfigurasi($this->setup_client_create(), $user_unit_code);
                 DB::commit();
+                $this->dispatchBrowserEvent('notification', ['message' => 'Berhasil menyimpan data.']);
             }catch(Exception $ex){
                 DB::rollBack();
                 Log::error($ex);
-                throw new Exception(500);
+                $this->dispatchBrowserEvent('notification', ['message' => 'Gagal menyimpan data.']);
             }
         }
     }
