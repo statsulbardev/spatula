@@ -11,7 +11,8 @@ class LihatAntrian extends Component
 {
     public function render() : View
     {
-        return view('livewire.antrian.non_admin.lihat_antrian')->layout('layouts.auth');
+        Log::info(session()->all());
+        return view('livewire.antrian.non_admin.lihat_antrian')->layout('layouts.app_antrian');
     }
 
     public function submit_auth_login($form_data)

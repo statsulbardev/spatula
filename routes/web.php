@@ -92,6 +92,10 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
 Route::redirect('/antrian', 'antrian/dashboard');
 Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non_admin-dashboard');
 Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
+Route::get('/antrian/auth/logout', function () {
+    session()->forget(['check_have_antrian_auth', 'konsumen_email', 'konsumen_no_wa_telepon', 'konsumen_tahun_lahir', 'konsumen_nama', 'is_registrasi']);
+    return redirect()->route('antrian-non_admin-auth');
+})->name('antrian-non_admin-auth-logout');
 
 Route::group(['middleware' => ['auth_antrian']], function () {
     Route::get('/antrian/lihat', LihatAntrian::class)->name('antrian-non_admin-lihat');

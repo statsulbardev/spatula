@@ -36,15 +36,13 @@
                             @include('components.notification.error_white')
                         @enderror
                     </div>
-                    <template x-if="type == 1">
-                        <div class="mt-6">
-                            <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_nama">Nama </label>
-                            <input wire:model.defer="konsumen_nama" ref="input" class="form-input" type="text" autofocus required>
-                            @error('konsumen_nama')
-                                @include('components.notification.error_white')
-                            @enderror
-                        </div>
-                    </template>
+                    <div class="mt-6"  x-show="type == 1" x-cloak>
+                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_nama">Nama </label>
+                        <input wire:model.defer="konsumen_nama" ref="input" class="form-input" type="text" autofocus required>
+                        @error('konsumen_nama')
+                            @include('components.notification.error_white')
+                        @enderror
+                    </div>
                 </div>
                 @if ($error_login_text != '')
                     <div class="mt-4 mb-2">
