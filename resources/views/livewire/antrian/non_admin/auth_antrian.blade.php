@@ -1,63 +1,59 @@
-@section('title', 'Login')
+@section('title', 'Login Antrian')
 
 <div class="overflow-hidden rounded-lg">
     <div class="w-full max-w-md">
-        <form wire:submit.prevent="login">
+        <form wire:submit.prevent="submit_auth">
             <div class="px-10 pt-10">
-                <div class="mb-8" x-data="{ type: '1'}">
+                <div class="mb-8" x-data="{ type: 0 }">
                     <div>
-                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="username">Email</label>
-                        <input wire:model.defer="username" ref="input" class="form-input" type="text" autofocus autocapitalize="off">
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                            clearTimeout(timeout);
-                            shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000);
-                        })" x-show.transition.opacity.out.duration.2000ms="shown">
-                            @error('username')
-                                @include('components.notification.error')
-                            @enderror
-                        </div>
-                    </div>
-                    <div>
-                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="username">Email</label>
-                        <input wire:model.defer="username" ref="input" class="form-input" type="text" autofocus autocapitalize="off">
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                            clearTimeout(timeout);
-                            shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000);
-                        })" x-show.transition.opacity.out.duration.2000ms="shown">
-                            @error('username')
-                                @include('components.notification.error')
-                            @enderror
-                        </div>
+                        <!-- <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="type">Type</label> -->
+                        <select x-model="type" wire:model.defer="type" ref="input" class="form-input" autofocus>
+                            <option value="0" selected>Sudah Pernah Daftar (Login)</option>
+                            <option value="1">Belum Pernah Daftar (Registrasi)</option>
+                        </select>
+                        @error('type')
+                            @include('components.notification.error_white')
+                        @enderror
                     </div>
                     <div class="mt-6">
-                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="password">Nomor Telpon dan WA </label>
-                        <input wire:model.defer="password" ref="input" class="form-input" type="password">
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                            clearTimeout(timeout);
-                            shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000);
-                        })" x-show.transition.opacity.out.duration.2000ms="shown">
-                            @error('password')
-                                @include('components.notification.error')
-                            @enderror
-                        </div>
+                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_email">Email</label>
+                        <input wire:model.defer="konsumen_email" ref="input" class="form-input" type="email" autofocus autocapitalize="off" required>
+                        @error('konsumen_email')
+                            @include('components.notification.error_white')
+                        @enderror
                     </div>
                     <div class="mt-6">
-                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="password">Tahun Lahir </label>
-                        <input wire:model.defer="password" ref="input" class="form-input" type="password">
-                        <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                            clearTimeout(timeout);
-                            shown = true;
-                            timeout = setTimeout(() => { shown = false }, 5000);
-                        })" x-show.transition.opacity.out.duration.2000ms="shown">
-                            @error('password')
-                                @include('components.notification.error')
+                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_no_wa_telepon">Nomor Telpon dan WA </label>
+                        <input wire:model.defer="konsumen_no_wa_telepon" ref="input" class="form-input" type="number" autofocus required>
+                        @error('konsumen_no_wa_telepon')
+                            @include('components.notification.error_white')
+                        @enderror
+                    </div>
+                    <div class="mt-6">
+                        <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_tahun_lahir">Tahun Lahir </label>
+                        <input wire:model.defer="konsumen_tahun_lahir" ref="input" class="form-input" type="number" autofocus required>
+                        @error('konsumen_tahun_lahir')
+                            @include('components.notification.error_white')
+                        @enderror
+                    </div>
+                    <template x-if="type == 1">
+                        <div class="mt-6">
+                            <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_nama">Nama </label>
+                            <input wire:model.defer="konsumen_nama" ref="input" class="form-input" type="text" autofocus required>
+                            @error('konsumen_nama')
+                                @include('components.notification.error_white')
                             @enderror
                         </div>
-                    </div>
+                    </template>
                 </div>
+                @if ($error_login_text != '')
+                    <div class="mt-4 mb-2">
+                        <span class="flex items-center text-sm text-white">
+                            @include('components.icon', ['name' => 'information-circle', 'size' => 'w-5 h-5'])
+                            <span class="ml-2">{{ $error_login_text }}</span>
+                        </span>
+                    </div>
+                @endif
             </div>
             <div class="bg-glass flex items-center justify-between px-10 py-4">
                 <button type="submit" class="btn-secondary w-full">LOG IN</button>
