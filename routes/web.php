@@ -25,10 +25,10 @@ use App\Http\Livewire\Antrian\Admin\Konfigurasi;
 use App\Http\Livewire\Antrian\Admin\Pemanggil;
 use App\Http\Livewire\Antrian\Admin\DaftarAntrian;
 use App\Http\Livewire\Antrian\Admin\DaftarAntrianLihat;
-use App\Http\Livewire\Antrian\Non_Admin\Auth_Antrian;
-use App\Http\Livewire\Antrian\Non_Admin\DashboardAntrian;
-use App\Http\Livewire\Antrian\Non_Admin\ItemLihatTambahUbah;
-use App\Http\Livewire\Antrian\Non_Admin\LihatAntrian;
+use App\Http\Livewire\Antrian\NonAdmin\AuthAntrian;
+use App\Http\Livewire\Antrian\NonAdmin\DashboardAntrian;
+use App\Http\Livewire\Antrian\NonAdmin\ItemLihatTambahUbah;
+use App\Http\Livewire\Antrian\NonAdmin\LihatAntrian;
 
 Route::redirect('/', 'penilaian');
 
@@ -90,16 +90,16 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
 });
 
 Route::redirect('/antrian', 'antrian/dashboard');
-Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non_admin-dashboard');
-Route::get('/antrian/auth', Auth_Antrian::class)->name('antrian-non_admin-auth');
+Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non-admin-dashboard');
+Route::get('/antrian/auth', AuthAntrian::class)->name('antrian-non-admin-auth');
 Route::get('/antrian/auth/logout', function () {
     session()->forget(['check_have_antrian_auth', 'konsumen_email', 'konsumen_no_wa_telepon', 'konsumen_tahun_lahir', 'konsumen_nama', 'is_registrasi']);
-    return redirect()->route('antrian-non_admin-auth');
-})->name('antrian-non_admin-auth-logout');
+    return redirect()->route('antrian-non-admin-auth');
+})->name('antrian-non-admin-auth-logout');
 
 Route::group(['middleware' => ['auth_antrian']], function () {
-    Route::get('/antrian/lihat', LihatAntrian::class)->name('antrian-non_admin-lihat');
-    Route::get('/antrian/tambah', ItemLihatTambahUbah::class)->name('antrian-non_admin-item-tambah');
-    Route::get('/antrian/{id_antrian}/edit', ItemLihatTambahUbah::class)->name('antrian-non_admin-item-edit');
-    Route::get('/antrian/{id_antrian}/lihat', ItemLihatTambahUbah::class)->name('antrian-non_admin-item-lihat');
+    Route::get('/antrian/lihat', LihatAntrian::class)->name('antrian-non-admin-lihat');
+    Route::get('/antrian/tambah', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-tambah');
+    Route::get('/antrian/{id_antrian}/edit', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
+    Route::get('/antrian/{id_antrian}/lihat', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-lihat');
 });

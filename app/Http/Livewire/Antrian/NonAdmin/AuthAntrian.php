@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Antrian\Non_Admin;
+namespace App\Http\Livewire\Antrian\NonAdmin;
 
 use App\Http\Livewire\Antrian\Traits\Helper_Auth;
 use Illuminate\View\View;
@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
-class Auth_Antrian extends Component
+class AuthAntrian extends Component
 {
     use Helper_Auth;
 
@@ -68,13 +68,13 @@ class Auth_Antrian extends Component
     public function mount()
     {
         if($this->auth_antrian_check()){
-            return redirect('antrian-non_admin-lihat');
+            return redirect('antrian-non-admin-lihat');
         }
     }
 
     public function render() : View
     {
-        return view('livewire.antrian.non_admin.auth_antrian')->layout('layouts.auth_antrian');
+        return view('livewire.antrian.non-admin.auth_antrian')->layout('layouts.auth_antrian');
     }
 
     public function submit_auth()
@@ -106,7 +106,7 @@ class Auth_Antrian extends Component
         }
 
         if ($result === 1) {
-            return redirect()->route('antrian-non_admin-lihat');
+            return redirect()->route('antrian-non-admin-lihat');
         }else{
             $this->error_login_text = 'Tidak terdapat user dengan informasi yang tersedia';
         }

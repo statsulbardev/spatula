@@ -10,7 +10,7 @@
             @include('components.partials.header_antrian')
 
             {{-- Content Main --}}
-            <main>
+            <main class="flex justify-center ">
                 {{ $slot }}
             </main>
         </div>
