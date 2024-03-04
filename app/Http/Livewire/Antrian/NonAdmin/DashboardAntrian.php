@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Antrian\Non_Admin;
+namespace App\Http\Livewire\Antrian\NonAdmin;
 
 use App\Models\d_antrian_satker;
 use App\Models\m_antrian_satker_layanan;
@@ -17,7 +17,7 @@ class DashboardAntrian extends Component
 
     public function render() : View
     {
-        return view('livewire.antrian.non_admin.dashboard', ['satu' => 'satu']) -> layout('layouts.auth_antrian');
+        return view('livewire.antrian.non-admin.dashboard', ['satu' => 'satu']) -> layout('layouts.auth_antrian');
     }
 
 

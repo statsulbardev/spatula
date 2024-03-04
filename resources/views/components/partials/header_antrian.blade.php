@@ -1,41 +1,9 @@
-<header class="sticky top-0 z-999 flex w-full bg-white shadow-sm dark:bg-boxdark dark:drop-shadow-none">
-    <div class="flex flex-grow items-center justify-between px-4 py-1 md:px-6 2xl:px-11">
-        <div class="flex items-center gap-2 sm:gap-4 lg:hidden">
-            <!-- Hamburger Toggle BTN -->
-            <button
-                class="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
-                @click.stop="sidebarToggle = !sidebarToggle">
-                @include('components.icons.heroline', ['name' => 'bars-3', 'size' => 'w-5 h-5'])
-                <span class="relative block h-5.5 w-5.5 cursor-pointer">
-                    <span class="du-block absolute right-0 h-full w-full">
-                        <span
-                            class="relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-[0] duration-200 ease-in-out dark:bg-white"
-                            :class="{ '!w-full delay-300': !sidebarToggle }"></span>
-                        <span
-                            class="relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-150 duration-200 ease-in-out dark:bg-white"
-                            :class="{ '!w-full delay-400': !sidebarToggle }"></span>
-                        <span
-                            class="relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-200 duration-200 ease-in-out dark:bg-white"
-                            :class="{ '!w-full delay-500': !sidebarToggle }"></span>
-                    </span>
-                    <span class="du-block absolute right-0 h-full w-full rotate-45">
-                        <span
-                            class="absolute left-2.5 top-0 block h-full w-0.5 rounded-sm bg-black delay-300 duration-200 ease-in-out dark:bg-white"
-                            :class="{ '!h-0 delay-[0]': !sidebarToggle }"></span>
-                        <span
-                            class="delay-400 absolute left-0 top-2.5 block h-0.5 w-full rounded-sm bg-black duration-200 ease-in-out dark:bg-white"
-                            :class="{ '!h-0 dealy-200': !sidebarToggle }"></span>
-                    </span>
-                </span>
-            </button>
-            <!-- Hamburger Toggle BTN -->
-            <!-- <a class="block flex-shrink-0 lg:hidden" href="index.html">
-                @include('components.icons.heroline', ['name' => 'bars-3', 'size' => 'w-5 h-5'])
-            </a> -->
+<header class="sticky flex justify-center  top-0 z-999 flex w-full bg-white shadow-sm dark:bg-boxdark dark:drop-shadow-none">
+    <div class="flex px-4 py-1 md:px-6 2xl:px-11 w-full lg:w-3/4">
+        <div  class="flex items-center leading-3 sm:leading-6 font-medium">
+            SPATULA ANTRIAN
         </div>
-        {{-- Identitas Satker --}}
-        <span class="mr-4 mt-1 text-sm">{{ $satker ?? null }}</span>
-
+        <div class="flex grow"></div>
         <div class="flex items-center gap-3 2xsm:gap-7">
             <!-- User Area -->
             <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false" x-cloak>
@@ -64,7 +32,7 @@
                     <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark py-5">
                         <li>
                             <div>
-                                <a href="{{route('antrian-non_admin-auth-logout')}}"
+                                <a href="{{route('antrian-non-admin-auth-logout')}}"
                                     class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
                                     @include('components.icon', ['name' => 'logout', 'size' => 'w-6 h-6'])
                                     Logout

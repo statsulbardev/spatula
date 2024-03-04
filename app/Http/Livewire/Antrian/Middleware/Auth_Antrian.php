@@ -21,7 +21,7 @@ class Auth_Antrian
         if($this->auth_antrian_check()){
             return $next($request);
         }else{
-            return redirect()->route('antrian-non_admin-auth');
+            return redirect()->route('antrian-non-admin-auth');
         }
     }
 }
