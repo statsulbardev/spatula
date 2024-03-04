@@ -35,4 +35,17 @@ class d_antrian_satker extends Model
         'konsumen_no_wa_telepon',
         'deskripsi',
     ];
+
+    public function satker()
+    {
+        return $this->hasOne(m_satker::class, 'kode_satker', 'kode_satker');
+    }
+
+
+    public function layanan()
+    {
+        return $this->hasOne(m_layanan::class, 'kode_layanan', 'kode_layanan');
+    }
+
+
 }
