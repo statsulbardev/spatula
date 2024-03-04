@@ -14,12 +14,13 @@ class DaftarAntrianSekarang extends Component
 
     public function render() : View
     {
-        $data = d_antrian_satker::where('konsumen_email', session('konsumen_email'))
+        $data = d_antrian_satker::with(['satker', 'layanan'])
+                    ->where('konsumen_email', session('konsumen_email'))
                     ->where('konsumen_no_wa_telepon', session('konsumen_no_wa_telepon'))
                     ->where('konsumen_tahun_lahir', session('konsumen_tahun_lahir'))
                     ->whereDate('tanggal', Carbon::today())
                     ->get();
-        return view('livewire.antrian.non-admin.component.daftar_antrian_bukan_sekarang', ['data' => $data]);
+        return view('livewire.antrian.non-admin.component.daftar_antrian_sekarang', ['data' => $data]);
     }
 
 }
