@@ -10,7 +10,7 @@
     {{-- Content --}}
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow">
-            <form wire:submit.prevent="submitData">
+            <form wire:submit="submitData">
                 <div class="flex flex-wrap p-6">
                     <div class="lg:w-1/3">
                         <h1 class="text-2xl tracking-wide">Informasi Jenis Layanan</h1>

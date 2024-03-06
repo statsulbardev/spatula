@@ -166,7 +166,7 @@
             {{-- Petugas Layanan --}}
             @if (isset($f_layanan) and explode('-', $f_layanan)[1] == 1)
                 <hr>
-                <div wire:key="petugas_layanan" class="flex flex-wrap p-6">
+                <div wire:key="petugas_layanan" class="flex flex-wrap p-6" x-init="$nextTick(() => { $dispatch('contentChanged') })">
                     <div class="w-full lg:w-1/3">
                         <h1 class="text-xl lg:text-2xl tracking-wide">Penilaian Petugas</h1>
                         <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">

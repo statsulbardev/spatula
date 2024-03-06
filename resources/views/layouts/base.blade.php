@@ -17,19 +17,8 @@
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.css') }}">
 
-    @production
-        @php
-            $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
-        @endphp
-        <script type="module" src="{{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['file']) }}"></script>
-        <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/build/' . $manifest['resources/js/app.js']['css'][0]) }}" />
-    @else
-        @vite('resources/js/app.js')
-    @endproduction
 
     @yield('styles')
-
-    @livewireStyles
 
     <style>
         [x-cloak] {
@@ -45,11 +34,13 @@
     :class="{ 'dark text-bodydark bg-boxdark-2': darkMode === true }">
 
     @yield('content')
+    
+    @vite(['resources/js/app.js'])
+    @livewireScriptConfig
 
-    @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+    <!-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
             data-turbolinks-eval="false"
-            data-turbo-eval="false">
+            data-turbo-eval="false"> -->
     </script>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
     <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
@@ -57,6 +48,7 @@
     <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
 
     @stack('scripts')
+    
 </body>
 
 </html>

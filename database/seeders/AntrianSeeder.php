@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Http\Livewire\Antrian\Traits\Helper_Firestore;
+use App\Livewire\Antrian\Traits\Helper_Firestore;
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;

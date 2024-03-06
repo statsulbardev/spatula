@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Livewire\Configuration\CreateEditService;
-use App\Http\Livewire\Configuration\CreateEditUnit;
+use App\Livewire\Configuration\CreateEditService;
+use App\Livewire\Configuration\CreateEditUnit;
 use App\Repositories\Interfaces\ConfigurationInterface;
 use App\Repositories\ServiceRepository;
 use App\Repositories\UnitRepository;

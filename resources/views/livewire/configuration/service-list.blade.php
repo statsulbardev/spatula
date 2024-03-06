@@ -35,7 +35,7 @@
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-6 pb-4 pt-6">
-                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
+                                <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                             </th>
                             <th class="px-6 pb-4 pt-6">Kode Layanan</th>
                             <th class="px-6 pb-4 pt-6">Nama Layanan</th>
@@ -47,7 +47,7 @@
                         @foreach ($services as $service)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
                                 <td class="w-2 border-t px-6 py-4">
-                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $service->id }}">
+                                    <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $service->id }}">
                                 </td>
                                 <td class="border-t">
                                     <span class="py-4 pl-6">

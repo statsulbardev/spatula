@@ -1,5 +1,5 @@
 <div wire:ignore>
-    <select wire:model.defer="{{ $model }}" class="star-rating" class="form-control mb-3">
+    <select wire:model="{{ $model }}" class="star-rating" class="form-control mb-3">
         <option value="" hidden selected></option>
         <option value="1">Sangat Tidak Puas</option>
         <option value="2">Tidak Puas</option>

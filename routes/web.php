@@ -1,34 +1,42 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Verification\CompleteList;
-use App\Http\Livewire\Verification\CompleteItem;
-use App\Http\Livewire\Verification\ServiceResponsibleList;
-use App\Http\Livewire\Verification\ServiceCategorization;
-use App\Http\Livewire\Verification\ComplaintResponsibleList;
-use App\Http\Livewire\Verification\ComplaintItem;
-use App\Http\Livewire\Report\Monthly;
-use App\Http\Livewire\Report\Daily;
-use App\Http\Livewire\Configuration\UserList;
-use App\Http\Livewire\Configuration\CreateEditUser;
-use App\Http\Livewire\Configuration\ServiceList;
-use App\Http\Livewire\Configuration\CreateEditService;
-use App\Http\Livewire\Configuration\UnitList;
-use App\Http\Livewire\Configuration\CreateEditUnit;
-use App\Http\Livewire\Dashboard\Dashboard;
-use App\Http\Livewire\Form\Evaluation;
+use App\Livewire\Auth\Login;
+use App\Livewire\Verification\CompleteList;
+use App\Livewire\Verification\CompleteItem;
+use App\Livewire\Verification\ServiceResponsibleList;
+use App\Livewire\Verification\ServiceCategorization;
+use App\Livewire\Verification\ComplaintResponsibleList;
+use App\Livewire\Verification\ComplaintItem;
+use App\Livewire\Report\Monthly;
+use App\Livewire\Report\Daily;
+use App\Livewire\Configuration\UserList;
+use App\Livewire\Configuration\CreateEditUser;
+use App\Livewire\Configuration\ServiceList;
+use App\Livewire\Configuration\CreateEditService;
+use App\Livewire\Configuration\UnitList;
+use App\Livewire\Configuration\CreateEditUnit;
+use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Form\Evaluation;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Livewire\Antrian\Admin\DaftarLayanan;
-use App\Http\Livewire\Antrian\Admin\Konfigurasi;
-use App\Http\Livewire\Antrian\Admin\Pemanggil;
-use App\Http\Livewire\Antrian\Admin\DaftarAntrian;
-use App\Http\Livewire\Antrian\Admin\DaftarAntrianLihat;
-use App\Http\Livewire\Antrian\NonAdmin\AuthAntrian;
-use App\Http\Livewire\Antrian\NonAdmin\DashboardAntrian;
-use App\Http\Livewire\Antrian\NonAdmin\ItemLihatTambahUbah;
-use App\Http\Livewire\Antrian\NonAdmin\LihatAntrian;
+use App\Livewire\Antrian\Admin\DaftarLayanan;
+use App\Livewire\Antrian\Admin\Konfigurasi;
+use App\Livewire\Antrian\Admin\Pemanggil;
+use App\Livewire\Antrian\Admin\DaftarAntrian;
+use App\Livewire\Antrian\Admin\DaftarAntrianLihat;
+use App\Livewire\Antrian\NonAdmin\AuthAntrian;
+use App\Livewire\Antrian\NonAdmin\DashboardAntrian;
+use App\Livewire\Antrian\NonAdmin\ItemLihatTambahUbah;
+use App\Livewire\Antrian\NonAdmin\LihatAntrian;
+use Livewire\Livewire;
+
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/spatula/livewire/update', $handle);
+});
+// Livewire::setScriptRoute(function ($handle) {
+//     return Route::get('/spatula/livewire/livewire.js', $handle);
+// });
 
 Route::redirect('/', 'penilaian');
 
