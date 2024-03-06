@@ -11,6 +11,7 @@ class Login extends Component
 {
     public $username;
     public $password;
+    public $error_login_text;
 
     // Rule Validasi Form
     protected $rules = [
@@ -54,6 +55,7 @@ class Login extends Component
             return redirect()->intended(env('APP_URL') . '/dashboard');
         } else {
             // sweetalert
+            $this->error_login_text = 'Gagal login dengn info yang tersedia!';
         }
     }
 }
