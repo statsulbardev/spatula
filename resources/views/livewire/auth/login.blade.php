@@ -36,6 +36,14 @@
                         </div>
                     </div>
                 </div>
+                @if ($error_login_text != '')
+                    <div class="-mt-2 mb-2">
+                        <span class="flex items-center text-sm text-white">
+                            @include('components.icon', ['name' => 'information-circle', 'size' => 'w-5 h-5'])
+                            <span class="ml-2">{{ $error_login_text }}</span>
+                        </span>
+                    </div>
+                @endif
             </div>
             <div class="bg-glass flex items-center justify-between px-10 py-4">
                 <button type="submit" class="btn-secondary w-full">LOG IN</button>
