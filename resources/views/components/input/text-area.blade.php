@@ -10,7 +10,7 @@
         x-data
         x-on:trix-change="$dispatch('input', event.target.value)"
         x-ref="trix"
-        wire:model.defer="{{ $model }}"
+        wire:model="{{ $model }}"
         wire:key="{{ Str::random() }}">
     </trix-editor>
 </div>

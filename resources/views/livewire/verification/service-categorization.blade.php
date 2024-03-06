@@ -11,7 +11,7 @@
     {{-- Informasi Pengguna Layanan --}}
     <section>
         <div class="h-full">
-            <form wire:submit.prevent="submitData">
+            <form wire:submit="submitData">
                 <div class="mx-auto w-full rounded-t-md border-gray-200 bg-white shadow-sm">
                     <div class="p-3">
                         <div class="overflow-x-auto">
@@ -52,7 +52,7 @@
                                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Jenis Layanan</td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
-                                            <select wire:model.defer="f_layanan" ref="input" class="form-select" :disabled="open">
+                                            <select wire:model="f_layanan" ref="input" class="form-select" :disabled="open">
                                                 <option hidden selected>Pilih Jenis Layanan ...</option>
                                                 @foreach ($this->services as $service)
                                                     <option value="{{ $service['kode_layanan'] }}">
@@ -98,7 +98,7 @@
                                                 @endif
                                             </div>
                                             <div class="flex w-full flex-nowrap items-center" x-data="{ open: true }">
-                                                <select wire:model.defer="f_rating_layanan" ref="input" class="form-select"
+                                                <select wire:model="f_rating_layanan" ref="input" class="form-select"
                                                     :disabled="open">
                                                     <option hidden selected>Pilih Rating Layanan ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
@@ -124,7 +124,7 @@
                                             Layanan</td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
-                                            <select wire:model.defer="f_petugas" ref="input" class="form-select" :disabled="open">
+                                            <select wire:model="f_petugas" ref="input" class="form-select" :disabled="open">
                                                 <option hidden selected>Pilih Petugas Layanan ...</option>
                                                 @foreach ($this->officers as $officer)
                                                     <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
@@ -170,7 +170,7 @@
                                                 @endif
                                             </div>
                                             <div class="flex w-full flex-nowrap items-center" x-data="{ open: true }">
-                                                <select wire:model.defer="f_rating_petugas" ref="input" class="form-select"
+                                                <select wire:model="f_rating_petugas" ref="input" class="form-select"
                                                     :disabled="open">
                                                     <option hidden selected>Pilih Rating Petugas ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
@@ -205,23 +205,23 @@
                                         <td class="pr-6">
                                             <div class="flex flex-wrap justify-between">
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_saran" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_saran" type="checkbox" class="mr-2">
                                                     <label>Saran</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_pengaduan" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_pengaduan" type="checkbox" class="mr-2">
                                                     <label>Pengaduan</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_kritik" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_kritik" type="checkbox" class="mr-2">
                                                     <label>Kritik</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_apresiasi" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_apresiasi" type="checkbox" class="mr-2">
                                                     <label>Apresiasi</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_lainnya" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_lainnya" type="checkbox" class="mr-2">
                                                     <label>Lainnya</label>
                                                 </div>
                                             </div>
@@ -232,7 +232,7 @@
                                     <tr>
                                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Catatan</td>
                                         <td class="font-semibold">:</td>
-                                        <td><input wire:model.defer="f_catatan" type="text" ref="input" class="form-input"
+                                        <td><input wire:model="f_catatan" type="text" ref="input" class="form-input"
                                                 placeholder="Contoh : Nama Kegiatan ..."></td>
                                     </tr>
                                 </tbody>

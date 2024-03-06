@@ -3,7 +3,7 @@
 <div>
     @include('components.notification.flash')
 
-    <form wire:submit.prevent="submitData">
+    <form wire:submit="submitData">
         <div class="text-xs text-right mt-3">
             <span class="font-medium">Admin Spatula, </span>
             <a href="{{ route('login') }}" target="_blank" class="font-medium text-primary-400 hover:text-primary-500">Login

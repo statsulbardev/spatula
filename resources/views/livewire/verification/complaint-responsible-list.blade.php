@@ -25,7 +25,7 @@
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-6 pb-4 pt-6">
-                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
+                                <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                             </th>
                             <th class="px-6 pb-4 pt-6">Tanggal</th>
                             <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
@@ -41,7 +41,7 @@
                         @foreach ($complaints as $complaint)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
                                 <td class="w-2 border-t px-6 py-4">
-                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $complaint->id }}">
+                                    <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $complaint->id }}">
                                 </td>
 
                                 {{-- Tanggal --}}

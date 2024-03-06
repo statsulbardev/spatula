@@ -1,16 +1,10 @@
 // Tailwind CSS
 import "../css/app.css";
 
-// AlpineJS
-import Alpine from "alpinejs";
+
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import Tooltip from "@ryangjchandler/alpine-tooltip";
-import persist from "@alpinejs/persist";
 
-// Turbo
-import * as Turbo from "@hotwired/turbo";
+Alpine.plugin(Tooltip)
 
-Alpine.plugin(Tooltip);
-Alpine.plugin(persist);
-
-window.Alpine = Alpine;
-Alpine.start();
+Livewire.start()

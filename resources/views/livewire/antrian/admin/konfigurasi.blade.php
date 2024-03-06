@@ -23,7 +23,7 @@
                     </p>
                 </div>
                 <div wire:key="{{ rand() }}" class="w-full mt-3" x-data='{ data_playlist : @json($data_playlist) }'>
-                    <form wire:submit.prevent="submit_data_perubahan('video', Object.fromEntries(new FormData($event.target)))">
+                    <form wire:submit="submit_data_perubahan('video', Object.fromEntries(new FormData($event.target)))">
                         <select name="playlist_type" class="form-input border-neutral-300 py-1">
                             @if ($data_playlist_type == 'video_and_audio')
                                 <option value="video_and_audio" selected>Video Tampil dan Audio Bunyi</option>
@@ -97,7 +97,7 @@
                     </p>
                 </div>
                 <div wire:key="{{ rand() }}"  class="w-full mt-3">
-                    <form wire:submit.prevent="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))">
+                    <form wire:submit="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))">
                         <select name="footer_type" class="form-input border-neutral-300 py-1">
                             @if ($data_footer_type == 'with_footer')
                                 <option value="with_footer" selected>Tampilkan Footer</option>

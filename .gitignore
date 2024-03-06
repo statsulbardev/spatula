@@ -4,6 +4,7 @@
 /public/build
 /storage/*.key
 /vendor
+/resources/views/layouts_old
 .env
 .env.backup
 .phpunit.result.cache

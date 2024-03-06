@@ -42,7 +42,7 @@
                 {{-- Tab --}}
                 <div class="flex flex-wrap items-center justify-between">
                     <div wire:ignore>
-                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                        <select wire:model.live="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Tahun ...</option>
                             @foreach ($this->years as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>

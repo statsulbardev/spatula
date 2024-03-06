@@ -21,7 +21,7 @@
             <div class="flex flex-wrap items-center justify-between p-4">
                 <div class="flex flex-wrap">
                     <div wire:ignore>
-                        <select wire:model.defer="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                        <select wire:model="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Bulan...</option>
                             @foreach ($this->months as $month)
                                 @foreach ($month as $index => $item)
@@ -32,7 +32,7 @@
                         <label data-te-select-label-ref>Bulan</label>
                     </div>
                     <div wire:ignore class="ml-4">
-                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                        <select wire:model.live="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Tahun...</option>
                             @foreach ($this->years as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>

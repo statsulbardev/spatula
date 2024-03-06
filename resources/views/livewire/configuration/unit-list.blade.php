@@ -30,7 +30,7 @@
                     {{-- @role('admin')
                     <div class="pr-6 ml-6 border-r-2 border-zinc-200">
                         <div wire:ignore class="w-80">
-                            <select wire:model="selectedUnit" data-te-select-init data-te-select-filter="true"
+                            <select wire:model.live="selectedUnit" data-te-select-init data-te-select-filter="true"
                                 data-te-select-size="lg">
                                 <option value="null" hidden selected>Pilih Unit Kerja...</option>
                                 @foreach ($units as $unit)
@@ -53,7 +53,7 @@
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-6 pb-4 pt-6">
-                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
+                                <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                             </th>
                             <th class="px-6 pb-4 pt-6">Kode Satker</th>
                             <th class="px-6 pb-4 pt-6">Nama Satker</th>
@@ -67,7 +67,7 @@
                         @foreach ($offices as $office)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
                                 <td class="w-2 border-t px-6 py-4">
-                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $office->id }}">
+                                    <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $office->id }}">
                                 </td>
                                 <td class="border-t">
                                     <span class="items-center py-4 pl-6">
