@@ -18,13 +18,3 @@
         </div>
     </div>
 @overwrite
-
-@push('scripts')
-    <script>
-        window.addEventListener('notification', event => {
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: event.detail.message
-            }));
-        })
-    </script>
-@endpush
