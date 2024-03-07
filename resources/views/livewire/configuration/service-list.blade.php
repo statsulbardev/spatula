@@ -7,7 +7,7 @@
         @include('components.page.page-title', ['title' => 'Pengaturan Layanan'])
 
         {{-- Layanan Baru --}}
-        <a href="{{ url(env('APP_URL') . '/pengaturan/layanan/tambah') }}"
+        <a href="{{ url(env('APP_URL') . '/pengaturan/layanan/tambah') }}" wire:navigate
             class="flex items-center rounded-md bg-primary-400 p-1 text-white hover:bg-primary-500 lg:p-3">
             @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
             <span class="ml-1 text-xs md:ml-2 md:text-sm">Tambah Layanan</span>
@@ -65,7 +65,8 @@
                                     <span class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Layanan"
                                             href="{{ url(env('APP_URL') . '/pengaturan/layanan/' . $service->id . '/edit') }}"
-                                            class="cursor-pointer text-violet-400 hover:text-violet-500">
+                                            class="cursor-pointer text-violet-400 hover:text-violet-500"
+                                            wire:navigate>
                                             @include('components.icon', [
                                                 'name' => 'pencil-square',
                                                 'size' => 'w-5 h-5',

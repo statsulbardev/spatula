@@ -167,7 +167,8 @@
                                     <div class="pl-4 mr-2 flex items-center space-x-2 py-2">
                                         @if (!is_null($service->kode_saran))
                                             <a x-data x-tooltip.raw="Edit Kategori" class="text-purple-400 hover:text-purple-500"
-                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}">
+                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}"
+                                                wire:navigate>
                                                 @include('components.icon', [
                                                     'name' => 'pencil-square',
                                                     'size' => 'w-5 h-5',
@@ -175,7 +176,8 @@
                                             </a>
                                         @else
                                             <a x-data x-tooltip.raw="Verifikasi" class="text-cyan-400 hover:text-cyan-500"
-                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) }}">
+                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) }}"
+                                                wire:navigate>
                                                 @include('components.icon', [
                                                     'name' => 'tag',
                                                     'size' => 'w-5 h-5',
