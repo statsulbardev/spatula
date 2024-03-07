@@ -84,9 +84,9 @@ class CreateEditService extends Component
                 ? $serviceRepository->save($this)
                 : $serviceRepository->update($this);
 
-        session()->flash('messages', $result);
-
         $this->callbackUrl('/pengaturan/layanan');
+
+        $this->dispatch('notification', message: $result);
     }
 
     protected function rules() : array

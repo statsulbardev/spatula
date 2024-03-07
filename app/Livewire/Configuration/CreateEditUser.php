@@ -105,9 +105,9 @@ class CreateEditUser extends Component
                 ? $userRepository->save($this)
                 : $userRepository->update($this);
 
-        session()->flash('messages', $result);
-
         $this->callbackUrl('/pengaturan/pengguna');
+
+        $this->dispatch('notification', message: $result);
     }
 
     protected function rules() : array

@@ -1,3 +1,4 @@
+@persist('notification_persist')
 <div wire:ignore
     x-cloak
     x-data="{ show: false, message: '' }" 
@@ -36,3 +37,4 @@
         </div>
     </div>
 </div>
+@endpersist
