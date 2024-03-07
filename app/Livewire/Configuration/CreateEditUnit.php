@@ -92,10 +92,11 @@ class CreateEditUnit extends Component
                 : $unitRepository->update($this);
 
         // Send notification to redirect page.
-        session()->flash('messages', $result);
-
         // Redirect the page.
-        $this->redirectRoute('daftar-satker');
+        $this->redirectRoute('daftar-satker', navigate: true);
+
+        $this->dispatch('notification', message: $result);
+
     }
 
     protected function rules() : array

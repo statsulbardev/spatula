@@ -1,4 +1,5 @@
-<div x-cloak
+<div wire:ignore
+    x-cloak
     x-data="{ show: false, message: '' }" 
     x-on:notify.window="show = true; message = $event.detail; setTimeout(() => { show = false }, 5000)"
     x-show="show" x-description="Notification panel, show/hide based on alert state."
