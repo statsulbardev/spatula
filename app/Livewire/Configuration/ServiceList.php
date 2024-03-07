@@ -50,6 +50,6 @@ class ServiceList extends Component
     {
         $result = $this->delete($this->layanan);
 
-        $this->dispatch('notification', ['message' => $result]);
+        $this->dispatch('notification', message: $result);
     }
 }

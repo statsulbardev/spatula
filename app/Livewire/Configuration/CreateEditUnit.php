@@ -43,7 +43,7 @@ class CreateEditUnit extends Component
     {
         if ($this->routeName === 'edit-satker')
             return [
-                'route' => route('edit-satker', request()->route()->originalParameters()),
+                'route' => route('edit-satker', ['satker' => $this->satker->id]),
                 'label' => 'Edit Satker',
             ];
     }
@@ -53,7 +53,7 @@ class CreateEditUnit extends Component
     {
         return $this->routeName === 'tambah-satker'
                 ? 'Tambah Satker'
-                : request()->route()->parameters()['satker']['nama'];
+                : $this->satker->nama;
     }
 
     public function render() : View
@@ -65,7 +65,6 @@ class CreateEditUnit extends Component
     public function mount(m_satker $satker)
     {
         $this->routeName      = Route::currentRouteName();
-        $this->ruleValidation = new StoreUnitRequest();
 
         if ($this->routeName === 'edit-satker') {
             $this->satker    = $satker;
@@ -84,6 +83,7 @@ class CreateEditUnit extends Component
         $this->dispatch('saved');
 
         // Validate the field.
+        $this->ruleValidation = new StoreUnitRequest();
         $this->validate();
 
         // Save data to database.
@@ -95,7 +95,7 @@ class CreateEditUnit extends Component
         session()->flash('messages', $result);
 
         // Redirect the page.
-        $this->callbackUrl('/pengaturan/satker');
+        $this->redirectRoute('daftar-satker');
     }
 
     protected function rules() : array

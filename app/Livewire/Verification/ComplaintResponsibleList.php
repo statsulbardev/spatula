@@ -55,7 +55,7 @@ class ComplaintResponsibleList extends Component
             'tanggal_selesai' => Carbon::now()
         ]);
 
-        $this->dispatch('notification', ['message' => $result]);
+        $this->dispatch('notification', message: $result);
     }
 
     private function retrieveData(): Paginator

@@ -133,24 +133,3 @@
         </div>
     </section>
 </div>
-
-@push('scripts')
-    @if (session()->has('messages'))
-        <script>
-            window.onload = function() {
-                window.dispatchEvent(new CustomEvent('notify', {
-                    detail: '{{ session('messages') }}'
-                }));
-            }
-        </script>
-
-        {{ session()->forget('messages') }}
-    @endif
-    <script>
-        window.addEventListener('notification', event => {
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: event.detail.message
-            }));
-        })
-    </script>
-@endpush

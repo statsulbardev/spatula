@@ -73,7 +73,7 @@ class ServiceResponsibleList extends Component
             $result = "Verifikasi gagal diselesaikan.";
         }
 
-        $this->dispatch('notification', ['message' => $result]);
+        $this->dispatch('notification', message: $result);
     }
 
     public function deleteItem(d_penilaian $penilaian)
@@ -85,7 +85,7 @@ class ServiceResponsibleList extends Component
     {
         $result = $this->delete($this->penilaian);
 
-        $this->dispatch('notification', ['message' => $result]);
+        $this->dispatch('notification', message: $result);
     }
 
     private function retrieveData(): Paginator

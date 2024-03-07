@@ -43,11 +43,11 @@ class DaftarLayanan extends Component
                     ->update(['is_active' => $kondisi_baru]);
                 $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
                 DB::commit();
-                $this->dispatch('notification', ['message' => 'Berhasil menyimpan data.']);
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
             }catch(Exception $ex){
                 DB::rollBack();
                 Log::error($ex);
-                $this->dispatch('notification', ['message' => 'Gagal menyimpan data.']);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
             }
            
         }
@@ -64,20 +64,13 @@ class DaftarLayanan extends Component
                         ->update(['loket' => $kondisi_baru]);
                     $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
                     DB::commit();
-                    $this->dispatch('notification', ['message' => 'Berhasil menyimpan data.']);
+                    $this->dispatch('notification', message: 'Berhasil menyimpan data.');
                 }catch(Exception $ex){
                     DB::rollBack();
                     Log::error($ex);
-                    $this->dispatch('notification', ['message' => 'Gagal menyimpan data.']);
+                    $this->dispatch('notification', message: 'Gagal menyimpan data.');
                 }
         }
-    }
-
-    public function confirmUncheckItem()
-    {
-        $result = $this->delete($this->pengguna);
-
-        $this->dispatch('notification', ['message' => $result]);
     }
 
     private function retrieveData()

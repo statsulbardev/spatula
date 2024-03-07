@@ -50,6 +50,6 @@ class UnitList extends Component
     {
         $result = $this->delete($this->satker);
 
-        $this->dispatch('notification', ['message' => $result]);
+        $this->dispatch('notification', message: $result);
     }
 }
