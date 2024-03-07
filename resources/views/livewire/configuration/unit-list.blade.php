@@ -7,7 +7,7 @@
         @include('components.page.page-title', ['title' => 'Daftar Satuan Kerja'])
 
         {{-- Satker Baru --}}
-        <a href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}"
+        <a href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}" wire:navigate
             class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
             @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
             <span class="ml-2 text-sm">Tambah Satker</span>
@@ -97,7 +97,8 @@
                                     <span class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Satker"
                                             href="{{ url(env('APP_URL') . '/pengaturan/satker/' . $office->id . '/edit') }}"
-                                            class="cursor-pointer text-violet-500 hover:text-violet-600">
+                                            class="cursor-pointer text-violet-500 hover:text-violet-600"
+                                            wire:navigate>
                                             @include('components.icon', [
                                                 'name' => 'pencil-square',
                                                 'size' => 'w-5 h-5',

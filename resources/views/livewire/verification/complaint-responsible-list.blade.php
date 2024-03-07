@@ -163,7 +163,8 @@
                                     <div class="pl-4 mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Lihat Informasi"
                                             class="cursor-pointer text-primary-400 hover:text-primary-500"
-                                            href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan/' . $complaint->id) }}">
+                                            href="{{ url(env('APP_URL') . '/verifikasi/pj-pengaduan/' . $complaint->id) }}"
+                                            wire:navigate>
                                             @include('components.icon', [
                                                 'name' => 'eye',
                                                 'size' => 'w-5 h-5',

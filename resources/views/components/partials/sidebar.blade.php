@@ -5,7 +5,7 @@
 
     {{-- Sidebar Header --}}
     <div class="mx-auto pt-3 flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <a href="{{ route('dashboard') }}" data-turbo-action="replace">
+        <a href="{{ route('dashboard') }}" wire:navigate>
             <div class="fill-white">
                 @include('components.logo.logo', ['width' => 150, 'height' => 36.728])
             </div>
@@ -32,7 +32,7 @@
                     <a class="cursor-pointer flex gap-2 mt-1"
                         href="{{ route('dashboard') }}"
                         @click="selected = (selected === 'Dashboard' ? '':'Dashboard')"
-                        data-turbo-action="replace">
+                        wire:navigate>
                         <span
                             class="{{ request()->is('dashboard') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} mr-2 h-4 w-4">
                             @include('components.icons.heroline', ['name' => 'squares-2x2', 'size' => 'w-5 h-5'])
@@ -65,7 +65,7 @@
                                                         : 'text-primary-100 group-hover:text-white'
                                                     }} text-sm"
                                             href="{{ route('daftar-selesai') }}"
-                                            data-turbo-action="replace">
+                                            wire:navigate>
                                             Selesai
                                         </a>
                                     </li>
@@ -76,7 +76,7 @@
                                                         : 'text-primary-100 group-hover:text-white'
                                                     }} text-sm"
                                             href="{{ route('daftar-pj-layanan') }}"
-                                            data-turbo-action="replace">
+                                            wire:navigate>
                                             PJ Layanan
                                         </a>
                                     </li>
@@ -84,7 +84,7 @@
                                         <span class="mr-2 h-4 w-4"></span>
                                         <a class="{{ request()->is('verifikasi/pj-pengaduan') || request()->is('verifikasi/pj-pengaduan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white' }} text-sm"
                                             href="{{ route('daftar-pj-pengaduan') }}"
-                                            data-turbo-action="replace">
+                                            wire:navigate>
                                             PJ Pengaduan
                                         </a>
                                     </li>
@@ -113,7 +113,7 @@
                                                     : 'text-primary-100 group-hover:text-white'
                                                 }} text-sm"
                                         href="{{ route('laporan-bulanan') }}"
-                                        data-turbo-action="replace">
+                                        wire:navigate>
                                         Bulanan
                                     </a>
                                 </li>
@@ -124,7 +124,7 @@
                                                     : 'text-primary-100 group-hover:text-white'
                                                 }} text-sm"
                                         href="{{ route('laporan-harian') }}"
-                                        data-turbo-action="replace">
+                                        wire:navigate>
                                         Harian
                                     </a>
                                 </li>
@@ -152,7 +152,7 @@
                                                             : 'text-primary-100 group-hover:text-white'
                                                         }} text-sm"
                                                 href="{{ route('antrian-daftar-layanan') }}"
-                                                data-turbo-action="replace">
+                                                wire:navigate>
                                                 Daftar Layanan
                                             </a>
                                         </li>
@@ -163,7 +163,7 @@
                                                             : 'text-primary-100 group-hover:text-white'
                                                         }} text-sm"
                                                 href="{{ route('antrian-config-view') }}"
-                                                data-turbo-action="replace">
+                                                wire:navigate>
                                                 Konfigurasi
                                             </a>
                                         </li>
@@ -174,7 +174,7 @@
                                                 ? 'text-white' 
                                                 : 'text-primary-100 group-hover:text-white' }} text-sm"
                                             href="{{ route('antrian-caller') }}"
-                                            data-turbo-action="replace">
+                                            wire:navigate>
                                             Pemanggil
                                         </a>
                                     </li>
@@ -185,7 +185,7 @@
                                                         : 'text-primary-100 group-hover:text-white'
                                                     }} text-sm"
                                             href="{{ route('antrian-daftar') }}"
-                                            data-turbo-action="replace">
+                                            wire:navigate>
                                             Daftar
                                         </a>
                                     </li>
@@ -207,7 +207,7 @@
                         <a class="cursor-pointer flex gap-2 mt-1"
                             href="{{ route('daftar-layanan') }}"
                             @click="selected = (selected === 'Service' ? '':'Service')"
-                            data-turbo-action="replace">
+                            wire:navigate>
                             <span
                                 class="{{ request()->is('pengaturan/layanan') || request()->is('pengaturan/layanan/*')
                                             ? 'text-white'
@@ -228,7 +228,7 @@
                         <a class="cursor-pointer flex gap-2 mt-1"
                             href="{{ route('daftar-pengguna') }}"
                             @click="selected = (selected === 'User' ? '':'User')"
-                            data-turbo-action="replace">
+                            wire:navigate>
                             <span
                                 class="{{ request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*')
                                             ? 'text-white'
@@ -249,7 +249,7 @@
                         <a class="cursor-pointer flex gap-2 mt-1"
                             href="{{ route('daftar-satker') }}"
                             @click="selected = (selected === 'Unit' ? '':'Unit')"
-                            data-turbo-action="replace">
+                            wire:navigate>
                             <span
                                 class="{{ request()->is('pengaturan/satker') || request()->is('pengaturan/satker/*')
                                             ? 'text-white'
@@ -272,7 +272,7 @@
                     <a class="cursor-pointer flex gap-2 mt-1"
                         href="{{ route('daftar-pengguna') }}"
                         @click="selected = (selected === 'User' ? '':'User')"
-                        data-turbo-action="replace">
+                        wire:navigate>
                         <span class="
                             {{ request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*')
                                 ? 'text-white'

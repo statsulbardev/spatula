@@ -171,7 +171,8 @@
                                     <div class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Lihat Informasi"
                                             href="{{ url(env('APP_URL') . '/verifikasi/selesai/' . $done->id) }}"
-                                            class="cursor-pointer text-primary-400 hover:text-primary-500">
+                                            class="cursor-pointer text-primary-400 hover:text-primary-500"
+                                            wire:navigate>
                                             @include('components.icon', [
                                                 'name' => 'eye',
                                                 'size' => 'w-5 h-5',

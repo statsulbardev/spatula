@@ -7,7 +7,7 @@
         @include('components.page.page-title', ['title' => 'Daftar Pengguna Aplikasi'])
 
         {{-- Pengguna Baru --}}
-        <a href="{{ url(env('APP_URL') . '/pengaturan/pengguna/tambah') }}"
+        <a href="{{ url(env('APP_URL') . '/pengaturan/pengguna/tambah') }}" wire:navigate
             class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
             @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
             <span class="ml-2 text-sm">Tambah Pengguna Baru</span>
@@ -102,7 +102,7 @@
                                 <td class="w-px border-t">
                                     <span class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Pengguna"
-                                            href="{{ url(env('APP_URL') . '/pengaturan/pengguna/' . $user->id . '/edit') }}"
+                                            href="{{ url(env('APP_URL') . '/pengaturan/pengguna/' . $user->id . '/edit') }}" wire:navigate
                                             class="cursor-pointer text-violet-500 hover:text-violet-600">
                                             @include('components.icon', [
                                                 'name' => 'pencil-square',

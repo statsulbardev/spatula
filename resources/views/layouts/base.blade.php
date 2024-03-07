@@ -21,9 +21,7 @@
     @yield('styles')
 
     <style>
-        [x-cloak] {
-            display: none
-        }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 
@@ -40,8 +38,8 @@
 
     <!-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
             data-turbolinks-eval="false"
-            data-turbo-eval="false"> -->
-    </script>
+            data-turbo-eval="false">
+    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
     <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
     <script src="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.js') }}"></script>
