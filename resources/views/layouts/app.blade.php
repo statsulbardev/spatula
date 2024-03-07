@@ -1,6 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
+    @include('components.notification.flash')
     <div class="flex h-screen overflow-hidden">
         {{-- Sidebar --}}
         @include('components.partials.sidebar')
