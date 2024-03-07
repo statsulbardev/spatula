@@ -307,7 +307,7 @@
             });
         });
 
-        window.addEventListener('notification', event => {
+        window.addEventListener('notification_evaluasi', event => {
             document.getElementById('notification_button').click();
         });
     </script>

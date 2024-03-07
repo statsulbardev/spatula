@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Livewire\Antrian\Traits\Helper_Auth;
+use App\Traits\Antrian\Helper_Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

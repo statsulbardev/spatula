@@ -56,7 +56,7 @@ class DaftarAntrianLihat extends Component
     {
         $result = $this->delete($this->pengguna);
 
-        $this->dispatch('notification', ['message' => $result]);
+        $this->dispatch('notification', message: $result);
     }
 
     private function retrieveData()

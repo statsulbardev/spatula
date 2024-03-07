@@ -104,7 +104,7 @@ class Evaluation extends Component
 
             $message = "Terima kasih telah memberikan penilaian..";
 
-            $this->dispatch('notification', ['message' => $message]);
+            $this->dispatch('notification_evaluasi', message: $message);
         } catch (Exception $error) {
             DB::rollBack();
 

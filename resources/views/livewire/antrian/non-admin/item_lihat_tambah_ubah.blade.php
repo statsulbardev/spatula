@@ -306,9 +306,5 @@
                 showText: true,
             });
         });
-
-        window.addEventListener('notification', event => {
-            document.getElementById('notification_button').click();
-        });
     </script>
 @endpush

@@ -53,13 +53,6 @@ class Pemanggil extends Component
         }
     }
 
-    public function confirmUncheckItem()
-    {
-        $result = $this->delete($this->pengguna);
-
-        $this->dispatch('notification', ['message' => $result]);
-    }
-
     private function retrieveData()
     {
         $user_unit_code  = auth()->user()->satker->kode_satker;

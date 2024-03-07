@@ -86,11 +86,4 @@
 
         {{ session()->forget('messages') }}
     @endif
-    <script>
-        window.addEventListener('notification', event => {
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: event.detail.message
-            }));
-        })
-    </script>
 @endpush
