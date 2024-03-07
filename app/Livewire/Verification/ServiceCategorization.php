@@ -120,8 +120,8 @@ class ServiceCategorization extends Component
 
         $result = $verificationRepository->verifyByServiceOfficer($this, $data);
 
-        session()->flash('messages', $result);
-
         $this->callbackUrl('/verifikasi/pj-layanan');
+
+        $this->dispatch('notification', message: $result);
     }
 }

@@ -94,17 +94,3 @@
     {{-- Delete Confirmation Modal --}}
     @include('components.input.delete-confirmation')
 </div>
-
-@push('scripts')
-    @if (session()->has('messages'))
-        <script>
-            window.onload = function() {
-                window.dispatchEvent(new CustomEvent('notify', {
-                    detail: '{{ session('messages') }}'
-                }));
-            }
-        </script>
-
-        {{ session()->forget('messages') }}
-    @endif
-@endpush
