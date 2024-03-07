@@ -1,7 +1,6 @@
 @section('title', 'Verifikasi PJ Pengaduan')
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    @include('components.notification.flash')
 
     {{-- Header --}}
     @include('components.page.page-title', ['title' => 'Verifikasi PJ Pengaduan'])

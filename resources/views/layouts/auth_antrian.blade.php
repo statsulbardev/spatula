@@ -1,6 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
+    @include('components.notification.flash')
     <div class="flex min-h-screen items-center justify-center bg-gradient-to-r from-primary-500 to-fuchsia-700 p-6">
         <div class="w-full max-w-md">
             <div class="flex items-center justify-center pb-8">

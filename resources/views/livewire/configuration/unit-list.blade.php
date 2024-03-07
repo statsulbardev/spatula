@@ -1,7 +1,6 @@
 @section('title', 'Pengaturan Satker')
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    @include('components.notification.flash')
 
     <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}

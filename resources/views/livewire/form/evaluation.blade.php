@@ -1,8 +1,6 @@
 @section('title', 'Form Penilaian Layanan')
 
 <div>
-    @include('components.notification.flash')
-
     <form wire:submit.prevent="submitData">
         <div class="text-xs text-right mt-3">
             <span class="font-medium">Admin Spatula, </span>

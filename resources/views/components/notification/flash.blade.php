@@ -1,4 +1,4 @@
-<div class="pointer-events-none fixed inset-0 flex items-end justify-center px-4 py-6 sm:items-start sm:justify-end sm:p-6">
+<div class="pointer-events-none fixed inset-0 flex items-end justify-center px-4 py-6 sm:items-start sm:justify-end sm:p-6 z-10">
     <div x-data="{ show: false, message: '' }" x-on:notify.window="show = true; message = $event.detail; setTimeout(() => { show = false }, 5000)"
         x-show="show" x-description="Notification panel, show/hide based on alert state."
         x-transition:enter="transform ease-out duration-300 transition"

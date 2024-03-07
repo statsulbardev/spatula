@@ -1,7 +1,6 @@
 @section('title', 'Pengaturan Daftar Layanan')
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    @include('components.notification.flash')
 
     <div class="flex flex-nowrap items-center justify-between">
         {{-- Header --}}
