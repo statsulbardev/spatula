@@ -45,7 +45,12 @@
                         <select wire:model.live="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Tahun ...</option>
                             @foreach ($this->years as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
+                                @if ($selectedYear == $item)
+                                    <option value="{{ $item }}" selected>{{ $item }}</option>
+                                @else
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endif
+                                
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Tahun</label>
