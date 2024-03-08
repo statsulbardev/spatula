@@ -18,7 +18,9 @@
                 @include('components.input.pagination-selected')
             </div>
             @if ($complaints->isEmpty())
-                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
+                <div class="w-full flex  justify-center p-5">
+                    <img src="{{ asset('public/files/404.svg') }}" class="w-1/3 border-t">
+                </div>
             @else
                 <table class="w-full table-auto">
                     <thead>
