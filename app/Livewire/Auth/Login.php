@@ -47,6 +47,8 @@ class Login extends Component
 
     public function login()
     {
+        $this->dispatch('saved');
+        
         $credentials = $this->validate();
 
         if (Auth::attempt($credentials)) {

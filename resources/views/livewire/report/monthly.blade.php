@@ -50,7 +50,6 @@
                                 @else
                                     <option value="{{ $item }}">{{ $item }}</option>
                                 @endif
-                                
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Tahun</label>
