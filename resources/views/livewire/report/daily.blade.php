@@ -21,21 +21,31 @@
             <div class="flex flex-wrap items-center justify-between p-4">
                 <div class="flex flex-wrap">
                     <div wire:ignore>
-                        <select wire:model="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                        <select id="selectedMonth_id" 
+                            wire:model.live="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Bulan...</option>
                             @foreach ($this->months as $month)
                                 @foreach ($month as $index => $item)
-                                    <option value="{{ $index }}">{{ $item }}</option>
+                                    @if ($selectedMonth == $month)
+                                        <option value="{{ $index }}" selected>{{ $item }}</option>
+                                    @else
+                                        <option value="{{ $index }}">{{ $item }}</option>
+                                    @endif
                                 @endforeach
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Bulan</label>
                     </div>
                     <div wire:ignore class="ml-4">
-                        <select wire:model.live="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                        <select id="selectedYear_id" 
+                            wire:model.live="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                             <option hidden selected>Pilih Tahun...</option>
                             @foreach ($this->years as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
+                                @if ($selectedYear == $item)
+                                    <option value="{{ $item }}" selected>{{ $item }}</option>
+                                @else
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endif
                             @endforeach
                         </select>
                         <label data-te-select-label-ref>Tahun</label>
@@ -189,3 +199,12 @@
     </section>
     {{ $dailyReport->links('vendor.livewire.tailwind') }}
 </div>
+
+@script
+    <script>
+        $wire.on('laporan-harian-daily-reset-filter', () => {
+            te.Select.getInstance(document.querySelector('#selectedMonth_id')).setValue("");
+            te.Select.getInstance(document.querySelector('#selectedYear_id')).setValue("");
+        })
+    </script>
+@endscript
