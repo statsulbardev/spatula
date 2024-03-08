@@ -41,7 +41,7 @@ class CreateEditService extends Component
     {
         if ($this->routeName === 'edit-layanan')
             return [
-                'route' => route('edit-layanan', request()->route()->originalParameters()),
+                'route' => route('edit-layanan', [ 'layanan' => $this->layanan->id]),
                 'label' => 'Edit Layanan',
             ];
     }
@@ -51,7 +51,7 @@ class CreateEditService extends Component
     {
         return $this->routeName === 'tambah-layanan'
                 ? 'Tambah Layanan'
-                : request()->route()->parameters()['layanan']['nama_layanan'];
+                : $this->layanan->nama_layanan;
     }
 
     public function render() : View
@@ -63,7 +63,6 @@ class CreateEditService extends Component
     public function mount(m_layanan $layanan)
     {
         $this->routeName         = Route::currentRouteName();
-        $this->ruleValidation    = new StoreServiceRequest();
 
         if ($this->routeName === 'edit-layanan') {
             $this->layanan     = $layanan;
@@ -78,13 +77,14 @@ class CreateEditService extends Component
     {
         $this->dispatch('saved');
 
+        $this->ruleValidation    = new StoreServiceRequest();
         $this->validate();
 
         $result = $this->routeName === 'tambah-layanan'
                 ? $serviceRepository->save($this)
                 : $serviceRepository->update($this);
 
-        $this->callbackUrl('/pengaturan/layanan');
+        $this->redirectRoute('daftar-layanan', navigate: true);
 
         $this->dispatch('notification', message: $result);
     }
