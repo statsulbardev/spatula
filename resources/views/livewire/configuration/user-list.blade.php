@@ -69,38 +69,38 @@
                                     <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $user->id }}">
                                 </td>
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $user->nama }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $user->username }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $user->email }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $user->satker->nama }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="flex items-center py-4 pl-6">
+                                    <div class="flex items-center py-4 pl-6">
                                         @foreach ($user->roles as $index => $role)
                                             <div
                                                 class="{{ $index == 0 ?: 'ml-1' }} relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
-                                                <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
-                                                <span class="relative">{{ $role->name }}</span>
+                                                <p aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></p>
+                                                <p class="relative">{{ $role->name }}</p>
                                             </div>
                                         @endforeach
-                                    </span>
+                                    </div>
                                 </td>
                                 <td class="w-px border-t">
-                                    <span class="mr-2 flex items-center space-x-2 py-2">
+                                    <div class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Pengguna"
                                             href="{{ url(env('APP_URL') . '/pengaturan/pengguna/' . $user->id . '/edit') }}" wire:navigate
                                             class="cursor-pointer text-violet-500 hover:text-violet-600">
@@ -117,7 +117,7 @@
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
-                                    </span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

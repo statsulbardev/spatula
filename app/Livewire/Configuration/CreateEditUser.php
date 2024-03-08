@@ -56,7 +56,7 @@ class CreateEditUser extends Component
     {
         if ($this->routeName === 'edit-pengguna')
             return [
-                'route' => route('edit-pengguna', request()->route()->originalParameters()),
+                'route' => route('edit-pengguna', ['pengguna', $this->pengguna->id]),
                 'label' => 'Edit Pengguna',
             ];
     }
@@ -66,13 +66,7 @@ class CreateEditUser extends Component
     {
         return $this->routeName === 'tambah-pengguna'
                 ? 'Tambah Pengguna'
-                : request()->route()->parameters()['pengguna']['nama'];
-    }
-
-    public function boot()
-    {
-        $this->routeName      = Route::currentRouteName();
-        $this->ruleValidation = new StoreUserRequest();
+                : $this->pengguna->nama;
     }
 
     public function render() : View
@@ -83,6 +77,8 @@ class CreateEditUser extends Component
 
     public function mount(m_pengguna $pengguna)
     {
+        $this->routeName      = Route::currentRouteName();
+
         if ($this->routeName === 'edit-pengguna') {
             $this->pengguna     = $pengguna;
             $this->f_nama       = $pengguna->nama;
@@ -99,13 +95,14 @@ class CreateEditUser extends Component
     {
         $this->dispatch('saved');
 
+        $this->ruleValidation = new StoreUserRequest();
         $this->validate();
 
         $result = $this->routeName === 'tambah-pengguna'
                 ? $userRepository->save($this)
                 : $userRepository->update($this);
 
-        $this->callbackUrl('/pengaturan/pengguna');
+        $this->redirectRoute('daftar-pengguna', navigate: true);
 
         $this->dispatch('notification', message: $result);
     }

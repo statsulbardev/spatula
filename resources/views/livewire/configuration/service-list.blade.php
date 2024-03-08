@@ -49,20 +49,20 @@
                                     <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $service->id }}">
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $service->kode_layanan }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $service->nama_layanan }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t pl-6">
-                                    {!! $service->deskripsi ?? '<span class="py-4">Lorem Ipsum Dolor Sit Amet</span>' !!}
+                                    {!! $service->deskripsi ?? '<p class="py-4">Lorem Ipsum Dolor Sit Amet</p>' !!}
                                 </td>
                                 <td class="w-px border-t">
-                                    <span class="mr-2 flex items-center space-x-2 py-2">
+                                    <div class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Layanan"
                                             href="{{ url(env('APP_URL') . '/pengaturan/layanan/' . $service->id . '/edit') }}"
                                             class="cursor-pointer text-violet-400 hover:text-violet-500"
@@ -80,7 +80,7 @@
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
-                                    </span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

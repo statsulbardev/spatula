@@ -69,32 +69,32 @@
                                     <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $office->id }}">
                                 </td>
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $office->kode_satker }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $office->nama }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $office->alamat }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $office->web }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $office->telepon }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="w-px border-t">
-                                    <span class="mr-2 flex items-center space-x-2 py-2">
+                                    <div class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Satker"
                                             href="{{ url(env('APP_URL') . '/pengaturan/satker/' . $office->id . '/edit') }}"
                                             class="cursor-pointer text-violet-500 hover:text-violet-600"
@@ -112,7 +112,7 @@
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
-                                    </span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
