@@ -47,9 +47,9 @@
 
                                 {{-- Tanggal Penilaian --}}
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $done->created_at->format('d/m/Y') }}
-                                    </span>
+                                    </p>
                                 </td>
 
                                 {{-- Pengguna Layanan, Email, dan WA --}}
@@ -67,9 +67,9 @@
                                         x-init="originalContent = @js($done->saran_pengaduan).trim();
                                         content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
 
-                                        <span x-html="isCollapsed ? originalContent : content"
+                                        <p x-html="isCollapsed ? originalContent : content"
                                             class="py-4 pl-6 leading-tight">
-                                        </span>
+                                        </p>
 
                                         <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
                                             x-text="isCollapsed ? 'less..' : 'more..'"
@@ -140,9 +140,9 @@
 
                                 {{-- Keterangan --}}
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $done->catatan ?? '-' }}
-                                    </span>
+                                    </p>
                                 </td>
 
                                 {{-- Kategorisasi --}}
