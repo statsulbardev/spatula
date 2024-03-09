@@ -1,7 +1,7 @@
 <div wire:ignore
-    x-init="$nextTick(() => { 
+    x-init="() => { 
         window.te.Select.getOrCreateInstance(document.querySelector('#{{ $id }}')).setValue({!! $value !!})
-    })">
+    }">
     <label class="form-label font-bold" for="{{ $label }}">
         {{ $label }}
         @if (isset($label_opt))
