@@ -148,7 +148,7 @@
                     </div>
 
                     {{-- Rating Layanan --}}
-                    @include('components.input.rating', ['model' => 'f_ratinglayanan'])
+                    @include('components.input.rating', ['id' => 'ratinglayanan_id', 'model' => 'f_ratinglayanan'])
                     <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                         clearTimeout(timeout);
                         shown = true;
@@ -195,7 +195,7 @@
                         </div>
 
                         {{-- Rating Petugas --}}
-                        @include('components.input.rating', ['model' => 'f_ratingpetugas'])
+                        @include('components.input.rating', ['id' => 'ratingpetugas', 'model' => 'f_ratingpetugas'])
                         <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                             clearTimeout(timeout);
                             shown = true;
@@ -289,24 +289,10 @@
     </div>
 </div>
 
-@push('scripts')
+@script
     <script>
-        var starRatingControl = new StarRating('.star-rating', {
-            maxStars: 5,
-            showText: true,
-        });
-
-        window.addEventListener('contentChanged', event => {
-            te.Select.getOrCreateInstance(document.querySelector('#petugas')).close();
-
-            var starRatingControl = new StarRating('.star-rating', {
-                maxStars: 5,
-                showText: true,
-            });
-        });
-
-        window.addEventListener('notification_evaluasi', event => {
+        $wire.on('notification_evaluasi', () => {
             document.getElementById('notification_button').click();
-        });
+        })
     </script>
-@endpush
+@endscript
