@@ -18,7 +18,7 @@
                             timeout = setTimeout(() => { shown = false }, 5000);
                         })" x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('username')
-                                @include('components.notification.error')
+                                @include('components.notification.error_white')
                             @enderror
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             timeout = setTimeout(() => { shown = false }, 5000);
                         })" x-show.transition.opacity.out.duration.2000ms="shown">
                             @error('password')
-                                @include('components.notification.error')
+                                @include('components.notification.error_white')
                             @enderror
                         </div>
                     </div>
