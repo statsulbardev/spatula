@@ -22,8 +22,8 @@ class CompleteItem extends Component
     public function getFirstBreadcrumbProperty() : array
     {
         return [
-            'route' => route('detail-selesai', request()->route()->originalParameters()),
-            'label' => request()->route()->parameters()['customer']['nama_konsumen']
+            'route' => route('detail-selesai', ['customer' => $this->done->id]),
+            'label' => $this->done->nama_konsumen
         ];
     }
 
