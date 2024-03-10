@@ -125,7 +125,11 @@
                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Saran Pengaduan</td>
                         <td class="font-semibold">:</td>
                         <td>
-                            <p>{{ $done->saran_pengaduan ?? '-' }}</p>
+                            @if ($done->saran_pengaduan)
+                                {!! $done->saran_pengaduan !!}
+                            @else
+                                -
+                            @endif
                         </td>
                 </div>
                 <tr>

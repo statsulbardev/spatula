@@ -75,27 +75,29 @@
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6">
                                             <div class="mr-6 flex">
-                                                @if (!is_null($pengguna_layanan->rating_layanan))
-                                                    @for ($i = 0; $i < 5; $i++)
-                                                        @if ($i < $pengguna_layanan->rating_layanan)
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                <template x-if="$wire.f_rating_layanan != null && $wire.f_rating_layanan != '' && $wire.f_rating_layanan != 0">
+                                                    <template x-for="index in [1,2,3,4,5]">
+                                                        <template x-if="index <= $wire.f_rating_layanan">
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
                                                                 @include('components.icon', [
                                                                     'name' => 'star-solid',
                                                                     'size' => 'w-5 h-5',
                                                                 ])
                                                             </span>
-                                                        @else
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                        </template>
+                                                        <template x-else>
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
                                                                 @include('components.icon', [
                                                                     'name' => 'star-outline',
                                                                     'size' => 'w-5 h-5',
                                                                 ])
                                                             </span>
-                                                        @endif
-                                                    @endfor
-                                                @else
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                                <template x-else>
                                                     -
-                                                @endif
+                                                </template>
                                             </div>
                                             <div class="flex w-full flex-nowrap items-center" x-data="{ open: true }">
                                                 <select wire:model="f_rating_layanan" ref="input" class="form-select"
@@ -147,27 +149,29 @@
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6">
                                             <div class="mr-6 flex">
-                                                @if (!is_null($pengguna_layanan->rating_petugas))
-                                                    @for ($i = 0; $i < 5; $i++)
-                                                        @if ($i < $pengguna_layanan->rating_petugas)
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                <template x-if="$wire.f_rating_petugas != null && $wire.f_rating_petugas != '' && $wire.f_rating_petugas != 0">
+                                                    <template x-for="index in [1,2,3,4,5]">
+                                                        <template x-if="index <= $wire.f_rating_petugas">
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
                                                                 @include('components.icon', [
                                                                     'name' => 'star-solid',
                                                                     'size' => 'w-5 h-5',
                                                                 ])
                                                             </span>
-                                                        @else
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                        </template>
+                                                        <template x-else>
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
                                                                 @include('components.icon', [
                                                                     'name' => 'star-outline',
                                                                     'size' => 'w-5 h-5',
                                                                 ])
                                                             </span>
-                                                        @endif
-                                                    @endfor
-                                                @else
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                                <template x-else>
                                                     -
-                                                @endif
+                                                </template>
                                             </div>
                                             <div class="flex w-full flex-nowrap items-center" x-data="{ open: true }">
                                                 <select wire:model="f_rating_petugas" ref="input" class="form-select"

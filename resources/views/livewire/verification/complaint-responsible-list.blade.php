@@ -178,7 +178,7 @@
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
-                                        @if (!is_null($complaint->kode_saran))
+                                        {{-- @if (!is_null($complaint->kode_saran))
                                             <button wire:click="finalize({{ $complaint->id }})" x-data x-tooltip.raw="Selesaikan Verifikasi"
                                                 class="text-green-400 hover:text-green-500">
                                                 @include('components.icon', [
@@ -186,7 +186,7 @@
                                                     'size' => 'w-5 h-5',
                                                 ])
                                             </button>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                 </td>
                             </tr>

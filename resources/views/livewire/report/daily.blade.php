@@ -168,10 +168,10 @@
 
                                 {{-- Kategori --}}
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <div class="py-4 pl-6">
                                         @if (!is_null($report->kode_saran))
                                             @for ($i = 0; $i < count($report->kode_saran); $i++)
-                                                <div class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900">
+                                                <div class="relative inline-block px-3 py-1 text-sm leading-tight text-green-900 mb-0.5">
                                                     <span aria-hidden class="absolute inset-0 rounded-full bg-green-200 opacity-50"></span>
                                                     <span
                                                         class="relative">{{ array_column($this->suggestions, $report->kode_saran[$i])[0] }}</span>
@@ -180,7 +180,7 @@
                                         @else
                                             -
                                         @endif
-                                    </span>
+                                    </div>
                                 </td>
 
                                 {{-- Tanggal Selesai Verifikasi --}}
