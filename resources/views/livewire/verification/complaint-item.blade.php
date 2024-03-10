@@ -126,7 +126,11 @@
                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Saran Pengaduan</td>
                         <td class="font-semibold">:</td>
                         <td>
-                            <p>{{ $complaint->saran_pengaduan ?? '-' }}</p>
+                            @if ($complaint->saran_pengaduan)
+                                {!! $complaint->saran_pengaduan !!}
+                            @else
+                                -
+                            @endif
                         </td>
                 </div>
                 <tr>

@@ -67,9 +67,9 @@
                                         x-init="originalContent = @js($done->saran_pengaduan).trim();
                                         content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
 
-                                        <p x-html="isCollapsed ? originalContent : content"
+                                        <span x-html="isCollapsed ? originalContent : content"
                                             class="py-4 pl-6 leading-tight">
-                                        </p>
+                                        </span>
 
                                         <button @click="isCollapsed = !isCollapsed" x-show="originalContent.length > maxLength"
                                             x-text="isCollapsed ? 'less..' : 'more..'"

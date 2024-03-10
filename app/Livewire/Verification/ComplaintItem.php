@@ -22,7 +22,7 @@ class ComplaintItem extends Component
     public function getFirstBreadcrumbProperty() : array
     {
         return [
-            'route' => route('detail-pj-pengaduan', request()->route()->originalParameters()),
+            'route' => route('detail-pj-pengaduan', ['customer' => $this->complaint->id]),
             'label' => 'Verifikasi Pengaduan',
         ];
     }
@@ -30,7 +30,7 @@ class ComplaintItem extends Component
     /** @computed property : secondBreadcrumb */
     public function getSecondBreadcrumbProperty() : string
     {
-        return request()->route()->parameters()['customer']['nama_konsumen'];
+        return $this->complaint->nama_konsumen;
     }
 
     public function render()
