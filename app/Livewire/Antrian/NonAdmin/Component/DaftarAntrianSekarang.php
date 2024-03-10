@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Livewire\LivewireComponentsFinder;
 
 class DaftarAntrianSekarang extends Component
@@ -14,6 +15,7 @@ class DaftarAntrianSekarang extends Component
 
     public function render() : View
     {
+        Log::info('asasasasasasasasa asasasasas');
         $data = d_antrian_satker::with(['satker', 'layanan'])
                     ->where('konsumen_email', session('konsumen_email'))
                     ->where('konsumen_no_wa_telepon', session('konsumen_no_wa_telepon'))

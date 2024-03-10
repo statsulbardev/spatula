@@ -27,9 +27,6 @@
                     </td>
                 <tr>
             @endforeach
-            <template x-for="(value, index) in {!!$data!!}">
-            
-            </template>
         <tbody>
     </table>
 @else

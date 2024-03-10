@@ -25,7 +25,8 @@ use App\Livewire\Antrian\Admin\Konfigurasi;
 use App\Livewire\Antrian\Admin\Pemanggil;
 use App\Livewire\Antrian\Admin\DaftarAntrian;
 use App\Livewire\Antrian\Admin\DaftarAntrianLihat;
-use App\Livewire\Antrian\NonAdmin\AuthAntrian;
+use App\Livewire\Antrian\NonAdmin\AuthLoginAntrian;
+use App\Livewire\Antrian\NonAdmin\AuthRegistrasiAntrian;
 use App\Livewire\Antrian\NonAdmin\DashboardAntrian;
 use App\Livewire\Antrian\NonAdmin\ItemLihatTambahUbah;
 use App\Livewire\Antrian\NonAdmin\LihatAntrian;
@@ -99,10 +100,20 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']
 
 Route::redirect('/antrian', 'antrian/dashboard');
 Route::get('/antrian/dashboard', DashboardAntrian::class)->name('antrian-non-admin-dashboard');
-Route::get('/antrian/auth', AuthAntrian::class)->name('antrian-non-admin-auth');
-Route::get('/antrian/auth/logout', function () {
-    session()->forget(['check_have_antrian_auth', 'konsumen_email', 'konsumen_no_wa_telepon', 'konsumen_tahun_lahir', 'konsumen_nama', 'is_registrasi']);
-    return redirect()->route('antrian-non-admin-auth');
+Route::get('/antrian/login', AuthLoginAntrian::class)->name('antrian-non-admin-auth-login');
+Route::get('/antrian/registrasi', AuthRegistrasiAntrian::class)->name('antrian-non-admin-auth-registrasi');
+Route::get('/antrian/logout', function () {
+    session()->forget([
+        'check_have_antrian_auth', 
+        'konsumen_email', 
+        'konsumen_no_wa_telepon', 
+        'konsumen_tahun_lahir', 
+        'konsumen_nama', 
+        'is_registrasi'
+    ]);
+    session()->invalidate();
+    session()->regenerateToken();
+    return redirect()->route('antrian-non-admin-auth-login');
 })->name('antrian-non-admin-auth-logout');
 
 Route::group(['middleware' => ['auth_antrian']], function () {
