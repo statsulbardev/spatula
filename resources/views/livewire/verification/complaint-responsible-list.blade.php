@@ -19,7 +19,7 @@
             </div>
             @if ($complaints->isEmpty())
                 <div class="w-full flex  justify-center p-5">
-                    <img src="{{ asset('public/files/404.svg') }}" class="w-1/3 border-t">
+                    <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
                 </div>
             @else
                 <table class="w-full table-auto">
