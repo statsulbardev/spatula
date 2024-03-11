@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use DateTime;
 use Exception;
 
 class Konfigurasi extends Component
@@ -35,8 +36,8 @@ class Konfigurasi extends Component
     public function render() : View
     {
         $data_to_render = $this->retrieveData();
-        // Log::info($data_to_render);
         return view('livewire.antrian.admin.konfigurasi', [
+            'data_tanggal_disabled' => $data_to_render['tanggal_disabled'],
             'data_playlist_type' => $data_to_render['playlist_type'],
             'data_playlist' => $data_to_render['playlist'],
             'data_footer_type' => $data_to_render['footer_type'],
@@ -46,7 +47,52 @@ class Konfigurasi extends Component
 
     public function submit_data_perubahan($type, $form_data)
     {
-        if($type == 'video'){
+        if($type == 'tanggal_disabled'){
+            DB::beginTransaction();
+            try{ 
+
+                $tanggal_disabled_string = $form_data['tanggal_disabled'];
+                $tanggal_disabled_array = explode(',', $tanggal_disabled_string);
+
+                $ada_error = false;
+
+                foreach($tanggal_disabled_array as $item_tanggal_string){
+                    if (!$this->isValidDate(trim($item_tanggal_string))) {
+                        $ada_error = true;
+                    }
+                }
+
+                if($ada_error){
+                    $this->dispatch('notification', message: 'Gagal menyimpan data, kesalahan format.');
+                    return;
+                }
+
+               
+                $user_unit_code  = auth()->user()->satker->kode_satker;
+                if(!$user_unit_code){
+                    throw new Exception(500);
+                }
+                
+                d_antrian_satker_config_view::where('kode_satker', $user_unit_code)
+                    ->whereIn('config_key', ['tanggal_disabled'])
+                    ->delete();
+
+                $baru = new d_antrian_satker_config_view();
+                $baru->kode_satker = $user_unit_code;
+                $baru->config_key = 'tanggal_disabled';     
+                $baru->config_index = '1';
+                $baru->config_value = $tanggal_disabled_string;
+                $baru->save();
+                
+                $this->set_konfigurasi($this->setup_client_create(), $user_unit_code);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+        }else if($type == 'video'){
             DB::beginTransaction();
             try{ 
                 $user_unit_code  = auth()->user()->satker->kode_satker;
@@ -149,10 +195,12 @@ class Konfigurasi extends Component
                 ->orderBy('config_index', 'asc')
                 ->get();
 
-        $data_return = ['playlist_type' => null, 'playlist' => [], 'footer_type' => null, 'footer' => null];
+        $data_return = ['tanggal_disabled'=> '', 'playlist_type' => null, 'playlist' => [], 'footer_type' => null, 'footer' => null];
 
         foreach($data_arr as $item){
-            if($item->config_key == 'playlist_type'){
+            if($item->config_key == 'tanggal_disabled'){
+                $data_return['tanggal_disabled'] = $item['config_value'];
+            }else if($item->config_key == 'playlist_type'){
                 $data_return['playlist_type'] = $item['config_value'];
             }else if($item->config_key == 'playlist'){
                 array_push( $data_return['playlist'], $item['config_value']);
@@ -164,6 +212,11 @@ class Konfigurasi extends Component
         }
 
         return $data_return;
+    }
+
+    private function isValidDate($date, $format = 'Y-m-d') {
+        $dateTime = DateTime::createFromFormat($format, $date);
+        return $dateTime && $dateTime->format($format) === $date;
     }
 
 }
