@@ -13,6 +13,34 @@
 
     {{-- Content --}}
     <section class="mb-6 mt-10">
+    <div class="w-full overflow-x-auto rounded bg-white shadow pb-2">
+            <div class="flex flex-wrap p-6">
+                <div class="w-full">
+                    <h1 class="text-xl lg:text-2xl tracking-wide">Tanggal Antrian Tidak Aktif </h1>
+                    <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
+                       Masukkan daftar tanggal (format YYYY-MM-DD) antrian dimatikan (hari sabtu dan minggu otomatis mati).
+                    </p>
+                    <p class="leading-6 lg:pr-24 text-md lg:text-base text-justify">
+                       Contoh : 2024-01-01, 2024-01-02, 2024-01-31
+                    </p>
+                </div>
+                <div wire:key="{{ rand() }}" class="w-full mt-3">
+                    <form wire:submit="submit_data_perubahan('tanggal_disabled', Object.fromEntries(new FormData($event.target)))">
+                        <textarea name="tanggal_disabled" rows="4" cols="50" class="form-input border-neutral-300 py-1">{{$data_tanggal_disabled}}</textarea>
+                        <div class="flex mt-2">
+                            <div class="flex grow"></div>
+                            <div class="flex  gap-2">
+                                <button  type="submit" 
+                                    class="flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
+                                        <span class="ml-2 text-sm">Simpan</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
         <div class="w-full overflow-x-auto rounded bg-white shadow pb-2">
             <div class="flex flex-wrap p-6">
                 <div class="w-full">
