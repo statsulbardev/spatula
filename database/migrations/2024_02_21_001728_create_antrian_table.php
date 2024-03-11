@@ -68,10 +68,11 @@ return new class extends Migration
             $table->string('konsumen_tahun_lahir', 4);
             $table->date('tanggal');
             $table->string('is_active', 1)->default('1');
-            $table->tinyInteger('antrian');
+            $table->string('antrian', 3);
             $table->string('konsumen_email', 255)->nullable();
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
             $table->text('deskripsi')->nullable();
+            $table->string('sudah_nilai', 1)->default('0');
             
             $table->index(['kode_satker']);
             $table->index(['kode_layanan']);
