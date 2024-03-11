@@ -34,6 +34,7 @@ class d_antrian_satker extends Model
         'konsumen_email',
         'konsumen_no_wa_telepon',
         'deskripsi',
+        'sudah_nilai'
     ];
 
     public function satker()
