@@ -1,5 +1,7 @@
 <div class="w-full overflow-x-auto rounded-md bg-white shadow">
-    <div class="flex flex-wrap items-center justify-between p-4">
+    <h1 class="text-md lg:text-xl font-bold mx-4 my-3">SEJARAH ANTRIAN : </h1>
+    <hr class="mb-4 mx-4">
+    <div class="flex flex-wrap items-center justify-between p-4 pt-0">
         <div class="flex flex-wrap">
             <div wire:ignore>
                 <select id="selectedMonth_id" 

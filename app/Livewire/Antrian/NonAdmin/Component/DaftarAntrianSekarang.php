@@ -12,10 +12,14 @@ use Livewire\LivewireComponentsFinder;
 
 class DaftarAntrianSekarang extends Component
 {
+    public $kode_satker;
+    
+    public function mount(){
+
+    }
 
     public function render() : View
     {
-        Log::info('asasasasasasasasa asasasasas');
         $data = d_antrian_satker::with(['satker', 'layanan'])
                     ->where('konsumen_email', session('konsumen_email'))
                     ->where('konsumen_no_wa_telepon', session('konsumen_no_wa_telepon'))

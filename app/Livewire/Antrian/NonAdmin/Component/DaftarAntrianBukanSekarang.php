@@ -71,6 +71,7 @@ class DaftarAntrianBukanSekarang extends Component
             ->where('konsumen_email', session('konsumen_email'))
             ->where('konsumen_no_wa_telepon', session('konsumen_no_wa_telepon'))
             ->where('konsumen_tahun_lahir', session('konsumen_tahun_lahir'))
+            ->orderBy('tanggal', 'desc')
             ->paginate($this->numberOfPagination);
         
     }
