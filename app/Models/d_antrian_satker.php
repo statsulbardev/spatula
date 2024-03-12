@@ -29,7 +29,7 @@ class d_antrian_satker extends Model
         'konsumen_nama',
         'konsumen_tahun_lahir',
         'tanggal',
-        'is_active',
+        'status',
         'antrian',
         'konsumen_email',
         'konsumen_no_wa_telepon',

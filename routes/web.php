@@ -109,7 +109,8 @@ Route::get('/antrian/logout', function () {
         'konsumen_no_wa_telepon', 
         'konsumen_tahun_lahir', 
         'konsumen_nama', 
-        'is_registrasi'
+        'is_registrasi',
+        'kode_satker_active'
     ]);
     session()->invalidate();
     session()->regenerateToken();

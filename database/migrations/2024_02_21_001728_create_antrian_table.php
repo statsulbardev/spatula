@@ -67,7 +67,7 @@ return new class extends Migration
             $table->string('konsumen_nama', 255);
             $table->string('konsumen_tahun_lahir', 4);
             $table->date('tanggal');
-            $table->string('is_active', 1)->default('1');
+            $table->string('status', 1)->default('0');
             $table->string('antrian', 3);
             $table->string('konsumen_email', 255)->nullable();
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
