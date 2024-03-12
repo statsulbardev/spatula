@@ -21,6 +21,9 @@ class Auth_Antrian
         if($this->auth_antrian_check()){
             return $next($request);
         }else{
+            session()->forget([
+                'kode_satker_active'
+            ]);
             return redirect()->route('antrian-non-admin-auth-login');
         }
     }

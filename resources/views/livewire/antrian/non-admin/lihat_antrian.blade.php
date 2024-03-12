@@ -16,7 +16,7 @@
     {{-- Breadcrumb --}}
     @include('components.partials.breadcrumb')
     <section class="mb-6 mt-10">
-        
+        <livewire:antrian.non-admin.component.daftar-antrian-sekarang/>
         <livewire:antrian.non-admin.component.daftar-antrian-bukan-sekarang/>
     </section>
     
