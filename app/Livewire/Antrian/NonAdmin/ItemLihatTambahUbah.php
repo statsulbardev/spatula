@@ -197,11 +197,7 @@ class ItemLihatTambahUbah extends Component
 
         $latest_antrian_query = d_antrian_satker::query();
         $latest_antrian_query->where('tanggal', $this->f_tanggal);
-        if($this->f_periode == 0){
-            $latest_antrian_query->where('antrian', 'LIKE', '0%');
-        }else if($this->f_periode == 1){
-            $latest_antrian_query->where('antrian', 'LIKE', '1%');
-        }
+        $latest_antrian_query->where('periode', $this->f_periode);
         $latest_antrian_query->whereIn('kode_layanan', $kode_layanan_with_same_loket);
         $latest_antrian_query->orderby('antrian', 'desc');
         $latest_antrian = $latest_antrian_query->first();
@@ -214,6 +210,17 @@ class ItemLihatTambahUbah extends Component
         $latest_number  += 1;
         $antrian_baru = str_pad($latest_number, 2, "0", STR_PAD_LEFT);
 
+        $latest_antrian_internal_query = d_antrian_satker::query();
+        $latest_antrian_internal_query->where('tanggal', $this->f_tanggal);
+        $latest_antrian_internal_query->orderby('antrian_internal', 'desc');
+        $latest_antrian_internal = $latest_antrian_internal_query->first();
+        $antrian_internal_baru = 0;
+        if($latest_antrian_internal){
+            $antrian_internal_baru = intval($latest_antrian_internal->antrian_internal);
+        }
+        $antrian_internal_baru +=1;
+
+
         if($this->routeName == 'antrian-non-admin-item-tambah'){
             DB::beginTransaction();
             try{
@@ -225,7 +232,9 @@ class ItemLihatTambahUbah extends Component
                 $baru->konsumen_tahun_lahir =  session('konsumen_tahun_lahir', null);
                 $baru->tanggal = $this->f_tanggal;
                 $baru->status = 0;
+                $baru->periode = $this->f_periode;
                 $baru->antrian = $this->f_periode.$antrian_baru;
+                $baru->antrian_internal = $antrian_internal_baru;
                 $baru->konsumen_email = session('konsumen_email', null);
                 $baru->konsumen_no_wa_telepon = session('konsumen_no_wa_telepon', null);
                 $baru->deskripsi = $this->f_deskripsi;
@@ -248,10 +257,11 @@ class ItemLihatTambahUbah extends Component
             DB::beginTransaction();
             try{
                 $this->atrian_satker->tanggal = $this->f_tanggal;
-                if(!( (str_starts_with( $this->atrian_satker->antrian, '0') && str_starts_with($this->f_periode, '0')) 
-                    || (str_starts_with( $this->atrian_satker->antrian, '1') && str_starts_with($this->f_periode, '1')))){
+                if($this->atrian_satker->periode !== $this->f_periode){
                     $this->atrian_satker->antrian = $this->f_periode.$antrian_baru;
+                    $this->atrian_satker->antrian_internal = $antrian_internal_baru;
                 }
+                $this->atrian_satker->periode = $this->f_periode;
                 $this->atrian_satker->deskripsi = $this->f_deskripsi;
                 $this->atrian_satker->save();
                 

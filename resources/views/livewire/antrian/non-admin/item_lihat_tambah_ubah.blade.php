@@ -119,8 +119,8 @@
                                         class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900" 
                                         {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Periode ...</option>
-                                        <option value="0">Jam Pertama (Sebelum Istiraha)</option>
-                                        <option value="1">Jam Kedua (Setelah Istiraha)</option>
+                                        <option value="0">Jam Pertama (Sebelum Istirahat)</option>
+                                        <option value="1">Jam Kedua (Setelah Istirahat)</option>
                                     </select>
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
