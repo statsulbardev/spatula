@@ -13,6 +13,7 @@ use Exception;
 class DaftarAntrianBukanSekarang extends Component
 {
     use WithPagination;
+    public d_antrian_satker $antrian_tobe_delete;
 
     public int $numberOfPagination = 20;
     public $selectedMonth;
@@ -84,6 +85,23 @@ class DaftarAntrianBukanSekarang extends Component
 
         return $d_antrian_satker_query->paginate($this->numberOfPagination);
         
+    }
+
+    public function deleteItem(d_antrian_satker $antrian_tobe_delete_)
+    {
+        $this->antrian_tobe_delete = $antrian_tobe_delete_;
+    }
+
+    public function confirmDeleteItem()
+    {
+        try
+        {
+            $this->antrian_tobe_delete->delete();
+            $this->dispatch('notification', message: "Informasi antrian telah dihapus.");
+        }catch (Exception $error) 
+        {
+            $this->dispatch('notification', message: "Informasi antrian gagal dihapus.");
+        }
     }
 
 }

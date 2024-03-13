@@ -38,6 +38,7 @@
                                 'opt_item' => $this->units,
                                 'value' => $this->f_kode_satker,
                                 'id' => 'unit_kerja',
+                                'prop' => in_array($routeName, ["antrian-non-admin-item-lihat", "antrian-non-admin-item-edit"]) ? "disabled" : "",
                             ])
                             <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                                 clearTimeout(timeout);
@@ -69,7 +70,9 @@
                                     <label class="form-label font-bold" for="Nama Layanan">
                                         Nama Layanan
                                     </label>
-                                    <select id="layanan_id" wire:model="f_kode_layanan" class="border border-1 w-full p-2 rounded-md border-slate-400">
+                                    <select id="layanan_id" wire:model="f_kode_layanan" 
+                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
+                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat", "antrian-non-admin-item-edit"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Layanan ...</option>
                                         {!!$layanan_satker!!}
                                     </select>
@@ -90,9 +93,10 @@
                                     <label class="form-label font-bold" for="Tanggal Kunjungan">
                                     Tanggal Kunjungan
                                     </label>
-                                    <input type='date' class="border border-1 w-full p-2 rounded-md border-slate-400"
+                                    <input type='date' class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
                                         type="text" id="tanggal_id" wire:model="f_tanggal"
-                                        placeholder="Tanggal Kunjungan"/>
+                                        placeholder="Tanggal Kunjungan" 
+                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}/>
 
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -111,7 +115,9 @@
                                     <label class="form-label font-bold" for="Nama Layanan">
                                         Periode Kedatangan
                                     </label>
-                                    <select id="periode_id" wire:model="f_periode" class="border border-1 w-full p-2 rounded-md border-slate-400">
+                                    <select id="periode_id" wire:model="f_periode" 
+                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900" 
+                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Periode ...</option>
                                         <option value="0">Jam Pertama (Sebelum Istiraha)</option>
                                         <option value="1">Jam Kedua (Setelah Istiraha)</option>
@@ -141,10 +147,17 @@
                         </div>
                         <div class="w-full lg:w-2/3">
                             <div class="my-6">
-                                @include('components.input.text-area', [
-                                    'model' => 'f_deskripsi',
-                                    'label' => 'Deskripsi Tujuan',
-                                ])
+                                @if (in_array($routeName, ["antrian-non-admin-item-tambah", "antrian-non-admin-item-edit"]))
+                                    @include('components.input.text-area', [
+                                        'model' => 'f_deskripsi',
+                                        'label' => 'Deskripsi Tujuan',
+                                    ])
+                                @else
+                                    <div class="border border-1 w-full h-full p-4 rounded-md border-slate-400 bg-gray-200">
+                                        {!!$this->f_deskripsi!!}
+                                    </div>
+                                @endif
+                               
 
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                                     clearTimeout(timeout);
@@ -161,12 +174,21 @@
                 @endif
               
             </div>
-            <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
-                <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Batal</a>
-                @if ($this->f_kode_satker)
-                <button type="submit" class="btn-primary ml-auto">Simpan</button>
-                @endif
-            </div>
+            
+            @if (in_array($routeName, ["antrian-non-admin-item-tambah", "antrian-non-admin-item-edit"]))
+                <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
+                    <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Batal</a>
+                        @if ($this->f_kode_satker)
+                            <button type="submit" class="btn-primary ml-auto">Simpan</button>
+                        @endif
+                </div>
+            @else
+                <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
+                    <div class="flex-grow"></div>
+                    <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Tutup</a>
+                </div>
+            @endif
+            
         </form>
     </div>
     

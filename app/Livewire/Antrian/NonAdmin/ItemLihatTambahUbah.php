@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Webpatser\Uuid\Uuid;
 
 class ItemLihatTambahUbah extends Component
 {
@@ -90,10 +91,10 @@ class ItemLihatTambahUbah extends Component
     {
         return $this->routeName === 'antrian-non-admin-item-tambah'
                 ? 'Tambah Antrian'
-                : Carbon::createFromFormat('Y-m-d', $this->atrian_satker->tanggal)->format('d/m/Y');
+                : 'Tanggal '.Carbon::createFromFormat('Y-m-d', $this->atrian_satker->tanggal)->format('d/m/Y');
     }
 
-    public function mount(d_antrian_satker $antrian_satker_)
+    public function mount(d_antrian_satker $antrian_satker)
     {
         if(session('kode_satker_active', null))
         {
@@ -102,12 +103,16 @@ class ItemLihatTambahUbah extends Component
         }
 
         $this->routeName      = Route::currentRouteName();
-        $this->atrian_satker  = $antrian_satker_;
-        if ($this->routeName === 'edit-satker') {
-            $this->f_kode_satker = $antrian_satker_->kode_satker;
-            $this->f_kode_layanan = $antrian_satker_->kode_layanan;
-            $this->f_tanggal = $antrian_satker_->tanggal;
-            $this->f_deskripsi = $antrian_satker_->deskripsi;
+        $this->atrian_satker  = $antrian_satker;
+        if ($this->routeName === 'antrian-non-admin-item-lihat' || $this->routeName === 'antrian-non-admin-item-edit') {
+            $this->f_kode_satker = $antrian_satker->kode_satker;
+            $satker_layanan = m_antrian_satker_layanan::where('kode_satker', $antrian_satker->kode_satker)
+                                ->where('kode_layanan', $antrian_satker->kode_layanan)
+                                ->first();
+            $this->f_kode_layanan = $satker_layanan->kode_layanan.'-'.$satker_layanan->loket;
+            $this->f_tanggal = $antrian_satker->tanggal;
+            $this->f_periode = substr($antrian_satker->antrian, 0, 1);
+            $this->f_deskripsi = $antrian_satker->deskripsi;
         }
     }
 
@@ -140,7 +145,7 @@ class ItemLihatTambahUbah extends Component
                     ->map(function ($item) {
                         return [
                             0 => $item->kode_layanan.'-'.$item->loket,
-                            1 => $item->layanan->nama_layanan.' (Loket '.$item->loket.' )'
+                            1 => '[Loket '.$item->loket.'] '.$item->layanan->nama_layanan
                         ];
                     })
                     ->toArray()
@@ -156,13 +161,16 @@ class ItemLihatTambahUbah extends Component
 
     public function render() : View
     {
-       
         return view('livewire.antrian.non-admin.item_lihat_tambah_ubah')
             ->layout('layouts.app_antrian');
     }
 
     public function submitData()
     {
+        if($this->routeName == 'antrian-non-admin-item-lihat'){
+            return;
+        }
+
         // Event for error message notification in blade.
         $this->dispatch('saved');
 
@@ -181,62 +189,82 @@ class ItemLihatTambahUbah extends Component
             }
         }
         // Save data to database.
-        if($this->routeName != 'antrian-non-admin-item-tambah'){
+        $loket = explode('-', $this->f_kode_layanan)[1];
+        $kode_layanan = explode('-', $this->f_kode_layanan)[0];
+
+        $kode_layanan_with_same_loket = m_antrian_satker_layanan::where('loket', $loket)
+            ->where('kode_satker', $this->f_kode_satker)->get()->pluck('kode_layanan');
+
+        $latest_antrian_query = d_antrian_satker::query();
+        $latest_antrian_query->where('tanggal', $this->f_tanggal);
+        if($this->f_periode == 0){
+            $latest_antrian_query->where('antrian', 'LIKE', '0%');
+        }else if($this->f_periode == 1){
+            $latest_antrian_query->where('antrian', 'LIKE', '1%');
+        }
+        $latest_antrian_query->whereIn('kode_layanan', $kode_layanan_with_same_loket);
+        $latest_antrian_query->orderby('antrian', 'desc');
+        $latest_antrian = $latest_antrian_query->first();
+
+        $latest_number = 0;
+        
+        if($latest_antrian){
+            $latest_number = intval(substr($latest_antrian->antrian,1));
+        }
+        $latest_number  += 1;
+        $antrian_baru = str_pad($latest_number, 2, "0", STR_PAD_LEFT);
+
+        if($this->routeName == 'antrian-non-admin-item-tambah'){
+            DB::beginTransaction();
+            try{
+                $baru = new d_antrian_satker();
+                $baru->id = (string) Uuid::generate();
+                $baru->kode_satker = $this->f_kode_satker;
+                $baru->kode_layanan = $kode_layanan;
+                $baru->konsumen_nama =  session('konsumen_nama', null);
+                $baru->konsumen_tahun_lahir =  session('konsumen_tahun_lahir', null);
+                $baru->tanggal = $this->f_tanggal;
+                $baru->status = 0;
+                $baru->antrian = $this->f_periode.$antrian_baru;
+                $baru->konsumen_email = session('konsumen_email', null);
+                $baru->konsumen_no_wa_telepon = session('konsumen_no_wa_telepon', null);
+                $baru->deskripsi = $this->f_deskripsi;
+                $baru->sudah_nilai = 0;
+                $baru->save();
+                
+                DB::commit();
+                $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
+                $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Informasi gagal menyimpan antrian data.');
+            }
+
             return;
         }
-        DB::beginTransaction();
-        try{
-            $loket = explode('-', $this->f_kode_layanan)[1];
-            $kode_layanan = explode('-', $this->f_kode_layanan)[0];
-
-            $kode_layanan_with_same_loket = m_antrian_satker_layanan::where('loket', $loket)
-                ->where('kode_satker', $this->f_kode_satker)->get()->pluck('kode_layanan');
-
-            $latest_antrian_query = d_antrian_satker::query();
-            $latest_antrian_query->where('tanggal', $this->f_tanggal);
-            if($this->f_periode == 0){
-                $latest_antrian_query->where('antrian', 'LIKE', '0%');
-            }else if($this->f_periode == 1){
-                $latest_antrian_query->where('antrian', 'LIKE', '1%');
+        if($this->routeName == 'antrian-non-admin-item-edit')
+        {
+            DB::beginTransaction();
+            try{
+                $this->atrian_satker->tanggal = $this->f_tanggal;
+                if(!( (str_starts_with( $this->atrian_satker->antrian, '0') && str_starts_with($this->f_periode, '0')) 
+                    || (str_starts_with( $this->atrian_satker->antrian, '1') && str_starts_with($this->f_periode, '1')))){
+                    $this->atrian_satker->antrian = $this->f_periode.$antrian_baru;
+                }
+                $this->atrian_satker->deskripsi = $this->f_deskripsi;
+                $this->atrian_satker->save();
+                
+                DB::commit();
+                $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
+                $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Informasi gagal menyimpan antrian data.');
             }
-            $latest_antrian_query->whereIn('kode_layanan', $kode_layanan_with_same_loket);
-            $latest_antrian_query->orderby('antrian', 'desc');
-            $latest_antrian = $latest_antrian_query->first();
-
-            $latest_number = 0;
-            
-            if($latest_antrian){
-                $latest_number = intval(substr($latest_antrian->antrian,1));
-            }
-            $latest_number  += 1;
-            $antrian_baru = str_pad($latest_number, 2, "0", STR_PAD_LEFT);
-
-            $baru = new d_antrian_satker();
-            $baru->id = 0;
-            $baru->kode_satker = $this->f_kode_satker;
-            $baru->kode_layanan = $kode_layanan;
-            $baru->konsumen_nama =  session('konsumen_nama', null);
-            $baru->konsumen_tahun_lahir =  session('konsumen_tahun_lahir', null);
-            $baru->tanggal = $this->f_tanggal;
-            $baru->status = 0;
-            $baru->antrian = $antrian_baru;
-            $baru->konsumen_email = session('konsumen_email', null);
-            $baru->konsumen_no_wa_telepon = session('konsumen_no_wa_telepon', null);
-            $baru->deskripsi = $this->f_deskripsi;
-            $baru->sudah_nilai = 0;
-            $baru->save();
-            
-            DB::commit();
-            $this->dispatch('notification', message: 'Berhasil menyimpan data.');
-        }catch(Exception $ex){
-            DB::rollBack();
-            Log::error($ex);
-            $this->dispatch('notification', message: 'Gagal menyimpan data.');
+           
         }
-
-        // Send notification to redirect page.
-        // Redirect the page.
-        $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
 
     }
 

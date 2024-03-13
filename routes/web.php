@@ -120,6 +120,6 @@ Route::get('/antrian/logout', function () {
 Route::group(['middleware' => ['auth_antrian']], function () {
     Route::get('/antrian/lihat', LihatAntrian::class)->name('antrian-non-admin-lihat');
     Route::get('/antrian/tambah', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-tambah');
-    Route::get('/antrian/{id_antrian}/edit', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
-    Route::get('/antrian/{id_antrian}/lihat', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-lihat');
+    Route::get('/antrian/{antrian_satker}/edit', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
+    Route::get('/antrian/{antrian_satker}/lihat', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-lihat');
 });
