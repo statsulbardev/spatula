@@ -29,7 +29,7 @@
                     <div class="text-sm leading-tight text-justify my-1.5">
                         <div>{{implode(', ', $item_show['layanan'])}}</div>
                         @if (count($item_show['antrian_ku']) > 0)
-                            <div class="text-6xl font-bold w-full text-center my-3">
+                            <div class="text-sm my-3 text-left">
                                 Antrian anda : {{$item_show['antrian_ku'][0]['antrian']}}
                             </div>
                         @endif
