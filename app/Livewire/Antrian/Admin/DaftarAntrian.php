@@ -2,12 +2,17 @@
 
 namespace App\Livewire\Antrian\Admin;
 
+use App\Models\d_antrian_satker;
 use App\Models\m_antrian_satker_layanan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class DaftarAntrian extends Component
 {
+
+    public $tanggal_filter; 
+
     /** @computed property : rootBreadcrumb */
     public function getRootBreadcrumbProperty()
     {
@@ -24,47 +29,25 @@ class DaftarAntrian extends Component
 
     public function render() : View
     {
-        $data_to_render = $this->retrieveData();
+        $master_antrian_satker = m_antrian_satker_layanan::all();
+        $master_key_value = [];
+        foreach($master_antrian_satker as $item){
+            $master_key_value[$item->kode_satker.'--'.$item->kode_layanan] = $item->loket;
+        }
+
+        $data_to_render = [];
+        if($this->tanggal_filter){
+            $data_to_render = d_antrian_satker::with(['satker', 'layanan'])
+                ->where('tanggal', $this->tanggal_filter)
+                ->where('kode_satker', Auth::user()->kode_satker_id)
+                ->orderby('antrian', 'asc')
+                ->get();
+        }
 
         return view('livewire.antrian.admin.daftar-antrian', [
-            'data' => $data_to_render
+            'data' => $data_to_render, 'master_key_value' => $master_key_value
         ])->layout('layouts.app');
     }
 
-    public function changeValueActive($kode_satker, $kode_layanan, $kondisi_baru)
-    {
-        if(in_array($kondisi_baru, ['0', '1'])){
-            m_antrian_satker_layanan::where('kode_satker', $kode_satker)
-                ->where('kode_layanan', $kode_layanan)
-                ->update(['is_active' => $kondisi_baru]);
-            $dict_loket[$kode_satker.'--'.$kode_layanan] = $kondisi_baru;
-        }
-    }
-
-    public function changeValueLoket($kode_satker, $kode_layanan, $kondisi_baru)
-    {
-        if(in_array($kondisi_baru, ['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P',
-            'Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'])){
-                m_antrian_satker_layanan::where('kode_satker', $kode_satker)
-                    ->where('kode_layanan', $kode_layanan)
-                    ->update(['loket' => $kondisi_baru]);
-            $dict_is_active[$kode_satker.'--'.$kode_layanan] = $kondisi_baru;
-        }
-    }
-
-    public function confirmUncheckItem()
-    {
-        $result = $this->delete($this->pengguna);
-
-        $this->dispatch('notification', message: $result);
-    }
-
-    private function retrieveData()
-    {
-        $user_unit_code  = auth()->user()->satker->kode_satker;
-
-        return m_antrian_satker_layanan::with(['satker', 'layanan'])
-                ->where('kode_satker', $user_unit_code)
-                ->get();
-    }
+   
 }
