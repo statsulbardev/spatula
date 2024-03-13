@@ -94,7 +94,7 @@ Route::group(['middleware' => ['auth', 'role:admin|pj-antrian']], function () {
 });
 Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar', DaftarAntrian::class)->name('antrian-daftar');
-    Route::get('/pengaturan/antrian/{id}/daftar', DaftarAntrianLihat::class)->name('antrian-daftar-lihat');
+    // Route::get('/pengaturan/antrian/{id}/daftar', DaftarAntrianLihat::class)->name('antrian-daftar-lihat');
     Route::get('/pengaturan/antrian/caller', Pemanggil::class)->name('antrian-caller');
 });
 
