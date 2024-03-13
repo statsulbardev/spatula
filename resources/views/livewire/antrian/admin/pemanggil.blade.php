@@ -19,7 +19,7 @@
     {{-- Content --}}
 
     <section class="mb-6 mt-10">
-        <div wire:poll.300s class="overflow-x-auto rounded-md bg-white shadow mb-5">
+        <div wire:poll.keep-alive.300s class="overflow-x-auto rounded-md bg-white shadow mb-5">
             <div class="flex flex-wrap items-center justify-between p-4 pt-0 mt-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full p-3">
                     @foreach ($show_data as $item_show)
