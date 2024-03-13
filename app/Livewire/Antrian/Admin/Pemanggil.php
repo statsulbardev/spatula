@@ -5,6 +5,7 @@ namespace App\Livewire\Antrian\Admin;
 use App\Models\m_antrian_satker_layanan;
 use Illuminate\View\View;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Builder;
 
 class Pemanggil extends Component
 {
@@ -25,6 +26,11 @@ class Pemanggil extends Component
 
     public function render() : View
     {
+        // $superadmin_role = auth()->user()->hasRole('superadmin');
+        // $user_unit_code  = auth()->user()->satker->kode_satker;
+        // ->when(!$superadmin_role, function (Builder $query, $data) use ($user_unit_code) {
+        //     $query->where('kode_satker', $user_unit_code);
+        // })
         $data_to_render = $this->retrieveData();
 
         return view('livewire.antrian.admin.pemanggil', [
