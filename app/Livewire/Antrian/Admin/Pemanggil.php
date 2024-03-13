@@ -4,12 +4,18 @@ namespace App\Livewire\Antrian\Admin;
 
 use App\Models\d_antrian_satker;
 use App\Models\m_antrian_satker_layanan;
+use App\Traits\Antrian\Helper_Firestore;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\View\View;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Pemanggil extends Component
 {
+    use Helper_Firestore;
 
     /** @computed property : rootBreadcrumb */
     public function getRootBreadcrumbProperty()
@@ -24,6 +30,63 @@ class Pemanggil extends Component
     // {
     //     m_a
     // }
+
+    public function selesaikan($id)
+    {
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+        if($user_unit_code){
+            d_antrian_satker::whereIn('status', ['0'])
+                ->where('id', $id)
+                ->where('kode_satker', $user_unit_code)
+                ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                ->update([
+                    'status' => 2
+                ]);
+        }
+       
+    }
+
+    public function selesaikan_dan_next($id)
+    {
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+        if($user_unit_code){
+            DB::beginTransaction();
+            try{  
+                d_antrian_satker::whereIn('status', ['0'])
+                    ->where('id', $id)
+                    ->where('kode_satker', $user_unit_code)
+                    ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                    ->update([
+                        'status' => 2
+                    ]);
+                $this->set_antrian($this->setup_client_create(), $user_unit_code);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+        }
+    }
+
+    public function rearrange()
+    {   
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+        if($user_unit_code){
+            DB::beginTransaction();
+            try{  
+                d_antrian_satker::rearrange($user_unit_code);
+                $this->set_antrian($this->setup_client_create(), $user_unit_code);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+        }
+    }
 
     public function render() : View
     {

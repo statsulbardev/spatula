@@ -1,10 +1,10 @@
-@section('title', 'Daftar Layanan Antrian')
+@section('title', 'Daftar Antrian')
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
 
     <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Daftar Layanan Antrian'])
+        @include('components.page.page-title', ['title' => 'Daftar Antrian'])
 
     </div>
 
