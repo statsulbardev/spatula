@@ -2,8 +2,8 @@
     <h1 class="text-md lg:text-xl font-bold mx-4 my-3">SEJARAH ANTRIAN : </h1>
     <hr class="mb-4 mx-4">
     <div class="flex flex-wrap items-center justify-between p-4 pt-0">
-        <div class="flex flex-wrap">
-            <div wire:ignore>
+        <div class="flex flex-wrap w-full gap-2">
+            <div wire:ignore class="flex-none">
                 <select id="selectedMonth_id" 
                     wire:model.live="selectedMonth" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                     <option hidden selected>Pilih Bulan...</option>
@@ -19,7 +19,7 @@
                 </select>
                 <label data-te-select-label-ref>Bulan</label>
             </div>
-            <div wire:ignore class="ml-4">
+            <div wire:ignore class="flex-none">
                 <select id="selectedYear_id" 
                     wire:model.live="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
                     <option hidden selected>Pilih Tahun...</option>
@@ -33,10 +33,15 @@
                 </select>
                 <label data-te-select-label-ref>Tahun</label>
             </div>
+            <div class="flex grow"></div>
+            <div class="flex-none">
+                @include('components.input.pagination-selected')
+            </div>
+            
         </div>
 
         {{-- Pagination Filter --}}
-        @include('components.input.pagination-selected')
+        
     </div>
     @if ($data->isEmpty())
         <div class="w-full flex  justify-center p-5">
@@ -46,21 +51,23 @@
         <table class="w-full table-auto">
             <thead>
                 <tr class="bg-neutral-100 text-left font-bold">
-                    <th class="px-6 pb-4 pt-6 text-center">No</th>
+                    <th class="px-3 pb-4 pt-6 text-center">No</th>
                     <th class="px-6 pb-4 pt-6">Layanan</th>
                     <th class="px-6 pb-4 pt-6 text-center">Tanggal</th>
+                    <th class="px-6 pb-4 pt-6 text-center">Periode</th>
                     <th class="px-6 pb-4 pt-6 text-center">Antrian</th>
+                    <th class="px-6 pb-4 pt-6 text-center">Tujuan</th>
                     <th class="px-6 pb-4 pt-6"></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data as $item)
                     <tr class="focus-within:bg-grey-lightest hover:bg-gray-200 py-10">
-                        <td class="border-t px-6 pb-4 items-center text-center">
+                        <td class="border-t px-3 pb-4 items-center text-center">
                             {{$loop->index + 1}}
                         </td>
                         <td class="border-t">
-                            <div class="px-6 pb-4">
+                            <div class="px-6 pb-4 whitespace-nowrap">
                                 <div class="text-md">{{$item->satker->nama}}</div>
                                 <div class="mb-2 text-sm text-neutral-500">{{$item->layanan->nama_layanan}}</div>
                                 <div class="text-sm text-primary-500">LOKET {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
@@ -70,7 +77,17 @@
                             {{ \Carbon\Carbon::createFromFormat('Y-m-d', $item->tanggal)->format('d/m/Y') }}
                         </td>
                         <td class="border-t px-6 pb-4 items-center text-center">
+                            @if ($item->periode == 0)
+                                Jam Pertama (Sebelum Istirahat)
+                            @elseif ($item->periode == 1)
+                                Jam Kedua (Setelah Istirahat)
+                            @endif
+                        </td>
+                        <td class="border-t px-6 pb-4 items-center text-center">
                             {{$item->antrian}}
+                        </td>
+                        <td class="border-t px-6 pb-4 items-center text-center whitespace-nowrap">
+                            {!!$item->deskripsi!!}
                         </td>
                         <td class="border-t px-6 pb-4">
                             <div class="flex items-center justify-center">
