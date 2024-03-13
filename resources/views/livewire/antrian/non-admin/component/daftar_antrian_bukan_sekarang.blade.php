@@ -56,26 +56,23 @@
             <tbody>
                 @foreach ($data as $item)
                     <tr class="focus-within:bg-grey-lightest hover:bg-gray-200 py-10">
-                        <td class="border-t py-4 pl-6 items-center text-center">
+                        <td class="border-t px-6 pb-4 items-center text-center">
                             {{$loop->index + 1}}
                         </td>
                         <td class="border-t">
-                            <div class="py-4 pl-6">
+                            <div class="px-6 pb-4">
                                 <div class="text-md">{{$item->satker->nama}}</div>
-                                <div class="mb-2 text-sm text-neutral-500">{{$item->layanan->nama}}</div>
-                                <div class="text-sm text-primary-500">{{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
+                                <div class="mb-2 text-sm text-neutral-500">{{$item->layanan->nama_layanan}}</div>
+                                <div class="text-sm text-primary-500">LOKET {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
                             </div>
                         </td>
-                        <td class="border-t">
-                            <span class="items-center py-4 pl-6">
-                                <i class="fas fa-calendar text-sm opacity-50"></i>
-                                {{ $report->created_at->format('d/m/Y') }}
-                            </span>
+                        <td class="border-t px-6 pb-4 text-center">
+                            {{ \Carbon\Carbon::createFromFormat('Y-m-d', $item->tanggal)->format('d/m/Y') }}
                         </td>
-                        <td class="border-t py-4 pl-6 items-center text-center">
+                        <td class="border-t px-6 pb-4 items-center text-center">
                             {{$item->antrian}}
                         </td>
-                        <td class="border-t py-4 pl-6 items-center text-center">
+                        <td class="border-t px-6 pb-4 items-center text-center">
                             
                         </td>
                     <tr>

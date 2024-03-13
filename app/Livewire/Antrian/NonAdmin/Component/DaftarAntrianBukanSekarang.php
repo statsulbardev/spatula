@@ -67,12 +67,22 @@ class DaftarAntrianBukanSekarang extends Component
 
     private function retrieveData() : Paginator
     {
-         return d_antrian_satker::with(['satker', 'layanan'])
+        $d_antrian_satker_query = d_antrian_satker::query();
+        $d_antrian_satker_query->with(['satker', 'layanan'])
             ->where('konsumen_email', session('konsumen_email'))
             ->where('konsumen_no_wa_telepon', session('konsumen_no_wa_telepon'))
-            ->where('konsumen_tahun_lahir', session('konsumen_tahun_lahir'))
-            ->orderBy('tanggal', 'desc')
-            ->paginate($this->numberOfPagination);
+            ->where('konsumen_tahun_lahir', session('konsumen_tahun_lahir'));
+
+        if($this->selectedYear){
+            $d_antrian_satker_query->whereYear('tanggal', $this->selectedYear);
+        }
+        if($this->selectedMonth){
+            $d_antrian_satker_query->whereMonth('tanggal', $this->selectedMonth);
+        }
+
+        $d_antrian_satker_query->orderBy('tanggal', 'desc');
+
+        return $d_antrian_satker_query->paginate($this->numberOfPagination);
         
     }
 
