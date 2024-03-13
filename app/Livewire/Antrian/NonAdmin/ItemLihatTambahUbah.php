@@ -183,8 +183,18 @@ class ItemLihatTambahUbah extends Component
                 return;
             }
             $tanggal_carbon = Carbon::createFromFormat('Y-m-d', $this->f_tanggal);
-            if( $tanggal_carbon->dayOfWeek == Carbon::SATURDAY || $tanggal_carbon->dayOfWeek == Carbon::MONDAY){
+            if( $tanggal_carbon->dayOfWeek == Carbon::SATURDAY || $tanggal_carbon->dayOfWeek == Carbon::SUNDAY){
                 $this->addError('f_tanggal', 'Pelayanan tidak buka pada sabtu dan minggu');
+                return;
+            }
+
+            if($tanggal_carbon < Carbon::today()){
+                $this->addError('f_tanggal', 'Tanggal minimal adalah tanggal hari ini');
+                return;
+            }
+
+            if(date_diff(Carbon::today(), $tanggal_carbon, true)->days > 14){
+                $this->addError('f_tanggal', 'Tanggal maksimal 2 minggu kedepan');
                 return;
             }
         }
