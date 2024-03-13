@@ -81,7 +81,7 @@ trait Helper_Firestore
         }
 
         $data_arr =  d_antrian_satker::where('kode_satker', $kode_satker)
-            ->whereDate('tanggal', Carbon::today())
+            ->whereDate('tanggal', Carbon::today()->format('Y-m-d'))
             ->get()
             ->toArray();
         $data_dict = [];

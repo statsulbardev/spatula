@@ -44,6 +44,7 @@ class DaftarLayanan extends Component
                     ->update(['is_active' => $kondisi_baru]);
                 d_antrian_satker::rearrange($kode_satker);
                 $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
+                $this->set_antrian($this->setup_client_create(), $kode_satker);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
             }catch(Exception $ex){
@@ -66,6 +67,7 @@ class DaftarLayanan extends Component
                         ->update(['loket' => $kondisi_baru]);
                     d_antrian_satker::rearrange($kode_satker);
                     $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
+                    $this->set_antrian($this->setup_client_create(), $kode_satker);
                     DB::commit();
                     $this->dispatch('notification', message: 'Berhasil menyimpan data.');
                 }catch(Exception $ex){

@@ -1,10 +1,10 @@
-@section('title', 'Daftar Layanan Antrian')
+@section('title', 'Pemanggil Antrian')
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
 
     <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Daftar Layanan Antrian'])
+        @include('components.page.page-title', ['title' => 'Pemanggil Antrian'])
 
     </div>
 
@@ -15,22 +15,7 @@
 
     <section class="mb-6 mt-10">
         <div wire:poll.300s class="overflow-x-auto rounded-md bg-white shadow mb-5">
-            <h1 class="text-md lg:text-xl font-bold mx-4 my-3">DASHBOARD ANTRIAN HARI INI : </h1>
-            <hr class="mb-4 mx-4">
-            <div class="flex flex-wrap items-center justify-between p-4 pt-0">
-                <div class="flex flex-wrap w-full">
-                    <div wire:ignore
-                        x-init="() => { 
-                            window.te.Select.getOrCreateInstance(document.querySelector('#unit_kerja')).setValue('{{ $this->kode_satker }}')
-                        }" class="w-full">
-                        <select id="unit_kerja" wire:model.lazy="kode_satker" data-te-select-filter="true">
-                            <option hidden selected>Pilih Unit Kerja ...</option>
-                            {!! $this->units !!}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-wrap items-center justify-between p-4 pt-0">
+            <div class="flex flex-wrap items-center justify-between p-4 pt-0 mt-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
                     @foreach ($show_data as $item_show)
                         <div class="rounded-sm border border-stroke bg-slate-100 px-3 py-1">
