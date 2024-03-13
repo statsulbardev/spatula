@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Antrian\Admin;
 
+use App\Models\d_antrian_satker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -41,6 +42,7 @@ class DaftarLayanan extends Component
                 m_antrian_satker_layanan::where('kode_satker', $kode_satker)
                     ->where('kode_layanan', $kode_layanan)
                     ->update(['is_active' => $kondisi_baru]);
+                d_antrian_satker::rearrange($kode_satker);
                 $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -62,6 +64,7 @@ class DaftarLayanan extends Component
                     m_antrian_satker_layanan::where('kode_satker', $kode_satker)
                         ->where('kode_layanan', $kode_layanan)
                         ->update(['loket' => $kondisi_baru]);
+                    d_antrian_satker::rearrange($kode_satker);
                     $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
                     DB::commit();
                     $this->dispatch('notification', message: 'Berhasil menyimpan data.');
