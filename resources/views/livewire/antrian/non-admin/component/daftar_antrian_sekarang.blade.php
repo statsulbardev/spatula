@@ -1,4 +1,4 @@
-<div wire:poll.300s class="w-full overflow-x-auto rounded-md bg-white shadow mb-5">
+<div wire:poll.keep-alive.300s class="w-full overflow-x-auto rounded-md bg-white shadow mb-5">
     <h1 class="text-md lg:text-xl font-bold mx-4 my-3">DASHBOARD ANTRIAN HARI INI : </h1>
     <hr class="mb-4 mx-4">
     <div class="flex flex-wrap items-center justify-between p-4 pt-0">
