@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Livewire\Antrian\Traits\Helper_Firestore;
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_layanan;
 use App\Models\m_pengguna;
 use App\Models\m_satker;
+use App\Traits\Antrian\Helper_Firestore;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;

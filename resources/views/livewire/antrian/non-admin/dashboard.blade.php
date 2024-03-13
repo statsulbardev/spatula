@@ -31,10 +31,16 @@
                     <div class="rounded-sm border border-stroke bg-slate-100 px-3 py-1">
                         <div class="text-sm font-bold">Loket {{$item_show['loket']}}</div>
                         @if ($item_show['active'])
-                            <div class="text-6xl font-bold w-full text-center my-3">{{$item_show['active']['antrian']}}</div>
+                            <div class="text-7xl font-bold w-full text-center my-3">{{$item_show['active']['antrian']}}</div>
                         @else
-                            <div class="text-6xl font-bold w-full text-center my-3">-</div>
+                            <div class="text-7xl font-bold w-full text-center my-3">-</div>
                         @endif
+
+                        <div class="w-full flex flex-col justify-center mx-3 my-2 mt-3">
+                            @if ($item_show['active'])
+                                <p class="w-full text-center text-md">{{$item_show['active']['konsumen_nama']}}</p>
+                            @endif
+                        </div>
                         
                         <hr class="border-zinc-400">
                         <div class="text-sm leading-tight text-justify my-1.5">
