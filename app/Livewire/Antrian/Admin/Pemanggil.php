@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\View\View;
 use Livewire\Component;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -31,34 +30,27 @@ class Pemanggil extends Component
     //     m_a
     // }
 
-    public function selesaikan($id)
-    {
-        $user_unit_code  = auth()->user()->satker->kode_satker;
-        if($user_unit_code){
-            d_antrian_satker::whereIn('status', ['0'])
-                ->where('id', $id)
-                ->where('kode_satker', $user_unit_code)
-                ->where('tanggal', Carbon::today()->format('Y-m-d'))
-                ->update([
-                    'status' => 2
-                ]);
-        }
-       
-    }
 
-    public function selesaikan_dan_next($id)
+    public function reset_active($loket)
     {
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{  
-                d_antrian_satker::whereIn('status', ['0'])
-                    ->where('id', $id)
+            try{ 
+                $arr_kode_layanan = m_antrian_satker_layanan::where('loket', $loket)
+                    ->where('is_active', '1')
+                    ->get()
+                    ->pluck('kode_layanan')
+                    ->toArray();
+
+               d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+                    ->whereIn('kode_layanan', $arr_kode_layanan)
                     ->where('kode_satker', $user_unit_code)
-                    ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                    ->whereIn('status', ['1'])
                     ->update([
-                        'status' => 2
+                        'status' => 0
                     ]);
+               
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -67,6 +59,86 @@ class Pemanggil extends Component
                 Log::error($ex);
                 $this->dispatch('notification', message: 'Gagal menyimpan data.');
             }
+        }
+    }
+
+    public function selesaikan_dan_next($id, $loket)
+    {
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+        if($user_unit_code){
+            DB::beginTransaction();
+            try{ 
+                $arr_kode_layanan = m_antrian_satker_layanan::where('loket', $loket)
+                    ->where('is_active', '1')
+                    ->get()
+                    ->pluck('kode_layanan')
+                    ->toArray();
+
+                if($id){
+                    d_antrian_satker::whereIn('status', ['1'])
+                        ->where('id', $id)
+                        ->where('kode_satker', $user_unit_code)
+                        ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                        ->update([
+                            'status' => 2
+                        ]);
+                }
+
+                $latest = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+                    ->whereIn('kode_layanan', $arr_kode_layanan)
+                    ->where('kode_satker', $user_unit_code)
+                    ->whereIn('status', ['0', '1'])
+                    ->orderByRaw('CASE WHEN status = "2" THEN 1 ELSE 0 END ASC')
+                    ->orderBy('antrian')
+                    ->first();
+                if($latest){
+                    $latest->status = '1';
+                    $latest->save();
+                }
+               
+                $this->set_antrian($this->setup_client_create(), $user_unit_code);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+        }
+    }
+
+    public function selesaikan($id, $status)
+    {
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+        if($user_unit_code){
+            DB::beginTransaction();
+            try{ 
+                if($status == 2){
+                    d_antrian_satker::whereIn('status', ['2'])
+                        ->where('id', $id)
+                        ->where('kode_satker', $user_unit_code)
+                        ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                        ->update([
+                            'status' => 0
+                        ]);
+                }else{
+                    d_antrian_satker::whereIn('status', ['0'])
+                        ->where('id', $id)
+                        ->where('kode_satker', $user_unit_code)
+                        ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                        ->update([
+                            'status' => 2
+                        ]);
+                }
+                $this->set_antrian($this->setup_client_create(), $user_unit_code);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+            
         }
     }
 
@@ -125,7 +197,7 @@ class Pemanggil extends Component
             $data = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
                 ->whereIn('kode_layanan', $kode_layanan_active)
                 ->where('kode_satker', $user_unit_code)
-                ->whereIn('status', ['0', '1'])
+                ->orderByRaw('CASE WHEN status = "2" THEN 1 ELSE 0 END ASC')
                 ->orderBy('antrian')
                 ->get();
 

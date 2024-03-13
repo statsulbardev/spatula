@@ -29,7 +29,7 @@ trait Helper_Firestore
     //     }
     // }
     
-    private $sync_with_firebase = false;
+    private $sync_with_firebase = true;
 
     function setup_client_create() :FirestoreClient
     {
@@ -93,7 +93,7 @@ trait Helper_Firestore
                 'kode_layanan' => $item['kode_layanan'],
                 'konsumen_nama' => $item['konsumen_nama'],
                 'tanggal' => $item['tanggal'],
-                'is_active' => $item['is_active'],
+                'status' => $item['status'],
                 'antrian' => $item['antrian'],
             ];
         }
