@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Carbon\Carbon;
 
 class DaftarAntrianBukanSekarang extends Component
 {
@@ -80,8 +81,11 @@ class DaftarAntrianBukanSekarang extends Component
         if($this->selectedMonth){
             $d_antrian_satker_query->whereMonth('tanggal', $this->selectedMonth);
         }
-
+        $d_antrian_satker_query->orderByRaw('CASE WHEN tanggal = "'.Carbon::today()->format('Y-m-d').'" THEN 0 ELSE 1 END ASC');
         $d_antrian_satker_query->orderBy('tanggal', 'desc');
+        $d_antrian_satker_query->orderBy('antrian', 'asc');
+
+        // Log::info($d_antrian_satker_query->toSql());
 
         return $d_antrian_satker_query->paginate($this->numberOfPagination);
         
