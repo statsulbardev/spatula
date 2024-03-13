@@ -85,6 +85,7 @@ class DashboardAntrian extends Component
             // Carbon::today()->format('Y-m-d')
             $data = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
                 ->whereIn('kode_layanan', $kode_layanan_active)
+                ->where('kode_satker', $this->kode_satker)
                 ->whereIn('status', ['0', '1'])
                 ->orderBy('antrian')
                 ->get();

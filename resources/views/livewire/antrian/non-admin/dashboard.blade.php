@@ -1,8 +1,16 @@
 @section('title', 'Dashboard Antrian')
-
 <div class="flex justify-center">
     <div wire:poll.300s class="overflow-x-auto rounded-md bg-white shadow mb-5">
-        <h1 class="text-md lg:text-xl font-bold mx-4 my-3">DASHBOARD ANTRIAN HARI INI : </h1>
+        <div class="flex p-4">
+            <h1 class="text-md lg:text-xl font-bold my-3">DASHBOARD ANTRIAN HARI INI : </h1>
+            <div class="flex-grow"></div>
+            <a href="{{ route('antrian-non-admin-item-tambah') }}" wire:navigate
+                class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
+                @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
+                <span class="ml-2 text-sm">Daftar Antrian</span>
+            </a>
+        </div>
+        
         <hr class="mb-4 mx-4">
         <div class="flex flex-wrap items-center justify-between p-4 pt-0">
             <div class="flex flex-wrap w-full">

@@ -77,6 +77,7 @@ class DaftarAntrianSekarang extends Component
             $kode_layanan_active = collect($antrian_satker_layanan)->pluck('kode_layanan');
 
             $data = d_antrian_satker::whereDate('tanggal', Carbon::today()->format('Y-m-d'))
+                ->where('kode_satker', $this->kode_satker)
                 ->whereIn('kode_layanan', $kode_layanan_active)
                 ->where(function ($query){
                     $query->orWhere('status', 1);
