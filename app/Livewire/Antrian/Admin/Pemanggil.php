@@ -43,7 +43,7 @@ class Pemanggil extends Component
                     ->pluck('kode_layanan')
                     ->toArray();
 
-               d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+               d_antrian_satker::whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                     ->whereIn('kode_layanan', $arr_kode_layanan)
                     ->where('kode_satker', $user_unit_code)
                     ->update([
@@ -73,7 +73,7 @@ class Pemanggil extends Component
                     ->pluck('kode_layanan')
                     ->toArray();
 
-                $latest = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+                $latest = d_antrian_satker::whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                     ->whereIn('kode_layanan', $arr_kode_layanan)
                     ->where('kode_satker', $user_unit_code)
                     ->whereIn('status', ['0', '1'])
@@ -116,7 +116,7 @@ class Pemanggil extends Component
                     ->pluck('kode_layanan')
                     ->toArray();
 
-                $new_active = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+                $new_active = d_antrian_satker::whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                     ->whereIn('kode_layanan', $arr_kode_layanan)
                     ->where('kode_satker', $user_unit_code)
                     ->whereIn('status', ['0', '1'])
@@ -190,7 +190,7 @@ class Pemanggil extends Component
                 }
 
                     
-                $new_active = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+                $new_active = d_antrian_satker::whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                     ->whereIn('kode_layanan', $arr_kode_layanan)
                     ->where('kode_satker', $user_unit_code)
                     ->whereIn('status', ['0', '1'])
@@ -301,7 +301,7 @@ class Pemanggil extends Component
 
             // Carbon::today()->format('Y-m-d')
             $data = d_antrian_satker::with('layanan')
-                ->whereDate('tanggal',  '2024-03-14')
+                ->whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                 ->whereIn('kode_layanan', $kode_layanan_active)
                 ->where('kode_satker', $user_unit_code)
                 ->orderByRaw('CASE WHEN status = "2" THEN 1 ELSE 0 END ASC')

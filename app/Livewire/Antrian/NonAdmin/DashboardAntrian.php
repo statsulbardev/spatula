@@ -83,7 +83,7 @@ class DashboardAntrian extends Component
             $kode_layanan_active = collect($antrian_satker_layanan)->pluck('kode_layanan');
 
             // Carbon::today()->format('Y-m-d')
-            $data = d_antrian_satker::whereDate('tanggal',  '2024-03-14')
+            $data = d_antrian_satker::whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                 ->whereIn('kode_layanan', $kode_layanan_active)
                 ->where('kode_satker', $this->kode_satker)
                 ->whereIn('status', ['0', '1'])
