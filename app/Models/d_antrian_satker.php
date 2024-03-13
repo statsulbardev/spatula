@@ -16,6 +16,8 @@ class d_antrian_satker extends Model
     protected $keyType = 'string';
     public $timestamps = true;
 
+    protected $dates = ['antrian'];
+
     /**
      * Atribut yang diperlukan untuk mass assignment.
      *
