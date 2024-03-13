@@ -72,12 +72,40 @@
                         <td class="border-t px-6 pb-4 items-center text-center">
                             {{$item->antrian}}
                         </td>
-                        <td class="border-t px-6 pb-4 items-center text-center">
-                            
+                        <td class="border-t px-6 pb-4">
+                            <div class="flex items-center justify-center">
+                                <a x-data x-tooltip.raw="Lihat Antrian" class="text-purple-400 hover:text-purple-500"
+                                    href="{{ route('antrian-non-admin-item-lihat', ['antrian_satker' => $item->id]) }}"
+                                    wire:navigate>
+                                    @include('components.icon', [
+                                        'name' => 'eye',
+                                        'size' => 'w-5 h-5',
+                                    ])
+                                </a>
+                                @if ($item->tanggal >= \Carbon\Carbon::today()->format('Y-m-d'))
+                                    <a x-data x-tooltip.raw="Edit Antrian" class="text-green-400 hover:text-green-500"
+                                        href="{{ route('antrian-non-admin-item-edit', ['antrian_satker' => $item->id]) }}"
+                                        wire:navigate>
+                                        @include('components.icon', [
+                                            'name' => 'pencil-square',
+                                            'size' => 'w-5 h-5',
+                                        ])
+                                    </a>
+                                    <button wire:click="deleteItem({{ $item->id }})" type="button" x-data
+                                        x-tooltip.raw="Hapus Antrian" class="text-red-500 hover:text-red-600" data-te-toggle="modal"
+                                        data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
+                                        @include('components.icon', [
+                                            'name' => 'trash',
+                                            'size' => 'w-5 h-5',
+                                        ])
+                                    </button>
+                                @endif
+                            </div>
                         </td>
                     <tr>
                 @endforeach
             </tbody>
         </table>
     @endif
+    @include('components.input.delete-confirmation')
 </div>
