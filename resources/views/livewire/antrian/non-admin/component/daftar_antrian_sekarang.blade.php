@@ -20,9 +20,9 @@
                 <div class="rounded-sm border border-stroke bg-slate-100 px-3 py-1">
                     <div class="text-sm font-bold">Loket {{$item_show['loket']}}</div>
                     @if ($item_show['active'])
-                        <div class="text-6xl font-bold w-full text-center my-3">{{$item_show['active']['antrian']}}</div>
+                        <div class="text-7xl font-bold w-full text-center my-3">{{$item_show['active']['antrian']}}</div>
                     @else
-                        <div class="text-6xl font-bold w-full text-center my-3">-</div>
+                        <div class="text-7xl font-bold w-full text-center my-3">-</div>
                     @endif
                     
                     <hr class="border-zinc-400">

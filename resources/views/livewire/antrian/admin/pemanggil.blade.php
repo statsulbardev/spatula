@@ -31,17 +31,24 @@
                                 <div class="text-7xl font-bold w-full text-center my-3">-</div>
                             @endif
 
-                            <div class="w-full flex flex-col justify-center mx-3 my-2 mt-3">
+                            <div class="w-full flex flex-col justify-center my-2 mt-3">
                                 @if ($item_show['active'])
                                     <p class="w-full text-center text-md">{{$item_show['active']['konsumen_nama']}}</p>
-                                    <button wire:click="selesaikan_dan_next('{{ $item_show['active']->id }}' , '{{$item_show['loket']}}')"
-                                        class="bg-orange-500 hover:orange-700 p-1 text-white rounded-sm text-sm">
-                                            Selesai dan Berikutnya
-                                    </button>
+                                    <div class="flex gap-x-1">
+                                        <button wire:click="belum_selesaikan_dan_next('{{ $item_show['active']->id }}' , '{{$item_show['loket']}}')"
+                                            class="flex-grow bg-gray-400 hover:bg-gray-600 p-1 text-white rounded-sm text-sm">
+                                                Langkahi
+                                        </button>
+                                        <button wire:click="selesaikan_dan_next('{{ $item_show['active']->id }}' , '{{$item_show['loket']}}')"
+                                            class="flex-grow bg-green-500 hover:bg-green-700 p-1 text-white rounded-sm text-sm">
+                                                Selesai
+                                        </button>
+                                    </div>
+                                    
                                 @else
-                                    <button wire:click="selesaikan_dan_next('', '{{$item_show['loket']}}')"
-                                        class="bg-orange-500 hover:orange-700 p-1 text-white rounded-sm text-sm">
-                                            Selesai dan Berikutnya
+                                    <button wire:click="mulai_dan_next('{{$item_show['loket']}}')"
+                                        class="bg-yellow-500 hover:bg-yellow-700 p-1 text-white rounded-sm text-sm">
+                                            Mulai
                                     </button>
                                 @endif
                                 <button wire:click="reset_active('{{$item_show['loket']}}')"
@@ -61,16 +68,21 @@
                                     <thead>
                                         <tr class="bg-neutral-100 text-left font-bold">
                                             <th class="px-1 py-2 text-center border border-1 border-slate-500">No</th>
-                                            <th class="px-1 py-2 border border-1 border-slate-500">Nama</th>
+                                            <th class="px-1 py-2 border border-1 border-slate-500">Konsumen</th>
                                             <th class="px-1 py-2 border border-1 border-slate-500">Status</th>
-                                            <th class="px-1 py-2 border border-1 border-slate-500"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($item_show['daftar'] as  $item_antrian)
                                             <tr>
                                                 <td class="px-1 py-2 text-center border border-1 border-slate-500">{{$item_antrian->antrian}}</td>
-                                                <td class="px-1 py-2 border border-1 border-slate-500">{{$item_antrian->konsumen_nama}}</td>
+                                                <td class="px-1 py-2 border border-1 border-slate-500">
+                                                    <div class="">
+                                                        <div class="text-md">{{$item_antrian->konsumen_nama}}</div>
+                                                        <div class="text-sm text-neutral-500">{{$item_antrian->konsumen_email}}</div>
+                                                        <div class="text-sm text-primary-500">{{$item_antrian->layanan->nama_layanan}}</div>
+                                                    </div> 
+                                                </td>
                                                 <td class="px-1 py-2 border border-1 border-slate-500">
                                                 @if ($item_antrian->status == 0)
                                                     Belum
@@ -80,19 +92,6 @@
                                                     Selesai
                                                 @endif
                                                 </td>
-                                                 <td class="px-1 py-2 border border-1 border-slate-500 flex justify-center">
-                                                    @if ($item_antrian->status != 2)
-                                                        <button wire:click="selesaikan('{{$item_antrian->id}}', '{{$item_antrian->status}}')"
-                                                            class="bg-green-500 hover:green-700 p-1 text-white rounded-sm text-sm">
-                                                                Buat Selesai
-                                                        </button>
-                                                    @else
-                                                        <button wire:click="selesaikan('{{$item_antrian->id}}', '{{$item_antrian->status}}')"
-                                                            class="bg-slate-400 hover:slate-600 p-1 text-white rounded-sm text-sm">
-                                                                Buat Belum
-                                                        </button>
-                                                    @endif
-                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
