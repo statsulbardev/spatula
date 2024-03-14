@@ -29,7 +29,8 @@
                     <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
                 </div>
             @else
-                <table class="w-full table-auto mx-4">
+            <div class="px-4">
+                <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-3 pb-4 pt-6 text-center">No</th>
@@ -80,6 +81,8 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+                
             @endif
         </div>
     </section>
