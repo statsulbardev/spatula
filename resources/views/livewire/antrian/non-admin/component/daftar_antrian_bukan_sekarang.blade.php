@@ -60,7 +60,7 @@
                     <th class="px-6 pb-4 pt-6"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody wire:key="{{ rand() }}">
                 @foreach ($data as $item)
                     <tr class="focus-within:bg-grey-lightest hover:bg-gray-200 py-10">
                         <td class="border-t px-3 pb-4 items-center text-center">
@@ -70,7 +70,9 @@
                             <div class="px-6 pb-4 whitespace-nowrap">
                                 <div class="text-md">{{$item->satker->nama}}</div>
                                 <div class="mb-2 text-sm text-neutral-500">{{$item->layanan->nama_layanan}}</div>
+                                @if ($item->tanggal == $today_tanggal)
                                 <div class="text-sm text-primary-500">LOKET {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
+                                @endif
                             </div>
                         </td>
                         <td class="border-t px-6 pb-4 text-center">
@@ -84,7 +86,11 @@
                             @endif
                         </td>
                         <td class="border-t px-6 pb-4 items-center text-center">
-                            {{$item->antrian}}
+                            @if ($item->tanggal == $today_tanggal)
+                                {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}{{$item->antrian}}
+                            @else
+                                {{$item->antrian}}
+                            @endif
                         </td>
                         <td class="border-t px-6 pb-4 items-center text-center whitespace-nowrap">
                             {!!$item->deskripsi!!}

@@ -246,41 +246,6 @@ class Pemanggil extends Component
         }
     }
 
-    // public function selesaikan($id, $status)
-    // {
-    //     $user_unit_code  = auth()->user()->satker->kode_satker;
-    //     if($user_unit_code){
-    //         DB::beginTransaction();
-    //         try{ 
-    //             if($status == 2){
-    //                 d_antrian_satker::whereIn('status', ['2'])
-    //                     ->where('id', $id)
-    //                     ->where('kode_satker', $user_unit_code)
-    //                     ->where('tanggal', Carbon::today()->format('Y-m-d'))
-    //                     ->update([
-    //                         'status' => 0
-    //                     ]);
-    //             }else{
-    //                 d_antrian_satker::whereIn('status', ['0'])
-    //                     ->where('id', $id)
-    //                     ->where('kode_satker', $user_unit_code)
-    //                     ->where('tanggal', Carbon::today()->format('Y-m-d'))
-    //                     ->update([
-    //                         'status' => 2
-    //                     ]);
-    //             }
-    //             $this->set_antrian($this->setup_client_create(), $user_unit_code);
-    //             DB::commit();
-    //             $this->dispatch('notification', message: 'Berhasil menyimpan data.');
-    //         }catch(Exception $ex){
-    //             DB::rollBack();
-    //             Log::error($ex);
-    //             $this->dispatch('notification', message: 'Gagal menyimpan data.');
-    //         }
-            
-    //     }
-    // }
-
     public function rearrange()
     {   
         $user_unit_code  = auth()->user()->satker->kode_satker;

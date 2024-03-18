@@ -64,7 +64,7 @@ class DaftarAntrianBukanSekarang extends Component
         }
 
         return view('livewire.antrian.non-admin.component.daftar_antrian_bukan_sekarang', 
-            ['data' => $this->retrieveData(), 'master_key_value' => $master_key_value]);
+            ['data' => $this->retrieveData(), 'master_key_value' => $master_key_value, 'today_tanggal' => Carbon::today()->format('Y-m-d')]);
     }
 
     private function retrieveData() : Paginator
