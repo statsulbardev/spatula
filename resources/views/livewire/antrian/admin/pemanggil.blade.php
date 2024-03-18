@@ -18,7 +18,7 @@
 
     {{-- Content --}}
 
-    <section class="mb-6 mt-10">
+    <section wire:key="{{ rand() }}" class="mb-6 mt-10">
         <div wire:poll.keep-alive.300s class="overflow-x-auto rounded-md bg-white shadow mb-5">
             <div class="flex flex-wrap items-center justify-between p-4 pt-0 mt-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full p-3">
@@ -26,7 +26,7 @@
                         <div class="rounded-md drop-shadow-lg border border-stroke bg-slate-100 px-3 py-1">
                             <div class="text-sm font-bold">Loket {{$item_show['loket']}}</div>
                             @if ($item_show['active'])
-                                <div class="text-7xl font-bold w-full text-center my-3">{{$item_show['active']['antrian']}}</div>
+                                <div class="text-7xl font-bold w-full text-center my-3">{{$item_show['loket']}}{{$item_show['active']['antrian']}}</div>
                             @else
                                 <div class="text-7xl font-bold w-full text-center my-3">-</div>
                             @endif
@@ -87,7 +87,7 @@
                                     <tbody>
                                         @foreach ($item_show['daftar'] as  $item_antrian)
                                             <tr>
-                                                <td class="px-1 py-2 text-center border border-1 border-slate-500">{{$item_antrian->antrian}}</td>
+                                                <td class="px-1 py-2 text-center border border-1 border-slate-500">{{$item_show['loket']}}{{$item_antrian->antrian}}</td>
                                                 <td class="px-1 py-2 border border-1 border-slate-500">
                                                     <div class="">
                                                         <div class="text-md">{{$item_antrian->konsumen_nama}}</div>

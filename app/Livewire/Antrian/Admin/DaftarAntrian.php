@@ -7,6 +7,7 @@ use App\Models\m_antrian_satker_layanan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class DaftarAntrian extends Component
 {
@@ -50,7 +51,7 @@ class DaftarAntrian extends Component
         }
 
         return view('livewire.antrian.admin.daftar-antrian', [
-            'data' => $data_to_render, 'master_key_value' => $master_key_value
+            'data' => $data_to_render, 'master_key_value' => $master_key_value, 'today_tanggal' => Carbon::today()->format('Y-m-d')
         ])->layout('layouts.app');
     }
 

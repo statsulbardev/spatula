@@ -25,13 +25,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-wrap items-center justify-between p-4 pt-0">
+        <div wire:key="{{ rand() }}" class="flex flex-wrap items-center justify-between p-4 pt-0">
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
                 @foreach ($show_data as $item_show)
                     <div class="rounded-sm border border-stroke bg-slate-100 px-3 py-1">
                         <div class="text-sm font-bold">Loket {{$item_show['loket']}}</div>
                         @if ($item_show['active'])
-                            <div class="text-7xl font-bold w-full text-center my-3">{{$item_show['active']['antrian']}}</div>
+                            <div class="text-7xl font-bold w-full text-center my-3">{{$item_show['loket']}}{{$item_show['active']['antrian']}}</div>
                         @else
                             <div class="text-7xl font-bold w-full text-center my-3">-</div>
                         @endif

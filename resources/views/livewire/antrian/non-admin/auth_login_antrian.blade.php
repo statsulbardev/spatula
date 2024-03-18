@@ -7,7 +7,7 @@
                 <div class="mb-8" x-data="{ type: 0 }">
                     <div>
                         <label class="mb-2 block text-sm font-bold tracking-wider text-white" for="konsumen_email">Email</label>
-                        <input wire:model="konsumen_email" ref="input" class="form-input" type="email" placeholder="Email" autocapitalize="off" required>
+                        <input wire:model="konsumen_email" ref="input" class="form-input" type="email" placeholder="Email" autocapitalize="off" autofocus required>
                         @error('konsumen_email')
                             @include('components.notification.error_white')
                         @enderror
