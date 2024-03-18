@@ -82,6 +82,7 @@ class Pemanggil extends Component
                     ->first();
                 if($latest){
                     $latest->status = '1';
+                    $latest->antrian_pemanggil_counter = '1';
                     $latest->save();
                 }
                
@@ -107,7 +108,8 @@ class Pemanggil extends Component
                     ->where('kode_satker', $user_unit_code)
                     ->where('tanggal', Carbon::today()->format('Y-m-d'))
                     ->update([
-                        'status' => 2
+                        'status' => 2,
+                        'antrian_pemanggil_counter' => '0'
                     ]);
 
                 $arr_kode_layanan = m_antrian_satker_layanan::where('loket', $loket)
@@ -125,6 +127,7 @@ class Pemanggil extends Component
                     ->first();
                 if($new_active){
                     $new_active->status = '1';
+                    $new_active->antrian_pemanggil_counter = '1';
                     $new_active->save();
                 }
                
@@ -185,6 +188,7 @@ class Pemanggil extends Component
 
                     $yang_dilangkahi->antrian = $yang_dilangkahi->periode.$antrian_baru;
                     $yang_dilangkahi->antrian_internal = $antrian_internal_baru;
+                    $yang_dilangkahi->antrian_pemanggil_counter = '0';
                     $yang_dilangkahi->status = 0;
                     $yang_dilangkahi->save();
                 }
@@ -199,9 +203,38 @@ class Pemanggil extends Component
                     ->first();
                 if($new_active){
                     $new_active->status = '1';
+                    $new_active->antrian_pemanggil_counter = '1';
                     $new_active->save();
                 }
                
+                $this->set_antrian($this->setup_client_create(), $user_unit_code);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+        }
+    }
+
+    public function call_the_active($id)
+    {
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+        if($user_unit_code){
+            DB::beginTransaction();
+            try{                 
+                $yang_active = d_antrian_satker::whereIn('status', ['1'])
+                    ->where('id', $id)
+                    ->where('kode_satker', $user_unit_code)
+                    ->where('tanggal', Carbon::today()->format('Y-m-d'))
+                    ->first();
+
+                $antrian_counter =  intval( $yang_active->antrian_pemanggil_counter  ) + 1;
+
+                $yang_active->antrian_pemanggil_counter =  $antrian_counter;
+                $yang_active->save();
+
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');

@@ -68,9 +68,10 @@ return new class extends Migration
             $table->string('konsumen_tahun_lahir', 4);
             $table->date('tanggal');
             $table->string('status', 1)->default('0');
-            $table->string('periode', 1);
+            $table->string('periode', 1)->default('0'); //0 : Pagi dan 1 : Siang
             $table->string('antrian', 3);
             $table->string('antrian_internal', 3);
+            $table->string('antrian_pemanggil_counter', 3)->default('0');
             $table->string('konsumen_email', 255)->nullable();
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
             $table->text('deskripsi')->nullable();
