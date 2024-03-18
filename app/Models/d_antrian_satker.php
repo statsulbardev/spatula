@@ -36,6 +36,7 @@ class d_antrian_satker extends Model
         'periode',
         'antrian',
         'antrian_internal',
+        'antrian_pemanggil_counter',
         'konsumen_email',
         'konsumen_no_wa_telepon',
         'deskripsi',

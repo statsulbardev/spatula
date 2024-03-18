@@ -95,6 +95,7 @@ trait Helper_Firestore
                 'tanggal' => $item['tanggal'],
                 'status' => $item['status'],
                 'antrian' => $item['antrian'],
+                'antrian_counter' => $item['antrian_pemanggil_counter'],
             ];
         }
         $db_client->collection('antrian')->document($kode_satker)->set($data_dict);

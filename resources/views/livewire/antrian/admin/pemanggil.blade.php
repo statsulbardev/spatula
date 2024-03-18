@@ -46,15 +46,27 @@
                                     </div>
                                     
                                 @else
+                                    <p class="w-full text-center text-md">-</p>
                                     <button wire:click="mulai_dan_next('{{$item_show['loket']}}')"
                                         class="bg-yellow-500 hover:bg-yellow-700 p-1 text-white rounded-sm text-sm">
                                             Mulai
                                     </button>
                                 @endif
-                                <button wire:click="reset_active('{{$item_show['loket']}}')"
-                                    class="bg-gray-500 hover:gray-700 p-1 text-white rounded-sm text-sm mt-1">
-                                        Reset Antrian
-                                </button>
+                                <div class="w-full">
+                                    <div class="flex gap-x-1">
+                                        @if ($item_show['active'])
+                                            <button wire:click="call_the_active('{{ $item_show['active']->id }}')"
+                                                class="flex-grow bg-blue-500 hover:blue-700 p-1 text-white rounded-sm text-sm mt-1">
+                                                    Panggil Antrian
+                                            </button>
+                                        @endif
+                                    
+                                        <button wire:click="reset_active('{{$item_show['loket']}}')"
+                                            class="flex-grow bg-gray-500 hover:gray-700 p-1 text-white rounded-sm text-sm mt-1">
+                                                Reset Antrian
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             
                             <hr class="border-zinc-400">
