@@ -36,9 +36,11 @@
                             <div class="text-7xl font-bold w-full text-center my-3">-</div>
                         @endif
 
-                        <div class="w-full flex flex-col justify-center mx-3 my-2 mt-3">
+                        <div class="w-full flex flex-col justify-center my-2 mt-3">
                             @if ($item_show['active'])
                                 <p class="w-full text-center text-md">{{$item_show['active']['konsumen_nama']}}</p>
+                            @else
+                                <p class="w-full text-center text-md">-</p>
                             @endif
                         </div>
                         
@@ -49,7 +51,7 @@
                         @if (count($item_show['daftar']) > 0)
                             <hr class="border-zinc-400">
                             <p class="text-sm leading-tight text-justify my-1.5 mt-2 font-medium">Daftar Antrian:</p>
-                            <table class="w-full text-sm">
+                            <table class="w-full text-sm bg-white">
                                 <thead>
                                     <tr class="bg-neutral-100 text-left font-bold">
                                         <th class="px-1 py-2 text-center border border-1 border-slate-500">No</th>
@@ -59,7 +61,7 @@
                                 <tbody>
                                     @foreach ($item_show['daftar'] as  $item_antrian)
                                         <tr>
-                                            <td class="px-1 py-2 text-center border border-1 border-slate-500">{{$item_antrian->antrian}}</td>
+                                            <td class="px-1 py-2 text-center border border-1 border-slate-500">{{$item_show['loket']}}{{$item_antrian->antrian}}</td>
                                             <td class="px-1 py-2 border border-1 border-slate-500">{{$item_antrian->konsumen_nama}}</td>
                                         </tr>
                                     @endforeach
