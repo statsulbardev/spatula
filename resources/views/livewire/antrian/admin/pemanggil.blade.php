@@ -36,19 +36,19 @@
                                     <p class="w-full text-center text-md">{{$item_show['active']['konsumen_nama']}}</p>
                                     <div class="flex gap-x-1">
                                         <button wire:click="belum_selesaikan_dan_next('{{ $item_show['active']->id }}' , '{{$item_show['loket']}}')"
-                                            class="flex-grow bg-gray-400 hover:bg-gray-600 p-1 text-white rounded-sm text-sm">
+                                            class="flex-grow bg-gray-400 hover:bg-gray-600 p-1 text-white rounded-md text-sm">
                                                 Langkahi
                                         </button>
                                         <button wire:click="selesaikan_dan_next('{{ $item_show['active']->id }}' , '{{$item_show['loket']}}')"
-                                            class="flex-grow bg-green-500 hover:bg-green-700 p-1 text-white rounded-sm text-sm">
-                                                Selesai
+                                            class="flex-grow bg-green-500 hover:bg-green-700 p-1 text-white rounded-md text-sm">
+                                                Berikutnya
                                         </button>
                                     </div>
                                     
                                 @else
                                     <p class="w-full text-center text-md">-</p>
                                     <button wire:click="mulai_dan_next('{{$item_show['loket']}}')"
-                                        class="bg-yellow-500 hover:bg-yellow-700 p-1 text-white rounded-sm text-sm">
+                                        class="bg-yellow-500 hover:bg-yellow-700 p-1 text-white rounded-md text-sm">
                                             Mulai
                                     </button>
                                 @endif
@@ -56,13 +56,13 @@
                                     <div class="flex gap-x-1">
                                         @if ($item_show['active'])
                                             <button wire:click="call_the_active('{{ $item_show['active']->id }}')"
-                                                class="flex-grow bg-blue-500 hover:blue-700 p-1 text-white rounded-sm text-sm mt-1">
+                                                class="flex-grow bg-blue-500 hover:blue-700 p-1 text-white rounded-md text-sm mt-1">
                                                     Panggil Antrian
                                             </button>
                                         @endif
                                     
                                         <button wire:click="reset_active('{{$item_show['loket']}}')"
-                                            class="flex-grow bg-gray-500 hover:gray-700 p-1 text-white rounded-sm text-sm mt-1">
+                                            class="flex-grow bg-gray-500 hover:gray-700 p-1 text-white rounded-md text-sm mt-1">
                                                 Reset Antrian
                                         </button>
                                     </div>
