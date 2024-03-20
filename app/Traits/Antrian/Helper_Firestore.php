@@ -29,7 +29,7 @@ trait Helper_Firestore
     //     }
     // }
     
-    private $sync_with_firebase = true;
+    private $sync_with_firebase = false;
 
     function setup_client_create() :FirestoreClient
     {
