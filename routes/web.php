@@ -12,8 +12,10 @@ use App\Livewire\Report\Monthly;
 use App\Livewire\Report\Daily;
 use App\Livewire\Configuration\UserList;
 use App\Livewire\Configuration\CreateEditUser;
-use App\Livewire\Configuration\ServiceList;
-use App\Livewire\Configuration\CreateEditService;
+use App\Livewire\Configuration\Service\ServiceList;
+use App\Livewire\Configuration\Service\ServiceBuilder;
+use App\Livewire\Configuration\Service\UnitServiceList;
+use App\Livewire\Configuration\Service\UnitServiceBuilder;
 use App\Livewire\Configuration\UnitList;
 use App\Livewire\Configuration\CreateEditUnit;
 use App\Livewire\Dashboard\Dashboard;
@@ -30,14 +32,7 @@ use App\Livewire\Antrian\NonAdmin\AuthRegistrasiAntrian;
 use App\Livewire\Antrian\NonAdmin\DashboardAntrian;
 use App\Livewire\Antrian\NonAdmin\ItemLihatTambahUbah;
 use App\Livewire\Antrian\NonAdmin\LihatAntrian;
-use Livewire\Livewire;
 
-Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('/spatula/livewire/update', $handle);
-});
-// Livewire::setScriptRoute(function ($handle) {
-//     return Route::get('/spatula/livewire/livewire.js', $handle);
-// });
 
 Route::redirect('/', 'penilaian');
 
@@ -71,13 +66,20 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin|pimpinan']], funct
 });
 
 // Configuration
-Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
-    Route::get('/pengaturan/layanan', ServiceList::class)->name('daftar-layanan');
-    Route::get('/pengaturan/layanan/tambah', CreateEditService::class)->name('tambah-layanan');
-    Route::get('/pengaturan/layanan/{layanan}/edit', CreateEditService::class)->name('edit-layanan');
-    Route::get('/pengaturan/satker', UnitList::class)->name('daftar-satker');
-    Route::get('/pengaturan/satker/tambah', CreateEditUnit::class)->name('tambah-satker');
-    Route::get('/pengaturan/satker/{satker}/edit', CreateEditUnit::class)->name('edit-satker');
+Route::middleware(['auth', 'role:superadmin|admin'])->prefix('/pengaturan/')->group(function () {
+    Route::name('service.')->group(function() {
+        Route::get('layanan', ServiceList::class)->name('index');
+        Route::get('layanan/baru', ServiceBuilder::class)->name('create');
+        Route::get('layanan/{layanan}/edit', ServiceBuilder::class)->name('edit');
+    });
+
+    Route::name('unit.')->group(function() {
+
+    });
+
+    Route::get('satker', UnitList::class)->name('daftar-satker');
+    Route::get('satker/tambah', CreateEditUnit::class)->name('tambah-satker');
+    Route::get('satker/{satker}/edit', CreateEditUnit::class)->name('edit-satker');
 });
 
 // User Configuration
@@ -88,11 +90,11 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
 });
 
 
-Route::group(['middleware' => ['auth', 'role:admin|pj-antrian']], function () {
+Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar-layanan', DaftarLayanan::class)->name('antrian-daftar-layanan');
     Route::get('/pengaturan/antrian/config_view', Konfigurasi::class)->name('antrian-config-view');
 });
-Route::group(['middleware' => ['auth', 'role:admin|pj-antrian|operator-antrian']], function () {
+Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-antrian|operator-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar', DaftarAntrian::class)->name('antrian-daftar');
     // Route::get('/pengaturan/antrian/{id}/daftar', DaftarAntrianLihat::class)->name('antrian-daftar-lihat');
     Route::get('/pengaturan/antrian/caller', Pemanggil::class)->name('antrian-caller');
@@ -104,11 +106,11 @@ Route::get('/antrian/login', AuthLoginAntrian::class)->name('antrian-non-admin-a
 Route::get('/antrian/registrasi', AuthRegistrasiAntrian::class)->name('antrian-non-admin-auth-registrasi');
 Route::get('/antrian/logout', function () {
     session()->forget([
-        'check_have_antrian_auth', 
-        'konsumen_email', 
-        'konsumen_no_wa_telepon', 
-        'konsumen_tahun_lahir', 
-        'konsumen_nama', 
+        'check_have_antrian_auth',
+        'konsumen_email',
+        'konsumen_no_wa_telepon',
+        'konsumen_tahun_lahir',
+        'konsumen_nama',
         'is_registrasi',
         'kode_satker_active'
     ]);

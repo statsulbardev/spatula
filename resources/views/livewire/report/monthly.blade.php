@@ -8,18 +8,28 @@
         {{-- Menu --}}
         <ul class="flex flex-nowrap" role="tablist" data-te-nav-ref>
             <li class="border-1 rounded-l-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
-                <a href="rating-petugas-layanan"
+                <a
+                    href="rating-petugas-layanan"
                     class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
-                    data-te-toggle="pill" data-te-target="#rating-petugas-layanan" data-te-nav-active role="tab"
-                    aria-controls="rating-petugas-layanan" aria-selected="true">
+                    data-te-toggle="pill"
+                    data-te-target="#rating-petugas-layanan"
+                    data-te-nav-active
+                    role="tab"
+                    aria-controls="rating-petugas-layanan"
+                    aria-selected="true">
                     Rating Petugas Layanan
                 </a>
             </li>
             <li class="border-1 bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
-                <a href="#rating-layanan"
+                <a
+                    href="#rating-layanan"
                     class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
-                    data-te-toggle="pill" data-te-target="#rating-layanan" role="tab" aria-controls="rating-layanan"
-                    aria-selected="false">Rating Layanan
+                    data-te-toggle="pill"
+                    data-te-target="#rating-layanan"
+                    role="tab"
+                    aria-controls="rating-layanan"
+                    aria-selected="false">
+                    Rating Layanan
                 </a>
             </li>
             <li class="border-1 rounded-r-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
@@ -32,9 +42,6 @@
             </li>
         </ul>
     </div>
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow">

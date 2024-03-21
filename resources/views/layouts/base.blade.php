@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.css') }}">
 
+    @livewireStyles
     @vite(['resources/css/app.css'])
     @yield('styles')
 
@@ -32,7 +33,7 @@
     :class="{ 'dark text-bodydark bg-boxdark-2': darkMode === true }">
 
     @yield('content')
-    
+
     @vite(['resources/js/app.js'])
     @livewireScriptConfig
 
@@ -53,7 +54,7 @@
     </script>
 
     @stack('scripts')
-    
+
 </body>
 
 </html>

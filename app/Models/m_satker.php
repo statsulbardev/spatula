@@ -48,4 +48,9 @@ class m_satker extends Model
             'alamat'      => $this->alamat,
         ];
     }
+
+    public function layanan()
+    {
+        return $this->belongsToMany(m_layanan::class, 'm_satker_layanan');
+    }
 }

@@ -4,7 +4,7 @@
     @include('components.notification.flash')
     <div class="flex h-screen overflow-hidden">
         {{-- Sidebar --}}
-        @include('components.partials.sidebar')
+        <x-partials.sidebar.sidebar />
 
         {{-- Content Area --}}
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">

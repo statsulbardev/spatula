@@ -62,11 +62,11 @@
                         </x-partials.collapse-menu>
                     @endrole
 
-                    @role('admin|pj-antrian|operator-antrian')
+                    @role('superadmin|admin|pj-antrian|operator-antrian')
                         <x-partials.sidebar.collapse-menu page="Queue" icon="queue-list" label="Antrian"
                             :class="request()->is('pengaturan/antrian/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
                             :verticalborder="request()->is('pengaturan/antrian/*') ? '' : 'opacity-50'">
-                            @role('admin|pj-antrian')
+                            @role('superadmin|admin|pj-antrian')
                             <x-partials.sidebar.submenu :route="route('antrian-daftar-layanan')" title="Daftar Layanan"
                                 :path="request()->is('pengaturan/antrian/daftar-layanan') || request()->is('pengaturan/antrian/daftar-layanan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" />
 
@@ -90,15 +90,9 @@
                 @role('superadmin')
                     <div class="flex flex-col gap-4">
                         {{-- Pengaturan Layanan --}}
-                        <x-partials.sidebar.collapse-menu page="Service" icon="clipboard-document-list" label="Layanan"
-                            :class="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                            :verticalborder="request()->routeIs('service.*') ? '' : 'opacity-50'">
-                            <x-partials.sidebar.submenu :route="route('service.master.index')" title="Master"
-                                :path="request()->routeIs('service.master.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" />
-
-                            <x-partials.sidebar.submenu :route="route('service.unit.index')" title="Satker"
-                                :path="request()->routeIs('service.unit.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" />
-                        </x-partials.sidebar.collapse-menu>
+                        <x-partials.sidebar.menu :route="route('service.index')"
+                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" icon="clipboard-document-list"
+                            page="Service" title="Layanan" />
 
                         {{-- Pengaturan User --}}
                         <x-partials.sidebar.menu :route="route('daftar-pengguna')"
@@ -113,9 +107,9 @@
                 @endrole
 
                 @role('admin')
-                <x-partials.sidebar.menu :route="route('daftar-pengguna')"
-                    :path="request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                    icon="user-circle" page="User" title="Pengguna" />
+                    <x-partials.sidebar.menu :route="route('daftar-pengguna')"
+                        :path="request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                        icon="user-circle" page="User" title="Pengguna" />
                 @endrole
             </div>
         </nav>

@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('m_satker', function (Blueprint $table) {
-            $table->unique(['kode_satker']);
-        });
-        Schema::table('m_layanan', function (Blueprint $table) {
-            $table->unique(['kode_layanan']);
-        });
+        // Schema::table('m_satker', function (Blueprint $table) {
+        //     $table->unique(['kode_satker']);
+        // });
+        // Schema::table('m_layanan', function (Blueprint $table) {
+        //     $table->unique(['kode_layanan']);
+        // });
 
         Schema::create('m_antrian_satker_layanan', function (Blueprint $table) {
             $table->char('kode_satker',4);
@@ -45,7 +45,7 @@ return new class extends Migration
 
         Schema::create('d_antrian_satker_config_view', function (Blueprint $table) {
             $table->char('kode_satker',4);
-            $table->string('config_key', 50); //running text, 
+            $table->string('config_key', 50); //running text,
             $table->tinyInteger('config_index');
             $table->string('config_value', 1024);
             $table->timestamps();
@@ -76,7 +76,7 @@ return new class extends Migration
             $table->string('konsumen_no_wa_telepon', 15)->nullable();
             $table->text('deskripsi')->nullable();
             $table->string('sudah_nilai', 1)->default('0');
-            
+
             $table->index(['kode_satker']);
             $table->index(['kode_layanan']);
 

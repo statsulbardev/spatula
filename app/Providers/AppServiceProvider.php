@@ -3,9 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,10 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191);
+        URL::forceScheme('https');
+
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/spatula/livewire/update', $handle);
+        });
 
         Model::shouldBeStrict(! $this->app->isProduction());
-
-        // URL::forceScheme('https');
     }
 }

@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Livewire\Configuration;
+declare(strict_types=1);
+
+namespace App\Livewire\Configuration\Service;
 
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\m_layanan;
 use App\Repositories\ServiceRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class CreateEditService extends Component
+class ServiceBuilder extends Component
 {
     use HasRedirectUrl;
 
@@ -19,7 +21,10 @@ class CreateEditService extends Component
 
     /** @props */
     public m_layanan $layanan;
+
     public string $routeName;
+
+    public string $pageTitle;
 
     // Form Data
     public $f_kode;
@@ -27,49 +32,25 @@ class CreateEditService extends Component
     public $f_deskripsi;
     public $f_metode;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty() : array
+    public function render(): View
     {
-        return [
-            'route' => route('daftar-layanan'),
-            'label' => 'Daftar Layanan',
-        ];
-    }
-
-    /** @computed property : firstBreadcrumb */
-    public function getFirstBreadcrumbProperty()
-    {
-        if ($this->routeName === 'edit-layanan')
-            return [
-                'route' => route('edit-layanan', [ 'layanan' => $this->layanan->id]),
-                'label' => 'Edit Layanan',
-            ];
-    }
-
-    /** @computed property : secondBreadcrumb */
-    public function getSecondBreadcrumbProperty() : string
-    {
-        return $this->routeName === 'tambah-layanan'
-                ? 'Tambah Layanan'
-                : $this->layanan->nama_layanan;
-    }
-
-    public function render() : View
-    {
-        return view('livewire.configuration.create-edit-service')
+        return view('livewire.configuration.service.service-builder')
             -> layout('layouts.app');
     }
 
     public function mount(m_layanan $layanan)
     {
-        $this->routeName         = Route::currentRouteName();
+        $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'edit-layanan') {
+        if ($this->routeName === 'service.master.edit') {
             $this->layanan     = $layanan;
             $this->f_kode      = $layanan->kode_layanan;
             $this->f_nama      = $layanan->nama_layanan;
             $this->f_deskripsi = $layanan->deskripsi;
             $this->f_metode    = $layanan->metode;
+            $this->pageTitle   = "Edit Master Layanan";
+        } else {
+            $this->pageTitle = "Master Layanan Baru";
         }
     }
 

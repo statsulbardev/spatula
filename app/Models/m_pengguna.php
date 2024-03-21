@@ -37,11 +37,6 @@ class m_pengguna extends Authenticatable
         'remember_token'
     ];
 
-    public function satker()
-    {
-        return $this->hasOne(m_satker::class, 'kode_satker', 'kode_satker_id');
-    }
-
     public function toSearchableArray(): array
     {
         return [
@@ -50,5 +45,10 @@ class m_pengguna extends Authenticatable
             'email'    => $this->email,
             'bpsid'    => $this->bpsid,
         ];
+    }
+
+    public function satker()
+    {
+        return $this->hasOne(m_satker::class, 'kode_satker', 'kode_satker_id');
     }
 }

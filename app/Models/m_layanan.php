@@ -36,4 +36,9 @@ class m_layanan extends Model
             'deskripsi'    => $this->deskripsi,
         ];
     }
+
+    public function satker()
+    {
+        return $this->belongsToMany(m_satker::class, 'm_satker_layanan');
+    }
 }

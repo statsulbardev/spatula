@@ -4,8 +4,7 @@ namespace App\Livewire\Configuration;
 
 use App\Models\m_satker;
 use App\Traits\HasModelProcess;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 

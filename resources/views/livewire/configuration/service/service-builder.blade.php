@@ -1,11 +1,8 @@
-@section('title', ucwords(str_replace('-', ' ', $routeName)))
+@section('title', $pageTitle)
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => ucwords(str_replace('-', ' ', $routeName))])
 
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
+    <x-page.page-title :title="$pageTitle" />
 
     {{-- Content --}}
     <section class="mb-6 mt-10">
@@ -65,7 +62,7 @@
                                 'opt_item' => "<option value='1'>Luring (offline)</option>
                                                                                                                                                                                                     <option value='2'>Daring (online)</option>",
                                 'id' => 'metode',
-                                'value' => $routeName === 'tambah-layanan' ? null : $this->f_metode,
+                                'value' => $routeName === 'service.master.create' ? null : $this->f_metode,
                             ])
                             <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                                 clearTimeout(timeout);
@@ -98,7 +95,7 @@
                 </div>
                 <div class="flex items-center border-t border-gray-200 bg-zinc-200 px-8 py-4">
                     <button class="btn-primary ml-auto">
-                        {{ $routeName === 'tambah-layanan' ? 'Simpan' : 'Perbaharui' }}
+                        {{ $routeName === 'service.master.create' ? 'Simpan' : 'Perbaharui' }}
                     </button>
                 </div>
             </form>
