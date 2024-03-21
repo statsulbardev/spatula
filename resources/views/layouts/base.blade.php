@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.css') }}">
 
-
+    @vite(['resources/css/app.css'])
     @yield('styles')
 
     <style>
