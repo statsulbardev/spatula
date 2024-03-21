@@ -49,33 +49,15 @@
                        Masukkan Link video/Audio youtube.
                     </p>
                 </div>
-                <div wire:key="{{ rand() }}" class="w-full mt-3" x-data='{ data_playlist : @json($data_playlist) }'>
+                <div wire:key="{{ rand() }}" class="w-full mt-3" x-data='{ data_playlist : @json($data_playlist), playlist_type_value: "{!! $data_playlist_type !!}" }'>
                     <form wire:submit="submit_data_perubahan('video', Object.fromEntries(new FormData($event.target)))">
-                        <select name="playlist_type" class="form-input border-neutral-300 py-1">
-                            @if ($data_playlist_type == 'video_and_audio')
-                                <option value="video_and_audio" selected>Video Tampil dan Audio Bunyi</option>
-                            @else
-                                <option value="video_and_audio">Video Tampil dan Audio Bunyi</option>
-                            @endif
-
-                            @if ($data_playlist_type == 'video_and_no_audio')
-                                <option value="video_and_no_audio" selected>Video Tampil dan Audio Tidak Bunyi</option>
-                            @else
-                                <option value="video_and_no_audio">Video Tampil dan Audio Tidak Bunyi</option>
-                            @endif
-
-                            @if ($data_playlist_type == 'no_video_and_audio')
-                                <option value="no_video_and_audio" selected>Video Tidak Tampil dan Audio Bunyi</option>
-                            @else
-                                <option value="no_video_and_audio">Video Tidak Tampil dan Audio Bunyi</option>
-                            @endif
-
-                            @if ($data_playlist_type == 'no_video_and_no_audio')
-                                <option value="no_video_and_no_audio" selected>Video Tidak Tampil dan Audio Tidak Bunyi</option>
-                            @else
-                                <option value="no_video_and_no_audio">Video Tidak Tampil dan Audio Tidak Bunyi</option>
-                            @endif
+                        <select class="form-input border-neutral-300 py-1" x-model="playlist_type_value" >
+                            <option value="video_and_audio">Video Tampil dan Audio Bunyi</option>
+                            <option value="video_and_no_audio">Video Tampil dan Audio Tidak Bunyi</option>
+                            <option value="no_video_and_audio">Video Tidak Tampil dan Audio Bunyi</option>
+                            <option value="no_video_and_no_audio">Video Tidak Tampil dan Audio Tidak Bunyi</option>
                         </select>
+                        <input name="playlist_type" class="invisible" type="text" x-model="playlist_type_value">
                         <table class="w-full table-auto mt-3">
                             <thead>
                                 <tr class="bg-neutral-100 text-left font-bold">
@@ -124,20 +106,13 @@
                     </p>
                 </div>
                 <div wire:key="{{ rand() }}"  class="w-full mt-3">
-                    <form wire:submit="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))">
-                        <select name="footer_type" class="form-input border-neutral-300 py-1">
-                            @if ($data_footer_type == 'with_footer')
-                                <option value="with_footer" selected>Tampilkan Footer</option>
-                            @else
-                                <option value="with_footer">Tampilkan Footer</option>
-                            @endif
-
-                            @if ($data_footer_type == 'without_footer')
-                                <option value="without_footer" selected>Sembunyikan Footer</option>
-                            @else
-                                <option value="without_footer">Sembunyikan Footer</option>
-                            @endif
+                    <form wire:submit="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))" 
+                        x-data='{ footer_type_value: "{!! $data_footer_type !!}" }'>
+                        <select class="form-input border-neutral-300 py-1" x-model="footer_type_value">
+                            <option value="with_footer">Tampilkan Footer</option>
+                            <option value="without_footer">Sembunyikan Footer</option>
                         </select>
+                        <input name="footer_type" class="invisible" type="text" x-model="footer_type_value">
                         <div>
                             <input id="note_id_1" name="footer" class="form-input border-neutral-300 py-1 mt-3" type="hidden" value="{!! $data_footer !!}">
                             <div class="py-1 mt-3">
