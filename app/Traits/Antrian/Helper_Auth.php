@@ -20,6 +20,8 @@ trait Helper_Auth
 
     function auth_antrian_register($konsumen_email, $konsumen_no_wa_telepon, $konsumen_tahun_lahir, $konsumen_nama)
     {
+        $konsumen_email = strtolower($konsumen_email);
+        
         $effected_row = d_antrian_satker::where('konsumen_email', $konsumen_email)
             ->where('konsumen_no_wa_telepon', $konsumen_no_wa_telepon)
             ->where('konsumen_tahun_lahir', $konsumen_tahun_lahir)
@@ -45,6 +47,8 @@ trait Helper_Auth
 
     function auth_antrian_login($konsumen_email, $konsumen_no_wa_telepon, $konsumen_tahun_lahir)
     {
+        $konsumen_email = strtolower($konsumen_email);
+        
         $one_antrian = d_antrian_satker::where('konsumen_email', $konsumen_email)
             ->where('konsumen_no_wa_telepon', $konsumen_no_wa_telepon)
             ->where('konsumen_tahun_lahir', $konsumen_tahun_lahir)
