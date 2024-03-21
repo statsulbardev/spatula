@@ -41,10 +41,10 @@
             data-turbo-eval="false">
     </script> -->
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.js') }}"></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}"></script>
-    <script>
+    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
+    <script data-navigate-once>
         window.addEventListener('notification', event => {
             window.dispatchEvent(new CustomEvent('notify', {
                 detail: event.detail.message
