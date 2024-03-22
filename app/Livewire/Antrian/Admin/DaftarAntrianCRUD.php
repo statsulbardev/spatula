@@ -25,6 +25,14 @@ class DaftarAntrianCRUD extends Component
     public string $routeName;
 
     // Form Data
+    public $search_email;
+    public $search_no_wa_telepon;
+
+    public $konsumen_email;
+    public $konsumen_no_wa_telepon;
+    public $konsumen_tahun_lahir;
+    public $konsumen_nama;
+
     public $satker;
     public $f_kode_layanan;
     public $f_tanggal;
@@ -38,6 +46,10 @@ class DaftarAntrianCRUD extends Component
     public function rules() : array
     {
         return [
+            'konsumen_email' => 'required|email',
+            'konsumen_no_wa_telepon' => 'required|numeric|digits_between:10,13',
+            'konsumen_tahun_lahir' => 'required|numeric|digits:4|min:1900',
+            'konsumen_nama' => 'required|string',
             'f_kode_layanan'  => 'required',
             'f_tanggal'       => 'required|date',
             'f_periode'       => 'required',
@@ -48,6 +60,17 @@ class DaftarAntrianCRUD extends Component
     public function messages() : array
     {
         return [
+            'konsumen_email.required' => 'Password tidak boleh kosong',
+            'konsumen_email.email'      => 'Password minimal 5 karakter',
+            'konsumen_no_wa_telepon.required' => 'No hp tidak boleh kosong',
+            'konsumen_no_wa_telepon.numeric'      => 'No hp hanya boleh angka',
+            'konsumen_no_wa_telepon.digits_between' => 'No hp tidak sesuai format',
+            'konsumen_tahun_lahir.required' => 'Tahun lahir tidak boleh kosong',
+            'konsumen_tahun_lahir.numeric'      => 'Tahun lahir hanya boleh angka',
+            'konsumen_tahun_lahir.digits' => 'Tahun lahir tidak sesuai',
+            'konsumen_tahun_lahir.min' => 'Tahun lahir tidak sesuai',
+            'konsumen_nama.required' => 'Nama tidak boleh kosong',
+            'konsumen_nama.string' => 'Nama adalah text',
             'f_kode_layanan.required'  => 'Layanan tidak boleh kosong',
             'f_tanggal.required'       => 'Tanggal tidak boleh kosong',
             'f_tanggal.date'           => 'Tanggal tidak sesuai format',
@@ -140,6 +163,32 @@ class DaftarAntrianCRUD extends Component
             ->layout('layouts.app');
     }
 
+    public function search_konsumen()
+    {
+        if(! ($this->search_email || $this->search_no_wa_telepon )){
+            $this->dispatch('notification', message: 'Informasi gagal mendapatkan data.');
+        }
+
+        $search_query = d_antrian_satker::query();
+        if($this->search_email){
+            $search_query->where('konsumen_email', strtolower($this->search_email));
+        }
+        if($this->search_no_wa_telepon){
+            $search_query->where('konsumen_no_wa_telepon', $this->search_no_wa_telepon);
+        }
+
+        $search_konsumen = $search_query->first();
+        if($search_konsumen){
+            $this->konsumen_email = $search_konsumen->konsumen_email;
+            $this->konsumen_no_wa_telepon = $search_konsumen->konsumen_no_wa_telepon;
+            $this->konsumen_nama = $search_konsumen->konsumen_nama;
+            $this->konsumen_tahun_lahir = $search_konsumen->konsumen_tahun_lahir;
+            $this->dispatch('notification', message: 'Informasi berhasil mendapatkan data.');
+        }else{
+            $this->dispatch('notification', message: 'Informasi gagal mendapatkan data.');
+        }
+    }
+
     public function submitData()
     {   
         if($this->routeName == 'antrian-daftar-lihat'){
@@ -151,6 +200,16 @@ class DaftarAntrianCRUD extends Component
 
         // Validate the field.
         $this->validate();
+
+        if(Carbon::today()->year - $this->konsumen_tahun_lahir <= 10){
+            $this->addError('konsumen_tahun_lahir', 'Tahun lahir terlalu awal');
+            return;
+        }
+
+        if( ! (str_starts_with($this->konsumen_no_wa_telepon, '0') or str_starts_with($this->konsumen_no_wa_telepon, '62'))){
+            $this->addError('konsumen_no_wa_telepon', 'No hp tidak sesuai format');
+            return;
+        }
 
         if($this->f_tanggal){
             if(str_contains($this->f_tanggal, $this->disable_date)){
