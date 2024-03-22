@@ -152,7 +152,9 @@ class ItemLihatTambahUbah extends Component
             );
 
         $this->disable_date = '';
-        $config_date = d_antrian_satker_config_view::where('config_key', 'tanggal_disabled')->first();
+        $config_date = d_antrian_satker_config_view::where('config_key', 'tanggal_disabled')
+            ->where('kode_satker', $this->f_kode_satker)
+            ->first();
         if($config_date){
             $this->disable_date = $config_date->config_value;
         }

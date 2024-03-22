@@ -126,10 +126,15 @@ class DaftarAntrianCRUD extends Component
 
         $this->routeName      = Route::currentRouteName();
         $this->atrian_satker  = $antrian_satker;
-        if ($this->routeName === 'antrian-non-admin-item-lihat' || $this->routeName === 'antrian-non-admin-item-edit') {
+        if ($this->routeName === 'antrian-daftar-lihat' || $this->routeName === 'antrian-daftar-ubah') {
             if($this->satker->kode_satker != $antrian_satker->kode_satker){
                 $this->redirectRoute('antrian-daftar', navigate: true);
             }
+
+            $this->konsumen_email = $antrian_satker->konsumen_email;
+            $this->konsumen_no_wa_telepon = $antrian_satker->konsumen_no_wa_telepon;
+            $this->konsumen_tahun_lahir = $antrian_satker->konsumen_tahun_lahir;
+            $this->konsumen_nama = $antrian_satker->konsumen_nama;
 
             $satker_layanan = m_antrian_satker_layanan::where('kode_satker', $antrian_satker->kode_satker)
                                 ->where('kode_layanan', $antrian_satker->kode_layanan)
@@ -155,6 +160,14 @@ class DaftarAntrianCRUD extends Component
                     })
                     ->toArray()
             );
+
+        $this->disable_date = '';
+        $config_date = d_antrian_satker_config_view::where('config_key', 'tanggal_disabled')
+            ->where('kode_satker', $this->satker->kode_satker)
+            ->first();
+        if($config_date){
+            $this->disable_date = $config_date->config_value;
+        }
     }
 
     public function render() : View
@@ -265,28 +278,28 @@ class DaftarAntrianCRUD extends Component
         $antrian_internal_baru +=1;
 
 
-        if($this->routeName == 'antrian-non-admin-item-tambah'){
+        if($this->routeName == 'antrian-daftar-tambah'){
             DB::beginTransaction();
             try{
                 $baru = new d_antrian_satker();
                 $baru->id = (string) Uuid::generate();
                 $baru->kode_satker = $this->satker->kode_satker;
                 $baru->kode_layanan = $kode_layanan;
-                $baru->konsumen_nama =  session('konsumen_nama', null);
-                $baru->konsumen_tahun_lahir =  session('konsumen_tahun_lahir', null);
+                $baru->konsumen_nama =  $this->konsumen_nama;
+                $baru->konsumen_tahun_lahir =  $this->konsumen_tahun_lahir;
                 $baru->tanggal = $this->f_tanggal;
                 $baru->status = 0;
                 $baru->periode = $this->f_periode;
                 $baru->antrian = $this->f_periode.$antrian_baru;
                 $baru->antrian_internal = $antrian_internal_baru;
-                $baru->konsumen_email = session('konsumen_email', null);
-                $baru->konsumen_no_wa_telepon = session('konsumen_no_wa_telepon', null);
+                $baru->konsumen_email = $this->konsumen_email;
+                $baru->konsumen_no_wa_telepon = $this->konsumen_no_wa_telepon;
                 $baru->deskripsi = $this->f_deskripsi;
                 $baru->sudah_nilai = 0;
                 $baru->save();
                 
                 DB::commit();
-                $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
+                $this->redirectRoute('antrian-daftar', navigate: true);
                 $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
             }catch(Exception $ex){
                 DB::rollBack();
@@ -296,7 +309,7 @@ class DaftarAntrianCRUD extends Component
 
             return;
         }
-        if($this->routeName == 'antrian-non-admin-item-edit')
+        if($this->routeName == 'antrian-daftar-ubah')
         {
             DB::beginTransaction();
             try{
@@ -310,7 +323,7 @@ class DaftarAntrianCRUD extends Component
                 $this->atrian_satker->save();
                 
                 DB::commit();
-                $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
+                $this->redirectRoute('antrian-daftar', navigate: true);
                 $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
             }catch(Exception $ex){
                 DB::rollBack();
