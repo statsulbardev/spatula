@@ -106,7 +106,7 @@
                                     ])
                                 </a>
                                 @if ($item->tanggal >= \Carbon\Carbon::today()->format('Y-m-d'))
-                                    <a x-data x-tooltip.raw="Edit Antrian" class="text-green-400 hover:text-green-500"
+                                    <a x-data x-tooltip.raw="Ubah Antrian" class="text-green-400 hover:text-green-500"
                                         href="{{ route('antrian-non-admin-item-edit', ['antrian_satker' => $item->id]) }}"
                                         wire:navigate>
                                         @include('components.icon', [

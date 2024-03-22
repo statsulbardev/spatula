@@ -1,4 +1,4 @@
-@section('title', 'Login Antrian')
+@section('title', 'Registrasi Antrian')
 
 <div class="overflow-hidden rounded-lg">
     <div class="w-full max-w-md">

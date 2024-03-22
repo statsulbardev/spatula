@@ -23,10 +23,10 @@ class DaftarAntrian extends Component
         ];
     }
 
-    // public function mount()
-    // {
-    //     m_a
-    // }
+    public function mount()
+    {
+        $this->tanggal_filter = Carbon::today()->format('Y-m-d');
+    }
 
     public function render() : View
     {

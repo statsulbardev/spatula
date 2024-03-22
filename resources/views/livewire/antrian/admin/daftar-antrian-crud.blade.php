@@ -1,61 +1,30 @@
-@section('title', 'Daftar Layanan Antrian')
+@if ($this->routeName == 'antrian-daftar-tambah')
+    @section('title', 'Tambah Antrian')
+@elseif ($this->routeName == 'antrian-daftar-ubah')
+    @section('title', 'Ubah Antrian')
+@elseif ($this->routeName == 'antrian-daftar-lihat')
+    @section('title', 'Lihat Antrian')
+@endif
 
-<div class="w-full lg:w-3/4 px-4 md:px-6 2xl:px-11 py-8">
+<div class="px-4 md:px-6 2xl:px-11 py-8">
+    {{-- Header --}}
 
-    <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
-        @if ($this->routeName == 'antrian-non-admin-item-tambah')
-            @include('components.page.page-title', ['title' => 'Tambah Antrian'])
-        @elseif ($this->routeName == 'antrian-non-admin-item-edit')
-            @include('components.page.page-title', ['title' => 'Ubah Antrian'])
-        @elseif ($this->routeName == 'antrian-non-admin-item-lihat')
-            @include('components.page.page-title', ['title' => 'Lihat Antrian'])
-        @endif
-        
-        {{-- Antrian Baru --}}
-    </div>
+    @if ($this->routeName == 'antrian-daftar-tambah')
+        @include('components.page.page-title', ['title' => 'Tambah Antrian'])
+    @elseif ($this->routeName == 'antrian-daftar-ubah')
+        @include('components.page.page-title', ['title' => 'Ubah Antrian'])
+    @elseif ($this->routeName == 'antrian-daftar-lihat')
+        @include('components.page.page-title', ['title' => 'Lihat Antrian'])
+    @endif
+
 
     {{-- Breadcrumb --}}
     @include('components.partials.breadcrumb')
-    <div>
-        <form wire:submit.prevent="submitData">
-            <div class="mt-4 rounded-t-lg border-l border-r border-t border-gray-200 bg-white py-4 shadow-sm">
-                {{-- Unit Kerja --}}
-                <div class="flex flex-wrap p-6">
-                    <div class="w-full lg:w-1/3">
-                        <h1 class="text-xl lg:text-2xl tracking-wide">Unit Kerja</h1>
-                        <p class="mt-4 leading-6 lg:pr-24 text-md lg:text-base text-justify">
-                            Pilih unit kerja yang ingin dikunjungi.
-                        </p>
-                    </div>
-                    <div class="w-full lg:w-2/3">
-                        <div class="my-6">
-                            {{-- Unit Kerja yang Dinilai --}}
-                            @include('components.input.select-realtime', [
-                                'label' => 'Unit Kerja',
-                                'model' => 'f_kode_satker',
-                                'opt_title' => 'Pilih Unit Kerja ...',
-                                'opt_item' => $this->units,
-                                'value' => $this->f_kode_satker,
-                                'id' => 'unit_kerja',
-                                'prop' => in_array($routeName, ["antrian-non-admin-item-lihat", "antrian-non-admin-item-edit"]) ? "disabled" : "",
-                            ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })" x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('f_kode_satker')
-                                    @include('components.notification.error')
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                {{-- Informasi Pengguna Layanan --}}
-                @if ($this->f_kode_satker)
-                    <hr>
+    {{-- Content --}}
+    <section class="mb-6 mt-10">
+        <div class="w-full overflow-x-auto rounded bg-white shadow">
+            <form wire:submit.prevent="submitData">
                     <div class="flex flex-wrap p-6">
                         <div class="w-full lg:w-1/3">
                             <h1 class="text-xl lg:text-2xl tracking-wide">Informasi Layanan</h1>
@@ -72,9 +41,9 @@
                                     </label>
                                     <select id="layanan_id" wire:model="f_kode_layanan" 
                                         class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
-                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat", "antrian-non-admin-item-edit"]) ? "disabled" : "" }}>
+                                        {{ in_array($routeName, ["antrian-daftar-lihat", "antrian-daftar-ubah"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Layanan ...</option>
-                                        {!!$layanan_satker!!}
+                                        {!!$this->layanan_satker!!}
                                     </select>
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -96,7 +65,7 @@
                                     <input type='date' class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
                                         type="text" id="tanggal_id" wire:model="f_tanggal"
                                         placeholder="Tanggal Kunjungan" 
-                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}/>
+                                        {{ in_array($routeName, ["antrian-daftar-lihat"]) ? "disabled" : "" }}/>
 
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -117,7 +86,7 @@
                                     </label>
                                     <select id="periode_id" wire:model="f_periode" 
                                         class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900" 
-                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
+                                        {{ in_array($routeName, ["antrian-daftar-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Periode ...</option>
                                         <option value="0">Jam Pertama (Sebelum Istirahat)</option>
                                         <option value="1">Jam Kedua (Setelah Istirahat)</option>
@@ -135,8 +104,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- Saran Pengaduan --}}
                     <hr>
                     <div wire:key="saran_pengaduan" class="flex flex-wrap p-6">
                         <div class="lg:w-1/3">
@@ -147,7 +114,7 @@
                         </div>
                         <div class="w-full lg:w-2/3">
                             <div class="my-6">
-                                @if (in_array($routeName, ["antrian-non-admin-item-tambah", "antrian-non-admin-item-edit"]))
+                                @if (in_array($routeName, ["antrian-daftar-tambah", "antrian-daftar-ubah"]))
                                     @include('components.input.text-area', [
                                         'model' => 'f_deskripsi',
                                         'label' => 'Deskripsi Tujuan',
@@ -157,7 +124,7 @@
                                         {!!$this->f_deskripsi!!}
                                     </div>
                                 @endif
-                               
+                            
 
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                                     clearTimeout(timeout);
@@ -171,27 +138,22 @@
                             </div>
                         </div>
                     </div>
-                @endif
-              
-            </div>
-            
-            @if (in_array($routeName, ["antrian-non-admin-item-tambah", "antrian-non-admin-item-edit"]))
-                <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
-                    <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Batal</a>
-                        @if ($this->f_kode_satker)
-                            <button type="submit" class="btn-primary ml-auto">Simpan</button>
-                        @endif
-                </div>
-            @else
-                <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
-                    <div class="flex-grow"></div>
-                    <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Tutup</a>
-                </div>
-            @endif
-            
-        </form>
-    </div>
-    
-    {{-- Content --}}
-</div>
 
+                
+                
+                @if (in_array($routeName, ["antrian-daftar-tambah", "antrian-daftar-ubah"]))
+                    <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
+                        <a href="{{route('antrian-daftar')}}" wire:navigate type="button" class="btn-secondary" >Batal</a>
+                        <button type="submit" class="btn-primary ml-auto">Simpan</button>
+                    </div>
+                @else
+                    <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
+                        <div class="flex-grow"></div>
+                        <a href="{{route('antrian-daftar')}}" wire:navigate type="button" class="btn-secondary" >Tutup</a>
+                    </div>
+                @endif
+                
+            </form>
+        </div>
+    </section>
+</div>
