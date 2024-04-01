@@ -1,14 +1,13 @@
 @section('title', 'Pengaturan Satker')
 
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    @include('components.notification.flash')
 
     <div class="flex-no-wrap flex justify-between">
         {{-- Header --}}
         @include('components.page.page-title', ['title' => 'Daftar Satuan Kerja'])
 
         {{-- Satker Baru --}}
-        <a href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}"
+        <a href="{{ url(env('APP_URL') . '/pengaturan/satker/tambah') }}" wire:navigate
             class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
             @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
             <span class="ml-2 text-sm">Tambah Satker</span>
@@ -30,7 +29,7 @@
                     {{-- @role('admin')
                     <div class="pr-6 ml-6 border-r-2 border-zinc-200">
                         <div wire:ignore class="w-80">
-                            <select wire:model="selectedUnit" data-te-select-init data-te-select-filter="true"
+                            <select wire:model.live="selectedUnit" data-te-select-init data-te-select-filter="true"
                                 data-te-select-size="lg">
                                 <option value="null" hidden selected>Pilih Unit Kerja...</option>
                                 @foreach ($units as $unit)
@@ -47,13 +46,15 @@
                 </div>
             </div>
             @if ($offices->isEmpty())
-                <img src="{{ asset('files/404.svg') }}" class="w-full border-t">
+                <div class="w-full flex  justify-center p-5">
+                    <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
+                </div>
             @else
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th class="px-6 pb-4 pt-6">
-                                <input type="checkbox" class="h-5 w-5" wire:model="selectAll">
+                                <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                             </th>
                             <th class="px-6 pb-4 pt-6">Kode Satker</th>
                             <th class="px-6 pb-4 pt-6">Nama Satker</th>
@@ -67,38 +68,39 @@
                         @foreach ($offices as $office)
                             <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
                                 <td class="w-2 border-t px-6 py-4">
-                                    <input type="checkbox" class="h-5 w-5" wire:model="selectProduct" value="{{ $office->id }}">
+                                    <input type="checkbox" class="h-5 w-5" wire:model.live="selectProduct" value="{{ $office->id }}">
                                 </td>
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $office->kode_satker }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
+                                    <p class="items-center py-4 pl-6">
                                         {{ $office->nama }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $office->alamat }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $office->web }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <p class="py-4 pl-6">
                                         {{ $office->telepon }}
-                                    </span>
+                                    </p>
                                 </td>
                                 <td class="w-px border-t">
-                                    <span class="mr-2 flex items-center space-x-2 py-2">
+                                    <div class="mr-2 flex items-center space-x-2 py-2">
                                         <a x-data x-tooltip.raw="Edit Satker"
                                             href="{{ url(env('APP_URL') . '/pengaturan/satker/' . $office->id . '/edit') }}"
-                                            class="cursor-pointer text-violet-500 hover:text-violet-600">
+                                            class="cursor-pointer text-violet-500 hover:text-violet-600"
+                                            wire:navigate>
                                             @include('components.icon', [
                                                 'name' => 'pencil-square',
                                                 'size' => 'w-5 h-5',
@@ -112,7 +114,7 @@
                                                 'size' => 'w-5 h-5',
                                             ])
                                         </button>
-                                    </span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -126,24 +128,3 @@
     {{-- Delete Confirmation Modal --}}
     @include('components.input.delete-confirmation')
 </div>
-
-@push('scripts')
-    @if (session()->has('messages'))
-        <script>
-            window.onload = function() {
-                window.dispatchEvent(new CustomEvent('notify', {
-                    detail: '{{ session('messages') }}'
-                }));
-            }
-        </script>
-
-        {{ session()->forget('messages') }}
-    @endif
-    <script>
-        window.addEventListener('notification', event => {
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: event.detail.message
-            }));
-        })
-    </script>
-@endpush

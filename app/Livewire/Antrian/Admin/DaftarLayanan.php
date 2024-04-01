@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Livewire\Antrian\Admin;
+
+use App\Models\d_antrian_satker;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+use Livewire\Component;
+use Illuminate\Support\Facades\Log;
+use Exception;
+
+use App\Models\m_antrian_satker_layanan;
+use App\Traits\Antrian\Helper_Firestore;
+
+class DaftarLayanan extends Component
+{
+    use Helper_Firestore;
+
+    /** @computed property : rootBreadcrumb */
+    public function getRootBreadcrumbProperty()
+    {
+        return [
+            'route' => route('antrian-daftar-layanan'),
+            'label' => 'Daftar Layanan Antrian'
+        ];
+    }
+
+    public function render() : View
+    {
+        $data_to_render = $this->retrieveData();
+
+        return view('livewire.antrian.admin.daftar-layanan', [
+            'data' => $data_to_render
+        ])->layout('layouts.app');
+    }
+
+    public function changeValueActive($kode_satker, $kode_layanan, $kondisi_baru)
+    {
+        if(in_array($kondisi_baru, ['0', '1'])){
+            DB::beginTransaction();
+            try{  
+                m_antrian_satker_layanan::where('kode_satker', $kode_satker)
+                    ->where('kode_layanan', $kode_layanan)
+                    ->update(['is_active' => $kondisi_baru]);
+                d_antrian_satker::rearrange($kode_satker);
+                $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
+                $this->set_antrian($this->setup_client_create(), $kode_satker);
+                DB::commit();
+                $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+            }catch(Exception $ex){
+                DB::rollBack();
+                Log::error($ex);
+                $this->dispatch('notification', message: 'Gagal menyimpan data.');
+            }
+           
+        }
+    }
+
+    public function changeValueLoket($kode_satker, $kode_layanan, $kondisi_baru)
+    {
+        if(in_array($kondisi_baru, ['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P',
+            'Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'])){
+                DB::beginTransaction();
+                try{  
+                    m_antrian_satker_layanan::where('kode_satker', $kode_satker)
+                        ->where('kode_layanan', $kode_layanan)
+                        ->update(['loket' => $kondisi_baru]);
+                    d_antrian_satker::rearrange($kode_satker);
+                    $this->set_daftar_layanan($this->setup_client_create(), $kode_satker);
+                    $this->set_antrian($this->setup_client_create(), $kode_satker);
+                    DB::commit();
+                    $this->dispatch('notification', message: 'Berhasil menyimpan data.');
+                }catch(Exception $ex){
+                    DB::rollBack();
+                    Log::error($ex);
+                    $this->dispatch('notification', message: 'Gagal menyimpan data.');
+                }
+        }
+    }
+
+    private function retrieveData()
+    {
+        $user_unit_code  = auth()->user()->satker->kode_satker;
+
+        return m_antrian_satker_layanan::with(['satker', 'layanan'])
+                ->where('kode_satker', $user_unit_code)
+                ->get();
+    }
+
+}

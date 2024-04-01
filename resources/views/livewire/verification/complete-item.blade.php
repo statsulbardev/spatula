@@ -1,14 +1,8 @@
-@section('title', 'Pengguna Layanan')
-
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Hasil Verifikasi ' . $done->nama_konsumen])
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
+    <x-page.page-title title="Hasil Verifikasi {{ $done->nama_konsumen }}" />
 
     {{-- Informasi Pengguna Layanan --}}
-    <section>
+    <section class="mb-6 mt-10">
         <div class="h-full">
             <!-- Table -->
             <div class="mx-auto w-full rounded-md border-gray-200 bg-white shadow-sm">
@@ -45,28 +39,24 @@
                     <tr>
                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Rating Petugas</td>
                         <td class="font-semibold">:</td>
-                        <td class="flex py-4">
-                            @if (!is_null($done->rating_petugas))
-                                @for ($i = 0; $i < 5; $i++)
-                                    @if ($i < $done->rating_petugas)
+                        <td class="align-middle">
+                            <div class="flex">
+                                @if (!is_null($done->rating_petugas))
+                                    @for ($i = 0; $i < 5; $i++)
+                                        @if ($i < $done->rating_petugas)
+                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                <x-icons.hero name="star-solid" size="w-5 h-5" />
+                                            </span>
+                                        @else
                                         <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                            @include('components.icon', [
-                                                'name' => 'star-solid',
-                                                'size' => 'w-5 h-5',
-                                            ])
+                                            <x-icons.hero name="star-outline" size="w-5 h-5" />
                                         </span>
-                                    @else
-                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                            @include('components.icon', [
-                                                'name' => 'star-outline',
-                                                'size' => 'w-5 h-5',
-                                            ])
-                                        </span>
-                                    @endif
-                                @endfor
-                            @else
-                                -
-                            @endif
+                                        @endif
+                                    @endfor
+                                @else
+                                    -
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -77,28 +67,24 @@
                     <tr>
                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Rating Layanan</td>
                         <td class="font-semibold">:</td>
-                        <td class="flex py-4">
-                            @if (!is_null($done->rating_layanan))
-                                @for ($i = 0; $i < 5; $i++)
-                                    @if ($i < $done->rating_layanan)
-                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                            @include('components.icon', [
-                                                'name' => 'star-solid',
-                                                'size' => 'w-5 h-5',
-                                            ])
-                                        </span>
-                                    @else
-                                        <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                            @include('components.icon', [
-                                                'name' => 'star-outline',
-                                                'size' => 'w-5 h-5',
-                                            ])
-                                        </span>
-                                    @endif
-                                @endfor
-                            @else
-                                -
-                            @endif
+                        <td class="align-middle">
+                            <div class="flex">
+                                @if (!is_null($done->rating_layanan))
+                                    @for ($i = 0; $i < 5; $i++)
+                                        @if ($i < $done->rating_layanan)
+                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                <x-icons.hero name="star-solid" size="w-5 h-5" />
+                                            </span>
+                                        @else
+                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
+                                                <x-icons.hero name="star-outline" size="w-5 h-5" />
+                                            </span>
+                                        @endif
+                                    @endfor
+                                @else
+                                    -
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -125,7 +111,11 @@
                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Saran Pengaduan</td>
                         <td class="font-semibold">:</td>
                         <td>
-                            <p>{{ $done->saran_pengaduan ?? '-' }}</p>
+                            @if ($done->saran_pengaduan)
+                                {!! $done->saran_pengaduan !!}
+                            @else
+                                -
+                            @endif
                         </td>
                 </div>
                 <tr>
@@ -181,7 +171,5 @@
                 </table>
             </div>
         </div>
-</div>
-</div>
-</section>
+    </section>
 </div>

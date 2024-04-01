@@ -1,15 +1,7 @@
-@section('title', 'Pengaduan Pengguna Layanan')
-
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    {{-- Header --}}
-    @include('components.page.page-title', [
-        'title' => 'Verifikasi Pengaduan Layanan Dari ' . $complaint->nama_konsumen,
-    ])
+    <x-page.page-title title="Verifikasi Hasil Pengaduan {{ $complaint->nama_konsumen }}" />
 
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
-
-    <section>
+    <section class="mb-6 mt-10">
         <div class="h-full">
             <!-- Table -->
             <div class="mx-auto w-full rounded-md border-gray-200 bg-white shadow-sm">
@@ -126,7 +118,11 @@
                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Saran Pengaduan</td>
                         <td class="font-semibold">:</td>
                         <td>
-                            <p>{{ $complaint->saran_pengaduan ?? '-' }}</p>
+                            @if ($complaint->saran_pengaduan)
+                                {!! $complaint->saran_pengaduan !!}
+                            @else
+                                -
+                            @endif
                         </td>
                 </div>
                 <tr>
@@ -175,7 +171,5 @@
                 </table>
             </div>
         </div>
-</div>
-</div>
-</section>
+    </section>
 </div>

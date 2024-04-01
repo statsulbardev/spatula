@@ -1,31 +1,42 @@
-@section('title', 'Laporan Bulanan')
-
 <div class="px-4 md:px-6 2xl:px-11 py-8">
     <div class="flex flex-none justify-between">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Laporan Bulanan Tahun ' . $selectedYear])
+        <x-page.page-title title="Laporan Bulanan Tahun {{ $selectedYear }}" />
 
         {{-- Menu --}}
         <ul class="flex flex-nowrap" role="tablist" data-te-nav-ref>
-            <li class="border-1 rounded-l-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
-                <a href="rating-petugas-layanan"
-                    class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
-                    data-te-toggle="pill" data-te-target="#rating-petugas-layanan" data-te-nav-active role="tab"
-                    aria-controls="rating-petugas-layanan" aria-selected="true">
+            <li class="border-l-2 border-t-2 border-b-2 border-primary-100 drop-shadow-sm rounded-l-md bg-white px-4 py-2 leading-tight hover:bg-gray-300" role="presentation">
+                <a
+                    href="rating-petugas-layanan"
+                    class="align-middle text-sm text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 data-[te-nav-active]:font-bold"
+                    data-te-toggle="pill"
+                    data-te-target="#rating-petugas-layanan"
+                    data-te-nav-active
+                    role="tab"
+                    aria-controls="rating-petugas-layanan"
+                    aria-selected="true">
                     Rating Petugas Layanan
                 </a>
             </li>
-            <li class="border-1 bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
-                <a href="#rating-layanan"
-                    class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
-                    data-te-toggle="pill" data-te-target="#rating-layanan" role="tab" aria-controls="rating-layanan"
-                    aria-selected="false">Rating Layanan
+            <li class="border-l-2 border-t-2 border-b-2 border-primary-100 drop-shadow-sm bg-white px-4 py-2 font-medium leading-tight hover:bg-gray-300" role="presentation">
+                <a
+                    href="#rating-layanan"
+                    class="align-middle text-sm text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 data-[te-nav-active]:font-bold"
+                    data-te-toggle="pill"
+                    data-te-target="#rating-layanan"
+                    role="tab"
+                    aria-controls="rating-layanan"
+                    aria-selected="false">
+                    Rating Layanan
                 </a>
             </li>
-            <li class="border-1 rounded-r-md bg-white p-2 font-medium leading-tight shadow hover:bg-gray-100" role="presentation">
-                <a href="#saran-pengaduan"
-                    class="block text-xs uppercase text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500"
-                    data-te-toggle="pill" data-te-target="#saran-pengaduan" role="tab" aria-controls="saran-pengaduan"
+            <li class="border-2 border-primary-100 drop-shadow-sm rounded-r-md bg-white px-4 py-2 font-medium leading-tight hover:bg-gray-300" role="presentation">
+                <a
+                    href="#saran-pengaduan"
+                    class="align-middle text-sm text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 data-[te-nav-active]:font-bold"
+                    data-te-toggle="pill"
+                    data-te-target="#saran-pengaduan"
+                    role="tab"
+                    aria-controls="saran-pengaduan"
                     aria-selected="false">
                     Saran Pengaduan
                 </a>
@@ -33,22 +44,23 @@
         </ul>
     </div>
 
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
-
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow">
             <div class="flex flex-wrap justify-between p-4">
                 {{-- Tab --}}
                 <div class="flex flex-wrap items-center justify-between">
-                    <div wire:ignore>
-                        <select wire:model="selectedYear" data-te-select-init data-te-select-filter="true" data-te-select-size="lg">
+                    <div>
+                        <label for="tahun" class="text-sm text-primary-400 font-bold tracking-wider">Tahun</label>
+                        <select id="tahun" wire:model.live="selectedYear" class="form-select min-w-40">
                             <option hidden selected>Pilih Tahun ...</option>
                             @foreach ($this->years as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
+                                @if ($selectedYear == $item)
+                                    <option value="{{ $item }}" selected>{{ $item }}</option>
+                                @else
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endif
                             @endforeach
                         </select>
-                        <label data-te-select-label-ref>Tahun</label>
                     </div>
                 </div>
             </div>
@@ -57,7 +69,7 @@
                 {{-- Rating Petugas --}}
                 <div class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
                     id="rating-petugas-layanan" role="tabpanel" aria-labelledby="rating-petugas-layanan-tab" data-te-tab-active>
-                    <table class="w-full table-fixed">
+                    <table class="w-full table-fixed overflow-auto text-base font-light">
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($officerRating[0] as $columnOfficer)
@@ -124,7 +136,7 @@
                 {{-- Rating Layanan --}}
                 <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block" id="rating-layanan"
                     role="tabpanel" aria-labelledby="rating-layanan-tab">
-                    <table class="w-full table-auto">
+                    <table class="w-full table-auto overflow-auto text-base font-light">
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($serviceRating[0] as $columnService)
@@ -191,7 +203,7 @@
                 {{-- Saran Pengaduan --}}
                 <div class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block" id="saran-pengaduan"
                     role="tabpanel" aria-labelledby="rating-layanan-tab">
-                    <table class="w-full table-auto">
+                    <table class="w-full table-auto overflow-auto text-base font-light">
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($complaintSuggestion[0] as $columnComplaintSuggestion)

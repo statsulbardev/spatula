@@ -1,17 +1,9 @@
-@section('title', 'Kategorisasi')
-
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-    @include('components.page.page-title', [
-        'title' => 'Verifikasi Penilaian Layanan Dari ' . $pengguna_layanan->nama_konsumen,
-    ])
+    <x-page.page-title title="Verifikasi Hasil Penilaian Layanan {{ $pengguna_layanan->nama_konsumen }}" />
 
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
-
-    {{-- Informasi Pengguna Layanan --}}
-    <section>
+    <section class="mb-6 mt-10">
         <div class="h-full">
-            <form wire:submit.prevent="submitData">
+            <form wire:submit="submitData">
                 <div class="mx-auto w-full rounded-t-md border-gray-200 bg-white shadow-sm">
                     <div class="p-3">
                         <div class="overflow-x-auto">
@@ -52,7 +44,7 @@
                                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Jenis Layanan</td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
-                                            <select wire:model.defer="f_layanan" ref="input" class="form-select" :disabled="open">
+                                            <select wire:model="f_layanan" ref="input" class="form-select" :disabled="open">
                                                 <option hidden selected>Pilih Jenis Layanan ...</option>
                                                 @foreach ($this->services as $service)
                                                     <option value="{{ $service['kode_layanan'] }}">
@@ -60,11 +52,17 @@
                                                 @endforeach
                                             </select>
                                             <button type="button" x-data x-tooltip.raw="Edit Layanan" @click="open = !open"
-                                                class="mx-5 cursor-pointer text-red-500 hover:text-red-600">
-                                                @include('components.icon', [
-                                                    'name' => 'pencil-square',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                class="mx-5 cursor-pointer">
+                                                <template x-if="!open">
+                                                    <span class="text-green-500 hover:text-green-600">
+                                                        <x-icons.hero name="lock-open-solid" size="w-5 h-5" />
+                                                    </span>
+                                                </template>
+                                                <template x-if="open">
+                                                    <span class="text-gray-500 hover:text-gray-600">
+                                                        <x-icons.hero name="lock-closed-solid" size="w-5 h-5" />
+                                                    </span>
+                                                </template>
                                             </button>
                                         </td>
                                     </tr>
@@ -73,32 +71,28 @@
                                     <tr>
                                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Rating Layanan</td>
                                         <td class="font-semibold">:</td>
-                                        <td class="flex flex-nowrap items-center py-6">
-                                            <div class="mr-6 flex">
-                                                @if (!is_null($pengguna_layanan->rating_layanan))
-                                                    @for ($i = 0; $i < 5; $i++)
-                                                        @if ($i < $pengguna_layanan->rating_layanan)
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                                @include('components.icon', [
-                                                                    'name' => 'star-solid',
-                                                                    'size' => 'w-5 h-5',
-                                                                ])
+                                        <td class="align-middle py-6 space-y-3">
+                                            <div class="flex space-x-2">
+                                                <template x-if="$wire.f_rating_layanan != null && $wire.f_rating_layanan != '' && $wire.f_rating_layanan != 0">
+                                                    <template x-for="index in [1,2,3,4,5]">
+                                                        <template x-if="index <= $wire.f_rating_layanan">
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
+                                                                <x-icons.hero name="star-solid" size="w-5 h-5" />
                                                             </span>
-                                                        @else
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                                @include('components.icon', [
-                                                                    'name' => 'star-outline',
-                                                                    'size' => 'w-5 h-5',
-                                                                ])
+                                                        </template>
+                                                        <template x-else>
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
+                                                                <x-icons.hero name="star-outline" size="w-5 h-5" />
                                                             </span>
-                                                        @endif
-                                                    @endfor
-                                                @else
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                                <template x-else>
                                                     -
-                                                @endif
+                                                </template>
                                             </div>
                                             <div class="flex w-full flex-nowrap items-center" x-data="{ open: true }">
-                                                <select wire:model.defer="f_rating_layanan" ref="input" class="form-select"
+                                                <select wire:model="f_rating_layanan" ref="input" class="form-select"
                                                     :disabled="open">
                                                     <option hidden selected>Pilih Rating Layanan ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
@@ -108,11 +102,17 @@
                                                     <option value="5">Sangat Puas</option>
                                                 </select>
                                                 <button type="button" x-data x-tooltip.raw="Edit Rating" @click="open = !open"
-                                                    class="mx-5 cursor-pointer text-red-500 hover:text-red-600">
-                                                    @include('components.icon', [
-                                                        'name' => 'pencil-square',
-                                                        'size' => 'w-5 h-5',
-                                                    ])
+                                                    class="mx-5 cursor-pointer">
+                                                    <template x-if="!open">
+                                                        <span class="text-green-500 hover:text-green-600">
+                                                            <x-icons.hero name="lock-open-solid" size="w-5 h-5" />
+                                                        </span>
+                                                    </template>
+                                                    <template x-if="open">
+                                                        <span class="text-gray-500 hover:text-gray-600">
+                                                            <x-icons.hero name="lock-closed-solid" size="w-5 h-5" />
+                                                        </span>
+                                                    </template>
                                                 </button>
                                             </div>
                                         </td>
@@ -120,22 +120,29 @@
 
                                     {{-- Nama Petugas Layanan --}}
                                     <tr>
-                                        <td class="whitespace-nowrap py-6 pl-5 font-semibold">Nama Petugas / Pemberi
-                                            Layanan</td>
+                                        <td class="whitespace-nowrap py-6 pl-5 font-semibold">
+                                            Nama Petugas / Pemberi Layanan
+                                        </td>
                                         <td class="font-semibold">:</td>
                                         <td class="flex flex-nowrap items-center py-6" x-data="{ open: true }">
-                                            <select wire:model.defer="f_petugas" ref="input" class="form-select" :disabled="open">
+                                            <select wire:model="f_petugas" ref="input" class="form-select" :disabled="open">
                                                 <option hidden selected>Pilih Petugas Layanan ...</option>
                                                 @foreach ($this->officers as $officer)
                                                     <option value="{{ $officer['id'] }}">{{ $officer['nama'] }}</option>
                                                 @endforeach
                                             </select>
                                             <button type="button" x-data x-tooltip.raw="Edit Petugas" @click="open = !open"
-                                                class="mx-5 cursor-pointer text-red-500 hover:text-red-600">
-                                                @include('components.icon', [
-                                                    'name' => 'pencil-square',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                class="mx-5 cursor-pointer">
+                                                <template x-if="!open">
+                                                    <span class="text-green-500 hover:text-green-600">
+                                                        <x-icons.hero name="lock-open-solid" size="w-5 h-5" />
+                                                    </span>
+                                                </template>
+                                                <template x-if="open">
+                                                    <span class="text-gray-500 hover:text-gray-600">
+                                                        <x-icons.hero name="lock-closed-solid" size="w-5 h-5" />
+                                                    </span>
+                                                </template>
                                             </button>
                                         </td>
                                     </tr>
@@ -145,32 +152,28 @@
                                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Rating Petugas / Pemberi
                                             Layanan</td>
                                         <td class="font-semibold">:</td>
-                                        <td class="flex flex-nowrap items-center py-6">
-                                            <div class="mr-6 flex">
-                                                @if (!is_null($pengguna_layanan->rating_petugas))
-                                                    @for ($i = 0; $i < 5; $i++)
-                                                        @if ($i < $pengguna_layanan->rating_petugas)
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                                @include('components.icon', [
-                                                                    'name' => 'star-solid',
-                                                                    'size' => 'w-5 h-5',
-                                                                ])
+                                        <td class="align-middle py-6 space-y-3">
+                                            <div class="flex space-x-2">
+                                                <template x-if="$wire.f_rating_petugas != null && $wire.f_rating_petugas != '' && $wire.f_rating_petugas != 0">
+                                                    <template x-for="index in [1,2,3,4,5]">
+                                                        <template x-if="index <= $wire.f_rating_petugas">
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
+                                                                <x-icons.hero name="star-solid" size="w-5 h-5" />
                                                             </span>
-                                                        @else
-                                                            <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                                @include('components.icon', [
-                                                                    'name' => 'star-outline',
-                                                                    'size' => 'w-5 h-5',
-                                                                ])
+                                                        </template>
+                                                        <template x-else>
+                                                            <span class="text-secondary-400" :class="{ 'ml-2': ! index == 1 }">
+                                                                <x-icons.hero name="star-outline" size="w-5 h-5" />
                                                             </span>
-                                                        @endif
-                                                    @endfor
-                                                @else
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                                <template x-else>
                                                     -
-                                                @endif
+                                                </template>
                                             </div>
                                             <div class="flex w-full flex-nowrap items-center" x-data="{ open: true }">
-                                                <select wire:model.defer="f_rating_petugas" ref="input" class="form-select"
+                                                <select wire:model="f_rating_petugas" ref="input" class="form-select"
                                                     :disabled="open">
                                                     <option hidden selected>Pilih Rating Petugas ...</option>
                                                     <option value="1">Sangat Tidak Puas</option>
@@ -180,11 +183,17 @@
                                                     <option value="5">Sangat Puas</option>
                                                 </select>
                                                 <button type="button" x-data x-tooltip.raw="Edit Rating" @click="open = !open"
-                                                    class="mx-5 cursor-pointer text-red-500 hover:text-red-600">
-                                                    @include('components.icon', [
-                                                        'name' => 'pencil-square',
-                                                        'size' => 'w-5 h-5',
-                                                    ])
+                                                    class="mx-5 cursor-pointer">
+                                                    <template x-if="!open">
+                                                        <span class="text-green-500 hover:text-green-600">
+                                                            <x-icons.hero name="lock-open-solid" size="w-5 h-5" />
+                                                        </span>
+                                                    </template>
+                                                    <template x-if="open">
+                                                        <span class="text-gray-500 hover:text-gray-600">
+                                                            <x-icons.hero name="lock-closed-solid" size="w-5 h-5" />
+                                                        </span>
+                                                    </template>
                                                 </button>
                                             </div>
                                         </td>
@@ -205,23 +214,23 @@
                                         <td class="pr-6">
                                             <div class="flex flex-wrap justify-between">
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_saran" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_saran" type="checkbox" class="mr-2">
                                                     <label>Saran</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_pengaduan" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_pengaduan" type="checkbox" class="mr-2">
                                                     <label>Pengaduan</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_kritik" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_kritik" type="checkbox" class="mr-2">
                                                     <label>Kritik</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_apresiasi" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_apresiasi" type="checkbox" class="mr-2">
                                                     <label>Apresiasi</label>
                                                 </div>
                                                 <div class="flex">
-                                                    <input wire:model.defer="cb_lainnya" type="checkbox" class="mr-2">
+                                                    <input wire:model="cb_lainnya" type="checkbox" class="mr-2">
                                                     <label>Lainnya</label>
                                                 </div>
                                             </div>
@@ -232,7 +241,7 @@
                                     <tr>
                                         <td class="whitespace-nowrap py-6 pl-5 font-semibold">Catatan</td>
                                         <td class="font-semibold">:</td>
-                                        <td><input wire:model.defer="f_catatan" type="text" ref="input" class="form-input"
+                                        <td><input wire:model="f_catatan" type="text" ref="input" class="form-input"
                                                 placeholder="Contoh : Nama Kegiatan ..."></td>
                                     </tr>
                                 </tbody>
