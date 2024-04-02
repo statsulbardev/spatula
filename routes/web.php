@@ -10,12 +10,12 @@ use App\Livewire\Verification\ComplaintResponsibleList;
 use App\Livewire\Verification\ComplaintItem;
 use App\Livewire\Report\Monthly;
 use App\Livewire\Report\Daily;
-use App\Livewire\Configuration\User\UserList;
-use App\Livewire\Configuration\User\UserBuilder;
 use App\Livewire\Configuration\Service\ServiceList;
 use App\Livewire\Configuration\Service\ServiceBuilder;
-use App\Livewire\Configuration\UnitList;
-use App\Livewire\Configuration\CreateEditUnit;
+use App\Livewire\Configuration\User\UserList;
+use App\Livewire\Configuration\User\UserBuilder;
+use App\Livewire\Configuration\Unit\UnitList;
+use App\Livewire\Configuration\Unit\UnitBuilder;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Frontend\Evaluation;
 use Illuminate\Support\Facades\Route;
@@ -58,9 +58,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-layanan|pj-peng
 });
 
 //TODO: Laporan
-Route::group(['middleware' => ['auth', 'role:superadmin|admin|pimpinan']], function () {
-    Route::get('/laporan/bulanan', Monthly::class)->name('laporan-bulanan');
-    Route::get('/laporan/harian', Daily::class)->name('laporan-harian');
+Route::middleware(['auth', 'role:superadmin|admin|pimpinan'])->prefix('/laporan/')->group(function () {
+    Route::get('bulanan', Monthly::class)->name('laporan-bulanan');
+    Route::get('harian', Daily::class)->name('laporan-harian');
 });
 
 // Configuration
@@ -71,20 +71,17 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('/pengaturan/')->gr
         Route::get('layanan/{layanan}/edit', ServiceBuilder::class)->name('edit');
     });
 
-    Route::name('unit.')->group(function() {
-
+    Route::name('user.')->group(function() {
+        Route::get('pengguna', UserList::class)->name('index');
+        Route::get('pengguna/baru', UserBuilder::class)->name('create');
+        Route::get('pengguna/{pengguna}/edit', UserBuilder::class)->name('edit');
     });
 
-    Route::get('satker', UnitList::class)->name('daftar-satker');
-    Route::get('satker/tambah', CreateEditUnit::class)->name('tambah-satker');
-    Route::get('satker/{satker}/edit', CreateEditUnit::class)->name('edit-satker');
-});
-
-// User Configuration
-Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
-    Route::get('/pengaturan/pengguna', UserList::class)->name('daftar-pengguna');
-    Route::get('/pengaturan/pengguna/tambah', UserBuilder::class)->name('tambah-pengguna');
-    Route::get('/pengaturan/pengguna/{pengguna}/edit', UserBuilder::class)->name('edit-pengguna');
+    Route::name('unit.')->group(function() {
+        Route::get('satker', UnitList::class)->name('index');
+        Route::get('satker/tambah', UnitBuilder::class)->name('create');
+        Route::get('satker/{satker}/edit', UnitBuilder::class)->name('edit');
+    });
 });
 
 

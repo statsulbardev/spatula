@@ -91,17 +91,17 @@
                     <div class="flex flex-col gap-4">
                         {{-- Pengaturan Layanan --}}
                         <x-partials.sidebar.menu :route="route('service.index')"
-                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" icon="clipboard-document-list-solid"
-                            page="Service" title="Layanan" />
+                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="clipboard-document-list-solid" page="Service" title="Layanan" />
 
                         {{-- Pengaturan User --}}
-                        <x-partials.sidebar.menu :route="route('daftar-pengguna')"
-                            :path="request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                        <x-partials.sidebar.menu :route="route('user.index')"
+                            :path="request()->routeIs('user.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
                             icon="user-circle-solid" page="User" title="Pengguna" />
 
                         {{-- Pengaturan Satker --}}
-                        <x-partials.sidebar.menu :route="route('daftar-satker')"
-                            :path="request()->is('pengaturan/satker') || request()->is('pengaturan/satker/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                        <x-partials.sidebar.menu :route="route('unit.index')"
+                            :path="request()->routeIs('unit.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
                             icon="building-office-solid" page="Unit" title="Satuan Kerja" />
                     </div>
                 @endrole

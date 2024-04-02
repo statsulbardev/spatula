@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Configuration;
 
 use App\Models\m_pengguna;
@@ -19,16 +21,7 @@ class UserList extends Component
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
-    {
-        return [
-            'route' => route('daftar-pengguna'),
-            'label' => 'Daftar Pengguna'
-        ];
-    }
-
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.configuration.user-list', [
             'users' => $this->retrieveData()

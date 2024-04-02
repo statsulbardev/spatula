@@ -2,7 +2,7 @@
     <x-page.page-title title="Daftar Hasil Verifikasi" />
 
     <section class="mb-6 mt-10 flex">
-        <div class="w-full overflow-x-auto rounded bg-white shadow">
+        <div class="w-full overflow-auto rounded bg-white shadow">
             <div class="flex flex-wrap justify-between p-4">
                 <x-forms.inputs.search />
 
@@ -13,7 +13,7 @@
                     <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
                 </div>
             @else
-                <table class="w-full table-auto overflow-auto text-base font-light">
+                <table class="w-full table-auto text-base font-light">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th scope="col" class="px-6 pb-4 pt-6">

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Livewire\Configuration;
+declare(strict_types=1);
+
+namespace App\Livewire\Configuration\Unit;
 
 use App\Models\m_satker;
 use App\Traits\HasModelProcess;
@@ -17,22 +19,15 @@ class UnitList extends Component
     public int $numberOfPagination = 10;
     public ?string $searchKeyword = null;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty() : array
-    {
-        return [
-            'route' => route('daftar-satker'),
-            'label' => 'Daftar Satker'
-        ];
-    }
+    public string $pageTitle = "Daftar Satuan Kerja";
 
-    public function render() : View
+    public function render(): View
     {
-        return view('livewire.configuration.unit-list', [
+        return view('livewire.configuration.unit.unit-list', [
             'offices' => m_satker::search($this->searchKeyword)
                             -> orderBy('kode_satker', 'asc')
                             -> paginate($this->numberOfPagination)
-        ])->layout('layouts.app');
+        ])->title($this->pageTitle);
     }
 
     public function updatedNumberOfPagination()

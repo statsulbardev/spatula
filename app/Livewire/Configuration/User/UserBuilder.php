@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire\Configuration\User;
 
-use App\Http\Requests\StoreUserRequest;
+use App\Livewire\Forms\UserForm;
 use App\Models\m_pengguna;
-use App\Repositories\UserRepository;
 use App\Traits\HasRedirectUrl;
 use App\Traits\HasRenderOption;
 use Illuminate\Support\Facades\Route;
@@ -17,81 +16,58 @@ class UserBuilder extends Component
 {
     use HasRedirectUrl, HasRenderOption;
 
-    /** @props */
-    public m_pengguna $pengguna;
-    public string $routeName;
-    public string $selectedRole;
-    protected StoreUserRequest $ruleValidation;
+    public UserForm $form;
 
-    // Form Data
-    public $f_nama;
-    public $f_email;
-    public $f_password;
-    public $f_nip;
-    public $f_petugas;
-    public $f_role;
-    public $f_unit;
+    public m_pengguna $pengguna;
+
+    public string $routeName;
+
+    public string $title;
 
     /** @computed property : units */
-    public function getUnitsProperty(UserRepository $userRepository) : string
+    public function getUnitsProperty() : string
     {
-        return $this->renderOption($userRepository->retrieveUnits());
-    }
-
-    /** @computed property : role */
-    public function getRolesProperty(UserRepository $userRepository) : string
-    {
-        return $this->renderOption($userRepository->retrieveRoles());
+        return $this->renderOption($this->form->retrieveUnits());
     }
 
     public function render(): View
     {
-        return view('livewire.configuration.user.user-builder');
+        return view('livewire.configuration.user.user-builder')->title($this->title);
     }
 
     public function mount(m_pengguna $pengguna)
     {
-        $this->routeName      = Route::currentRouteName();
+        $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'edit-pengguna') {
-            $this->pengguna     = $pengguna;
-            $this->f_nama       = $pengguna->nama;
-            $this->f_email      = $pengguna->email;
-            $this->f_nip        = $pengguna->bpsid;
-            $this->f_petugas    = $pengguna->is_petugas;
-            $this->f_role       = $this->rolesToArray();
-            $this->f_unit       = $pengguna->kode_satker_id;
-            $this->selectedRole = json_encode($this->rolesToArray());
+        if ($this->routeName === 'user.edit') {
+            $this->pengguna        = $pengguna;
+            $this->form->f_nama    = $pengguna->nama;
+            $this->form->f_email   = $pengguna->email;
+            $this->form->f_nip     = $pengguna->bpsid;
+            $this->form->f_petugas = $pengguna->is_petugas;
+            $this->form->f_role    = $this->rolesToArray();
+            $this->form->f_unit    = $pengguna->kode_satker_id;
+
+            $this->title           = "Edit Pengguna " . $pengguna->nama;
+        } else {
+            $this->title = "Pengguna Baru";
         }
     }
 
-    public function submitData(UserRepository $userRepository)
+    public function submitData()
     {
-        $this->dispatch('saved');
+        $this->dispatch('validate');
 
-        $this->ruleValidation = new StoreUserRequest();
-        $this->validate();
-
-        $result = $this->routeName === 'tambah-pengguna'
-                ? $userRepository->save($this)
-                : $userRepository->update($this);
+        $result = $this->routeName === 'user.create'
+                ? $this->form->save()
+                : $this->form->update($this->pengguna);
 
         $this->dispatch('notification', message: $result);
 
-        return $this->redirectRoute('daftar-pengguna', navigate: true);
+        return $this->redirectRoute('user.index', navigate: true);
     }
 
-    protected function rules() : array
-    {
-        return ($this->ruleValidation)->rules();
-    }
-
-    protected function messages() : array
-    {
-        return ($this->ruleValidation)->messages();
-    }
-
-    private function rolesToArray() : array
+    private function rolesToArray(): array
     {
         return
             array_column(

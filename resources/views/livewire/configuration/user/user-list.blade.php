@@ -1,12 +1,9 @@
 <div class="px-4 md:px-6 2xl:px-11 py-8">
-
-    <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
+    <div class="flex flex-nowrap items-center justify-between">
         <x-page.page-title title="Daftar Pengguna Aplikasi" />
 
-        {{-- Pengguna Baru --}}
         <a
-            href="{{ route('tambah-pengguna') }}"
+            href="{{ route('user.create') }}"
             class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500"
             wire:navigate>
             <x-icons.hero name="plus-circle-solid" size="w-5 h-5" />
@@ -46,7 +43,7 @@
                     <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
                 </div>
             @else
-                <table class="w-full table-auto overflow-auto text-base font-light">
+                <table class="w-full table-auto text-base font-light">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
                             <th scope="col" class="px-6 pb-4 pt-6">
@@ -103,7 +100,7 @@
                                             wire:navigate
                                             x-data
                                             x-tooltip.raw="Edit Pengguna"
-                                            href="{{ route('edit-pengguna', $user->id) }}"
+                                            href="{{ route('user.edit', $user->id) }}"
                                             class="cursor-pointer text-violet-500 hover:text-violet-600">
                                             <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />
                                         </a>

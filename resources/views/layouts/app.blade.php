@@ -51,9 +51,6 @@
         </div>
     @endauth
 
-
-
-
     @vite(['resources/js/app.js'])
 
     @livewireScriptConfig
