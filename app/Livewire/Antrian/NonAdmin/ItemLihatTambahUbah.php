@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Title;
 use Webpatser\Uuid\Uuid;
 
 class ItemLihatTambahUbah extends Component
@@ -34,7 +36,6 @@ class ItemLihatTambahUbah extends Component
 
     public ?string $layanan_satker;
     public ?string $disable_date;
-
 
     public function rules() : array
     {
@@ -60,40 +61,20 @@ class ItemLihatTambahUbah extends Component
         ];
     }
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
+    #[Computed]
+    public function units(): string
     {
-        return [
-            'route' => route('antrian-non-admin-lihat'),
-            'label' => 'Daftar Antrian Pribadi'
-        ];
-    }
-
-    /** @computed property : firstBread */
-    public function getFirstBreadcrumbProperty()
-    {
-        if($this->routeName === 'antrian-non-admin-item-edit')
-        {
-            return [
-                'route' => route('antrian-non-admin-lihat'),
-                'label' => 'Edit Antrian',
-            ];
-        }
-        else if($this->routeName === 'antrian-non-admin-item-lihat')
-        {
-            return [
-                'route' => route('antrian-non-admin-lihat'),
-                'label' => 'Lihat Antrian',
-            ];
-        }
-    }
-
-    /** @computed property : secondBreadcrumb */
-    public function getSecondBreadcrumbProperty() : string
-    {
-        return $this->routeName === 'antrian-non-admin-item-tambah'
-                ? 'Tambah Antrian'
-                : 'Tanggal '.Carbon::createFromFormat('Y-m-d', $this->atrian_satker->tanggal)->format('d/m/Y');
+        return
+            $this->renderOption(
+                m_satker::get(['kode_satker', 'nama'])
+                    ->map(function ($item) {
+                        return [
+                            0 => $item->kode_satker,
+                            1 => $item->nama
+                        ];
+                    })
+                    ->toArray()
+            );
     }
 
     public function mount(d_antrian_satker $antrian_satker)
@@ -118,22 +99,6 @@ class ItemLihatTambahUbah extends Component
         }
     }
 
-
-    public function getUnitsProperty(): string
-    {
-        return
-            $this->renderOption(
-                m_satker::get(['kode_satker', 'nama'])
-                    ->map(function ($item) {
-                        return [
-                            0 => $item->kode_satker,
-                            1 => $item->nama
-                        ];
-                    })
-                    ->toArray()
-            );
-    }
-
     public function updatedFKodeSatker()
     {
         session(['kode_satker_active' => $this->f_kode_satker]);
@@ -154,13 +119,16 @@ class ItemLihatTambahUbah extends Component
             );
 
         $this->disable_date = '';
-        $config_date = d_antrian_satker_config_view::where('config_key', 'tanggal_disabled')->first();
+        $config_date = d_antrian_satker_config_view::where('config_key', 'tanggal_disabled')
+            ->where('kode_satker', $this->f_kode_satker)
+            ->first();
         if($config_date){
             $this->disable_date = $config_date->config_value;
         }
         $this->dispatch('tambah-antrian-change-kode-satker');
     }
 
+    #[Title('Daftar Layanan Antrian')]
     public function render(): View
     {
         return view('livewire.antrian.non-admin.item_lihat_tambah_ubah')
@@ -220,7 +188,7 @@ class ItemLihatTambahUbah extends Component
             $latest_number = intval(substr($latest_antrian->antrian,1));
         }
         $latest_number  += 1;
-        $antrian_baru = str_pad($latest_number, 2, "0", STR_PAD_LEFT);
+        $antrian_baru = str_pad(strval($latest_number), 2, "0", STR_PAD_LEFT);
 
         $latest_antrian_internal_query = d_antrian_satker::query();
         $latest_antrian_internal_query->where('tanggal', $this->f_tanggal);
@@ -285,9 +253,7 @@ class ItemLihatTambahUbah extends Component
                 Log::error($ex);
                 $this->dispatch('notification', message: 'Informasi gagal menyimpan antrian data.');
             }
-
         }
-
     }
 
 }

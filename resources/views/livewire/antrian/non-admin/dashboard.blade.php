@@ -5,7 +5,7 @@
             <div class="flex-grow"></div>
             <a href="{{ route('antrian-non-admin-item-tambah') }}" wire:navigate
                 class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
-                @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
+                <x-icons.hero name="plus-circle-solid" size="w-5 h-5" />
                 <span class="ml-2 text-sm">Daftar Antrian</span>
             </a>
         </div>
@@ -13,15 +13,12 @@
         <hr class="mb-4 mx-4">
         <div class="flex flex-wrap items-center justify-between p-4 pt-0">
             <div class="flex flex-wrap w-full">
-                <div wire:ignore
-                    x-init="() => {
-                        window.te.Select.getOrCreateInstance(document.querySelector('#unit_kerja')).setValue('{{ $this->kode_satker }}')
-                    }" class="w-full">
-                    <select id="unit_kerja" wire:model.lazy="kode_satker" data-te-select-filter="true">
-                        <option hidden selected>Pilih Unit Kerja ...</option>
-                        {!! $this->units !!}
-                    </select>
-                </div>
+                <x-forms.inputs.select
+                    model="kode_satker"
+                    method="live"
+                    :optitem="$this->units"
+                    placeholder="Pilih Unit Kerja ..."
+                />
             </div>
         </div>
         <div wire:key="{{ rand() }}" class="flex flex-wrap items-center justify-between p-4 pt-0">

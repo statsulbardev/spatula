@@ -3,15 +3,12 @@
     <hr class="mb-4 mx-4">
     <div class="flex flex-wrap items-center justify-between p-4 pt-0">
         <div class="flex flex-wrap w-full">
-            <div wire:ignore
-                x-init="() => { 
-                    window.te.Select.getOrCreateInstance(document.querySelector('#unit_kerja')).setValue('{{ $this->kode_satker }}')
-                }" class="w-full">
-                <select id="unit_kerja" wire:model.lazy="kode_satker" data-te-select-filter="true">
-                    <option hidden selected>Pilih Unit Kerja ...</option>
-                    {!! $this->units !!}
-                </select>
-            </div>
+            <x-forms.inputs.select
+                model="kode_satker"
+                method="live"
+                :optitem="$this->units"
+                placeholder="Pilih Unit Kerja ..."
+            />
         </div>
     </div>
     <div wire:key="{{ rand() }}" class="flex flex-wrap items-center justify-between p-4 pt-0">
@@ -24,7 +21,7 @@
                     @else
                         <div class="text-7xl font-bold w-full text-center my-3">-</div>
                     @endif
-                    
+
                     <hr class="border-zinc-400">
                     <div class="text-sm leading-tight text-justify my-1.5">
                         <div>{{implode(', ', $item_show['layanan'])}}</div>
@@ -34,7 +31,6 @@
                             </div>
                         @endif
                     </div>
-                    
                 </div>
             @endforeach
         </div>

@@ -8,6 +8,7 @@ use App\Traits\HasInitialProperty;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,22 +17,28 @@ class Monthly extends Component
 {
     use HasInitialProperty, WithPagination;
 
-    public $selectedYear;
-    public $officerRating;
-    public $serviceRating;
-    public $complaintSuggestion;
+    public string $selectedYear;
 
-    public function getMonthsProperty()
+    public ?array $officerRating;
+
+    public ?array $serviceRating;
+
+    public ?array $complaintSuggestion;
+
+    #[Computed]
+    public function months()
     {
         return $this->initMonthsOption();
     }
 
-    public function getYearsProperty()
+    #[Computed]
+    public function years()
     {
         return $this->initYearsOption();
     }
 
-    public function getSuggestionsProperty()
+    #[Computed]
+    public function suggestions()
     {
         return $this->initSuggestionsOption();
     }

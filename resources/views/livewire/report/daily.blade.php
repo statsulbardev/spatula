@@ -16,7 +16,7 @@
                 <div class="flex flex-nowrap justify-start space-x-4">
                     <div>
                         <label for="selectedMonth_id" class="text-sm text-primary-400 font-bold tracking-wider">Bulan</label>
-                        <select id="selectedMonth_id" wire:model.live="selectedMonth" class="form-select min-w-40">
+                        <select id="selectedMonth_id" wire:model.live="selectedMonth" class="form-select min-w-48">
                             <option hidden selected>Pilih Bulan...</option>
                             @foreach ($this->months as $month)
                                 @foreach ($month as $index => $item)
@@ -31,7 +31,7 @@
                     </div>
                     <div>
                         <label for="selectedYear_id" class="text-sm text-primary-400 font-bold tracking-wider">Tahun</label>
-                        <select id="selectedYear_id" wire:model.live="selectedYear" class="form-select min-w-40">
+                        <select id="selectedYear_id" wire:model.live="selectedYear" class="form-select min-w-48">
                             <option hidden selected>Pilih Tahun...</option>
                             @foreach ($this->years as $item)
                                 @if ($selectedYear == $item)
@@ -187,14 +187,6 @@
             @endif
         </div>
     </section>
+
     {{ $dailyReport->links('vendor.livewire.tailwind') }}
 </div>
-
-@script
-    <script>
-        $wire.on('laporan-harian-daily-reset-filter', () => {
-            te.Select.getInstance(document.querySelector('#selectedMonth_id')).setValue("");
-            te.Select.getInstance(document.querySelector('#selectedYear_id')).setValue("");
-        })
-    </script>
-@endscript

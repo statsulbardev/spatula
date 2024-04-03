@@ -7,7 +7,8 @@ namespace App\Livewire\Report;
 use App\Models\d_penilaian;
 use App\Traits\HasInitialProperty;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,24 +19,24 @@ class Daily extends Component
 
     public int $numberOfPagination = 20;
 
-    /** @props */
-    public $selectedMonth;
-    public $selectedYear;
+    public ?string $selectedMonth = null;
 
-    /** @computed property : months */
-    public function getMonthsProperty()
+    public ?string $selectedYear = null;
+
+    #[Computed]
+    public function months()
     {
         return $this->initMonthsOption();
     }
 
-    /** @computed property : years */
-    public function getYearsProperty()
+    #[Computed]
+    public function years()
     {
         return $this->initYearsOption();
     }
 
-    /** @computed property : suggestions */
-    public function getSuggestionsProperty()
+   #[Computed]
+    public function suggestions()
     {
         return $this->initSuggestionsOption();
     }
@@ -47,10 +48,9 @@ class Daily extends Component
             ->layout('components.layouts.app');
     }
 
-    public function resetData()
+    public function resetData(): void
     {
         $this->reset();
-        $this->dispatch('laporan-harian-daily-reset-filter');
     }
 
     private function retrieveData(): Paginator
@@ -64,12 +64,15 @@ class Daily extends Component
         $return_data_query->when(!$superadmin_role, function ($query) use ($user_unit_code) {
             $query->where('kode_satker_id', $user_unit_code);
         });
-        if($this->selectedYear){
+
+        if ($this->selectedYear) {
             $return_data_query->whereYear('created_at', $this->selectedYear);
         }
-        if($this->selectedMonth){
+
+        if ($this->selectedMonth) {
             $return_data_query->whereMonth('created_at', $this->selectedMonth);
         }
+
         $return_data_query->where('selesai', 1)
             ->orderBy('tanggal_selesai', 'desc');
 

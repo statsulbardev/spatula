@@ -11,13 +11,30 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\m_satker;
 use App\Traits\HasRenderOption;
+use Livewire\Attributes\Computed;
 
 class DaftarAntrianSekarang extends Component
 {
     use HasRenderOption;
-    
+
     public $kode_satker;
-    
+
+    #[Computed]
+    public function units(): string
+    {
+        return
+            $this->renderOption(
+                m_satker::get(['kode_satker', 'nama'])
+                    ->map(function ($item) {
+                        return [
+                            0 => $item->kode_satker,
+                            1 => $item->nama
+                        ];
+                    })
+                    ->toArray()
+            );
+    }
+
     public function mount()
     {
         if(session('kode_satker_active', null))
@@ -32,21 +49,6 @@ class DaftarAntrianSekarang extends Component
                 $this->kode_satker = $unit_tanggal->kode_satker;
             }
         }
-    }
-
-    public function getUnitsProperty(): string
-    {
-        return
-            $this->renderOption(
-                m_satker::get(['kode_satker', 'nama'])
-                    ->map(function ($item) {
-                        return [
-                            0 => $item->kode_satker,
-                            1 => $item->nama
-                        ];
-                    })
-                    ->toArray()
-            );
     }
 
     public function render() : View
@@ -95,16 +97,16 @@ class DaftarAntrianSekarang extends Component
                 if($item->status == 1){
                     $show_data[$loket_key_index[$layanan_loket[$item->kode_layanan]]]['active'] = $item;
                 }
-                if($item->konsumen_email == session('konsumen_email') 
-                    && $item->konsumen_no_wa_telepon == session('konsumen_no_wa_telepon') 
+                if($item->konsumen_email == session('konsumen_email')
+                    && $item->konsumen_no_wa_telepon == session('konsumen_no_wa_telepon')
                     && $item->konsumen_tahun_lahir == session('konsumen_tahun_lahir'))
                 {
                     array_push($show_data[$loket_key_index[$layanan_loket[$item->kode_layanan]]]['antrian_ku']
                         , $item);
-                } 
+                }
             }
         }
-       
+
         return view('livewire.antrian.non-admin.component.daftar_antrian_sekarang', ['show_data' => $show_data]);
     }
 

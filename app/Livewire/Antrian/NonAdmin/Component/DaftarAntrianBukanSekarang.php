@@ -10,18 +10,20 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use Carbon\Carbon;
+use Livewire\Attributes\Computed;
 
 class DaftarAntrianBukanSekarang extends Component
 {
     use WithPagination;
+
     public d_antrian_satker $antrian_tobe_delete;
 
     public int $numberOfPagination = 20;
     public $selectedMonth;
     public $selectedYear;
 
-    /** @computed property : months */
-    public function getMonthsProperty()
+    #[Computed]
+    public function months()
     {
         return [
             ['1' => 'Januari'],
@@ -39,8 +41,8 @@ class DaftarAntrianBukanSekarang extends Component
         ];
     }
 
-    /** @computed property : years */
-    public function getYearsProperty()
+    #[Computed]
+    public function years()
     {
         $tahun_arr = [];
         for($i=2024; $i <= date('Y'); $i++){
@@ -54,7 +56,7 @@ class DaftarAntrianBukanSekarang extends Component
         $this->reset();
         $this->dispatch('daftar-antrian-bukan-sekarang-reset-filter');
     }
-    
+
     public function render()
     {
         $master_antrian_satker = m_antrian_satker_layanan::all();
@@ -63,7 +65,7 @@ class DaftarAntrianBukanSekarang extends Component
             $master_key_value[$item->kode_satker.'--'.$item->kode_layanan] = $item->loket;
         }
 
-        return view('livewire.antrian.non-admin.component.daftar_antrian_bukan_sekarang', 
+        return view('livewire.antrian.non-admin.component.daftar_antrian_bukan_sekarang',
             ['data' => $this->retrieveData(), 'master_key_value' => $master_key_value, 'today_tanggal' => Carbon::today()->format('Y-m-d')]);
     }
 
@@ -88,7 +90,7 @@ class DaftarAntrianBukanSekarang extends Component
         // Log::info($d_antrian_satker_query->toSql());
 
         return $d_antrian_satker_query->paginate($this->numberOfPagination);
-        
+
     }
 
     public function deleteItem(d_antrian_satker $antrian_tobe_delete_)
@@ -102,7 +104,7 @@ class DaftarAntrianBukanSekarang extends Component
         {
             $this->antrian_tobe_delete->delete();
             $this->dispatch('notification', message: "Informasi antrian telah dihapus.");
-        }catch (Exception $error) 
+        }catch (Exception $error)
         {
             $this->dispatch('notification', message: "Informasi antrian gagal dihapus.");
         }

@@ -11,15 +11,31 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Exception;
-use Illuminate\Support\Facades\Log;
 use App\Traits\HasRenderOption;
+use Livewire\Attributes\Computed;
 
-class DashboardAntrian extends Component
+class
+DashboardAntrian extends Component
 {
     use HasRenderOption;
 
     public $kode_satker;
+
+    #[Computed]
+    public function units(): string
+    {
+        return
+            $this->renderOption(
+                m_satker::get(['kode_satker', 'nama'])
+                    ->map(function ($item) {
+                        return [
+                            0 => $item->kode_satker,
+                            1 => $item->nama
+                        ];
+                    })
+                    ->toArray()
+            );
+    }
 
     public function mount()
     {
@@ -37,21 +53,6 @@ class DashboardAntrian extends Component
         }
     }
 
-    public function getUnitsProperty(): string
-    {
-        return
-            $this->renderOption(
-                m_satker::get(['kode_satker', 'nama'])
-                    ->map(function ($item) {
-                        return [
-                            0 => $item->kode_satker,
-                            1 => $item->nama
-                        ];
-                    })
-                    ->toArray()
-            );
-    }
-
     #[Title('Dashboard Antrian')]
     public function render(): View
     {
@@ -63,6 +64,8 @@ class DashboardAntrian extends Component
                 ->where('is_active', '1')
                 ->orderby('loket')
                 ->get();
+
+            dump($antrian_satker_layanan);
 
             $loket_key_index = [];
             $layanan_loket = [];
@@ -105,5 +108,4 @@ class DashboardAntrian extends Component
         return view('livewire.antrian.non-admin.dashboard', ['show_data' => $show_data])
             ->layout('components.layouts.antrian-dashboard');
     }
-
 }

@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -57,7 +58,8 @@ class Evaluation extends Component
     #[Validate('min:5', onUpdate: false, message: 'Deskripsi saran pengaduan minimal 5 karakter')]
     public string $f_saranpengaduan;
 
-    public function getUnitsProperty(): string
+    #[Computed]
+    public function units(): string
     {
         return
             $this->renderOption(
@@ -71,21 +73,6 @@ class Evaluation extends Component
                     ->toArray()
             );
     }
-
-    // public function getServicesProperty(): string
-    // {
-    //     return
-    //         $this->renderOption(
-    //             m_layanan::get(['kode_layanan', 'nama_layanan', 'metode'])
-    //                 ->map(function ($item) {
-    //                     return [
-    //                         0 => json_encode($item->kode_layanan . '-' . $item->metode),
-    //                         1 => $item->nama_layanan
-    //                     ];
-    //                 })
-    //                 ->toArray()
-    //         );
-    // }
 
     #[Title('Form Penilaian Spatula')]
     public function render(): View

@@ -22,11 +22,7 @@
 
     @yield('styles')
 
-    <style>
-        [x-cloak] {
-            display: none !important
-        }
-    </style>
+    <style>[x-cloak] { display: none !important }</style>
 </head>
 
 <body x-data="{page: 'spatula', 'loaded': true, 'sidebarToggle': false, 'scrollTop': false}">
@@ -34,41 +30,14 @@
 
     @yield('content')
 
-    {{-- @guest
-    @switch(request()->route()->getName())
-    @case('form-penilaian')
-    <x-layouts.evaluation> {{ $slot }} </x-layouts.evaluation>
-    @break
-
-    @case('login')
-    <x-layouts.auth> {{ $slot }} </x-layouts.auth>
-    @break
-
-    @case('antrian-non-admin-dashboard')
-    <x-layouts.antrian-dashboard> {{ $slot }} </x-layouts.antrian-dashboard>
-    @break
-
-    @case('antrian-non-admin-auth-login' || 'antrian-non-admin-auth-registrasi')
-    <x-layouts.antrian-auth> {{ $slot }} </x-layouts.antrian-auth>
-    @break
-
-    @endswitch
-    @endguest
-
-    @auth
-
-    @endauth --}}
-
     @vite(['resources/js/app.js'])
 
     @livewireScriptConfig
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}" data-navigate-once>
-    </script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.js') }}" data-navigate-once></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}" data-navigate-once>
-    </script>
+    <script src="{{ secure_asset('public/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset('public/vendor/trix/trix-editor.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset('public/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
     <script data-navigate-once>
         window.addEventListener('notification', event => {
             window.dispatchEvent(new CustomEvent('notify', {
@@ -79,5 +48,4 @@
 
     @stack('scripts')
 </body>
-
 </html>
