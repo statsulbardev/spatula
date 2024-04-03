@@ -35,7 +35,8 @@ class CompleteList extends Component
     #[Title('Hasil Verifikasi Layanan')]
     public function render(): View
     {
-        return view('livewire.verification.complete-list', ['dones' => $this->retrieveData()]);
+        return view('livewire.verification.complete-list', ['dones' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function updatedNumberOfPagination()

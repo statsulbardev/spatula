@@ -40,9 +40,8 @@ class ServiceResponsibleList extends Component
     #[Title('PJ Layanan')]
     public function render(): View
     {
-        return view('livewire.verification.service-responsible-list', [
-            'services' => $this->retrieveData()
-        ]);
+        return view('livewire.verification.service-responsible-list', ['services' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function updatedNumberOfPagination()

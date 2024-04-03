@@ -43,7 +43,8 @@ class Daily extends Component
     #[Title('Laporan Harian')]
     public function render(): View
     {
-        return view('livewire.report.daily', ['dailyReport' => $this->retrieveData()]);
+        return view('livewire.report.daily', ['dailyReport' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function resetData()

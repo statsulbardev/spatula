@@ -34,7 +34,8 @@ class ServiceList extends Component
         return view('livewire.configuration.service.service-list', [
             'services'    => $masterLayanan,
             'unitService' => $layananSatker
-        ]);
+        ])
+        ->layout('components.layouts.app');
     }
 
     // reset pagination

@@ -38,9 +38,8 @@ class ComplaintResponsibleList extends Component
     #[Title('Verifikasi Pengaduan')]
     public function render(): View
     {
-        return view('livewire.verification.complaint-responsible-list', [
-            'complaints' => $this->retrieveData()
-        ]);
+        return view('livewire.verification.complaint-responsible-list', ['complaints' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function finalize(d_penilaian $penilaian)

@@ -44,7 +44,9 @@ class unitBuilder extends Component
 
     public function render(): View
     {
-        return view('livewire.configuration.unit.unit-builder')->title($this->pageTitle);
+        return view('livewire.configuration.unit.unit-builder')
+            ->layout('components.layouts.app')
+            ->title($this->pageTitle);
     }
 
     public function submitData()

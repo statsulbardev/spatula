@@ -25,7 +25,8 @@ class UserList extends Component
     #[Title('Pengaturan Pengguna')]
     public function render() : View
     {
-        return view('livewire.configuration.user.user-list', ['users' => $this->retrieveData()]);
+        return view('livewire.configuration.user.user-list', ['users' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function updatedNumberOfPagination()

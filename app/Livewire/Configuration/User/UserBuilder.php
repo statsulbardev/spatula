@@ -32,7 +32,9 @@ class UserBuilder extends Component
 
     public function render(): View
     {
-        return view('livewire.configuration.user.user-builder')->title($this->title);
+        return view('livewire.configuration.user.user-builder')
+            ->layout('components.layouts.app')
+            ->title($this->title);
     }
 
     public function mount(m_pengguna $pengguna)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\NonAdmin;
 
 use App\Models\d_antrian_satker;
@@ -7,7 +9,7 @@ use App\Models\d_antrian_satker_config_view;
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_satker;
 use App\Traits\HasRenderOption;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
@@ -19,7 +21,7 @@ use Webpatser\Uuid\Uuid;
 class ItemLihatTambahUbah extends Component
 {
     use HasRenderOption;
-    
+
     public d_antrian_satker $atrian_satker;
     public string $routeName;
 
@@ -116,7 +118,7 @@ class ItemLihatTambahUbah extends Component
         }
     }
 
-    
+
     public function getUnitsProperty(): string
     {
         return
@@ -159,10 +161,10 @@ class ItemLihatTambahUbah extends Component
         $this->dispatch('tambah-antrian-change-kode-satker');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.antrian.non-admin.item_lihat_tambah_ubah')
-            ->layout('layouts.app_antrian');
+            ->layout('components.layouts.antrian-app');
     }
 
     public function submitData()
@@ -213,7 +215,7 @@ class ItemLihatTambahUbah extends Component
         $latest_antrian = $latest_antrian_query->first();
 
         $latest_number = 0;
-        
+
         if($latest_antrian){
             $latest_number = intval(substr($latest_antrian->antrian,1));
         }
@@ -250,7 +252,7 @@ class ItemLihatTambahUbah extends Component
                 $baru->deskripsi = $this->f_deskripsi;
                 $baru->sudah_nilai = 0;
                 $baru->save();
-                
+
                 DB::commit();
                 $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
                 $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
@@ -274,7 +276,7 @@ class ItemLihatTambahUbah extends Component
                 $this->atrian_satker->periode = $this->f_periode;
                 $this->atrian_satker->deskripsi = $this->f_deskripsi;
                 $this->atrian_satker->save();
-                
+
                 DB::commit();
                 $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
                 $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
@@ -283,7 +285,7 @@ class ItemLihatTambahUbah extends Component
                 Log::error($ex);
                 $this->dispatch('notification', message: 'Informasi gagal menyimpan antrian data.');
             }
-           
+
         }
 
     }

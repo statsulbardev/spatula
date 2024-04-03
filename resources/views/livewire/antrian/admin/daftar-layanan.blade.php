@@ -1,20 +1,12 @@
-@section('title', 'Daftar Layanan Antrian')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
+<div>
     <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Daftar Layanan Antrian'])
-
+        <x-page.page-title :title="$pageTitle" />
     </div>
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow pb-2">
-           
+
             @if ($data->isEmpty())
                 <div class="w-full flex  justify-center p-5">
                     <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">

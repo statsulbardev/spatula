@@ -1,15 +1,7 @@
-@section('title', 'Daftar Antrian')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
+<div>
     <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Daftar Antrian'])
-
+        <x-page.page-title :title="$pageTitle" />
     </div>
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">
@@ -55,7 +47,7 @@
                                         @if ($item->tanggal == $today_tanggal)
                                             <div class="text-sm text-primary-500">LOKET {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
                                         @endif
-                                        
+
                                     </div>
                                 </td>
                                 <td class="border-t">
@@ -85,7 +77,7 @@
                     </tbody>
                 </table>
             </div>
-                
+
             @endif
         </div>
     </section>

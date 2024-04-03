@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Livewire\Configuration\Service;
 
-use App\Http\Requests\StoreServiceRequest;
 use App\Livewire\Forms\ServiceForm;
 use App\Models\m_layanan;
-use App\Repositories\ServiceRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class ServiceBuilder extends Component
@@ -29,7 +26,9 @@ class ServiceBuilder extends Component
 
     public function render(): View
     {
-        return view('livewire.configuration.service.service-builder')->title($this->pageTitle);
+        return view('livewire.configuration.service.service-builder')
+            ->layout('components.layouts.app')
+            ->title($this->pageTitle);
     }
 
     public function mount(m_layanan $layanan)

@@ -1,4 +1,4 @@
-<div class="px-4 md:px-6 2xl:px-11 py-8">
+<div>
     <x-page.page-title title="Verifikasi Hasil Pengaduan {{ $complaint->nama_konsumen }}" />
 
     <section class="mb-6 mt-10">

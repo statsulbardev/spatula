@@ -27,7 +27,9 @@ class UnitList extends Component
             'offices' => m_satker::search($this->searchKeyword)
                             -> orderBy('kode_satker', 'asc')
                             -> paginate($this->numberOfPagination)
-        ])->title($this->pageTitle);
+        ])
+        ->layout('components.layouts.app')
+        ->title($this->pageTitle);
     }
 
     public function updatedNumberOfPagination()

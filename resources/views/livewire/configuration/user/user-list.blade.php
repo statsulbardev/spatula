@@ -1,4 +1,4 @@
-<div class="px-4 md:px-6 2xl:px-11 py-8">
+<div>
     <div class="flex flex-nowrap items-center justify-between">
         <x-page.page-title title="Daftar Pengguna Aplikasi" />
 
@@ -7,7 +7,7 @@
             class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500"
             wire:navigate>
             <x-icons.hero name="plus-circle-solid" size="w-5 h-5" />
-            <span class="ml-2 text-sm">Pengguna Baru</span>
+            <span class="ml-2 text-sm">Pengguna</span>
         </a>
     </div>
 

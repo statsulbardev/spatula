@@ -1,8 +1,5 @@
-@section('title', 'Dashboard')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Dashboard Spatula'])
+<div>
+   <x-page.page-title title="Dashboard Spatula" />
 
     <section class="mb-6 mt-10 columns-1 lg:columns-2 gap-4 space-y-4 mx-auto">
         {{-- Informasi Verifikasi --}}
@@ -16,7 +13,7 @@
                         <div class="flex items-center">
                             {{-- Icon --}}
                             <div class="bg-gradient-to-b from-primary-500 to-fuchsia-700 rounded-lg p-2 text-white">
-                                @include('components.icon', ['name' => 'check-circle', 'size' => 'w-8 h-8'])
+                                <x-icons.hero name="check-circle-solid" size="w-8 h-8" />
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-primary-500">Selesai Diverifikasi</div>
@@ -28,7 +25,7 @@
                         <div class="flex items-center">
                             {{-- Icon --}}
                             <div class="bg-gradient-to-b from-primary-500 to-fuchsia-700 rounded-lg p-2 text-white">
-                                @include('components.icon', ['name' => 'question-mark-circle', 'size' => 'w-8 h-8'])
+                                <x-icons.hero name="question-mark-circle-solid" size="w-8 h-8" />
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-primary-500">Belum Diverifikasi</div>
@@ -40,7 +37,7 @@
                         <div class="flex items-center">
                             {{-- Icon --}}
                             <div class="bg-gradient-to-b from-primary-500 to-fuchsia-700 rounded-lg p-2 text-white">
-                                @include('components.icon', ['name' => 'list-bullet', 'size' => 'w-8 h-8'])
+                                <x-icons.hero name="list-bullet" size="w-8 h-8" />
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-primary-500">Verifikasi PJ Layanan</div>
@@ -52,7 +49,7 @@
                         <div class="flex items-center">
                             {{-- Icon --}}
                             <div class="bg-gradient-to-b from-primary-500 to-fuchsia-700 rounded-lg p-2 text-white">
-                                @include('components.icon', ['name' => 'list-bullet', 'size' => 'w-8 h-8'])
+                                <x-icons.hero name="list-bullet" size="w-8 h-8" />
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-primary-500">Verifikasi PJ Pengaduan</div>

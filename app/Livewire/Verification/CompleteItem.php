@@ -21,6 +21,7 @@ class CompleteItem extends Component
     #[Title('Verifikasi Layanan')]
     public function render(): View
     {
-        return view('livewire.verification.complete-item');
+        return view('livewire.verification.complete-item')
+            ->layout('components.layouts.app');
     }
 }

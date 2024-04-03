@@ -1,5 +1,3 @@
-@section('title', 'Login Antrian')
-
 <div class="overflow-hidden rounded-lg">
     <div class="w-full max-w-md">
         <form wire:submit="submit_auth">
@@ -39,7 +37,7 @@
             <div class="bg-glass flex flex-col items-center justify-between px-10 py-4">
                 <button type="submit" class="btn-secondary w-full">LOG IN</button>
                 <a type="submit" href="{{route('antrian-non-admin-auth-registrasi')}}"
-                    class="mt-2 w-full text-center whitespace-nowrap rounded bg-fuchsia-400 px-6 py-3 text-sm font-bold text-fuchsia-900 
+                    class="mt-2 w-full text-center whitespace-nowrap rounded bg-fuchsia-400 px-6 py-3 text-sm font-bold text-fuchsia-900
                         hover:bg-secondary-500 focus:bg-secondary-500">
                     REGISTRASI
                 </a>

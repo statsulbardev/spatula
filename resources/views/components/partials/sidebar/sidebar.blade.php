@@ -107,9 +107,9 @@
                 @endrole
 
                 @role('admin')
-                    <x-partials.sidebar.menu :route="route('daftar-pengguna')"
-                        :path="request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                        icon="user-circle" page="User" title="Pengguna" />
+                    <x-partials.sidebar.menu :route="route('user.index')"
+                        :path="request()->routeIs('user.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                        icon="user-circle-solid" page="User" title="Pengguna" />
                 @endrole
             </div>
         </nav>

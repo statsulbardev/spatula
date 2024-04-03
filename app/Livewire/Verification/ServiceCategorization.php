@@ -61,7 +61,8 @@ class ServiceCategorization extends Component
     #[Title('Verifikasi Penilaian')]
     public function render(): View
     {
-        return view('livewire.verification.service-categorization');
+        return view('livewire.verification.service-categorization')
+            ->layout('components.layouts.app');
     }
 
     public function mount(d_penilaian $pengguna_layanan)

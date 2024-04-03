@@ -16,25 +16,21 @@ class Monthly extends Component
 {
     use HasInitialProperty, WithPagination;
 
-    /** @props */
     public $selectedYear;
     public $officerRating;
     public $serviceRating;
     public $complaintSuggestion;
 
-    /** @computed property : months */
     public function getMonthsProperty()
     {
         return $this->initMonthsOption();
     }
 
-    /** @computed property : years */
     public function getYearsProperty()
     {
         return $this->initYearsOption();
     }
 
-    /** @computed property : suggestions */
     public function getSuggestionsProperty()
     {
         return $this->initSuggestionsOption();
@@ -52,11 +48,14 @@ class Monthly extends Component
     #[Title('Laporan Bulanan')]
     public function render(): View
     {
-        return view("livewire.report.monthly");
+        return view("livewire.report.monthly")
+            ->layout('components.layouts.app');
     }
 
     public function updatedSelectedYear()
     {
+        $this->reset(['officerRating', 'serviceRating', 'complaintSuggestion']);
+
         $this->officerRating       = $this->getOfficerRating();
         $this->serviceRating       = $this->getServiceRating();
         $this->complaintSuggestion = $this->getComplaintSuggestion();

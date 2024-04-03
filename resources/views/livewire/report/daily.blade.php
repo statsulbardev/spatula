@@ -1,4 +1,4 @@
-<div class="px-4 md:px-6 2xl:px-11 py-8">
+<div>
     <div class="flex-no-wrap flex justify-between">
         <x-page.page-title title="Laporan Harian" />
 

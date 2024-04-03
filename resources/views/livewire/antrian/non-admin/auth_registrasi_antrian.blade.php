@@ -1,5 +1,3 @@
-@section('title', 'Login Antrian')
-
 <div class="overflow-hidden rounded-lg">
     <div class="w-full max-w-md">
         <form wire:submit="submit_auth">

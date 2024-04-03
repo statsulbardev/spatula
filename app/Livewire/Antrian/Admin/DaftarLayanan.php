@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\Admin;
 
 use App\Models\d_antrian_satker;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -16,29 +18,22 @@ class DaftarLayanan extends Component
 {
     use Helper_Firestore;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
-    {
-        return [
-            'route' => route('antrian-daftar-layanan'),
-            'label' => 'Daftar Layanan Antrian'
-        ];
-    }
+    public string $pageTitle = "Daftar Layanan Antrian";
 
-    public function render() : View
+    public function render(): View
     {
         $data_to_render = $this->retrieveData();
 
-        return view('livewire.antrian.admin.daftar-layanan', [
-            'data' => $data_to_render
-        ])->layout('layouts.app');
+        return view('livewire.antrian.admin.daftar-layanan', ['data' => $data_to_render])
+            ->layout('components.layouts.app')
+            ->title($this->pageTitle);
     }
 
     public function changeValueActive($kode_satker, $kode_layanan, $kondisi_baru)
     {
         if(in_array($kondisi_baru, ['0', '1'])){
             DB::beginTransaction();
-            try{  
+            try{
                 m_antrian_satker_layanan::where('kode_satker', $kode_satker)
                     ->where('kode_layanan', $kode_layanan)
                     ->update(['is_active' => $kondisi_baru]);
@@ -52,7 +47,7 @@ class DaftarLayanan extends Component
                 Log::error($ex);
                 $this->dispatch('notification', message: 'Gagal menyimpan data.');
             }
-           
+
         }
     }
 
@@ -61,7 +56,7 @@ class DaftarLayanan extends Component
         if(in_array($kondisi_baru, ['A', 'B','C', 'D','E', 'F','G', 'H','I', 'J','K', 'L','M', 'N','O', 'P',
             'Q', 'R','S', 'T','U', 'V','W', 'X','Y', 'X'])){
                 DB::beginTransaction();
-                try{  
+                try{
                     m_antrian_satker_layanan::where('kode_satker', $kode_satker)
                         ->where('kode_layanan', $kode_layanan)
                         ->update(['loket' => $kondisi_baru]);

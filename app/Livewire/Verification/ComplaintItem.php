@@ -15,7 +15,8 @@ class ComplaintItem extends Component
     #[Title('Detail Verifikasi Pengaduan')]
     public function render()
     {
-        return view('livewire.verification.complaint-item');
+        return view('livewire.verification.complaint-item')
+            ->layout('components.layouts.app');
     }
 
     public function mount(d_penilaian $customer)

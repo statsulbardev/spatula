@@ -90,7 +90,8 @@ class Evaluation extends Component
     #[Title('Form Penilaian Spatula')]
     public function render(): View
     {
-        return view('livewire.frontend.evaluation');
+        return view('livewire.frontend.evaluation')
+            ->layout('components.layouts.evaluation');
     }
 
     public function submitData()

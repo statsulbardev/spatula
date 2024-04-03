@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\NonAdmin;
 
 use App\Traits\Antrian\Helper_Auth;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -46,9 +49,11 @@ class AuthRegistrasiAntrian extends Component
         }
     }
 
+    #[Title('Registrasi Antrian')]
     public function render() : View
     {
-        return view('livewire.antrian.non-admin.auth_registrasi_antrian')->layout('layouts.auth_antrian');
+        return view('livewire.antrian.non-admin.auth_registrasi_antrian')
+            ->layout('components.layouts.antrian-auth');
     }
 
     public function submit_auth()
@@ -70,7 +75,7 @@ class AuthRegistrasiAntrian extends Component
         if ($result === 1) {
             return redirect()->route('antrian-non-admin-lihat');
         }
-        
+
     }
 
 }

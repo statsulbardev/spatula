@@ -24,12 +24,13 @@ class Login extends Component
     #[Title('Login Spatula')]
     public function render(): View
     {
-        return view('livewire.auth.login');
+        return view('livewire.auth.login')
+            ->layout('components.layouts.auth');
     }
 
     public function login()
     {
-        $this->dispatch('saved');
+        $this->dispatch('validate');
 
         if (Auth::attempt($this->form->validate())) {
             request()->session()->regenerate();
