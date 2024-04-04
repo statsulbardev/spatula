@@ -26,7 +26,6 @@
                             <th scope="col" class="px-6 pb-4 pt-6">Nama Petugas</th>
                             <th scope="col" class="px-6 pb-4 pt-6">Keterangan</th>
                             <th scope="col" class="px-6 pb-4 pt-6">Kategori</th>
-                            <th scope="col" class="px-6 pb-4 pt-6">Tanggal Selesai</th>
                             <th scope="col" class="px-6 pb-4 pt-6"></th>
                         </tr>
                     </thead>
@@ -138,13 +137,6 @@
                                                 </span>
                                             </div>
                                         @endfor
-                                    </div>
-                                </td>
-
-                                {{-- Tanggal Selesai Verifikasi --}}
-                                <td class="border-t">
-                                    <div class="items-center py-4 pl-6">
-                                        {{ $done->tanggal_selesai->format('d/m/Y') }}
                                     </div>
                                 </td>
 
