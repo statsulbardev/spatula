@@ -62,9 +62,11 @@
                                     <th class="px-6 pb-4 pt-6">
                                         <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                                     </th>
-                                    <th scope="col" class="px-6 pb-4 pt-6">Kode</th>
                                     <th scope="col" class="px-6 pb-4 pt-6">Nama Layanan</th>
                                     <th scope="col" class="px-6 pb-4 pt-6">Metode</th>
+                                    @role('superadmin')
+                                        <th scope="col" class="px-6 pb-4 pt-6">Digunakan Satker</th>
+                                    @endrole
                                     <th scope="col" class="px-6 pb-4 pt-6">Deskripsi</th>
                                     <th scope="col" class="px-6 pb-4 pt-6"></th>
                                 </tr>
@@ -77,30 +79,39 @@
                                     </td>
                                     <td class="border-t">
                                         <p class="py-4 pl-6">
-                                            {{ $service->kode_layanan }}
-                                        </p>
-                                    </td>
-                                    <td class="border-t">
-                                        <p class="py-4 pl-6">
                                             {{ $service->nama_layanan }}
                                         </p>
                                     </td>
                                     <td class="border-t pl-6">
                                         {{ $service->metode === '1' ? 'Luar Jaringan (Offline/Tatap Muka)' : 'Dalam Jaringan (Online)' }}
                                     </td>
+                                    @role('superadmin')
+                                        <td class="border-t pl-6">
+                                            @php
+                                            $serviceCheck = DB::table('m_satker_layanan')->where('m_layanan_id', $service->id)->count() > 0;
+                                            @endphp
+
+                                            <span
+                                                class="{{ $serviceCheck ? 'bg-primary-400' : 'bg-gray-400' }} px-2 py-1 rounded-lg font-medium tracking-wider text-sm text-white">
+                                                {{ $serviceCheck ? 'Ya' : 'Tidak' }}
+                                            </span>
+                                        </td>
+                                    @endrole
                                     <td class="border-t pl-6">
                                         {!! $service->deskripsi ?? 'Tidak ada deskripsi layanan' !!}
                                     </td>
                                     <td class="w-px border-t">
                                         <div class="mr-2 flex items-center space-x-2 py-2">
-                                            <a
-                                                x-data
-                                                x-tooltip.raw="Edit Layanan"
-                                                href="{{ route('service.edit', $service->id) }}"
-                                                class="cursor-pointer text-violet-400 hover:text-violet-500"
-                                                wire:navigate>
-                                                <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />
-                                            </a>
+                                            @role('superadmin')
+                                                <a
+                                                    x-data
+                                                    x-tooltip.raw="Edit Layanan"
+                                                    href="{{ route('service.edit', $service->id) }}"
+                                                    class="cursor-pointer text-violet-400 hover:text-violet-500"
+                                                    wire:navigate>
+                                                    <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />
+                                                </a>
+                                            @endrole
                                             <button
                                                 type="button"
                                                 x-data
@@ -111,18 +122,20 @@
                                                 data-te-ripple-color="light">
                                                 <x-icons.hero name="arrow-down-on-square-stack-outline" size="w-5 h-5" />
                                             </button>
-                                            <button
-                                                type="button"
-                                                x-data
-                                                x-tooltip.raw="Hapus Layanan"
-                                                wire:click="deleteItem({{ $service->id }})"
-                                                class="text-red-500 hover:text-red-600"
-                                                data-te-toggle="modal"
-                                                data-te-target="#deleteModal"
-                                                data-te-ripple-init
-                                                data-te-ripple-color="light">
-                                                <x-icons.hero name="trash-outline" size="w-5 h-5" />
-                                            </button>
+                                            @role('superadmin')
+                                                <button
+                                                    type="button"
+                                                    x-data
+                                                    x-tooltip.raw="Hapus Layanan"
+                                                    wire:click="deleteItem({{ $service->id }})"
+                                                    class="text-red-500 hover:text-red-600"
+                                                    data-te-toggle="modal"
+                                                    data-te-target="#deleteModal"
+                                                    data-te-ripple-init
+                                                    data-te-ripple-color="light">
+                                                    <x-icons.hero name="trash-outline" size="w-5 h-5" />
+                                                </button>
+                                            @endrole
                                         </div>
                                     </td>
                                 </tr>
@@ -147,33 +160,37 @@
                                 <tr class="bg-neutral-100 text-left font-bold">
                                     <th scope="col" class="px-6 pb-4 pt-6">Nama Layanan</th>
                                     <th scope="col" class="px-6 pb-4 pt-6">Metode</th>
+                                    <th scope="col" class="px-6 pb-4 pt-6">Link Layanan</th>
                                     <th scope="col" class="px-6 pb-4 pt-6"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($unitService as $unitItem)
-                                <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
-                                    <td class="border-t">
-                                        <p class="py-4 pl-6">
-                                            {{ $unitItem->nama_layanan }}
-                                        </p>
-                                    </td>
-                                    <td class="border-t pl-6">
-                                        {{ $unitItem->metode === '1' ? 'Luar Jaringan (Offline/Tatap Muka)' : 'Dalam Jaringan (Online)' }}
-                                    </td>
-                                    <td class="w-px border-t">
-                                        <div class="mr-2 flex items-center space-x-2 py-2">
-                                            <button
-                                                type="button"
-                                                x-data
-                                                x-tooltip.raw="Hapus Layanan"
-                                                wire:click="removeUnitService({{ auth()->user()->satker->id }}, {{ $unitItem->id }})"
-                                                class="text-red-500 hover:text-red-600">
-                                                <x-icons.hero name="trash-outline" size="w-5 h-5" />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr class="focus-within:bg-grey-lightest hover:bg-gray-200">
+                                        <td class="border-t">
+                                            <p class="py-4 pl-6">
+                                                {{ $unitItem->nama_layanan }}
+                                            </p>
+                                        </td>
+                                        <td class="border-t pl-6">
+                                            {{ $unitItem->metode === '1' ? 'Luar Jaringan (Offline/Tatap Muka)' : 'Dalam Jaringan (Online)' }}
+                                        </td>
+                                        <td class="border-t pl-6">
+                                            {{ env('APP_URL') . '/penilaian/' . auth()->user()->satker->kode_satker . '/' . $unitItem->id }}
+                                        </td>
+                                        <td class="w-px border-t">
+                                            <div class="mr-2 flex items-center space-x-2 py-2">
+                                                <button
+                                                    type="button"
+                                                    x-data
+                                                    x-tooltip.raw="Hapus Layanan"
+                                                    wire:click="removeUnitService({{ auth()->user()->satker->id }}, {{ $unitItem->id }})"
+                                                    class="text-red-500 hover:text-red-600">
+                                                    <x-icons.hero name="trash-outline" size="w-5 h-5" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

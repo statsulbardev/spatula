@@ -80,7 +80,6 @@ class ServiceList extends Component
 
     public function removeUnitService($unitId, $serviceId)
     {
-
         try {
             DB::beginTransaction();
 

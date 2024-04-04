@@ -107,9 +107,17 @@
                 @endrole
 
                 @role('admin')
-                    <x-partials.sidebar.menu :route="route('user.index')"
-                        :path="request()->routeIs('user.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                        icon="user-circle-solid" page="User" title="Pengguna" />
+                    <div class="flex flex-col gap-4">
+                        {{-- Pengaturan Layanan --}}
+                        <x-partials.sidebar.menu :route="route('service.index')"
+                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="clipboard-document-list-solid" page="Service" title="Layanan" />
+
+                        {{-- Pengaturan User --}}
+                        <x-partials.sidebar.menu :route="route('user.index')"
+                            :path="request()->routeIs('user.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="user-circle-solid" page="User" title="Pengguna" />
+                    </div>
                 @endrole
             </div>
         </nav>

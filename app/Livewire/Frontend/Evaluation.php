@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -58,6 +59,8 @@ class Evaluation extends Component
     #[Validate('min:5', onUpdate: false, message: 'Deskripsi saran pengaduan minimal 5 karakter')]
     public string $f_saranpengaduan;
 
+    public ?string $prop;
+
     #[Computed]
     public function units(): string
     {
@@ -72,6 +75,31 @@ class Evaluation extends Component
                     })
                     ->toArray()
             );
+    }
+
+    public function mount(string $satker = null, string $layanan = null)
+    {
+        $unit    = m_satker::where('kode_satker', $satker);
+        $service = m_layanan::where('id', $layanan);
+
+        if (! is_null($satker) && ! is_null($layanan)) {
+
+            $result = DB::table('m_satker_layanan')
+                ->where('m_satker_id', $unit->pluck('id')[0])
+                ->where('m_layanan_id', $service->pluck('id')[0])
+                ->get();
+
+            if ($result->count() > 0) {
+                $this->prop = 'disabled';
+
+                $this->f_unit =
+                    $unit->pluck('id')[0] . '-' . $unit->pluck('kode_satker')[0] . '-' . $unit->pluck('nama')[0];
+
+                $this->unitServices = $this->getUnitService();
+
+                $this->f_layanan = $service->pluck('id')[0] . '-' . $service->pluck('metode')[0];
+            }
+        }
     }
 
     #[Title('Form Penilaian Spatula')]
@@ -142,21 +170,7 @@ class Evaluation extends Component
                     ->toArray()
             );
 
-        $this->unitServices =
-            $this->renderOption(
-                DB::table('m_layanan')
-                    ->join('m_satker_layanan', 'm_layanan.id', '=', 'm_satker_layanan.m_layanan_id')
-                    ->where('m_satker_layanan.m_satker_id', explode('-', $this->f_unit)[0])
-                    ->select('m_layanan.kode_layanan', 'm_layanan.nama_layanan', 'm_layanan.metode')
-                    ->get()
-                    ->map(function ($item) {
-                        return [
-                            0 => json_encode($item->kode_layanan . '-' . $item->metode),
-                            1 => $item->nama_layanan
-                        ];
-                    })
-                    ->toArray()
-            );
+        $this->unitServices = $this->getUnitService();
 
         $this->reset(['f_layanan', 'f_ratinglayanan', 'f_petugas', 'f_ratingpetugas']);
     }
@@ -169,5 +183,23 @@ class Evaluation extends Component
 
         if ($temp == 2)
             $this->reset(['f_petugas', 'f_ratingpetugas']);
+    }
+
+    private function getUnitService(): string
+    {
+        return $this->renderOption(
+            DB::table('m_layanan')
+                ->join('m_satker_layanan', 'm_layanan.id', '=', 'm_satker_layanan.m_layanan_id')
+                ->where('m_satker_layanan.m_satker_id', explode('-', $this->f_unit)[0])
+                ->select('m_layanan.kode_layanan', 'm_layanan.nama_layanan', 'm_layanan.metode')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        0 => json_encode($item->kode_layanan . '-' . $item->metode),
+                        1 => $item->nama_layanan
+                    ];
+                })
+                ->toArray()
+        );
     }
 }

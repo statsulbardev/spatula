@@ -38,6 +38,7 @@ Route::get('sso', [LoginController::class, 'sso'])->name('sso');
 Route::get('/login', Login::class)->name('login');
 
 Route::get('/penilaian', Evaluation::class)->name('form-penilaian');
+Route::get('/penilaian/{satker?}/{layanan?}', Evaluation::class)->name('form-penilaian-satker');
 
 //TODO: Dashboard
 Route::group(['middleware' => ['auth']], function () {
@@ -77,7 +78,7 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('/pengaturan/')->gr
         Route::get('pengguna/{pengguna}/edit', UserBuilder::class)->name('edit');
     });
 
-    Route::name('unit.')->group(function() {
+    Route::middleware(['auth', 'role:superadmin'])->name('unit.')->group(function() {
         Route::get('satker', UnitList::class)->name('index');
         Route::get('satker/tambah', UnitBuilder::class)->name('create');
         Route::get('satker/{satker}/edit', UnitBuilder::class)->name('edit');

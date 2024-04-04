@@ -26,7 +26,7 @@
                 </div>
                 <div class="w-full lg:w-2/3">
                     <x-forms.inputs.select label="Unit Kerja" model="f_unit" method="live" :optitem="$this->units"
-                        placeholder="Pilih Unit Kerja ..." />
+                        placeholder="Pilih Unit Kerja ..." :prop="$prop" />
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
             </div>
 
             {{-- Penilaian Layanan --}}
-            @if (isset($f_unit))
+            @isset($f_unit)
                 <hr>
                 <div class="flex flex-wrap p-6">
                     <div class="w-full lg:w-1/3">
@@ -62,12 +62,12 @@
                     </div>
                     <div class="w-full lg:w-2/3">
                         <x-forms.inputs.select label="Nama Layanan" model="f_layanan" method="live" :optitem="$this->unitServices"
-                            placeholder="Pilih Jenis Layanan ..." />
+                            placeholder="Pilih Jenis Layanan ..." :prop="$prop" />
 
                         <x-forms.inputs.rating id="ratinglayanan_id" model="f_ratinglayanan" />
                     </div>
                 </div>
-            @endif
+            @endisset
 
             {{-- Petugas Layanan --}}
             @if (isset($f_layanan) and explode('-', $f_layanan)[1] == 1)
