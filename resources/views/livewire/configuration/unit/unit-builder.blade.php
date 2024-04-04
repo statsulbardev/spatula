@@ -22,7 +22,7 @@
                             label="Level"
                             model="form.f_level"
                             placeholder="Pilih Level Satker ..."
-                            optitem="<option value='1'>Provinsi</option><option value='2'>Kabupaten</option>"
+                            optitem="<option value='1'>Provinsi</option><option value='2'>Kabupaten</option><option value='3'>Pojok Statistik</option>"
                         />
 
                         <x-forms.inputs.text label="Alamat" model="form.f_alamat" type="text" />
