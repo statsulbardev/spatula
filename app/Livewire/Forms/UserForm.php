@@ -28,6 +28,7 @@ class UserForm extends Form
     #[Validate('numeric', onUpdate: false, message: 'NIP hanya boleh karakter numerik')]
     public string $f_nip;
 
+    // TODO: Kalau production pakai string
     #[Validate('required', onUpdate: false, message: 'Tipe petugas harus terpilih')]
     public int $f_petugas;
 
