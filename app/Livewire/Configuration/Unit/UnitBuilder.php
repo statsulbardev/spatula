@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class unitBuilder extends Component
+class UnitBuilder extends Component
 {
     use HasRedirectUrl;
 

@@ -131,7 +131,7 @@
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($serviceRating[0] as $columnService)
-                                    <th class="px-6 pb-4 pt-6">{{ $columnService }}</th>
+                                    <th class="px-6 pb-4 pt-6 border border-white">{{ $columnService }}</th>
                                 @endforeach
                             </tr>
                         </thead>
@@ -198,7 +198,7 @@
                         <thead>
                             <tr class="bg-neutral-100 text-left font-bold">
                                 @foreach ($complaintSuggestion[0] as $columnComplaintSuggestion)
-                                <th class="px-6 pb-4 pt-6">{{ $columnComplaintSuggestion }}</th>
+                                <th class="px-6 pb-4 pt-6 border border-white">{{ $columnComplaintSuggestion }}</th>
                                 @endforeach
                             </tr>
                         </thead>
