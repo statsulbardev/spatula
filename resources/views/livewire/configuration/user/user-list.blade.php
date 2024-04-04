@@ -18,23 +18,6 @@
                 <x-forms.inputs.search />
 
                 <div class="flex flex-wrap items-center">
-                    {{-- Pilih Unit Kerja --}}
-                    {{-- @role('superadmin')
-                    <div class="pr-6 ml-6 border-r-2 border-zinc-200">
-                        <div wire:ignore class="w-80">
-                            <select wire:model.live="selectedUnit" data-te-select-init data-te-select-filter="true"
-                                data-te-select-size="lg">
-                                <option value="null" hidden selected>Pilih Unit Kerja...</option>
-                                @foreach ($units as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
-                                @endforeach
-                            </select>
-                            <label data-te-select-label-ref>Unit Kerja</label>
-                        </div>
-                    </div>
-                    @endrole --}}
-
-                    {{-- Pagination Filter --}}
                     <x-forms.attributes.pagination-selected />
                 </div>
             </div>
@@ -51,9 +34,9 @@
                             </th>
                             <th scope="col" class="px-6 pb-4 pt-6">Nama</th>
                             <th scope="col" class="px-6 pb-4 pt-6">Username</th>
-                            <th scope="col" class="px-6 pb-4 pt-6">Email</th>
                             <th scope="col" class="px-6 pb-4 pt-6">Unit Kerja</th>
                             <th scope="col" class="px-6 pb-4 pt-6">Hak Akses</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Petugas Layanan</th>
                             <th scope="col" class="px-6 pb-4 pt-6"></th>
                         </tr>
                     </thead>
@@ -65,17 +48,13 @@
                                 </td>
                                 <td class="border-t">
                                     <div class="items-center py-4 pl-6">
-                                        {{ $user->nama }}
+                                        <div class="font-medium">{{ $user->nama }}</div>
+                                        <div class="text-sm text-primary-400 font-medium">{{ $user->email }}</div>
                                     </div>
                                 </td>
                                 <td class="border-t">
                                     <div class="items-center py-4 pl-6">
                                         {{ $user->username }}
-                                    </div>
-                                </td>
-                                <td class="border-t">
-                                    <div class="py-4 pl-6">
-                                        {{ $user->email }}
                                     </div>
                                 </td>
                                 <td class="border-t">
@@ -92,6 +71,13 @@
                                                 <p class="relative">{{ $role->name }}</p>
                                             </div>
                                         @endforeach
+                                    </div>
+                                </td>
+                                <td class="border-t">
+                                    <div class="py-4 pl-6">
+                                        <span class="{{ $user->is_petugas ? 'bg-primary-400' : 'bg-gray-400' }} px-2 py-1 rounded-lg font-medium tracking-wider text-sm text-white">
+                                            {{ $user->is_petugas ? 'Ya' : 'Tidak' }}
+                                        </span>
                                     </div>
                                 </td>
                                 <td class="w-px border-t">
