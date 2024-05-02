@@ -121,3 +121,6 @@ Route::group(['middleware' => ['auth_antrian']], function () {
     Route::get('/antrian/{antrian_satker}/edit', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
     Route::get('/antrian/{antrian_satker}/lihat', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-lihat');
 });
+
+
+Route::view('/buku-tamu', 'page.buku-tamu-alt1');
