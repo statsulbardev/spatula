@@ -14,8 +14,7 @@ use Livewire\Component;
 use App\Traits\HasRenderOption;
 use Livewire\Attributes\Computed;
 
-class
-DashboardAntrian extends Component
+class DashboardAntrian extends Component
 {
     use HasRenderOption;
 
@@ -65,7 +64,7 @@ DashboardAntrian extends Component
                 ->orderby('loket')
                 ->get();
 
-            dump($antrian_satker_layanan);
+            // dump($antrian_satker_layanan);
 
             $loket_key_index = [];
             $layanan_loket = [];
