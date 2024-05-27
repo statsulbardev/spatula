@@ -24,7 +24,7 @@ use App\Livewire\Antrian\Admin\DaftarLayanan;
 use App\Livewire\Antrian\Admin\Konfigurasi;
 use App\Livewire\Antrian\Admin\Pemanggil;
 use App\Livewire\Antrian\Admin\DaftarAntrian;
-use App\Livewire\Antrian\Admin\DaftarAntrianLihat;
+use App\Livewire\Antrian\Admin\DaftarAntrianCRUD;
 use App\Livewire\Antrian\NonAdmin\AuthLoginAntrian;
 use App\Livewire\Antrian\NonAdmin\AuthRegistrasiAntrian;
 use App\Livewire\Antrian\NonAdmin\DashboardAntrian;
@@ -86,14 +86,17 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('/pengaturan/')->gr
 });
 
 
+//Antrian
 Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-antrian']], function () {
     Route::get('/pengaturan/antrian/daftar-layanan', DaftarLayanan::class)->name('antrian-daftar-layanan');
     Route::get('/pengaturan/antrian/config_view', Konfigurasi::class)->name('antrian-config-view');
 });
 Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-antrian|operator-antrian']], function () {
-    Route::get('/pengaturan/antrian/daftar', DaftarAntrian::class)->name('antrian-daftar');
-    // Route::get('/pengaturan/antrian/{id}/daftar', DaftarAntrianLihat::class)->name('antrian-daftar-lihat');
     Route::get('/pengaturan/antrian/caller', Pemanggil::class)->name('antrian-caller');
+    Route::get('/pengaturan/antrian/daftar', DaftarAntrian::class)->name('antrian-daftar');
+    Route::get('/pengaturan/antrian/daftar/tambah', DaftarAntrianCRUD::class)->name('antrian-daftar-tambah');
+    Route::get('/pengaturan/antrian/daftar/{antrian_satker}/ubah', DaftarAntrianCRUD::class)->name('antrian-daftar-ubah');
+    Route::get('/pengaturan/antrian/daftar/{antrian_satker}/lihat', DaftarAntrianCRUD::class)->name('antrian-daftar-lihat');
 });
 
 Route::redirect('/antrian', 'antrian/dashboard');
@@ -118,7 +121,7 @@ Route::get('/antrian/logout', function () {
 Route::group(['middleware' => ['auth_antrian']], function () {
     Route::get('/antrian/lihat', LihatAntrian::class)->name('antrian-non-admin-lihat');
     Route::get('/antrian/tambah', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-tambah');
-    Route::get('/antrian/{antrian_satker}/edit', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
+    Route::get('/antrian/{antrian_satker}/ubah', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
     Route::get('/antrian/{antrian_satker}/lihat', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-lihat');
 });
 

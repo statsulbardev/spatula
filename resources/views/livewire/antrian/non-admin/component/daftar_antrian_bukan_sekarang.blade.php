@@ -100,7 +100,7 @@
                                     <x-icons.hero name="eye-outline" size="w-5 h-5" />
                                 </a>
                                 @if ($item->tanggal >= \Carbon\Carbon::today()->format('Y-m-d'))
-                                    <a x-data x-tooltip.raw="Edit Antrian" class="text-green-400 hover:text-green-500"
+                                    <a x-data x-tooltip.raw="Ubah Antrian" class="text-green-400 hover:text-green-500"
                                         href="{{ route('antrian-non-admin-item-edit', ['antrian_satker' => $item->id]) }}"
                                         wire:navigate>
                                         <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />

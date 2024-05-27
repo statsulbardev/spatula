@@ -22,7 +22,7 @@
                         </p>
                     </div>
                     <div class="w-full lg:w-2/3">
-                        <x-forms.inputs.select label="Unit Kerja" model="f_kode_satker" method="live"
+                    <x-forms.inputs.select label="Unit Kerja" model="f_kode_satker" method="live"
                             placeholder="Pilih Unit Kerja ..." :optitem="$this->units" />
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                                     <label class="form-label font-bold" for="Nama Layanan">
                                         Nama Layanan
                                     </label>
-                                    <select id="layanan_id" wire:model="f_kode_layanan"
+                                    <select id="layanan_id" wire:model="f_kode_layanan" 
                                         class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
                                         {{ in_array($routeName, ["antrian-non-admin-item-lihat", "antrian-non-admin-item-edit"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Layanan ...</option>
@@ -69,7 +69,7 @@
                                     </label>
                                     <input type='date' class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
                                         type="text" id="tanggal_id" wire:model="f_tanggal"
-                                        placeholder="Tanggal Kunjungan"
+                                        placeholder="Tanggal Kunjungan" 
                                         {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}/>
 
                                 </div>
@@ -89,8 +89,8 @@
                                     <label class="form-label font-bold" for="Nama Layanan">
                                         Periode Kedatangan
                                     </label>
-                                    <select id="periode_id" wire:model="f_periode"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
+                                    <select id="periode_id" wire:model="f_periode" 
+                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900" 
                                         {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Periode ...</option>
                                         <option value="0">Jam Pertama (Sebelum Istirahat)</option>
@@ -131,7 +131,7 @@
                                         {!!$this->f_deskripsi!!}
                                     </div>
                                 @endif
-
+                               
 
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                                     clearTimeout(timeout);
@@ -146,9 +146,9 @@
                         </div>
                     </div>
                 @endif
-
+              
             </div>
-
+            
             @if (in_array($routeName, ["antrian-non-admin-item-tambah", "antrian-non-admin-item-edit"]))
                 <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
                     <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Batal</a>
@@ -162,10 +162,9 @@
                     <a href="{{route('antrian-non-admin-lihat')}}" wire:navigate type="button" class="btn-secondary" >Tutup</a>
                 </div>
             @endif
-
+            
         </form>
     </div>
-
+    
     {{-- Content --}}
 </div>
-

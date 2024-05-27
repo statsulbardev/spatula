@@ -58,7 +58,7 @@ class Konfigurasi extends Component
 
                 $user_unit_code  = auth()->user()->satker->kode_satker;
                 if(!$user_unit_code){
-                    throw new Exception(500);
+                    throw new Exception();
                 }
 
                 d_antrian_satker_config_view::where('kode_satker', $user_unit_code)
@@ -85,7 +85,7 @@ class Konfigurasi extends Component
             try{
                 $user_unit_code  = auth()->user()->satker->kode_satker;
                 if(!$user_unit_code){
-                    throw new Exception(500);
+                    throw new Exception();
                 }
 
                 d_antrian_satker_config_view::where('kode_satker', $user_unit_code)
@@ -119,7 +119,7 @@ class Konfigurasi extends Component
                             $baru->config_value = $value;
                             $baru->save();
                             $index += 1;
-
+                            
                         }
                     }
                 }

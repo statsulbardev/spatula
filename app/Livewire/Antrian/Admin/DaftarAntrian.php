@@ -17,6 +17,11 @@ class DaftarAntrian extends Component
 
     public string $pageTitle = "Daftar Antrian";
 
+    public function mount()
+    {
+        $this->tanggal_filter = Carbon::today()->format('Y-m-d');
+    }
+
     public function render(): View
     {
         $superadmin_role = auth()->user()->hasRole('superadmin');

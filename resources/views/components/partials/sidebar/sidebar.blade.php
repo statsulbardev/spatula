@@ -77,7 +77,7 @@
                             <x-partials.sidebar.submenu :route="route('antrian-caller')" title="Pemanggil"
                                 :path="request()->is('pengaturan/antrian/caller') || request()->is('pengaturan/antrian/caller/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" />
 
-                            <x-partials.sidebar.submenu :route="route('antrian-daftar')" title="Daftar"
+                            <x-partials.sidebar.submenu :route="route('antrian-daftar')" title="Daftar Antrian"
                                 :path="request()->is('pengaturan/antrian/daftar') || request()->is('pengaturan/antrian/daftar/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" />
                         </x-partials.sidebar.collapse-menu>
                     @endrole
