@@ -120,6 +120,8 @@ class Konfigurasi extends Component
                             $baru->save();
                             $index += 1;
                             
+                        }else{
+                            $this->dispatch('notification', message: 'Url youtube tidak sesuai.');
                         }
                     }
                 }
