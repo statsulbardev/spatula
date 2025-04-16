@@ -1,41 +1,32 @@
-@section('title', 'Verifikasi PJ Layanan')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Verifikasi PJ Layanan'])
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
+<div>
+    <x-page.page-title title="Verifikasi PJ Layanan" />
 
     <section class="mb-6 mt-10">
         <div class="w-full overflow-x-auto rounded bg-white shadow">
             <div class="flex flex-wrap justify-between p-4">
-                {{-- Pencarian --}}
-                @include('components.input.search')
+                <x-forms.inputs.search />
 
-                {{-- Pagination Filter --}}
-                @include('components.input.pagination-selected')
+                <x-forms.attributes.pagination-selected />
             </div>
             @if ($services->isEmpty())
                 <div class="w-full flex  justify-center p-5">
                     <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
                 </div>
             @else
-                <table class="w-full table-auto">
+                <table class="w-full table-auto overflow-auto text-base font-light">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
-                            <th class="px-6 pb-4 pt-6">
+                            <th scope="col" class="px-6 pb-4 pt-6">
                                 <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                             </th>
-                            <th class="px-6 pb-4 pt-6">Tanggal</th>
-                            <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
-                            <th class="px-6 pb-4 pt-6">Saran dan Pengaduan</th>
-                            <th class="px-6 pb-4 pt-6">Nama Layanan</th>
-                            <th class="px-6 pb-4 pt-6">Nama Petugas</th>
-                            <th class="px-6 pb-4 pt-6">Keterangan</th>
-                            <th class="px-6 pb-4 pt-6">Kategori</th>
-                            <th class="px-6 pb-4 pt-6"></th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Tanggal</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Pengguna Layanan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Saran dan Pengaduan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Nama Layanan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Nama Petugas</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Keterangan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Kategori</th>
+                            <th scope="col" class="px-6 pb-4 pt-6"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,13 +47,13 @@
                                 <td class="border-t">
                                     <div class="py-4 pl-6">
                                         <div class="text-md">{{ ucwords(strtolower($service->nama_konsumen)) }}</div>
-                                        <div class="mb-2 text-sm text-neutral-500">{{ $service->email_konsumen }}</div>
-                                        <div class="text-sm text-primary-500">{{ $service->no_wa_telepon ?? '-' }}</div>
+                                        <div class="mb-2 text-xs text-neutral-500">{{ $service->email_konsumen }}</div>
+                                        <div class="text-xs text-primary-500">{{ $service->no_wa_telepon ?? '-' }}</div>
                                     </div>
                                 </td>
 
                                 {{-- Saran Pengaduan --}}
-                                <td class="border-t" width="35%">
+                                <td class="border-t">
                                     <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }" x-init="originalContent = @js($service->saran_pengaduan).trim();
                                     content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
 
@@ -151,9 +142,9 @@
                                             @for ($i = 0; $i < count($service->kode_saran); $i++)
                                                 <div class="mb-1 flex flex-nowrap items-center">
                                                     <span class="text-{{ array_column($this->colorSuggestions, $service->kode_saran[$i])[0] }}-400">
-                                                        @include('components.icon', ['name' => 'tag', 'size' => 'w-4 h-4'])
+                                                        <x-icons.hero name="tag-solid" size="w-4 h-4" />
                                                     </span>
-                                                    <span class="text-{{ array_column($this->colorSuggestions, $service->kode_saran[$i])[0] }}-400 ml-1">
+                                                    <span class="text-{{ array_column($this->colorSuggestions, $service->kode_saran[$i])[0] }}-400 font-medium ml-1">
                                                         {{ array_column($this->suggestions, $service->kode_saran[$i])[0] }}
                                                     </span>
                                                 </div>
@@ -168,45 +159,36 @@
                                 <td class="w-px border-t">
                                     <div class="pl-4 mr-2 flex items-center space-x-2 py-2">
                                         @if (!is_null($service->kode_saran))
-                                            <a x-data x-tooltip.raw="Edit Kategori" class="text-purple-400 hover:text-purple-500"
-                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) . '/edit' }}"
+                                            <a
+                                                x-data
+                                                x-tooltip.raw="Edit Kategori"
+                                                class="text-purple-400 hover:text-purple-500"
+                                                href="{{ route('edit-kategorisasi-layanan', $service->id) }}"
                                                 wire:navigate>
-                                                @include('components.icon', [
-                                                    'name' => 'pencil-square',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />
                                             </a>
                                         @else
-                                            <a x-data x-tooltip.raw="Verifikasi" class="text-cyan-400 hover:text-cyan-500"
-                                                href="{{ url(env('APP_URL') . '/verifikasi/pj-layanan/kategorisasi/' . $service->id) }}"
+                                            <a
+                                                x-data
+                                                x-tooltip.raw="Verifikasi"
+                                                class="text-cyan-400 hover:text-cyan-500"
+                                                href="{{ route('tambah-kategorisasi-layanan', $service->id) }}"
                                                 wire:navigate>
-                                                @include('components.icon', [
-                                                    'name' => 'tag',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                <x-icons.hero name="tag-outline" size="w-5 h-5" />
                                             </a>
                                         @endif
                                         <button x-data x-tooltip.raw="Kirim Pesan" class="text-secondary-400 hover:text-secondary-500">
-                                            @include('components.icon', [
-                                                'name' => 'message',
-                                                'size' => 'w-5 h-5',
-                                            ])
+                                            <x-icons.hero name="envelope-outline" size="w-5 h-5" />
                                         </button>
                                         <button wire:click="deleteItem({{ $service->id }})" type="button" x-data
                                             x-tooltip.raw="Hapus Penilaian" class="text-red-500 hover:text-red-600" data-te-toggle="modal"
                                             data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
-                                            @include('components.icon', [
-                                                'name' => 'trash',
-                                                'size' => 'w-5 h-5',
-                                            ])
+                                            <x-icons.hero name="trash-outline" size="w-5 h-5" />
                                         </button>
                                         @if (!is_null($service->kode_saran))
                                             <button wire:click="finalizeServiceItem({{ $service->id }})" x-data
                                                 x-tooltip.raw="Selesaikan Verifikasi" class="text-green-400 hover:text-green-500">
-                                                @include('components.icon', [
-                                                    'name' => 'check-circle',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                <x-icons.hero name="check-circle-outline" size="w-5 h-5" />
                                             </button>
                                         @endif
                                     </div>
@@ -221,5 +203,5 @@
     {{ $services->links('vendor.livewire.tailwind') }}
 
     {{-- Delete Confirmation Modal --}}
-    @include('components.input.delete-confirmation')
+    <x-forms.attributes.delete-confirmation />
 </div>

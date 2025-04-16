@@ -1,15 +1,7 @@
-@section('title', 'Konfigurasi Antrian')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
+<div>
     <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Konfigurasi Antrian'])
-
+        <x-page.page-title :title="$pageTitle" />
     </div>
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">
@@ -30,7 +22,7 @@
                         <div class="flex mt-2">
                             <div class="flex grow"></div>
                             <div class="flex  gap-2">
-                                <button  type="submit" 
+                                <button  type="submit"
                                     class="flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
                                         <span class="ml-2 text-sm">Simpan</span>
                                 </button>
@@ -81,12 +73,12 @@
                         <div class="flex mt-2">
                             <div class="flex grow"></div>
                             <div class="flex  gap-2">
-                                <button x-on:click="data_playlist.push('')" type="button" 
+                                <button x-on:click="data_playlist.push('')" type="button"
                                     class="flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
                                         @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
                                         <span class="ml-2 text-sm">Tambah Baris</span>
                                 </button>
-                                <button  type="submit" 
+                                <button  type="submit"
                                     class="flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
                                         <span class="ml-2 text-sm">Simpan</span>
                                 </button>
@@ -106,7 +98,7 @@
                     </p>
                 </div>
                 <div wire:key="{{ rand() }}"  class="w-full mt-3">
-                    <form wire:submit="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))" 
+                    <form wire:submit="submit_data_perubahan('footer', Object.fromEntries(new FormData($event.target)))"
                         x-data='{ footer_type_value: "{!! $data_footer_type !!}" }'>
                         <select class="form-input border-neutral-300 py-1" x-model="footer_type_value">
                             <option value="with_footer">Tampilkan Footer</option>
@@ -119,11 +111,11 @@
                                 <trix-editor input="note_id_1"></trix-editor>
                             </div>
                         </div>
-                        
+
                         <div class="flex mt-2">
                             <div class="flex grow"></div>
                             <div class="flex  gap-2">
-                                <button  type="submit" 
+                                <button  type="submit"
                                     class="flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
                                         <span class="ml-2 text-sm">Simpan</span>
                                 </button>

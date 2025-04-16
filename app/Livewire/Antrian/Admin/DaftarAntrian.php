@@ -1,34 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\Admin;
 
 use App\Models\d_antrian_satker;
 use App\Models\m_antrian_satker_layanan;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Carbon\Carbon;
 
 class DaftarAntrian extends Component
 {
+    public $tanggal_filter;
 
-    public $tanggal_filter; 
-
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
-    {
-        return [
-            'route' => route('antrian-daftar'),
-            'label' => 'Daftar Antrian'
-        ];
-    }
+    public string $pageTitle = "Daftar Antrian";
 
     public function mount()
     {
         $this->tanggal_filter = Carbon::today()->format('Y-m-d');
     }
 
-    public function render() : View
+    public function render(): View
     {
         $superadmin_role = auth()->user()->hasRole('superadmin');
         $user_unit_code  = auth()->user()->satker->kode_satker;
@@ -52,8 +46,10 @@ class DaftarAntrian extends Component
 
         return view('livewire.antrian.admin.daftar-antrian', [
             'data' => $data_to_render, 'master_key_value' => $master_key_value, 'today_tanggal' => Carbon::today()->format('Y-m-d')
-        ])->layout('layouts.app');
+        ])
+        ->layout('components.layouts.app')
+        ->title($this->pageTitle);
     }
 
-   
+
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Verification;
 
 use App\Models\d_penilaian;
@@ -7,8 +9,9 @@ use App\Traits\HasModelProcess;
 use App\Traits\HasInitialProperty;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Laravel\Scout\Builder;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,15 +22,6 @@ class ComplaintResponsibleList extends Component
     /** @props */
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
-
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty(): array
-    {
-        return [
-            'route' => route('daftar-pj-pengaduan'),
-            'label' => 'Daftar Verifikasi'
-        ];
-    }
 
     /** @computed property : suggestions */
     public function getSuggestionsProperty(): array
@@ -41,11 +35,11 @@ class ComplaintResponsibleList extends Component
         return $this->initColorSuggestionsOption();
     }
 
+    #[Title('Verifikasi Pengaduan')]
     public function render(): View
     {
-        return view('livewire.verification.complaint-responsible-list', [
-            'complaints' => $this->retrieveData()
-        ])->layout('layouts.app');
+        return view('livewire.verification.complaint-responsible-list', ['complaints' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function finalize(d_penilaian $penilaian)

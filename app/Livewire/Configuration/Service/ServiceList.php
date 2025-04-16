@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,6 +24,7 @@ class ServiceList extends Component
 
     public ?string $searchKeyword = null;
 
+    #[Title('Pengaturan Layanan')]
     public function render(): View
     {
         $masterLayanan = m_layanan::search($this->searchKeyword)->orderBy('id', 'asc')->paginate($this->numberOfPagination);
@@ -32,31 +34,14 @@ class ServiceList extends Component
         return view('livewire.configuration.service.service-list', [
             'services'    => $masterLayanan,
             'unitService' => $layananSatker
-        ])->layout('layouts.app');
+        ])
+        ->layout('components.layouts.app');
     }
 
     // reset pagination
     public function updatedNumberOfPagination()
     {
         $this->resetPage();
-    }
-
-    public function setUnitService($id)
-    {
-        try {
-            DB::beginTransaction();
-
-            DB::table('m_satker_layanan')->insert([
-                'm_satker_id'  => auth()->user()->satker->id,
-                'm_layanan_id' => $id
-            ]);
-
-            DB::commit();
-        } catch(Exception $error) {
-            DB::rollBack();
-
-            Log::error($error->getMessage());
-        }
     }
 
     public function deleteItem(m_layanan $layanan)
@@ -71,15 +56,38 @@ class ServiceList extends Component
         $this->dispatch('notification', message: $result);
     }
 
-    public function removeUnitService($unitId, $serviceId)
+    public function setUnitService($id)
     {
-
         try {
             DB::beginTransaction();
 
-           DB::table('m_satker_layanan')->where('m_satker_id', $unitId)->where('m_layanan_id', $serviceId)->delete();
+            DB::table('m_satker_layanan')->insert([
+                'm_satker_id'  => auth()->user()->satker->id,
+                'm_layanan_id' => $id
+            ]);
 
             DB::commit();
+
+            $this->dispatch('notification', message:'Telah ditambahkan ke layanan satker');
+        } catch(Exception $error) {
+            DB::rollBack();
+
+            Log::error($error->getMessage());
+
+            $this->dispatch('notification', message:'Tidak dapat ditambahkan ke layanan satker');
+        }
+    }
+
+    public function removeUnitService($unitId, $serviceId)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('m_satker_layanan')->where('m_satker_id', $unitId)->where('m_layanan_id', $serviceId)->delete();
+
+            DB::commit();
+
+            $this->dispatch('notification', message:'Layanan satker telah dihapus');
         } catch(Exception $error) {
             DB::rollBack();
 

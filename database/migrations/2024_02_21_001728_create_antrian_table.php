@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,18 +12,18 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('m_satker', function (Blueprint $table) {
-        //     $table->unique(['kode_satker']);
-        // });
-        // Schema::table('m_layanan', function (Blueprint $table) {
-        //     $table->unique(['kode_layanan']);
-        // });
+        Schema::table('m_satker', function (Blueprint $table) {
+            $table->unique(['kode_satker']);
+        });
+        Schema::table('m_layanan', function (Blueprint $table) {
+            $table->unique(['kode_layanan']);
+        });
 
         Schema::create('m_antrian_satker_layanan', function (Blueprint $table) {
-            $table->char('kode_satker',4);
-            $table->char('kode_layanan',2);
-            $table->char('loket',1)->default('A');
-            $table->char('is_active',1)->default('0'); // 0: non active 1: active
+            $table->char('kode_satker', 4);
+            $table->char('kode_layanan', 2);
+            $table->char('loket', 1)->default('A');
+            $table->char('is_active', 1)->default('0'); // 0: non active 1: active
             $table->timestamps();
 
             $table->primary(['kode_satker', 'kode_layanan']);
@@ -44,7 +43,7 @@ return new class extends Migration
         });
 
         Schema::create('d_antrian_satker_config_view', function (Blueprint $table) {
-            $table->char('kode_satker',4);
+            $table->char('kode_satker', 4);
             $table->string('config_key', 50); //running text,
             $table->tinyInteger('config_index');
             $table->string('config_value', 1024);
@@ -62,8 +61,8 @@ return new class extends Migration
 
         Schema::create('d_antrian_satker', function (Blueprint $table) {
             $table->string('id', 36)->primary();
-            $table->char('kode_satker',4);
-            $table->char('kode_layanan',2);
+            $table->char('kode_satker', 4);
+            $table->char('kode_layanan', 2);
             $table->string('konsumen_nama', 255);
             $table->string('konsumen_tahun_lahir', 4);
             $table->date('tanggal');

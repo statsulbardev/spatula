@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Dashboard;
 
 use App\Models\d_penilaian;
 use App\Traits\HasInitialProperty;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -66,8 +70,10 @@ class Dashboard extends Component
         $this->ratingService        = $result->groupBy('kode_layanan')->map->avg('rating_layanan')->sortDesc()->take(3);
     }
 
-    public function render()
+    #[Title('Dashboard')]
+    public function render(): View
     {
-        return view('livewire.dashboard.dashboard')->layout('layouts.app');
+        return view('livewire.dashboard.dashboard')
+            ->layout('components.layouts.app');
     }
 }

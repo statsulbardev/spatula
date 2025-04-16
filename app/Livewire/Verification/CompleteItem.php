@@ -1,40 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Verification;
 
 use App\Models\d_penilaian;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class CompleteItem extends Component
 {
     public $done;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty() : array
-    {
-        return [
-            'route' => route('daftar-selesai'),
-            'label' => 'Hasil Verifikasi'
-        ];
-    }
-
-    /** @computed property : firstBreadcrumb */
-    public function getFirstBreadcrumbProperty() : array
-    {
-        return [
-            'route' => route('detail-selesai', ['customer' => $this->done->id]),
-            'label' => $this->done->nama_konsumen
-        ];
-    }
-
-    public function render()
-    {
-        return view('livewire.verification.complete-item')
-            -> layout('layouts.app');
-    }
-
     public function mount(d_penilaian $customer)
     {
         $this->done = $customer;
+    }
+
+    #[Title('Verifikasi Layanan')]
+    public function render(): View
+    {
+        return view('livewire.verification.complete-item')
+            ->layout('components.layouts.app');
     }
 }

@@ -1,63 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Auth;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
+use App\Livewire\Forms\AuthenticationForm;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
+use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Login extends Component
 {
-    public $username;
-    public $password;
-    public $error_login_text;
-
-    // Rule Validasi Form
-    protected $rules = [
-        'username' => 'required|string|min:5',
-        'password' => 'required|string|min:5'
-    ];
-
-    // Pesan Error Validasi Form
-    protected $messages = [
-        'username.required' => 'Username tidak boleh kosong',
-        'username.min'      => 'Username minimal 5 karakter',
-        'password.required' => 'Password tidak boleh kosong',
-        'password.min'      => 'Password minimal 5 karakter'
-    ];
+    public AuthenticationForm $form;
 
     public function mount()
     {
-        if(Auth::check()){
-            return redirect('/dashboard');
-        }
+        if (Auth::check())
+            return $this->redirectIntended('dashboard', navigate: true);
     }
 
-    /**
-     * Render Komponen Login
-     * @return View
-     * @throws BindingResolutionException
-     */
-    public function render() : View
+    #[Title('Login Spatula')]
+    public function render(): View
     {
         return view('livewire.auth.login')
-            -> layout('layouts.auth');
+            ->layout('components.layouts.auth');
     }
 
     public function login()
     {
-        $this->dispatch('saved');
-        $this->error_login_text = '';
-        $credentials = $this->validate();
+        $this->dispatch('validate');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($this->form->validate())) {
             request()->session()->regenerate();
 
-            return redirect()->intended(env('APP_URL') . '/dashboard');
-        } else {
-            // sweetalert
-            $this->error_login_text = 'Gagal login dengn info yang tersedia!';
+            return $this->redirectIntended('dashboard', navigate: true);
         }
+
+        throw ValidationException::withMessages([
+            'form.username' => 'Username tidak terdaftar pada aplikasi ini.',
+            'form.password' => 'Password tidak terdaftar pada aplikasi ini.'
+        ]);
     }
 }

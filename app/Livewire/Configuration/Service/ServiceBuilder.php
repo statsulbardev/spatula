@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire\Configuration\Service;
 
-use App\Http\Requests\StoreServiceRequest;
+use App\Livewire\Forms\ServiceForm;
 use App\Models\m_layanan;
-use App\Repositories\ServiceRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
@@ -16,8 +15,7 @@ class ServiceBuilder extends Component
 {
     use HasRedirectUrl;
 
-    /** protected props */
-    protected StoreServiceRequest $ruleValidation;
+    public ServiceForm $form;
 
     /** @props */
     public m_layanan $layanan;
@@ -26,57 +24,40 @@ class ServiceBuilder extends Component
 
     public string $pageTitle;
 
-    // Form Data
-    public $f_kode;
-    public $f_nama;
-    public $f_deskripsi;
-    public $f_metode;
-
     public function render(): View
     {
         return view('livewire.configuration.service.service-builder')
-            -> layout('layouts.app');
+            ->layout('components.layouts.app')
+            ->title($this->pageTitle);
     }
 
     public function mount(m_layanan $layanan)
     {
         $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'service.master.edit') {
-            $this->layanan     = $layanan;
-            $this->f_kode      = $layanan->kode_layanan;
-            $this->f_nama      = $layanan->nama_layanan;
-            $this->f_deskripsi = $layanan->deskripsi;
-            $this->f_metode    = $layanan->metode;
-            $this->pageTitle   = "Edit Master Layanan";
+        if ($this->routeName === 'service.edit') {
+            $this->layanan           = $layanan;
+            $this->form->f_kode      = $layanan->kode_layanan;
+            $this->form->f_nama      = $layanan->nama_layanan;
+            $this->form->f_deskripsi = $layanan->deskripsi;
+            $this->form->f_metode    = $layanan->metode;
+            $this->pageTitle   = "Edit Informasi Layanan " . $layanan->nama_layanan;
         } else {
             $this->pageTitle = "Master Layanan Baru";
         }
     }
 
-    public function submitData(ServiceRepository $serviceRepository)
+    public function submitData()
     {
-        $this->dispatch('saved');
+        $this->dispatch('validate');
 
-        $this->ruleValidation    = new StoreServiceRequest();
-        $this->validate();
+        $result = $this->routeName === 'service.create'
+                ? $this->form->save()
+                : $this->form->update($this->layanan);
 
-        $result = $this->routeName === 'tambah-layanan'
-                ? $serviceRepository->save($this)
-                : $serviceRepository->update($this);
-
-        $this->redirectRoute('daftar-layanan', navigate: true);
 
         $this->dispatch('notification', message: $result);
-    }
 
-    protected function rules() : array
-    {
-        return ($this->ruleValidation)->rules();
-    }
-
-    protected function messages() : array
-    {
-        return ($this->ruleValidation)->messages();
+        return $this->redirect(route('service.index'), navigate: true);
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\Admin;
 
 use App\Traits\Antrian\Helper_Firestore;
 use App\Models\d_antrian_satker_config_view;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use DateTime;
 use Exception;
@@ -15,25 +17,9 @@ class Konfigurasi extends Component
 {
     use Helper_Firestore;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
-    {
-        return [
-            'route' => route('antrian-config-view'),
-            'label' => 'Konfigurasi Antrian'
-        ];
-    }
+    public string $pageTitle = "Konfigurasi Antrian";
 
-    /** @computed property : firstBreadcrumb */
-    public function getFirstBreadcrumbProperty()
-    {
-        return [
-            'route' => route('antrian-config-view'),
-            'label' => auth()->user()->satker->nama,
-        ];
-    }
-
-    public function render() : View
+    public function render(): View
     {
         $data_to_render = $this->retrieveData();
         return view('livewire.antrian.admin.konfigurasi', [
@@ -42,14 +28,16 @@ class Konfigurasi extends Component
             'data_playlist' => $data_to_render['playlist'],
             'data_footer_type' => $data_to_render['footer_type'],
             'data_footer' => $data_to_render['footer'],
-        ])->layout('layouts.app');
+        ])
+        ->layout('components.layouts.app')
+        ->title($this->pageTitle);
     }
 
     public function submit_data_perubahan($type, $form_data)
     {
         if($type == 'tanggal_disabled'){
             DB::beginTransaction();
-            try{ 
+            try{
 
                 $tanggal_disabled_string = $form_data['tanggal_disabled'];
                 $tanggal_disabled_array = explode(',', $tanggal_disabled_string);
@@ -67,23 +55,23 @@ class Konfigurasi extends Component
                     return;
                 }
 
-               
+
                 $user_unit_code  = auth()->user()->satker->kode_satker;
                 if(!$user_unit_code){
-                    throw new Exception(500);
+                    throw new Exception();
                 }
-                
+
                 d_antrian_satker_config_view::where('kode_satker', $user_unit_code)
                     ->whereIn('config_key', ['tanggal_disabled'])
                     ->delete();
 
                 $baru = new d_antrian_satker_config_view();
                 $baru->kode_satker = $user_unit_code;
-                $baru->config_key = 'tanggal_disabled';     
+                $baru->config_key = 'tanggal_disabled';
                 $baru->config_index = '1';
                 $baru->config_value = $tanggal_disabled_string;
                 $baru->save();
-                
+
                 $this->set_konfigurasi($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -94,22 +82,22 @@ class Konfigurasi extends Component
             }
         }else if($type == 'video'){
             DB::beginTransaction();
-            try{ 
+            try{
                 $user_unit_code  = auth()->user()->satker->kode_satker;
                 if(!$user_unit_code){
-                    throw new Exception(500);
+                    throw new Exception();
                 }
-                
+
                 d_antrian_satker_config_view::where('kode_satker', $user_unit_code)
                     ->whereIn('config_key', ['playlist_type', 'playlist'])
                     ->delete();
-                
-                $index = 1; 
+
+                $index = 1;
                 foreach($form_data as $key=>$value){
                     if($key == 'playlist_type'){
                         $baru = new d_antrian_satker_config_view();
                         $baru->kode_satker = $user_unit_code;
-                        $baru->config_key = 'playlist_type';     
+                        $baru->config_key = 'playlist_type';
                         $baru->config_index = 1;
                         $baru->config_value = $value;
                         $baru->save();
@@ -117,21 +105,23 @@ class Konfigurasi extends Component
                     }
                     if($value){
                         $url_parsed_arr = parse_url($value);
-                        if ($url_parsed_arr['host'] == "www.youtube.com" 
-                            && $url_parsed_arr['path'] == "/watch" 
-                            && substr($url_parsed_arr['query'], 0, 2) == "v=" 
+                        if ($url_parsed_arr['host'] == "www.youtube.com"
+                            && $url_parsed_arr['path'] == "/watch"
+                            && substr($url_parsed_arr['query'], 0, 2) == "v="
                             && substr($url_parsed_arr['query'], 2) != ""
                             && $url_parsed_arr['query']
-                            && substr_count($url_parsed_arr['query'], '=') == 1) 
+                            && substr_count($url_parsed_arr['query'], '=') == 1)
                         {
                             $baru = new d_antrian_satker_config_view();
                             $baru->kode_satker = $user_unit_code;
-                            $baru->config_key = 'playlist';     
+                            $baru->config_key = 'playlist';
                             $baru->config_index = $index;
                             $baru->config_value = $value;
                             $baru->save();
                             $index += 1;
                             
+                        }else{
+                            $this->dispatch('notification', message: 'Url youtube tidak sesuai.');
                         }
                     }
                 }
@@ -145,19 +135,19 @@ class Konfigurasi extends Component
             }
         }else if($type == 'footer'){
             DB::beginTransaction();
-            try{ 
+            try{
                 $user_unit_code  = auth()->user()->satker->kode_satker;
-                
+
                 d_antrian_satker_config_view::where('kode_satker', $user_unit_code)
                     ->whereIn('config_key', ['footer_type', 'footer'])
                     ->delete();
-                
-                $index = 1; 
+
+                $index = 1;
                 foreach($form_data as $key=>$value){
                     if($key == 'footer_type'){
                         $baru = new d_antrian_satker_config_view();
                         $baru->kode_satker = $user_unit_code;
-                        $baru->config_key = 'footer_type';     
+                        $baru->config_key = 'footer_type';
                         $baru->config_index = 1;
                         $baru->config_value = $value;
                         $baru->save();
@@ -167,7 +157,7 @@ class Konfigurasi extends Component
                     if($key == 'footer'){
                         $baru = new d_antrian_satker_config_view();
                         $baru->kode_satker = $user_unit_code;
-                        $baru->config_key = 'footer';     
+                        $baru->config_key = 'footer';
                         $baru->config_index = 1;
                         $baru->config_value = $value;
                         $baru->save();

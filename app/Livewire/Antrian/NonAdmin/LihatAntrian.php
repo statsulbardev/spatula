@@ -1,27 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\NonAdmin;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
-use Exception;
 
 class LihatAntrian extends Component
 {
-
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
+    #[Title('Daftar Layanan Antrian')]
+    public function render(): View
     {
-        return [
-            'route' => route('antrian-non-admin-lihat'),
-            'label' => 'Daftar Antrian Pribadi'
-        ];
+        return view('livewire.antrian.non-admin.lihat_antrian')
+            ->layout('components.layouts.antrian-app');
     }
-
-    public function render() : View
-    {
-        return view('livewire.antrian.non-admin.lihat_antrian')->layout('layouts.app_antrian');
-    }
-
 }

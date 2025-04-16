@@ -1,41 +1,32 @@
-@section('title', 'Selesai Tindak Lanjut')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-    {{-- Header --}}
-    @include('components.page.page-title', ['title' => 'Daftar Hasil Verifikasi'])
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
+<div>
+    <x-page.page-title title="Daftar Hasil Verifikasi" />
 
     <section class="mb-6 mt-10 flex">
-        <div class="w-full overflow-x-auto rounded bg-white shadow">
+        <div class="w-full overflow-auto rounded bg-white shadow">
             <div class="flex flex-wrap justify-between p-4">
-                {{-- Pencarian --}}
-                @include('components.input.search')
+                <x-forms.inputs.search />
 
-                {{-- Pagination Filter --}}
-                @include('components.input.pagination-selected')
+                <x-forms.attributes.pagination-selected />
             </div>
             @if ($dones->isEmpty())
                 <div class="w-full flex  justify-center p-5">
                     <img src="{{ asset('public/files/404.svg') }}" class="w-full sm:w-1/2 md:w-1/3 border-t">
                 </div>
             @else
-                <table class="w-full table-auto">
+                <table class="w-full table-auto text-base font-light">
                     <thead>
                         <tr class="bg-neutral-100 text-left font-bold">
-                            <th class="px-6 pb-4 pt-6">
+                            <th scope="col" class="px-6 pb-4 pt-6">
                                 <input type="checkbox" class="h-5 w-5" wire:model.live="selectAll">
                             </th>
-                            <th class="px-6 pb-4 pt-6">Tanggal</th>
-                            <th class="px-6 pb-4 pt-6">Pengguna Layanan</th>
-                            <th class="px-6 pb-4 pt-6">Saran dan Pengaduan</th>
-                            <th class="px-6 pb-4 pt-6">Nama Layanan</th>
-                            <th class="px-6 pb-4 pt-6">Nama Petugas</th>
-                            <th class="px-6 pb-4 pt-6">Keterangan</th>
-                            <th class="px-6 pb-4 pt-6">Kategori</th>
-                            <th class="px-6 pb-4 pt-6">Tanggal Selesai</th>
-                            <th class="px-6 pb-4 pt-6"></th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Tanggal</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Pengguna Layanan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Saran dan Pengaduan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Nama Layanan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Nama Petugas</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Keterangan</th>
+                            <th scope="col" class="px-6 pb-4 pt-6">Kategori</th>
+                            <th scope="col" class="px-6 pb-4 pt-6"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,22 +38,22 @@
 
                                 {{-- Tanggal Penilaian --}}
                                 <td class="border-t">
-                                    <p class="items-center py-4 pl-6">
+                                    <div class="items-center py-4 pl-6">
                                         {{ $done->created_at->format('d/m/Y') }}
-                                    </p>
+                                    </div>
                                 </td>
 
                                 {{-- Pengguna Layanan, Email, dan WA --}}
                                 <td class="border-t">
                                     <div class="py-4 pl-6">
                                         <div class="text-md">{{ ucwords(strtolower($done->nama_konsumen)) }}</div>
-                                        <div class="mb-2 text-sm text-neutral-500">{{ $done->email_konsumen }}</div>
-                                        <div class="text-sm text-primary-500">{{ $done->no_wa_telepon ?? '-' }}</div>
+                                        <div class="mb-2 text-xs text-neutral-500">{{ $done->email_konsumen }}</div>
+                                        <div class="text-xs text-primary-500">{{ $done->no_wa_telepon ?? '-' }}</div>
                                     </div>
                                 </td>
 
                                {{-- Saran Pengaduan --}}
-                                <td class="border-t" width="20%">
+                                <td class="border-t">
                                     <div x-data="{ isCollapsed: false, maxLength: 120, originalContent: '', content: '' }"
                                         x-init="originalContent = @js($done->saran_pengaduan).trim();
                                         content = originalContent.slice(0, maxLength)" class="flex flex-wrap">
@@ -87,17 +78,11 @@
                                                 @for ($i = 0; $i < 5; $i++)
                                                     @if ($i < $done->rating_layanan)
                                                         <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                            @include('components.icon', [
-                                                                'name' => 'star-solid',
-                                                                'size' => 'w-4 h-4',
-                                                            ])
+                                                            <x-icons.hero name="star-solid" size="w-4 h-4" />
                                                         </span>
                                                     @else
                                                         <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                            @include('components.icon', [
-                                                                'name' => 'star-outline',
-                                                                'size' => 'w-4 h-4',
-                                                            ])
+                                                           <x-icons.hero name="star-outline" size="w-4 h-4" />
                                                         </span>
                                                     @endif
                                                 @endfor
@@ -117,17 +102,11 @@
                                                 @for ($i = 0; $i < 5; $i++)
                                                     @if ($i < $done->rating_petugas)
                                                         <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                            @include('components.icon', [
-                                                            'name' => 'star-solid',
-                                                            'size' => 'w-4 h-4',
-                                                            ])
+                                                            <x-icons.hero name="star-solid" size="w-4 h-4" />
                                                         </span>
                                                     @else
                                                         <span class="{{ $i == 0 ?: 'ml-2' }} text-secondary-400">
-                                                            @include('components.icon', [
-                                                            'name' => 'star-outline',
-                                                            'size' => 'w-4 h-4',
-                                                            ])
+                                                            <x-icons.hero name="star-outline" size="w-4 h-4" />
                                                         </span>
                                                     @endif
                                                 @endfor
@@ -140,45 +119,37 @@
 
                                 {{-- Keterangan --}}
                                 <td class="border-t">
-                                    <p class="items-center py-4 pl-6">
+                                    <div class="items-center py-4 pl-6">
                                         {{ $done->catatan ?? '-' }}
-                                    </p>
+                                    </div>
                                 </td>
 
                                 {{-- Kategorisasi --}}
                                 <td class="border-t">
-                                    <span class="py-4 pl-6">
+                                    <div class="py-4 pl-6">
                                         @for ($i = 0; $i < count($done->kode_saran); $i++)
                                             <div class="mb-1 flex flex-nowrap items-center">
                                                 <span class="text-{{ array_column($this->colorSuggestions, $done->kode_saran[$i])[0] }}-400">
-                                                    @include('components.icon', ['name' => 'tag', 'size' => 'w-4 h-4'])
+                                                    <x-icons.hero name="tag-solid" size="w-4 h-4" />
                                                 </span>
-                                                <span class="text-{{ array_column($this->colorSuggestions, $done->kode_saran[$i])[0] }}-400 ml-1">
+                                                <span class="text-{{ array_column($this->colorSuggestions, $done->kode_saran[$i])[0] }}-400 font-medium ml-1">
                                                     {{ array_column($this->suggestions, $done->kode_saran[$i])[0] }}
                                                 </span>
                                             </div>
                                         @endfor
-                                    </span>
-                                </td>
-
-                                {{-- Tanggal Selesai Verifikasi --}}
-                                <td class="border-t">
-                                    <span class="items-center py-4 pl-6">
-                                        {{ $done->tanggal_selesai->format('d/m/Y') }}
-                                    </span>
+                                    </div>
                                 </td>
 
                                 {{-- Aksi --}}
                                 <td class="w-px border-t">
                                     <div class="mr-2 flex items-center space-x-2 py-2">
-                                        <a x-data x-tooltip.raw="Lihat Informasi"
-                                            href="{{ url(env('APP_URL') . '/verifikasi/selesai/' . $done->id) }}"
+                                        <a
+                                            x-data
+                                            x-tooltip.raw="Lihat Informasi"
+                                            href="{{ route('detail-selesai', $done->id) }}"
                                             class="cursor-pointer text-primary-400 hover:text-primary-500"
                                             wire:navigate>
-                                            @include('components.icon', [
-                                                'name' => 'eye',
-                                                'size' => 'w-5 h-5',
-                                            ])
+                                            <x-icons.hero name="eye-outline" size="w-5 h-5" />
                                         </a>
                                     </div>
                                 </td>
@@ -189,5 +160,6 @@
             @endif
         </div>
     </section>
+
     {{ $dones->links('vendor.livewire.tailwind') }}
 </div>

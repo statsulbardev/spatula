@@ -10,16 +10,14 @@ use App\Livewire\Verification\ComplaintResponsibleList;
 use App\Livewire\Verification\ComplaintItem;
 use App\Livewire\Report\Monthly;
 use App\Livewire\Report\Daily;
-use App\Livewire\Configuration\UserList;
-use App\Livewire\Configuration\CreateEditUser;
 use App\Livewire\Configuration\Service\ServiceList;
 use App\Livewire\Configuration\Service\ServiceBuilder;
-use App\Livewire\Configuration\Service\UnitServiceList;
-use App\Livewire\Configuration\Service\UnitServiceBuilder;
-use App\Livewire\Configuration\UnitList;
-use App\Livewire\Configuration\CreateEditUnit;
+use App\Livewire\Configuration\User\UserList;
+use App\Livewire\Configuration\User\UserBuilder;
+use App\Livewire\Configuration\Unit\UnitList;
+use App\Livewire\Configuration\Unit\UnitBuilder;
 use App\Livewire\Dashboard\Dashboard;
-use App\Livewire\Form\Evaluation;
+use App\Livewire\Frontend\Evaluation;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Antrian\Admin\DaftarLayanan;
@@ -40,13 +38,14 @@ Route::get('sso', [LoginController::class, 'sso'])->name('sso');
 Route::get('/login', Login::class)->name('login');
 
 Route::get('/penilaian', Evaluation::class)->name('form-penilaian');
+Route::get('/penilaian/{satker?}/{layanan?}', Evaluation::class)->name('form-penilaian-satker');
 
-// Dashboard
+//TODO: Dashboard
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 });
 
-// Verification
+//TODO: Verifikasi
 Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-layanan|pj-pengaduan']], function () {
     Route::prefix('/verifikasi/')->group(function () {
         Route::get('selesai', CompleteList::class)->name('daftar-selesai');
@@ -59,10 +58,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin|pj-layanan|pj-peng
     });
 });
 
-// Report
-Route::group(['middleware' => ['auth', 'role:superadmin|admin|pimpinan']], function () {
-    Route::get('/laporan/bulanan', Monthly::class)->name('laporan-bulanan');
-    Route::get('/laporan/harian', Daily::class)->name('laporan-harian');
+//TODO: Laporan
+Route::middleware(['auth', 'role:superadmin|admin|pimpinan'])->prefix('/laporan/')->group(function () {
+    Route::get('bulanan', Monthly::class)->name('laporan-bulanan');
+    Route::get('harian', Daily::class)->name('laporan-harian');
 });
 
 // Configuration
@@ -73,20 +72,17 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('/pengaturan/')->gr
         Route::get('layanan/{layanan}/edit', ServiceBuilder::class)->name('edit');
     });
 
-    Route::name('unit.')->group(function() {
-
+    Route::name('user.')->group(function() {
+        Route::get('pengguna', UserList::class)->name('index');
+        Route::get('pengguna/baru', UserBuilder::class)->name('create');
+        Route::get('pengguna/{pengguna}/edit', UserBuilder::class)->name('edit');
     });
 
-    Route::get('satker', UnitList::class)->name('daftar-satker');
-    Route::get('satker/tambah', CreateEditUnit::class)->name('tambah-satker');
-    Route::get('satker/{satker}/edit', CreateEditUnit::class)->name('edit-satker');
-});
-
-// User Configuration
-Route::group(['middleware' => ['auth', 'role:superadmin|admin']], function () {
-    Route::get('/pengaturan/pengguna', UserList::class)->name('daftar-pengguna');
-    Route::get('/pengaturan/pengguna/tambah', CreateEditUser::class)->name('tambah-pengguna');
-    Route::get('/pengaturan/pengguna/{pengguna}/edit', CreateEditUser::class)->name('edit-pengguna');
+    Route::middleware(['auth', 'role:superadmin'])->name('unit.')->group(function() {
+        Route::get('satker', UnitList::class)->name('index');
+        Route::get('satker/tambah', UnitBuilder::class)->name('create');
+        Route::get('satker/{satker}/edit', UnitBuilder::class)->name('edit');
+    });
 });
 
 
@@ -128,3 +124,6 @@ Route::group(['middleware' => ['auth_antrian']], function () {
     Route::get('/antrian/{antrian_satker}/ubah', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-edit');
     Route::get('/antrian/{antrian_satker}/lihat', ItemLihatTambahUbah::class)->name('antrian-non-admin-item-lihat');
 });
+
+
+Route::view('/buku-tamu', 'page.buku-tamu-alt1');

@@ -31,11 +31,11 @@
                     {{-- Dashbboard --}}
                     <x-partials.sidebar.menu :route="route('dashboard')"
                         :path="request()->is('dashboard') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                        icon="squares-2x2" page="Dashboard" title="Dashboard" />
+                        icon="squares-2x2-solid" page="Dashboard" title="Dashboard" />
 
                     {{-- Verifikasi --}}
                     @role('superadmin|admin|pj-layanan|pj-pengaduan')
-                        <x-partials.sidebar.collapse-menu page="Verification" icon="square-3-stack-3d" label="Verifikasi"
+                        <x-partials.sidebar.collapse-menu page="Verification" icon="square-3-stack-3d-solid" label="Verifikasi"
                             :class="request()->is('verifikasi/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
                             :verticalborder="request()->is('verifikasi/*') ? '' : 'opacity-50'">
                             <x-partials.sidebar.submenu :route="route('daftar-selesai')" title="Layanan"
@@ -51,7 +51,7 @@
 
                     {{-- Laporan --}}
                     @role('superadmin|admin|pimpinan')
-                        <x-partials.sidebar.collapse-menu page="Report" icon="presentation-chart-line" label="Laporan"
+                        <x-partials.sidebar.collapse-menu page="Report" icon="presentation-chart-line-solid" label="Laporan"
                             :class="request()->is('laporan/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
                             :verticalborder="request()->is('laporan/*') ? '' : 'opacity-50'">
                             <x-partials.sidebar.submenu :route="route('laporan-bulanan')" title="Bulanan"
@@ -63,7 +63,7 @@
                     @endrole
 
                     @role('superadmin|admin|pj-antrian|operator-antrian')
-                        <x-partials.sidebar.collapse-menu page="Queue" icon="queue-list" label="Antrian"
+                        <x-partials.sidebar.collapse-menu page="Queue" icon="queue-list-solid" label="Antrian"
                             :class="request()->is('pengaturan/antrian/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
                             :verticalborder="request()->is('pengaturan/antrian/*') ? '' : 'opacity-50'">
                             @role('superadmin|admin|pj-antrian')
@@ -91,25 +91,33 @@
                     <div class="flex flex-col gap-4">
                         {{-- Pengaturan Layanan --}}
                         <x-partials.sidebar.menu :route="route('service.index')"
-                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'" icon="clipboard-document-list"
-                            page="Service" title="Layanan" />
+                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="clipboard-document-list-solid" page="Service" title="Layanan" />
 
                         {{-- Pengaturan User --}}
-                        <x-partials.sidebar.menu :route="route('daftar-pengguna')"
-                            :path="request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                            icon="user-circle" page="User" title="Pengguna" />
+                        <x-partials.sidebar.menu :route="route('user.index')"
+                            :path="request()->routeIs('user.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="user-circle-solid" page="User" title="Pengguna" />
 
                         {{-- Pengaturan Satker --}}
-                        <x-partials.sidebar.menu :route="route('daftar-satker')"
-                            :path="request()->is('pengaturan/satker') || request()->is('pengaturan/satker/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                            icon="building-office" page="Unit" title="Satuan Kerja" />
+                        <x-partials.sidebar.menu :route="route('unit.index')"
+                            :path="request()->routeIs('unit.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="building-office-solid" page="Unit" title="Satuan Kerja" />
                     </div>
                 @endrole
 
                 @role('admin')
-                    <x-partials.sidebar.menu :route="route('daftar-pengguna')"
-                        :path="request()->is('pengaturan/pengguna') || request()->is('pengaturan/pengguna/*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
-                        icon="user-circle" page="User" title="Pengguna" />
+                    <div class="flex flex-col gap-4">
+                        {{-- Pengaturan Layanan --}}
+                        <x-partials.sidebar.menu :route="route('service.index')"
+                            :path="request()->routeIs('service.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="clipboard-document-list-solid" page="Service" title="Layanan" />
+
+                        {{-- Pengaturan User --}}
+                        <x-partials.sidebar.menu :route="route('user.index')"
+                            :path="request()->routeIs('user.*') ? 'text-white' : 'text-primary-100 group-hover:text-white'"
+                            icon="user-circle-solid" page="User" title="Pengguna" />
+                    </div>
                 @endrole
             </div>
         </nav>

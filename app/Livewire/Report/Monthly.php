@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Report;
 
 use App\Traits\HasInitialProperty;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,43 +17,30 @@ class Monthly extends Component
 {
     use HasInitialProperty, WithPagination;
 
-    /** @props */
-    public $selectedYear;
-    public $officerRating;
-    public $serviceRating;
-    public $complaintSuggestion;
+    public string $selectedYear;
 
-    /** @computed property : months */
-    public function getMonthsProperty()
+    public ?array $officerRating;
+
+    public ?array $serviceRating;
+
+    public ?array $complaintSuggestion;
+
+    #[Computed]
+    public function months()
     {
         return $this->initMonthsOption();
     }
 
-    /** @computed property : years */
-    public function getYearsProperty()
+    #[Computed]
+    public function years()
     {
         return $this->initYearsOption();
     }
 
-    /** @computed property : suggestions */
-    public function getSuggestionsProperty()
+    #[Computed]
+    public function suggestions()
     {
         return $this->initSuggestionsOption();
-    }
-
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty(): array
-    {
-        return [
-            'route' => route('laporan-bulanan'),
-            'label' => 'Laporan'
-        ];
-    }
-
-    /** @computed propery : secondBreadcrumb */
-    public function getSecondBreadcrumbProperty(): string
-    {
-        return 'Bulanan';
     }
 
     public function boot()
@@ -60,13 +52,17 @@ class Monthly extends Component
         $this->complaintSuggestion = $this->getComplaintSuggestion();
     }
 
-    public function render()
+    #[Title('Laporan Bulanan')]
+    public function render(): View
     {
-        return view("livewire.report.monthly")->layout("layouts.app");
+        return view("livewire.report.monthly")
+            ->layout('components.layouts.app');
     }
 
     public function updatedSelectedYear()
     {
+        $this->reset(['officerRating', 'serviceRating', 'complaintSuggestion']);
+
         $this->officerRating       = $this->getOfficerRating();
         $this->serviceRating       = $this->getServiceRating();
         $this->complaintSuggestion = $this->getComplaintSuggestion();

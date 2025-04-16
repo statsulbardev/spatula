@@ -42,6 +42,8 @@ class DaftarAntrianCRUD extends Component
     public ?string $layanan_satker;
     public ?string $disable_date;
 
+    public string $pageTitle = "Daftar Antrian CRUD";
+
 
     public function rules() : array
     {
@@ -168,12 +170,21 @@ class DaftarAntrianCRUD extends Component
         if($config_date){
             $this->disable_date = $config_date->config_value;
         }
+
+        if($this->routeName === 'antrian-daftar-lihat'){
+            $this->pageTitle = 'Ubah Antrian';
+        }else if($this->routeName === 'antrian-daftar-ubah'){
+            $this->pageTitle = 'Lihat Antrian';
+        }else if($this->routeName === 'antrian-daftar-tambah'){
+            $this->pageTitle = 'Tambah Antrian';
+        }
     }
 
     public function render() : View
     {
         return view('livewire.antrian.admin.daftar-antrian-crud')
-            ->layout('layouts.app');
+            ->layout('components.layouts.app')
+            ->title($this->pageTitle);
     }
 
     public function search_konsumen()

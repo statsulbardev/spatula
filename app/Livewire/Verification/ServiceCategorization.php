@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Verification;
 
 use App\Models\d_penilaian;
@@ -9,7 +11,8 @@ use App\Repositories\VerificationRepository;
 use App\Traits\HasRedirectUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class ServiceCategorization extends Component
@@ -33,7 +36,6 @@ class ServiceCategorization extends Component
     public $cb_apresiasi;
     public $cb_lainnya;
 
-    /** @computed Property : officers */
     public function getOfficersProperty()
     {
         $superadmin_role = auth()->user()->hasRole('superadmin');
@@ -48,7 +50,6 @@ class ServiceCategorization extends Component
             ->toArray();
     }
 
-    /** @computed Property : services */
     public function getServicesProperty()
     {
         return
@@ -57,34 +58,11 @@ class ServiceCategorization extends Component
             ->toArray();
     }
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty(): array
-    {
-        return [
-            'route'  => route('daftar-pj-layanan'),
-            'label'  => 'Daftar Verifikasi',
-        ];
-    }
-
-    /** @computed property : firstBreadcrumb */
-    public function getFirstBreadcrumbProperty(): array
-    {
-        return [
-            'route' => route('tambah-kategorisasi-layanan', request()->route()->originalParameters()),
-            'label' => 'Kategorisasi Layanan',
-        ];
-    }
-
-    /** @computed property : secondBreadcrumb */
-    public function getSecondBreadcrumbProperty(): string
-    {
-        return request()->route()->parameters()['pengguna_layanan']['nama_konsumen'];
-    }
-
+    #[Title('Verifikasi Penilaian')]
     public function render(): View
     {
         return view('livewire.verification.service-categorization')
-            ->layout('layouts.app');
+            ->layout('components.layouts.app');
     }
 
     public function mount(d_penilaian $pengguna_layanan)
@@ -120,8 +98,8 @@ class ServiceCategorization extends Component
 
         $result = $verificationRepository->verifyByServiceOfficer($this, $data);
 
-        $this->redirectRoute('daftar-pj-layanan', navigate: true);
-
         $this->dispatch('notification', message: $result);
+
+        return $this->redirectRoute('daftar-pj-layanan', navigate: true);
     }
 }

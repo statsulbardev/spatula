@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\Admin;
 
 use App\Models\d_antrian_satker;
@@ -7,7 +9,7 @@ use App\Models\m_antrian_satker_layanan;
 use App\Traits\Antrian\Helper_Firestore;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,27 +18,14 @@ class Pemanggil extends Component
 {
     use Helper_Firestore;
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
-    {
-        return [
-            'route' => route('antrian-caller'),
-            'label' => 'Pemanggil'
-        ];
-    }
-
-    // public function mount()
-    // {
-    //     m_a
-    // }
-
+    public string $pageTitle = "Pemanggil Antrian";
 
     public function reset_active($loket)
     {
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{ 
+            try{
                 $arr_kode_layanan = m_antrian_satker_layanan::where('loket', $loket)
                     ->where('is_active', '1')
                     ->get()
@@ -49,7 +38,7 @@ class Pemanggil extends Component
                     ->update([
                         'status' => 0
                     ]);
-               
+
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -66,7 +55,7 @@ class Pemanggil extends Component
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{ 
+            try{
                 $arr_kode_layanan = m_antrian_satker_layanan::where('loket', $loket)
                     ->where('is_active', '1')
                     ->get()
@@ -85,7 +74,7 @@ class Pemanggil extends Component
                     $latest->antrian_pemanggil_counter = '1';
                     $latest->save();
                 }
-               
+
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -102,7 +91,7 @@ class Pemanggil extends Component
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{ 
+            try{
                 d_antrian_satker::whereIn('status', ['1'])
                     ->where('id', $id)
                     ->where('kode_satker', $user_unit_code)
@@ -130,7 +119,7 @@ class Pemanggil extends Component
                     $new_active->antrian_pemanggil_counter = '1';
                     $new_active->save();
                 }
-               
+
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -147,13 +136,13 @@ class Pemanggil extends Component
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{ 
+            try{
                 $arr_kode_layanan = m_antrian_satker_layanan::where('loket', $loket)
                     ->where('is_active', '1')
                     ->get()
                     ->pluck('kode_layanan')
                     ->toArray();
-                
+
                 $yang_dilangkahi = d_antrian_satker::whereIn('status', ['1'])
                     ->where('id', $id)
                     ->where('kode_satker', $user_unit_code)
@@ -167,15 +156,15 @@ class Pemanggil extends Component
                     $latest_antrian_query->whereIn('kode_layanan', $arr_kode_layanan);
                     $latest_antrian_query->orderby('antrian', 'desc');
                     $latest_antrian = $latest_antrian_query->first();
-            
+
                     $latest_number = 0;
-                    
+
                     if($latest_antrian){
                         $latest_number = intval(substr($latest_antrian->antrian,1));
                     }
                     $latest_number  += 1;
                     $antrian_baru = str_pad($latest_number, 2, "0", STR_PAD_LEFT);
-            
+
                     $latest_antrian_internal_query = d_antrian_satker::query();
                     $latest_antrian_internal_query->where('tanggal', $yang_dilangkahi->tanggal);
                     $latest_antrian_internal_query->orderby('antrian_internal', 'desc');
@@ -193,7 +182,7 @@ class Pemanggil extends Component
                     $yang_dilangkahi->save();
                 }
 
-                    
+
                 $new_active = d_antrian_satker::whereDate('tanggal',  Carbon::today()->format('Y-m-d'))
                     ->whereIn('kode_layanan', $arr_kode_layanan)
                     ->where('kode_satker', $user_unit_code)
@@ -206,7 +195,7 @@ class Pemanggil extends Component
                     $new_active->antrian_pemanggil_counter = '1';
                     $new_active->save();
                 }
-               
+
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
                 $this->dispatch('notification', message: 'Berhasil menyimpan data.');
@@ -223,7 +212,7 @@ class Pemanggil extends Component
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{                 
+            try{
                 $yang_active = d_antrian_satker::whereIn('status', ['1'])
                     ->where('id', $id)
                     ->where('kode_satker', $user_unit_code)
@@ -247,11 +236,11 @@ class Pemanggil extends Component
     }
 
     public function rearrange()
-    {   
+    {
         $user_unit_code  = auth()->user()->satker->kode_satker;
         if($user_unit_code){
             DB::beginTransaction();
-            try{  
+            try{
                 d_antrian_satker::rearrange($user_unit_code);
                 $this->set_antrian($this->setup_client_create(), $user_unit_code);
                 DB::commit();
@@ -264,7 +253,7 @@ class Pemanggil extends Component
         }
     }
 
-    public function render() : View
+    public function render(): View
     {
         $show_data = [];
         $user_unit_code  = auth()->user()->satker->kode_satker;
@@ -285,9 +274,9 @@ class Pemanggil extends Component
                 if(!array_key_exists($item_layanan->loket, $loket_key_index)){
                     $loket_key_index[$item_layanan->loket] = count($show_data);
                     array_push($show_data, [
-                        'loket' => $item_layanan->loket, 
-                        'layanan' => [], 
-                        'active' => null, 
+                        'loket' => $item_layanan->loket,
+                        'layanan' => [],
+                        'active' => null,
                         'daftar' => []
                     ]);
                 }
@@ -315,8 +304,8 @@ class Pemanggil extends Component
             }
         }
 
-        return view('livewire.antrian.admin.pemanggil', [
-            'show_data' => $show_data
-        ])->layout('layouts.app');
+        return view('livewire.antrian.admin.pemanggil', ['show_data' => $show_data])
+            ->layout('components.layouts.app')
+            ->title($this->pageTitle);
     }
 }

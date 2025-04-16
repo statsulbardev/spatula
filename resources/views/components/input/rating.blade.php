@@ -1,11 +1,5 @@
-<div wire:ignore
-    x-init="() => { 
-        new StarRating('#{{ $id }}', {
-            maxStars: 5,
-            showText: true,
-        })
-    }">
-    <select wire:model="{{ $model }}" id="{{ $id }}" class="star-rating" class="form-control mb-3">
+<div wire:ignore>
+    <select wire:model.defer="{{ $model }}" class="star-rating" class="form-control mb-3">
         <option value="" hidden selected></option>
         <option value="1">Sangat Tidak Puas</option>
         <option value="2">Tidak Puas</option>

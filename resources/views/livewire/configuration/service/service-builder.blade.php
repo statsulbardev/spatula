@@ -1,7 +1,4 @@
-@section('title', $pageTitle)
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
+<div>
     <x-page.page-title :title="$pageTitle" />
 
     {{-- Content --}}
@@ -17,86 +14,22 @@
                         </p>
                     </div>
                     <div class="pr-3 lg:w-2/3">
-                        {{-- Kode Layanan --}}
-                        <div class="my-6 w-full">
-                            @include('components.input.text', [
-                                'label' => 'Kode Layanan',
-                                'model' => 'f_kode',
-                                'type' => 'text',
-                            ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })" x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('f_kode')
-                                    @include('components.notification.error')
-                                @enderror
-                            </div>
-                        </div>
+                        <x-forms.inputs.text label="Kode Layanan" model="form.f_kode" type="text" />
 
-                        {{-- Nama Layanan --}}
-                        <div class="my-6 w-full">
-                            @include('components.input.text', [
-                                'label' => 'Nama Layanan',
-                                'model' => 'f_nama',
-                                'type' => 'text',
-                            ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })" x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('f_nama')
-                                    @include('components.notification.error')
-                                @enderror
-                            </div>
-                        </div>
+                        <x-forms.inputs.text label="Nama Layanan" model="form.f_nama" type="text" />
 
-                        {{-- Metode Layanan --}}
-                        <div class="my-6 w-full">
-                            @include('components.input.select', [
-                                'label' => 'Metode Layanan',
-                                'model' => 'f_metode',
-                                'opt_title' => 'Pilih Metode Layanan ...',
-                                'opt_item' => "<option value='1'>Luring (offline)</option>
-                                                                                                                                                                                                    <option value='2'>Daring (online)</option>",
-                                'id' => 'metode',
-                                'value' => $routeName === 'service.master.create' ? null : $this->f_metode,
-                            ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })" x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('f_metode')
-                                    @include('components.notification.error')
-                                @enderror
-                            </div>
-                        </div>
+                        <x-forms.inputs.select
+                            label="Metode Layanan"
+                            model="form.f_metode"
+                            optitem="<option value='1'>Luring (offline)</option><option value='2'>Daring (online)</option>"
+                            placeholder="Pilih Metode Layanan ..."
+                        />
 
-                        {{-- Deskripsi Layanan --}}
-                        <div class="my-6 w-full">
-                            @include('components.input.text-area', [
-                                'model' => 'f_deskripsi',
-                                'label' => 'Deskripsi Layanan',
-                            ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })" x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('f_deskripsi')
-                                    @include('components.notification.error')
-                                @enderror
-                            </div>
-                        </div>
+                        <x-forms.inputs.text-area model="form.f_deskripsi" label="Deskripsi Layanan" />
                     </div>
                 </div>
                 <div class="flex items-center border-t border-gray-200 bg-zinc-200 px-8 py-4">
-                    <button class="btn-primary ml-auto">
-                        {{ $routeName === 'service.master.create' ? 'Simpan' : 'Perbaharui' }}
-                    </button>
+                    <button class="btn-primary ml-auto">Simpan</button>
                 </div>
             </form>
         </div>

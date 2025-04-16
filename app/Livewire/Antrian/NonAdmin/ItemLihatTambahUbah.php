@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Antrian\NonAdmin;
 
 use App\Models\d_antrian_satker;
@@ -7,13 +9,15 @@ use App\Models\d_antrian_satker_config_view;
 use App\Models\m_antrian_satker_layanan;
 use App\Models\m_satker;
 use App\Traits\HasRenderOption;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Title;
 use Webpatser\Uuid\Uuid;
 
 class ItemLihatTambahUbah extends Component
@@ -32,7 +36,6 @@ class ItemLihatTambahUbah extends Component
 
     public ?string $layanan_satker;
     public ?string $disable_date;
-
 
     public function rules() : array
     {
@@ -58,40 +61,20 @@ class ItemLihatTambahUbah extends Component
         ];
     }
 
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty()
+    #[Computed]
+    public function units(): string
     {
-        return [
-            'route' => route('antrian-non-admin-lihat'),
-            'label' => 'Daftar Antrian Pribadi'
-        ];
-    }
-
-    /** @computed property : firstBread */
-    public function getFirstBreadcrumbProperty()
-    {
-        if($this->routeName === 'antrian-non-admin-item-edit')
-        {
-            return [
-                'route' => route('antrian-non-admin-lihat'),
-                'label' => 'Ubah Antrian',
-            ];
-        }
-        else if($this->routeName === 'antrian-non-admin-item-lihat')
-        {
-            return [
-                'route' => route('antrian-non-admin-lihat'),
-                'label' => 'Lihat Antrian',
-            ];
-        }
-    }
-
-    /** @computed property : secondBreadcrumb */
-    public function getSecondBreadcrumbProperty() : string
-    {
-        return $this->routeName === 'antrian-non-admin-item-tambah'
-                ? 'Tambah Antrian'
-                : 'Tanggal '.Carbon::createFromFormat('Y-m-d', $this->atrian_satker->tanggal)->format('d/m/Y');
+        return
+            $this->renderOption(
+                m_satker::get(['kode_satker', 'nama'])
+                    ->map(function ($item) {
+                        return [
+                            0 => $item->kode_satker,
+                            1 => $item->nama
+                        ];
+                    })
+                    ->toArray()
+            );
     }
 
     public function mount(d_antrian_satker $antrian_satker)
@@ -114,22 +97,6 @@ class ItemLihatTambahUbah extends Component
             $this->f_periode = substr($antrian_satker->antrian, 0, 1);
             $this->f_deskripsi = $antrian_satker->deskripsi;
         }
-    }
-
-    
-    public function getUnitsProperty(): string
-    {
-        return
-            $this->renderOption(
-                m_satker::get(['kode_satker', 'nama'])
-                    ->map(function ($item) {
-                        return [
-                            0 => $item->kode_satker,
-                            1 => $item->nama
-                        ];
-                    })
-                    ->toArray()
-            );
     }
 
     public function updatedFKodeSatker()
@@ -161,10 +128,11 @@ class ItemLihatTambahUbah extends Component
         $this->dispatch('tambah-antrian-change-kode-satker');
     }
 
-    public function render() : View
+    #[Title('Daftar Layanan Antrian')]
+    public function render(): View
     {
         return view('livewire.antrian.non-admin.item_lihat_tambah_ubah')
-            ->layout('layouts.app_antrian');
+            ->layout('components.layouts.antrian-app');
     }
 
     public function submitData()
@@ -285,9 +253,7 @@ class ItemLihatTambahUbah extends Component
                 Log::error($ex);
                 $this->dispatch('notification', message: 'Informasi gagal menyimpan antrian data.');
             }
-           
         }
-
     }
 
 }

@@ -1,24 +1,17 @@
-@section('title', 'Daftar Layanan Antrian')
-
 <div class="w-full lg:w-3/4 px-4 md:px-6 2xl:px-11 py-8">
-
-    <div class="flex-no-wrap flex justify-between">
+    <div class="flex-no-wrap flex justify-between mb-8">
         {{-- Header --}}
         @if ($this->routeName == 'antrian-non-admin-item-tambah')
-            @include('components.page.page-title', ['title' => 'Tambah Antrian'])
+           <x-page.page-title title="Tambah Antrian" />
         @elseif ($this->routeName == 'antrian-non-admin-item-edit')
-            @include('components.page.page-title', ['title' => 'Ubah Antrian'])
+            <x-page.page-title title="Edit Antrian" />
         @elseif ($this->routeName == 'antrian-non-admin-item-lihat')
-            @include('components.page.page-title', ['title' => 'Lihat Antrian'])
+            <x-page.page-title title="Ubah Antrian" />
         @endif
-        
-        {{-- Antrian Baru --}}
     </div>
 
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
     <div>
-        <form wire:submit.prevent="submitData">
+        <form wire:submit="submitData">
             <div class="mt-4 rounded-t-lg border-l border-r border-t border-gray-200 bg-white py-4 shadow-sm">
                 {{-- Unit Kerja --}}
                 <div class="flex flex-wrap p-6">
@@ -29,27 +22,8 @@
                         </p>
                     </div>
                     <div class="w-full lg:w-2/3">
-                        <div class="my-6">
-                            {{-- Unit Kerja yang Dinilai --}}
-                            @include('components.input.select-realtime', [
-                                'label' => 'Unit Kerja',
-                                'model' => 'f_kode_satker',
-                                'opt_title' => 'Pilih Unit Kerja ...',
-                                'opt_item' => $this->units,
-                                'value' => $this->f_kode_satker,
-                                'id' => 'unit_kerja',
-                                'prop' => in_array($routeName, ["antrian-non-admin-item-lihat", "antrian-non-admin-item-edit"]) ? "disabled" : "",
-                            ])
-                            <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
-                                clearTimeout(timeout);
-                                shown = true;
-                                timeout = setTimeout(() => { shown = false }, 5000);
-                            })" x-show.transition.opacity.out.duration.2000ms="shown">
-                                @error('f_kode_satker')
-                                    @include('components.notification.error')
-                                @enderror
-                            </div>
-                        </div>
+                    <x-forms.inputs.select label="Unit Kerja" model="f_kode_satker" method="live"
+                            placeholder="Pilih Unit Kerja ..." :optitem="$this->units" />
                     </div>
                 </div>
 
@@ -194,4 +168,3 @@
     
     {{-- Content --}}
 </div>
-

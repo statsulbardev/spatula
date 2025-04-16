@@ -1,13 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') - Spatula</title>
+    <title>{{ $title ?? 'Spatula'}}</title>
 
     <!-- Favicon-->
     <link id="favicon" rel="icon" href="{{ secure_asset(env('APP_URL') . '/public/files/logo_2.ico') }}">
@@ -18,33 +17,27 @@
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.css') }}">
 
     @livewireStyles
+
     @vite(['resources/css/app.css'])
+
     @yield('styles')
 
-    <style>
-        [x-cloak] { display: none !important; }
-    </style>
+    <style>[x-cloak] { display: none !important }</style>
 </head>
 
-<body
-    x-data="{ 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
-    x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
-    $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{ 'dark text-bodydark bg-boxdark-2': darkMode === true }">
+<body x-data="{page: 'spatula', 'loaded': true, 'sidebarToggle': false, 'scrollTop': false}">
+    <x-notification.flash />
 
     @yield('content')
 
     @vite(['resources/js/app.js'])
+
     @livewireScriptConfig
 
-    <!-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-            data-turbolinks-eval="false"
-            data-turbo-eval="false">
-    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.js') }}" data-navigate-once></script>
-    <script src="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset('public/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset('public/vendor/trix/trix-editor.min.js') }}" data-navigate-once></script>
+    <script src="{{ secure_asset('public/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
     <script data-navigate-once>
         window.addEventListener('notification', event => {
             window.dispatchEvent(new CustomEvent('notify', {
@@ -54,7 +47,5 @@
     </script>
 
     @stack('scripts')
-
 </body>
-
 </html>

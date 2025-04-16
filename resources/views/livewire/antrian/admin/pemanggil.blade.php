@@ -1,23 +1,17 @@
-@section('title', 'Pemanggil Antrian')
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
+<div>
     <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Pemanggil Antrian'])
+        <x-page.page-title :title="$pageTitle" />
+
         {{-- Rearange Data --}}
         <button wire:click="rearrange" type="button"
             class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
-            @include('components.icon', ['name' => 'cursor-arrow-ripple', 'size' => 'w-5 h-5'])
+           <x-icons.hero name="cursor-arrow-ripple-outline" size="w-5 h-5" />
             <span class="ml-2 text-sm">Rearrange</span>
         </button>
     </div>
 
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
-
     <section wire:key="{{ rand() }}" class="mb-6 mt-10">
         <div wire:poll.keep-alive.300s class="overflow-x-auto rounded-md bg-white shadow mb-5">
             <div class="flex flex-wrap items-center justify-between p-4 pt-0 mt-4">
@@ -44,7 +38,7 @@
                                                 Berikutnya
                                         </button>
                                     </div>
-                                    
+
                                 @else
                                     <p class="w-full text-center text-md">-</p>
                                     <button wire:click="mulai_dan_next('{{$item_show['loket']}}')"
@@ -60,7 +54,7 @@
                                                     Panggil Antrian
                                             </button>
                                         @endif
-                                    
+
                                         <button wire:click="reset_active('{{$item_show['loket']}}')"
                                             class="flex-grow bg-gray-500 hover:gray-700 p-1 text-white rounded-md text-sm mt-1">
                                                 Reset Antrian
@@ -68,7 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <hr class="border-zinc-400">
                             <div class="text-sm leading-tight text-justify my-1.5">
                                 <div>{{implode(', ', $item_show['layanan'])}}</div>
@@ -93,7 +87,7 @@
                                                         <div class="text-md">{{$item_antrian->konsumen_nama}}</div>
                                                         <div class="text-sm text-neutral-500">{{$item_antrian->konsumen_email}}</div>
                                                         <div class="text-sm text-primary-500">{{$item_antrian->layanan->nama_layanan}}</div>
-                                                    </div> 
+                                                    </div>
                                                 </td>
                                                 <td class="px-1 py-2 border border-1 border-slate-500">
                                                 @if ($item_antrian->status == 0)

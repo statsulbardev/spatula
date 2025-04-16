@@ -1,15 +1,7 @@
-@section('title', 'Pengaduan Pengguna Layanan')
+<div>
+    <x-page.page-title title="Verifikasi Hasil Pengaduan {{ $complaint->nama_konsumen }}" />
 
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-    {{-- Header --}}
-    @include('components.page.page-title', [
-        'title' => 'Verifikasi Pengaduan Layanan Dari ' . $complaint->nama_konsumen,
-    ])
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
-
-    <section>
+    <section class="mb-6 mt-10">
         <div class="h-full">
             <!-- Table -->
             <div class="mx-auto w-full rounded-md border-gray-200 bg-white shadow-sm">
@@ -179,7 +171,5 @@
                 </table>
             </div>
         </div>
-</div>
-</div>
-</section>
+    </section>
 </div>

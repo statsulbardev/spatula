@@ -1,25 +1,13 @@
-@if ($this->routeName == 'antrian-daftar-tambah')
-    @section('title', 'Tambah Antrian')
-@elseif ($this->routeName == 'antrian-daftar-ubah')
-    @section('title', 'Ubah Antrian')
-@elseif ($this->routeName == 'antrian-daftar-lihat')
-    @section('title', 'Lihat Antrian')
-@endif
-
-<div class="px-4 md:px-6 2xl:px-11 py-8">
+<div>
     {{-- Header --}}
 
     @if ($this->routeName == 'antrian-daftar-tambah')
-        @include('components.page.page-title', ['title' => 'Tambah Antrian'])
+        <x-page.page-title title="Tambah Antrian" />
     @elseif ($this->routeName == 'antrian-daftar-ubah')
-        @include('components.page.page-title', ['title' => 'Ubah Antrian'])
+        <x-page.page-title title="Ubah Antrian" />
     @elseif ($this->routeName == 'antrian-daftar-lihat')
-        @include('components.page.page-title', ['title' => 'Lihat Antrian'])
+        <x-page.page-title title="Lihat Antrian" />
     @endif
-
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">

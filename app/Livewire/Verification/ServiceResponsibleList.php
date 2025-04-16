@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Verification;
 
 use App\Models\d_penilaian;
@@ -8,8 +10,10 @@ use App\Traits\HasInitialProperty;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Builder;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,15 +24,6 @@ class ServiceResponsibleList extends Component
     public d_penilaian $penilaian;
     public int $numberOfPagination = 20;
     public ?string $searchKeyword = null;
-
-    /** @computed property : rootBreadcrumb */
-    public function getRootBreadcrumbProperty(): array
-    {
-        return [
-            'route' => route('daftar-pj-layanan'),
-            'label' => 'Daftar Verifikasi'
-        ];
-    }
 
     /** @computed property : suggestions */
     public function getSuggestionsProperty(): array
@@ -42,11 +37,11 @@ class ServiceResponsibleList extends Component
         return $this->initColorSuggestionsOption();
     }
 
-    public function render()
+    #[Title('PJ Layanan')]
+    public function render(): View
     {
-        return view('livewire.verification.service-responsible-list', [
-            'services' => $this->retrieveData()
-        ])->layout('layouts.app');
+        return view('livewire.verification.service-responsible-list', ['services' => $this->retrieveData()])
+            ->layout('components.layouts.app');
     }
 
     public function updatedNumberOfPagination()

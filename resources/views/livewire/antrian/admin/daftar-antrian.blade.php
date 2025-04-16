@@ -1,21 +1,15 @@
-@section('title', 'Daftar Antrian')
+<div>
+    <div class="flex flex-nowrap items-center justify-between">
+        <x-page.page-title :title="$pageTitle" />
 
-<div class="px-4 md:px-6 2xl:px-11 py-8">
-
-    <div class="flex-no-wrap flex justify-between">
-        {{-- Header --}}
-        @include('components.page.page-title', ['title' => 'Daftar Antrian'])
-
-        {{-- Antrian Baru --}}
-        <a href="{{ url(env('APP_URL') . '/pengaturan/antrian/daftar/tambah') }}" wire:navigate
-            class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500">
-            @include('components.icon', ['name' => 'plus-circle', 'size' => 'w-5 h-5'])
-            <span class="ml-2 text-sm">Tambah Antrian Baru</span>
+        <a
+            href="{{ route('antrian-daftar-tambah') }}"
+            class="ml-6 flex items-center rounded-md bg-primary-400 p-3 text-white hover:bg-primary-500"
+            wire:navigate>
+            <x-icons.hero name="plus-circle-solid" size="w-5 h-5" />
+            <span class="ml-2 text-sm">Tambah</span>
         </a>
     </div>
-
-    {{-- Breadcrumb --}}
-    @include('components.partials.breadcrumb')
 
     {{-- Content --}}
     <section class="mb-6 mt-10">
@@ -89,30 +83,31 @@
                                 </td>
                                 <td class="border-t px-6 pb-4">
                                     <div class="flex items-center justify-center">
-                                        <a x-data x-tooltip.raw="Lihat Antrian" class="text-purple-400 hover:text-purple-500"
+                                        <a
+                                            wire:navigate
+                                            x-data
+                                            x-tooltip.raw="Lihat Antrian"
                                             href="{{ route('antrian-daftar-lihat', ['antrian_satker' => $item->id]) }}"
-                                            wire:navigate>
-                                            @include('components.icon', [
-                                                'name' => 'eye',
-                                                'size' => 'w-5 h-5',
-                                            ])
+                                            class="cursor-pointer text-purple-500 hover:text-purple-600">
+                                            <x-icons.hero name="eye-outline" size="w-5 h-5" />
                                         </a>
                                         @if ($item->tanggal >= \Carbon\Carbon::today()->format('Y-m-d'))
-                                            <a x-data x-tooltip.raw="Ubah Antrian" class="text-green-400 hover:text-green-500"
+                                            <a
+                                                wire:navigate
+                                                x-data
+                                                x-tooltip.raw="Ubah Antrian"
                                                 href="{{ route('antrian-daftar-ubah', ['antrian_satker' => $item->id]) }}"
-                                                wire:navigate>
-                                                @include('components.icon', [
-                                                    'name' => 'pencil-square',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                class="cursor-pointer text-violet-500 hover:text-violet-600">
+                                                <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />
                                             </a>
-                                            <button wire:click="deleteItem({{ $item->id }})" type="button" x-data
-                                                x-tooltip.raw="Hapus Antrian" class="text-red-500 hover:text-red-600" data-te-toggle="modal"
+                                            <button
+                                                wire:click="deleteItem({{ $item->id }})"
+                                                type="button"
+                                                x-data
+                                                x-tooltip.raw="Hapus Pengguna"
+                                                class="text-red-500 hover:text-red-600" data-te-toggle="modal"
                                                 data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
-                                                @include('components.icon', [
-                                                    'name' => 'trash',
-                                                    'size' => 'w-5 h-5',
-                                                ])
+                                                <x-icons.hero name="trash-outline" size="w-5 h-5" />
                                             </button>
                                         @endif
                                     </div>
