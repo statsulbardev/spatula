@@ -9,7 +9,9 @@ use App\Models\m_satker;
 use App\Traits\Antrian\Helper_Firestore;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AntrianSeeder extends Seeder
 {
@@ -22,22 +24,41 @@ class AntrianSeeder extends Seeder
     public function run()
     {
         $this->insert_m_antrian_satker_layanan();
-        $this->antrian_add_role();
-        $this->change_pass_all();
+        // $this->antrian_add_role();
+        // $this->change_pass_all();
         $this->init_firebase();
     }
 
     private function insert_m_antrian_satker_layanan()
     {
-        $all_satker = m_satker::orderby('kode_satker', 'asc')->get();
-        $layanan_yang_diinsert = m_layanan::whereIn('kode_layanan', ['2','3','4','5'])
+        $layanan_offline = m_layanan::where('metode', 1)
             ->orderby('id', 'asc')
             ->get();
-        foreach($all_satker as $item_satker){
-            foreach($layanan_yang_diinsert as $item_layanan){
+
+        $layanan_id = [];
+        $dict_layanan = [];
+        foreach($layanan_offline as $item){
+            array_push($layanan_id, $item->id);
+            $dict_layanan[$item->id] = $item;
+        }
+
+        $satker = m_satker::all();
+        $dict_satkr = [];
+        foreach($satker as $itm){
+            $dict_satkr[$itm->id] = $itm;
+        }
+
+        $data = DB::table('m_satker_layanan')->whereIn('m_layanan_id', $layanan_id)->get();
+
+        $unique_id_arr = [];
+        foreach($data as $item_layanan){
+            $item_unique_id = $dict_satkr[$item_layanan->m_satker_id]->kode_satker.'-'.$item_layanan->m_layanan_id;
+            if(!in_array($item_unique_id, $unique_id_arr)){
+                array_push($unique_id_arr, $item_unique_id);
+                Log::alert($item_unique_id);
                 $item_m_layanan = new m_antrian_satker_layanan();
-                $item_m_layanan->kode_satker = $item_satker->kode_satker;
-                $item_m_layanan->kode_layanan = $item_layanan->kode_layanan;
+                $item_m_layanan->kode_satker = $dict_satkr[$item_layanan->m_satker_id]->kode_satker;
+                $item_m_layanan->kode_layanan = $dict_layanan[$item_layanan->m_layanan_id]->kode_layanan;
                 $item_m_layanan->is_active = '1';
                 $item_m_layanan->save();
             }

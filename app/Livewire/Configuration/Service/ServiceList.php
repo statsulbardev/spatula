@@ -14,9 +14,13 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+use App\Traits\Antrian\Helper_Firestore;
+
 class ServiceList extends Component
 {
     use HasModelProcess, WithPagination;
+
+    use Helper_Firestore;
 
     public m_layanan $layanan;
 
@@ -53,6 +57,8 @@ class ServiceList extends Component
     {
         $result = $this->delete($this->layanan);
 
+        $this->set_service_list_change($this->layanan, 'hapus');
+
         $this->dispatch('notification', message: $result);
     }
 
@@ -65,6 +71,8 @@ class ServiceList extends Component
                 'm_satker_id'  => auth()->user()->satker->id,
                 'm_layanan_id' => $id
             ]);
+
+            $this->set_satker_service_list_change(auth()->user()->satker->id, $id, 'tambah');
 
             DB::commit();
 
@@ -84,6 +92,8 @@ class ServiceList extends Component
             DB::beginTransaction();
 
             DB::table('m_satker_layanan')->where('m_satker_id', $unitId)->where('m_layanan_id', $serviceId)->delete();
+
+            $this->set_satker_service_list_change($unitId, $serviceId, 'hapus');
 
             DB::commit();
 

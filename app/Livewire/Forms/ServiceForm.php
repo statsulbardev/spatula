@@ -11,8 +11,12 @@ use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
+use App\Traits\Antrian\Helper_Firestore;
+
 class ServiceForm extends Form
 {
+    use Helper_Firestore;
+
     #[Validate('required', onUpdate: false, message: 'Kode layanan tidak boleh kosong')]
     #[Validate('numeric', onUpdate: false, message: 'Kode layanan hanya boleh numerik')]
     public string $f_kode;
@@ -63,12 +67,18 @@ class ServiceForm extends Form
         try {
             DB::beginTransaction();
 
+            $layanan_metode_or = $layanan->metode;
+
             $layanan->update([
                 'kode_layanan' => $this->f_kode,
                 'nama_layanan' => $this->f_nama,
                 'deskripsi'    => $this->f_deskripsi ?? null,
                 'metode'       => $this->f_metode
             ]);
+
+            if($layanan_metode_or != $this->f_metode){
+                $this->set_service_list_change($layanan, 'ubah');
+            }
 
             DB::commit();
 

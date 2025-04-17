@@ -14,8 +14,9 @@
                         </div>
                     </div>
 
-                    <span class="h-10 w-10 flex flex-nowrap items-center rounded-full">
-                        <img src="https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png" alt="user" />
+                    <span class="h-9 w-9 flex flex-nowrap items-center rounded-full">
+                        {{-- <img src="https://www.clipartmax.com/png/small/6-61698_lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-avatar-login.png" alt="user" /> --}}
+                        <img class="rounded-full" src="{{ session('konsumen_avatar_url') }}" alt="user" />
                     </span>
 
                     <svg :class="dropdownOpen && 'rotate-180'" class="hidden fill-current sm:block" width="12"

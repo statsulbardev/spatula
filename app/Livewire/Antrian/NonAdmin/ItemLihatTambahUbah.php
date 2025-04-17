@@ -23,7 +23,7 @@ use Webpatser\Uuid\Uuid;
 class ItemLihatTambahUbah extends Component
 {
     use HasRenderOption;
-    
+
     public d_antrian_satker $atrian_satker;
     public string $routeName;
 
@@ -34,6 +34,7 @@ class ItemLihatTambahUbah extends Component
     public $f_periode;
     public $f_deskripsi;
 
+    public ?string $f_kode_layanan_ori;
     public ?string $layanan_satker;
     public ?string $disable_date;
 
@@ -92,7 +93,13 @@ class ItemLihatTambahUbah extends Component
             $satker_layanan = m_antrian_satker_layanan::where('kode_satker', $antrian_satker->kode_satker)
                                 ->where('kode_layanan', $antrian_satker->kode_layanan)
                                 ->first();
-            $this->f_kode_layanan = $satker_layanan->kode_layanan.'-'.$satker_layanan->loket;
+            if($satker_layanan){
+                $this->f_kode_layanan_ori = $satker_layanan->kode_layanan.'-'.$satker_layanan->loket;
+                $this->f_kode_layanan = $satker_layanan->kode_layanan.'-'.$satker_layanan->loket;
+            }else{
+                $this->f_kode_layanan_ori = '';
+                $this->f_kode_layanan ='';
+            }
             $this->f_tanggal = $antrian_satker->tanggal;
             $this->f_periode = substr($antrian_satker->antrian, 0, 1);
             $this->f_deskripsi = $antrian_satker->deskripsi;
@@ -148,7 +155,7 @@ class ItemLihatTambahUbah extends Component
         $this->validate();
 
         if($this->f_tanggal){
-            if(str_contains($this->f_tanggal, $this->disable_date)){
+            if(str_contains($this->disable_date, $this->f_tanggal)){
                 $this->addError('f_tanggal', 'PST tidak buka pada tanggal tersebut');
                 return;
             }
@@ -183,12 +190,12 @@ class ItemLihatTambahUbah extends Component
         $latest_antrian = $latest_antrian_query->first();
 
         $latest_number = 0;
-        
+
         if($latest_antrian){
             $latest_number = intval(substr($latest_antrian->antrian,1));
         }
         $latest_number  += 1;
-        $antrian_baru = str_pad($latest_number, 2, "0", STR_PAD_LEFT);
+        $antrian_baru = str_pad(''.$latest_number, 2, "0", STR_PAD_LEFT);
 
         $latest_antrian_internal_query = d_antrian_satker::query();
         $latest_antrian_internal_query->where('tanggal', $this->f_tanggal);
@@ -220,7 +227,7 @@ class ItemLihatTambahUbah extends Component
                 $baru->deskripsi = $this->f_deskripsi;
                 $baru->sudah_nilai = 0;
                 $baru->save();
-                
+
                 DB::commit();
                 $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
                 $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');
@@ -237,14 +244,15 @@ class ItemLihatTambahUbah extends Component
             DB::beginTransaction();
             try{
                 $this->atrian_satker->tanggal = $this->f_tanggal;
-                if($this->atrian_satker->periode !== $this->f_periode){
+                if($this->atrian_satker->periode !== $this->f_periode || $this->f_kode_layanan_ori !== $this->f_kode_layanan){
                     $this->atrian_satker->antrian = $this->f_periode.$antrian_baru;
                     $this->atrian_satker->antrian_internal = $antrian_internal_baru;
+                    $this->atrian_satker->kode_layanan = $kode_layanan;
                 }
                 $this->atrian_satker->periode = $this->f_periode;
                 $this->atrian_satker->deskripsi = $this->f_deskripsi;
                 $this->atrian_satker->save();
-                
+
                 DB::commit();
                 $this->redirectRoute('antrian-non-admin-lihat', navigate: true);
                 $this->dispatch('notification', message: 'Informasi berhasil menyimpan antrian data.');

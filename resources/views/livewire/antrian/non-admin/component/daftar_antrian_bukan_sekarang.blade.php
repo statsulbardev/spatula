@@ -68,7 +68,11 @@
                                 <div class="text-md">{{$item->satker->nama}}</div>
                                 <div class="mb-2 text-sm text-neutral-500">{{$item->layanan->nama_layanan}}</div>
                                 @if ($item->tanggal == $today_tanggal)
-                                <div class="text-sm text-primary-500">LOKET {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
+                                    @if (array_key_exists($item->kode_satker.'--'.$item->kode_layanan, $master_key_value))
+                                        <div class="text-sm text-primary-500">LOKET {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}</div>
+                                    @else
+                                        <div class="text-sm text-primary-500">LOKET ??</div>
+                                    @endif
                                 @endif
                             </div>
                         </td>
@@ -83,8 +87,10 @@
                             @endif
                         </td>
                         <td class="border-t px-6 pb-4 items-center text-center">
-                            @if ($item->tanggal == $today_tanggal)
+                            @if ($item->tanggal == $today_tanggal && array_key_exists($item->kode_satker.'--'.$item->kode_layanan, $master_key_value))
                                 {{$master_key_value[$item->kode_satker.'--'.$item->kode_layanan]}}{{$item->antrian}}
+                            @elseif ($item->tanggal == $today_tanggal && !array_key_exists($item->kode_satker.'--'.$item->kode_layanan, $master_key_value))
+                                Belum Tersedia
                             @else
                                 {{$item->antrian}}
                             @endif

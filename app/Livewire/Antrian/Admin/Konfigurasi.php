@@ -99,7 +99,11 @@ class Konfigurasi extends Component
                         $baru->kode_satker = $user_unit_code;
                         $baru->config_key = 'playlist_type';
                         $baru->config_index = 1;
-                        $baru->config_value = $value;
+                        if(in_array($value, ['video_and_audio', 'video_and_audio', 'video_and_audio', 'video_and_audio'])){
+                            $baru->config_value = $value;
+                        }else{
+                            $baru->config_value = 'video_and_audio';
+                        }
                         $baru->save();
                         continue;
                     }
@@ -119,7 +123,7 @@ class Konfigurasi extends Component
                             $baru->config_value = $value;
                             $baru->save();
                             $index += 1;
-                            
+
                         }else{
                             $this->dispatch('notification', message: 'Url youtube tidak sesuai.');
                         }

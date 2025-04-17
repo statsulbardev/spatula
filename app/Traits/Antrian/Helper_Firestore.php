@@ -5,6 +5,8 @@ namespace App\Traits\Antrian;
 use App\Models\d_antrian_satker;
 use App\Models\d_antrian_satker_config_view;
 use App\Models\m_antrian_satker_layanan;
+use App\Models\m_layanan;
+use App\Models\m_satker;
 use Carbon\Carbon;
 use Google\Cloud\Firestore\FirestoreClient;
 use Illuminate\Support\Facades\Log;
@@ -25,17 +27,74 @@ trait Helper_Firestore
     //         'aktive': 'string with || seperate',
     //         'data': {
     //             'id' : {data}
-    //         } 
+    //         }
     //     }
     // }
-    
+
     private $sync_with_firebase = true;
 
     function setup_client_create() :FirestoreClient
     {
-        return  new FirestoreClient([
-            'projectId' => 'spatula-antrian',
-        ]);
+        return  new FirestoreClient(json_decode( file_get_contents(base_path(env('GOOGLE_APPLICATION_CREDENTIALS'))), true));
+    }
+
+    function set_service_list_change(m_layanan $service, $type)
+    {
+        if( $type == 'ubah' ){
+            $satker = m_satker::all();
+            if($service->metode == 1){
+                //online => offline
+                foreach($satker as $item_sateker){
+                    $item_m_layanan = new m_antrian_satker_layanan();
+                    $item_m_layanan->kode_satker = $item_sateker->kode_satker;
+                    $item_m_layanan->kode_layanan = $service->kode_layanan;
+                    $item_m_layanan->is_active = '1';
+                    $item_m_layanan->save();
+                }
+            }if($service->metode == 2){
+                //offlime => online
+                m_antrian_satker_layanan::where('kode_layanan', $service->kode_layanan)->delete();
+            }
+
+            foreach($satker as $item_sateker){
+                $this->set_daftar_layanan($this->setup_client_create(), $item_sateker->kode_satker);
+            }
+        }else if($type == 'hapus'){
+            m_antrian_satker_layanan::where('kode_layanan', $service->kode_layanan)->delete();
+            $satker = m_satker::all();
+            foreach($satker as $item_sateker){
+                $this->set_daftar_layanan($this->setup_client_create(), $item_sateker->kode_satker);
+            }
+        }
+    }
+
+    function set_satker_service_list_change($unitId, $serviceId, $type)
+    {
+        $service = m_layanan::where('id', $serviceId )->first();
+
+        if($service->metode == '1'){
+            $unit = m_satker::where('id', $unitId )->first();
+            $m_antrian_satker_layanan = m_antrian_satker_layanan::where('kode_satker', $unit->kode_satker)
+                ->where('kode_layanan', $service->kode_layanan)
+                ->first();
+
+            if($type == 'tambah' && !$m_antrian_satker_layanan){
+                $m_antrian_satker_layanan = new m_antrian_satker_layanan();
+                $m_antrian_satker_layanan->kode_satker = $unit->kode_satker;
+                $m_antrian_satker_layanan->kode_layanan = $service->kode_layanan;
+                $m_antrian_satker_layanan->loket = 'A';
+                $m_antrian_satker_layanan->is_active = 0;
+                $m_antrian_satker_layanan->save();
+
+                $this->set_daftar_layanan($this->setup_client_create(), $unit->kode_satker);
+            }else if($type == 'hapus'){
+                m_antrian_satker_layanan::where('kode_satker', $unit->kode_satker)
+                    ->where('kode_layanan', $service->kode_layanan)
+                    ->delete();
+
+                $this->set_daftar_layanan($this->setup_client_create(), $unit->kode_satker);
+            }
+        }
     }
 
     function set_daftar_layanan(FirestoreClient $db_client, $kode_satker)
@@ -87,7 +146,7 @@ trait Helper_Firestore
         $data_dict = [];
 
         foreach($data_arr as $item){
-            $data_dict[$item['id']] = 
+            $data_dict[$item['id']] =
             [
                 'kode_satker' => $item['kode_satker'],
                 'kode_layanan' => $item['kode_layanan'],

@@ -21,7 +21,7 @@ trait Helper_Auth
     function auth_antrian_register($konsumen_email, $konsumen_no_wa_telepon, $konsumen_tahun_lahir, $konsumen_nama)
     {
         $konsumen_email = strtolower($konsumen_email);
-        
+
         $effected_row = d_antrian_satker::where('konsumen_email', $konsumen_email)
             ->where('konsumen_no_wa_telepon', $konsumen_no_wa_telepon)
             ->where('konsumen_tahun_lahir', $konsumen_tahun_lahir)
@@ -39,6 +39,7 @@ trait Helper_Auth
             'konsumen_no_wa_telepon' => $konsumen_no_wa_telepon,
             'konsumen_tahun_lahir' => $konsumen_tahun_lahir,
             'konsumen_nama' => $konsumen_nama,
+            'konsumen_avatar_url' =>  $this->getAvatarUrl($konsumen_nama),
             'is_registrasi' => $is_registrasi,
         ]);
 
@@ -48,7 +49,6 @@ trait Helper_Auth
     function auth_antrian_login($konsumen_email, $konsumen_no_wa_telepon, $konsumen_tahun_lahir)
     {
         $konsumen_email = strtolower($konsumen_email);
-        
         $one_antrian = d_antrian_satker::where('konsumen_email', $konsumen_email)
             ->where('konsumen_no_wa_telepon', $konsumen_no_wa_telepon)
             ->where('konsumen_tahun_lahir', $konsumen_tahun_lahir)
@@ -61,6 +61,7 @@ trait Helper_Auth
                 'konsumen_no_wa_telepon' => $konsumen_no_wa_telepon,
                 'konsumen_tahun_lahir' => $konsumen_tahun_lahir,
                 'konsumen_nama' => $konsumen_nama,
+                'konsumen_avatar_url' => $this->getAvatarUrl($konsumen_nama),
                 'is_registrasi' => 0
             ]);
             return 1;
@@ -69,9 +70,22 @@ trait Helper_Auth
         }
     }
 
+    public function getAvatarUrl($text): string
+    {
+        $name = str($text)
+            ->trim()
+            ->explode(' ')
+            ->map(fn (string $segment): string => filled($segment) ? mb_substr($segment, 0, 1) : '')
+            ->join(' ');
+
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=FFFFFF&background=000000';
+    }
+
+
     function auth_antrian_logout()
     {
-        session()->forget(['check_have_antrian_auth', 'konsumen_email', 'konsumen_no_wa_telepon', 'konsumen_tahun_lahir', 'konsumen_nama', 'is_registrasi']);
+        session()->forget(['check_have_antrian_auth', 'konsumen_email', 'konsumen_no_wa_telepon', 'konsumen_tahun_lahir', 'konsumen_nama', 'konsumen_avatar_url', 'is_registrasi']);
     }
 
 }

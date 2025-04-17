@@ -48,7 +48,7 @@
                     </div>
 
                     <span class="h-12 w-12 rounded-full">
-                        <img src="{{ secure_asset('public/files/user-01.png') }}" alt="user" />
+                        <img class="rounded-full" src="{{ auth()->user()->getAvatarUrl() }}" alt="user" />
                     </span>
 
                     <x-icons.hero name="chevron-down" size="w-4 h-4" />
