@@ -80,18 +80,22 @@ class ItemLihatTambahUbah extends Component
 
     public function mount(d_antrian_satker $antrian_satker)
     {
-        if(session('kode_satker_active', null))
-        {
-            $this->f_kode_satker = session('kode_satker_active', null);
-            $this->updatedFKodeSatker();
-        }
-
         $this->routeName      = Route::currentRouteName();
         $this->atrian_satker  = $antrian_satker;
-        if ($this->routeName === 'antrian-non-admin-item-lihat' || $this->routeName === 'antrian-non-admin-item-edit') {
+
+        if($this->routeName === 'antrian-non-admin-item-tambah'){
+            if(session('kode_satker_active', null))
+            {
+                $this->f_kode_satker = session('kode_satker_active', null);
+                $this->updatedFKodeSatker();
+            }
+        }else if ($this->routeName === 'antrian-non-admin-item-lihat' || $this->routeName === 'antrian-non-admin-item-edit') {
             $this->f_kode_satker = $antrian_satker->kode_satker;
+            $this->updatedFKodeSatker();
+
             $satker_layanan = m_antrian_satker_layanan::where('kode_satker', $antrian_satker->kode_satker)
                                 ->where('kode_layanan', $antrian_satker->kode_layanan)
+                                ->where('is_active', 1)
                                 ->first();
             if($satker_layanan){
                 $this->f_kode_layanan_ori = $satker_layanan->kode_layanan.'-'.$satker_layanan->loket;
@@ -132,7 +136,6 @@ class ItemLihatTambahUbah extends Component
         if($config_date){
             $this->disable_date = $config_date->config_value;
         }
-        $this->dispatch('tambah-antrian-change-kode-satker');
     }
 
     #[Title('Daftar Layanan Antrian')]

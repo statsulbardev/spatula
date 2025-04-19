@@ -4,9 +4,9 @@
         @if ($this->routeName == 'antrian-non-admin-item-tambah')
            <x-page.page-title title="Tambah Antrian" />
         @elseif ($this->routeName == 'antrian-non-admin-item-edit')
-            <x-page.page-title title="Edit Antrian" />
-        @elseif ($this->routeName == 'antrian-non-admin-item-lihat')
             <x-page.page-title title="Ubah Antrian" />
+        @elseif ($this->routeName == 'antrian-non-admin-item-lihat')
+            <x-page.page-title title="Lihat Antrian" />
         @endif
     </div>
 
@@ -22,11 +22,22 @@
                         </p>
                     </div>
                     <div class="w-full lg:w-2/3">
-                    <x-forms.inputs.select label="Unit Kerja" model="f_kode_satker" method="live"
-                            placeholder="Pilih Unit Kerja ..." :optitem="$this->units" />
+                        <div class="mb-6 w-full">
+                            <label class="form-label font-bold" for="Unit Kerja">
+                                Unit Kerja
+                            </label>
+                            <select
+                                wire:model.live="f_kode_satker"
+                                id="f_kode_satker"
+                                class="form-select"
+                                placeholder="Pilih Unit Kerja ..."
+                                {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
+                                <option hidden selected>Pilih Unit Kerja ...</option>
+                                {!! $this->units !!}
+                            </select>
+                        </div>
                     </div>
                 </div>
-
                 {{-- Informasi Pengguna Layanan --}}
                 @if ($this->f_kode_satker)
                     <hr>
@@ -45,7 +56,8 @@
                                         Nama Layanan
                                     </label>
                                     <select id="layanan_id" wire:model="f_kode_layanan"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900">
+                                        class="form-select"
+                                        {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Layanan ...</option>
                                         {!!$layanan_satker!!}
                                     </select>
@@ -66,7 +78,7 @@
                                     <label class="form-label font-bold" for="Tanggal Kunjungan">
                                     Tanggal Kunjungan
                                     </label>
-                                    <input type='date' class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
+                                    <input type='date' class="form-select"
                                         type="text" id="tanggal_id" wire:model="f_tanggal"
                                         placeholder="Tanggal Kunjungan"
                                         {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}/>
@@ -89,7 +101,7 @@
                                         Periode Kedatangan
                                     </label>
                                     <select id="periode_id" wire:model="f_periode"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
+                                        class="form-select"
                                         {{ in_array($routeName, ["antrian-non-admin-item-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Periode ...</option>
                                         <option value="0">Jam Pertama (Sebelum Istirahat)</option>
@@ -126,7 +138,7 @@
                                         'label' => 'Deskripsi Tujuan',
                                     ])
                                 @else
-                                    <div class="border border-1 w-full h-full p-4 rounded-md border-slate-400 bg-gray-200">
+                                    <div class="form-textarea" disabled>
                                         {!!$this->f_deskripsi!!}
                                     </div>
                                 @endif
