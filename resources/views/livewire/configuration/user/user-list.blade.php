@@ -111,4 +111,5 @@
 
     {{ $users->links('vendor.livewire.tailwind') }}
 
+    <x-forms.attributes.delete-confirmation />
 </div>

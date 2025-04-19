@@ -57,7 +57,6 @@ class DaftarAntrian extends Component
 
     public function deleteItem(d_antrian_satker $antrian_tobe_delete_)
     {
-        Log::info("asasasasas asass");
         $this->antrian_tobe_delete = $antrian_tobe_delete_;
     }
 

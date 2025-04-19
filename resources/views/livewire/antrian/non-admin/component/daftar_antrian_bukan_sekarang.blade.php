@@ -124,4 +124,5 @@
             </tbody>
         </table>
     @endif
+    @include('components.input.delete-confirmation')
 </div>

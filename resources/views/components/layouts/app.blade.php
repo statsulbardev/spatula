@@ -16,6 +16,5 @@
         data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
     </button>
 
-    @include('components.input.delete-confirmation')
 </div>
 @overwrite

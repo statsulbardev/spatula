@@ -121,4 +121,5 @@
             @endif
         </div>
     </section>
+    @include('components.input.delete-confirmation')
 </div>
