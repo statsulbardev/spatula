@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        View::composer('layouts.app', 'App\Http\ViewComposer\UserComposer');
+        View::composer('components.layouts.app', 'App\Http\ViewComposer\UserComposer');
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('components.layouts.base')
 
 @section('content')
     <div class="container mx-auto">

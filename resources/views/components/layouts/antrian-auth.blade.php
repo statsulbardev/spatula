@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('components.layouts.base')
 
 @section('content')
 <div class="flex min-h-screen items-center justify-center bg-gradient-to-r from-primary-500 to-fuchsia-700 p-6">

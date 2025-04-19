@@ -23,6 +23,6 @@ class Evaluation extends Component
      */
     public function render()
     {
-        return view('layouts.evaluation');
+        return view('components.layouts.evaluation');
     }
 }

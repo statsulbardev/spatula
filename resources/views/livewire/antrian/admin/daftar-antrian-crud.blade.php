@@ -31,7 +31,7 @@
                                             Cari Email Konsumen
                                         </label>
                                         <input wire:model="search_email" ref="input" type="email" placeholder="Email"
-                                            class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900">
+                                            class="form-input">
                                     </div>
                                 </div>
                                 <div class="my-6">
@@ -40,13 +40,13 @@
                                             Cari Nomor Telpon dan WA Pengguna
                                         </label>
                                         <input wire:model="search_no_wa_telepon" ref="input" type="number" placeholder="No Telpon dan WA"
-                                            class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900">
+                                            class="form-input">
                                     </div>
                                 </div>
 
                                 <button wire:click="search_konsumen()" type="button" class="justify-end btn-primary">Cari Konsumen</button>
                                 <hr class="mt-3 -mb-3">
-                            @endif                            
+                            @endif
 
                             <div class="mt-6 mb-6">
                                 <div>
@@ -54,7 +54,7 @@
                                         Email Konsumen
                                     </label>
                                     <input wire:model="konsumen_email" ref="input" type="email" placeholder="Email"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900"
+                                        class="form-input"
                                         {{ in_array($routeName, ["antrian-daftar-lihat", "antrian-daftar-ubah"]) ? "disabled" : "" }}>
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -73,7 +73,7 @@
                                         Nomor Telpon dan WA Pengguna
                                     </label>
                                     <input wire:model="konsumen_no_wa_telepon" ref="input" type="number" placeholder="No Telpon dan WA"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900"
+                                        class="form-input"
                                         {{ in_array($routeName, ["antrian-daftar-lihat", "antrian-daftar-ubah"]) ? "disabled" : "" }}>
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -92,7 +92,7 @@
                                         Tahun Lahir
                                     </label>
                                     <input wire:model="konsumen_tahun_lahir" ref="input" type="number" placeholder="Tahun Lahir"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900"
+                                        class="form-input"
                                         {{ in_array($routeName, ["antrian-daftar-lihat", "antrian-daftar-ubah"]) ? "disabled" : "" }}>
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -111,7 +111,7 @@
                                         Nama
                                     </label>
                                     <input wire:model="konsumen_nama" ref="input" type="text" placeholder="Nama"
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900"
+                                        class="form-input"
                                         {{ in_array($routeName, ["antrian-daftar-lihat", "antrian-daftar-ubah"]) ? "disabled" : "" }}>
                                 </div>
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
@@ -141,9 +141,9 @@
                                     <label class="form-label font-bold" for="Nama Layanan">
                                         Nama Layanan
                                     </label>
-                                    <select id="layanan_id" wire:model="f_kode_layanan" 
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900"
-                                        {{ in_array($routeName, ["antrian-daftar-lihat", "antrian-daftar-ubah"]) ? "disabled" : "" }}>
+                                    <select id="layanan_id" wire:model="f_kode_layanan"
+                                        class="form-select"
+                                        {{ in_array($routeName, ["antrian-daftar-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Layanan ...</option>
                                         {!!$this->layanan_satker!!}
                                     </select>
@@ -164,9 +164,9 @@
                                     <label class="form-label font-bold" for="Tanggal Kunjungan">
                                     Tanggal Kunjungan
                                     </label>
-                                    <input type='date' class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900 read-only:bg-gray-200 read-only:text-slate-900"
+                                    <input type='date' class="form-select"
                                         type="text" id="tanggal_id" wire:model="f_tanggal"
-                                        placeholder="Tanggal Kunjungan" 
+                                        placeholder="Tanggal Kunjungan"
                                         {{ in_array($routeName, ["antrian-daftar-lihat"]) ? "disabled" : "" }}/>
 
                                 </div>
@@ -186,8 +186,8 @@
                                     <label class="form-label font-bold" for="Nama Layanan">
                                         Periode Kedatangan
                                     </label>
-                                    <select id="periode_id" wire:model="f_periode" 
-                                        class="border border-1 w-full p-2 rounded-md border-slate-400 disabled:bg-gray-200 disabled:text-slate-900" 
+                                    <select id="periode_id" wire:model="f_periode"
+                                        class="form-select"
                                         {{ in_array($routeName, ["antrian-daftar-lihat"]) ? "disabled" : "" }}>
                                         <option hidden selected>Pilih Periode ...</option>
                                         <option value="0">Jam Pertama (Sebelum Istirahat)</option>
@@ -222,11 +222,11 @@
                                         'label' => 'Deskripsi Tujuan',
                                     ])
                                 @else
-                                    <div class="border border-1 w-full h-full p-4 rounded-md border-slate-400 bg-gray-200">
+                                    <div class="form-textarea" disabled>
                                         {!!$this->f_deskripsi!!}
                                     </div>
                                 @endif
-                            
+
 
                                 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('saved', () => {
                                     clearTimeout(timeout);
@@ -241,8 +241,8 @@
                         </div>
                     </div>
 
-                
-                
+
+
                 @if (in_array($routeName, ["antrian-daftar-tambah", "antrian-daftar-ubah"]))
                     <div class="mt-auto flex items-center rounded-b-lg border-gray-200 bg-gray-200 p-4 shadow-sm">
                         <a href="{{route('antrian-daftar')}}" wire:navigate type="button" class="btn-secondary" >Batal</a>
@@ -254,7 +254,7 @@
                         <a href="{{route('antrian-daftar')}}" wire:navigate type="button" class="btn-secondary" >Tutup</a>
                     </div>
                 @endif
-                
+
             </form>
         </div>
     </section>

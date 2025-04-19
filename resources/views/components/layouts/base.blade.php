@@ -9,12 +9,12 @@
     <title>{{ $title ?? 'Spatula'}}</title>
 
     <!-- Favicon-->
-    <link id="favicon" rel="icon" href="{{ secure_asset(env('APP_URL') . '/public/files/logo_2.ico') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@200..900&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
-    <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/star-rating/star-rating.min.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . '/vendor/trix/trix-editor.min.css') }}">
+    <link id="favicon" rel="icon" href="{{ secure_asset('public/files/logo_2.ico') }}"  data-navigate-once>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@200..900&display=swap"  data-navigate-once>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"  data-navigate-once/>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"   data-navigate-once/>
+    <link rel="stylesheet" href="{{ secure_asset('/vendor/star-rating/star-rating.min.css') }}"  data-navigate-once>
+    <link rel="stylesheet" href="{{ secure_asset('/vendor/trix/trix-editor.min.css') }}"  data-navigate-once>
 
     @livewireStyles
 
@@ -34,7 +34,7 @@
 
     @livewireScriptConfig
 
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"  data-navigate-once></script>
     <script src="{{ secure_asset('public/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>
     <script src="{{ secure_asset('public/vendor/trix/trix-editor.min.js') }}" data-navigate-once></script>
     <script src="{{ secure_asset('public/vendor/star-rating/star-rating.min.js') }}" data-navigate-once></script>

@@ -10,12 +10,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class DaftarAntrian extends Component
 {
     public $tanggal_filter;
 
     public string $pageTitle = "Daftar Antrian";
+
+    public ?d_antrian_satker $antrian_tobe_delete;
 
     public function mount()
     {
@@ -49,6 +53,24 @@ class DaftarAntrian extends Component
         ])
         ->layout('components.layouts.app')
         ->title($this->pageTitle);
+    }
+
+    public function deleteItem(d_antrian_satker $antrian_tobe_delete_)
+    {
+        Log::info("asasasasas asass");
+        $this->antrian_tobe_delete = $antrian_tobe_delete_;
+    }
+
+    public function confirmDeleteItem()
+    {
+        try
+        {
+            $this->antrian_tobe_delete->delete();
+            $this->dispatch('notification', message: "Informasi antrian telah dihapus.");
+        }catch (Exception $error)
+        {
+            $this->dispatch('notification', message: "Informasi antrian gagal dihapus.");
+        }
     }
 
 

@@ -126,5 +126,4 @@
     {{ $offices->links('vendor.livewire.tailwind') }}
 
     {{-- Delete Confirmation Modal --}}
-    @include('components.input.delete-confirmation')
 </div>

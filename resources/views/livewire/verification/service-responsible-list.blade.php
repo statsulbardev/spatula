@@ -203,5 +203,4 @@
     {{ $services->links('vendor.livewire.tailwind') }}
 
     {{-- Delete Confirmation Modal --}}
-    <x-forms.attributes.delete-confirmation />
 </div>

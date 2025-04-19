@@ -111,7 +111,7 @@
                                         wire:navigate>
                                         <x-icons.hero name="pencil-square-outline" size="w-5 h-5" />
                                     </a>
-                                    <button wire:click="deleteItem({{ $item->id }})" type="button" x-data
+                                    <button wire:click="deleteItem('{{ $item->id }}')" type="button" x-data
                                         x-tooltip.raw="Hapus Antrian" class="text-red-500 hover:text-red-600" data-te-toggle="modal"
                                         data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
                                         <x-icons.hero name="trash-outline" size="w-5 h-5" />
@@ -124,5 +124,4 @@
             </tbody>
         </table>
     @endif
-    @include('components.input.delete-confirmation')
 </div>
