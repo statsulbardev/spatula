@@ -19,7 +19,7 @@ class DaftarAntrian extends Component
 
     public string $pageTitle = "Daftar Antrian";
 
-    public ?d_antrian_satker $antrian_tobe_delete;
+    public d_antrian_satker $antrian_tobe_delete;
 
     public function mount()
     {

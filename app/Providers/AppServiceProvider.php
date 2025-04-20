@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         URL::forceScheme('https');
 
         Livewire::setUpdateRoute(function ($handle) {
-            return Route::post('/spatula-2025/livewire/update', $handle)->name('customsetUpdateRoute');
+            return Route::post('/spatula/livewire/update', $handle)->name('customsetUpdateRoute');
         });
 
         Model::shouldBeStrict(! $this->app->isProduction());
