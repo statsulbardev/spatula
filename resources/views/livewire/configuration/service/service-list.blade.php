@@ -7,7 +7,7 @@
                 <li class="border-l-2 border-t-2 border-b-2 border-primary-100 drop-shadow-sm rounded-l-md bg-white px-4 py-2 leading-tight hover:bg-gray-300"
                     role="presentation">
                     <a
-                        href="master-layanan"
+                        href="#master-layanan"
                         class="align-middle text-sm text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 data-[te-nav-active]:font-bold"
                         data-te-toggle="pill"
                         data-te-target="#master-layanan"
@@ -21,7 +21,7 @@
                 <li class="border-2 border-primary-100 drop-shadow-sm rounded-r-md bg-white px-4 py-2 font-medium leading-tight hover:bg-gray-300"
                     role="presentation">
                     <a
-                        href="layanan-satker"
+                        href="#layanan-satker"
                         class="align-middle text-sm text-neutral-500 hover:isolate focus:isolate data-[te-nav-active]:text-primary-500 data-[te-nav-active]:font-bold"
                         data-te-toggle="pill"
                         data-te-target="#layanan-satker"
