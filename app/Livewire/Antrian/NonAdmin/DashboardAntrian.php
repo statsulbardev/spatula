@@ -24,9 +24,11 @@ DashboardAntrian extends Component
     #[Computed]
     public function units(): string
     {
+        $kode_satker = m_antrian_satker_layanan::where('is_active', '1')->select('kode_satker')->distinct()->get()->pluck(['kode_satker']);
         return
             $this->renderOption(
-                m_satker::get(['kode_satker', 'nama'])
+                m_satker::whereIn('kode_satker', $kode_satker)
+                    ->get(['kode_satker', 'nama'])
                     ->map(function ($item) {
                         return [
                             0 => $item->kode_satker,

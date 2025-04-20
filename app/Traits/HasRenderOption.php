@@ -13,6 +13,10 @@ trait HasRenderOption
         foreach($data as $item)
                 $result .= "<option value=" . $item[0] . ">" . $item[1] . "</option>";
 
-        return $result;
+        if(is_null($result)){
+            return '';
+        }else{
+            return $result;
+        }
     }
 }

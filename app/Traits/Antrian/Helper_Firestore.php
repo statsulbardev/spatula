@@ -48,7 +48,8 @@ trait Helper_Firestore
                     $item_m_layanan = new m_antrian_satker_layanan();
                     $item_m_layanan->kode_satker = $item_sateker->kode_satker;
                     $item_m_layanan->kode_layanan = $service->kode_layanan;
-                    $item_m_layanan->is_active = '1';
+                    $item_m_layanan->loket = 'A';
+                    $item_m_layanan->is_active = '0';
                     $item_m_layanan->save();
                 }
             }if($service->metode == 2){

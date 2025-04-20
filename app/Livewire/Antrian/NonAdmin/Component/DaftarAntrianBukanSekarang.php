@@ -59,7 +59,7 @@ class DaftarAntrianBukanSekarang extends Component
 
     public function render()
     {
-        $master_antrian_satker = m_antrian_satker_layanan::all();
+        $master_antrian_satker = m_antrian_satker_layanan::where('is_active', '1')->get();
         $master_key_value = [];
         foreach($master_antrian_satker as $item){
             $master_key_value[$item->kode_satker.'--'.$item->kode_layanan] = $item->loket;

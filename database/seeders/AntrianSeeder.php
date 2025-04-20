@@ -59,7 +59,8 @@ class AntrianSeeder extends Seeder
                 $item_m_layanan = new m_antrian_satker_layanan();
                 $item_m_layanan->kode_satker = $dict_satkr[$item_layanan->m_satker_id]->kode_satker;
                 $item_m_layanan->kode_layanan = $dict_layanan[$item_layanan->m_layanan_id]->kode_layanan;
-                $item_m_layanan->is_active = '1';
+                $item_m_layanan->loket = 'A';
+                $item_m_layanan->is_active = '0';
                 $item_m_layanan->save();
             }
         }
