@@ -47,5 +47,68 @@
     </script>
 
     @stack('scripts')
+
+    <script data-navigate-once>
+        const componentList_TWE = {
+            Input: te.Alert,
+            Animate: te.Animate,
+            Autocomplete: te.Autocomplete,
+            Button: te.Button,
+            Carousel: te.Carousel,
+            Chart: te.Chart,
+            Chip: te.Chip,
+            ChipsInput: te.ChipsInput,
+            Clipboard: te.Clipboard,
+            Collapse: te.Collapse,
+            Datatable: te.Datatable,
+            Datepicker: te.Datepicker,
+            Datetimepicker: te.Datetimepicker,
+            Dropdown: te.Dropdown,
+            InfiniteScroll: te.InfiniteScroll,
+            Input: te.Input,
+            LazyLoad: te.LazyLoad,
+            Lightbox: te.Lightbox,
+            LoadingManagement: te.LoadingManagement,
+            Modal: te.Modal,
+            MultiRangeSlider: te.MultiRangeSlider,
+            Offcanvas: te.Offcanvas,
+            PerfectScrollbar: te.PerfectScrollbar,
+            Popconfirm: te.Popconfirm,
+            Popover: te.Popover,
+            Rating: te.Rating,
+            Ripple: te.Ripple,
+            ScrollSpy: te.ScrollSpy,
+            Select: te.Select,
+            Sidenav: te.Sidenav,
+            SmoothScroll: te.SmoothScroll,
+            Stepper: te.Stepper,
+            Sticky: te.Sticky,
+            Tab: te.Tab,
+            Timepicker: te.Timepicker,
+            Toast: te.Toast,
+            Tooltip: te.Tooltip,
+            Touch: te.Touch,
+            Validation: te.Validation,
+        };
+        var init_componentList_TWE = true;
+    </script>
+
+    <script data-navigate-once>
+        document.addEventListener('livewire:navigated', () => {
+            if(init_componentList_TWE){
+                init_componentList_TWE = false;
+            }else{
+                console.log('livewire:navigated');
+                te.initTE(componentList_TWE, {allowReinits: true});
+            }
+        })
+
+        document.addEventListener("livewire:initialized", () => {
+            Livewire.hook('morphed', ({ el, component }) => {
+                console.log('livewire:initialized :: morphed');
+                te.initTE(componentList_TWE, {allowReinits: true});
+            })
+        });
+    </script>
 </body>
 </html>

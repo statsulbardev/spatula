@@ -11,10 +11,7 @@
         </main>
     </div>
 
-    <button  type="button" x-data
-        x-tooltip.raw="Hapus Antrian" class="hidden" data-te-toggle="modal"
-        data-te-target="#deleteModal" data-te-ripple-init data-te-ripple-color="light">
-    </button>
+
 
 </div>
 @overwrite
