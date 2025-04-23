@@ -160,10 +160,15 @@ class ItemLihatTambahUbah extends Component
         $this->validate();
 
         if($this->f_tanggal){
-            if(str_contains($this->disable_date, $this->f_tanggal)){
-                $this->addError('f_tanggal', 'PST tidak buka pada tanggal tersebut');
-                return;
+            if(!is_null($this->disable_date)){
+                if(trim($this->disable_date) != ''){
+                    if(str_contains($this->disable_date, $this->f_tanggal)){
+                        $this->addError('f_tanggal', 'PST tidak buka pada tanggal tersebut');
+                        return;
+                    }
+                }
             }
+
             $tanggal_carbon = Carbon::createFromFormat('Y-m-d', $this->f_tanggal);
             if( $tanggal_carbon->dayOfWeek == Carbon::SATURDAY || $tanggal_carbon->dayOfWeek == Carbon::SUNDAY){
                 $this->addError('f_tanggal', 'Pelayanan tidak buka pada sabtu dan minggu');
